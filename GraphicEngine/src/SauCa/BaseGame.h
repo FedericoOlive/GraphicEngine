@@ -6,5 +6,5 @@ using namespace std;
 class SAUCA_API BaseGame
 {
 public:
-	void Init();
+	int Init();
 };
