@@ -1,5 +1,8 @@
-#pragma once
+#ifndef WINDOW_H
+#define WINDOW_H
+
 #include "Exports.h"
+#include <glfw3.h>
 
 class SAUCA_API Window
 {
@@ -19,3 +22,4 @@ class SAUCA_API Window
 
 };
 
+#endif

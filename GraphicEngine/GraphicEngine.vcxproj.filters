@@ -30,28 +30,28 @@
     <ClCompile Include="src\SauCa\Renderer.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Entity.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Entity2D.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Material.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Material.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\TileMap.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Shape.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Shape.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Sprite.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Sprite.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Animation.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Animation.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\TextureImport.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\TextureImport.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,28 +77,28 @@
     <ClInclude Include="src\SauCa\Renderer.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Entity.h">
+    <ClInclude Include="src\SauCa\Entity\Entity.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Entity2D.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Material.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Material.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\TileMap.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Shape.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Shape.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Sprite.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Sprite.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Animation.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Animation.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\TextureImport.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\TextureImport.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

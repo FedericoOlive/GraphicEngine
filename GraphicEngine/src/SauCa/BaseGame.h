@@ -1,7 +1,8 @@
-#pragma once
+#ifndef BASEGAME_H
+#define BASEGAME_H
+
 #include "Exports.h"
 #include <iostream>
-
 #include "Input.h"
 #include "CollisionManager.h"
 #include "Renderer.h"
@@ -19,3 +20,5 @@ public:
 	int Init();
 	
 };
+
+#endif
