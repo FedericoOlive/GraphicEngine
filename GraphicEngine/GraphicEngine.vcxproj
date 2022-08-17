@@ -180,12 +180,36 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Animation.cpp" />
+    <ClCompile Include="src\SauCa\CollisionManager.cpp" />
+    <ClCompile Include="src\SauCa\Entity.cpp" />
+    <ClCompile Include="src\SauCa\Entity2D.cpp" />
+    <ClCompile Include="src\SauCa\Material.cpp" />
+    <ClCompile Include="src\SauCa\Renderer.cpp" />
+    <ClCompile Include="src\SauCa\Shape.cpp" />
+    <ClCompile Include="src\SauCa\Sprite.cpp" />
+    <ClCompile Include="src\SauCa\Input.cpp" />
     <ClCompile Include="src\SauCa\BaseGame.cpp" />
+    <ClCompile Include="src\SauCa\TextureImport.cpp" />
+    <ClCompile Include="src\SauCa\TileMap.cpp" />
+    <ClCompile Include="src\SauCa\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Animation.h" />
+    <ClInclude Include="src\SauCa\CollisionManager.h" />
+    <ClInclude Include="src\SauCa\Entity.h" />
+    <ClInclude Include="src\SauCa\Entity2D.h" />
+    <ClInclude Include="src\SauCa\Material.h" />
+    <ClInclude Include="src\SauCa\Renderer.h" />
+    <ClInclude Include="src\SauCa\Shape.h" />
+    <ClInclude Include="src\SauCa\Sprite.h" />
+    <ClInclude Include="src\SauCa\Input.h" />
     <ClInclude Include="src\SauCa\Exports.h" />
     <ClInclude Include="src\SauCa\BaseGame.h" />
     <ClInclude Include="src\SauCa.h" />
+    <ClInclude Include="src\SauCa\TextureImport.h" />
+    <ClInclude Include="src\SauCa\TileMap.h" />
+    <ClInclude Include="src\SauCa\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
