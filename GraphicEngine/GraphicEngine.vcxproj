@@ -106,9 +106,12 @@
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)bin\$(Configuration)\" "$(SolutionDir)bin\$(Configuration)\" /e /h /y /s
-XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" /e /h /y /s</Command>
+      <Command>XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
+XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>MKDIR "$(SolutionDir)bin\$(configuration)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -130,10 +133,12 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)\" /e /h /y /s
-XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.lib" "$(SolutionDir)bin\$(Configuration)\" /e /h /y /s
-XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" /e /h /y /s</Command>
+      <Command>XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
+XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>MKDIR "$(SolutionDir)bin\$(configuration)</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
