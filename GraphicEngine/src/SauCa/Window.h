@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include "Exports.h"
+#include "glew.h"
 #include <glfw3.h>
 
 class SAUCA_API Window
