@@ -36,7 +36,7 @@ int BaseGame::Init()
             /* Poll for and process events */
             window->PollEvents();
         }
-
+        renderer->DestroyShader();
         window->TerminateLibrary();
 
         delete window;

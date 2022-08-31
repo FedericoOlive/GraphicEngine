@@ -45,7 +45,7 @@ void Renderer::CreateShader()
 
 void Renderer::DrawTriangle()
 {
-    ourShader.use();
+    shader->Use();
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
