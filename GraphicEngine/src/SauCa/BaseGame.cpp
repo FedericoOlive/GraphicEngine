@@ -20,12 +20,16 @@ int BaseGame::Init()
         /* Make the window's context current */
         window->AssignContext(window->GetWindow());
 
+        renderer->CreateShader();
+	
         /* Loop until the user closes the window */
         while (!window->WindowShouldClose(window->GetWindow()))
         {
             /* Render here */
             rend->Clear(GL_COLOR_BUFFER_BIT);
 
+            renderer->DrawTriangle();
+        	
             /* Swap front and back buffers */
             rend->SwapBuffers(window->GetWindow());
 
