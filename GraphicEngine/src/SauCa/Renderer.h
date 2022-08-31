@@ -3,12 +3,15 @@
 
 #include "Exports.h"
 #include "Window.h"
+#include "Shaders/Shader.h"
 
 class SAUCA_API Renderer
 {
 private:
 	unsigned int VBO;
 	unsigned int VAO;
+	Shader* shader;
+	
 public:
 	Renderer();
 	~Renderer();
