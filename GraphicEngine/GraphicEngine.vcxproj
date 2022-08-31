@@ -218,6 +218,10 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
     <ClInclude Include="src\SauCa\Window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\SauCa\Shaders\BasicShader.fs" />
+    <None Include="src\SauCa\Shaders\BasicShader.vs" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -108,4 +108,8 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="src\SauCa\Shaders\BasicShader.vs" />
+    <None Include="src\SauCa\Shaders\BasicShader.fs" />
+  </ItemGroup>
 </Project>
