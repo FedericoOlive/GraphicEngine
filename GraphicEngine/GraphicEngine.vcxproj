@@ -185,6 +185,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Shaders\Shader.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Animation.cpp" />
     <ClCompile Include="src\SauCa\CollisionManager.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity.cpp" />
@@ -200,6 +201,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Shaders\Shader.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Animation.h" />
     <ClInclude Include="src\SauCa\CollisionManager.h" />
     <ClInclude Include="src\SauCa\Entity\Entity.h" />
