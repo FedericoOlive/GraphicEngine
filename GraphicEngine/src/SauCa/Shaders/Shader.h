@@ -1,20 +1,19 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include "glew.h"
+#include "Exports.h"
 
 #include <string>
-#include <fstream>
-#include <sstream>
 #include <iostream>
 
-class Shader
+class SAUCA_API Shader
 {
 public:
-    unsigned int ID;
+    int ID;
+    Shader();
+    ~Shader();
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
-    Shader(const char* vertexPath, const char* fragmentPath);
     // activate the shader
     // ------------------------------------------------------------------------
     void Use();
@@ -25,9 +24,10 @@ public:
     void SetInt(const std::string& name, int value) const;
     // ------------------------------------------------------------------------
     void SetFloat(const std::string& name, float value) const;
-
-
+    
 private:
+    std::string vspath = "D:/Image Campus/4- Gráficos I/GraphicEngineSolution/GraphicEngine/vs.shader";
+    std::string fspath = "D:/Image Campus/4- Gráficos I/GraphicEngineSolution/GraphicEngine/fs.shader";
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
     void CheckCompileErrors(unsigned int shader, std::string type);

@@ -1,6 +1,9 @@
 #include "Shader.h"
+#include "glew.h"
+#include <fstream>
+#include <sstream>
 
-Shader::Shader(const char* vertexPath, const char* fragmentPath)
+Shader::Shader()
 {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
@@ -13,8 +16,8 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     try
     {
         // open files
-        vShaderFile.open(vertexPath, std::ios::in | std::ios::binary);
-        fShaderFile.open(fragmentPath, std::ios::in | std::ios::binary);
+        vShaderFile.open(vspath, std::ios::in | std::ios::binary);
+        fShaderFile.open(fspath, std::ios::in | std::ios::binary);
         std::stringstream vShaderStream, fShaderStream;
         // read file's buffer contents into streams
         vShaderStream << vShaderFile.rdbuf();
@@ -53,7 +56,9 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+	
 }
+Shader::~Shader() {}
 
 void Shader::Use()
 {

@@ -4,8 +4,6 @@ using namespace std;
 
 Renderer::Renderer()
 {
-    vspath = VSPATH;
-    fspath = FSPATH;
 }
 
 Renderer::~Renderer()
@@ -16,14 +14,8 @@ void Renderer::CreateShader()
 {
     // build and compile our shader program
     // ------------------------------------GraphicEngine/src/SauCa/Shaders/
-   try
-   {
-       shader = new Shader("C:/GraphicEngineSolution/GraphicEngine/vs.shader", "C:/GraphicEngineSolution/GraphicEngine/fs.shader"); // you can name your shader files however you like
-   }
-   catch (exception e) {
-       std::cout << e.what();
-   }
-    
+   
+    shader = new Shader(); // you can name your shader files however you like
 
     // set up vertex data (and buffer(s)) and configure vertex attributes
     // ------------------------------------------------------------------

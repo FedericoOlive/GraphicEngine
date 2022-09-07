@@ -6,8 +6,8 @@
 
 int BaseGame::Init()
 {
-        Window* window = new Window();
-        Renderer* rend = new Renderer();
+        window = new Window();
+        renderer = new Renderer();
 
         /* Initialize the library */
         window->InitLibrary();
@@ -29,12 +29,12 @@ int BaseGame::Init()
         while (!window->WindowShouldClose(window->GetWindow()))
         {
             /* Render here */
-            rend->Clear(GL_COLOR_BUFFER_BIT);
+            renderer->Clear(GL_COLOR_BUFFER_BIT);
 
             renderer->DrawTriangle();
         	
             /* Swap front and back buffers */
-            rend->SwapBuffers(window->GetWindow());
+            renderer->SwapBuffers(window->GetWindow());
 
             /* Poll for and process events */
             window->PollEvents();
@@ -43,6 +43,6 @@ int BaseGame::Init()
         window->TerminateLibrary();
 
         delete window;
-        delete rend;
+        delete renderer;
         return 0;
 }

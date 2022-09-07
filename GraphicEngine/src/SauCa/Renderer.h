@@ -1,15 +1,13 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
-#include "Exports.h"
-#include "Window.h"
 #include "Shaders/Shader.h"
+#include "Window.h"
 
 class SAUCA_API Renderer
 {
 private:
-	std::string vspath;
-	std::string fspath;
+	
 	unsigned int VBO;
 	unsigned int VAO;
 	Shader* shader;
