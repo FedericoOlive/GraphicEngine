@@ -20,6 +20,9 @@ int BaseGame::Init()
         /* Make the window's context current */
         window->AssignContext(window->GetWindow());
 
+        glewExperimental = GL_TRUE;
+        glewInit();
+
         renderer->CreateShader();
 	
         /* Loop until the user closes the window */

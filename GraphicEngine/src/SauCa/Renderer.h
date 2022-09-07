@@ -8,10 +8,11 @@
 class SAUCA_API Renderer
 {
 private:
+	std::string vspath;
+	std::string fspath;
 	unsigned int VBO;
 	unsigned int VAO;
 	Shader* shader;
-	
 public:
 	Renderer();
 	~Renderer();
