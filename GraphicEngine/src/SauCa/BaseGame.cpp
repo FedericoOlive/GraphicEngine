@@ -6,6 +6,22 @@
 
 #include "Entity/Entity2D/Triangle.h"
 
+BaseGame::BaseGame()
+{
+    input = nullptr;
+    window = nullptr;
+    renderer = nullptr;
+    collisionManager = nullptr;	
+}
+
+BaseGame::~BaseGame()
+{
+    //delete input;
+    //delete window;
+    //delete renderer;
+    //delete collisionManager;
+}
+
 int BaseGame::Init()
 {
     window = new Window();
@@ -26,17 +42,17 @@ int BaseGame::Init()
     glewInit();
 
     renderer->CreateShader();
-    Triangle* triangle = new Triangle();
+    //Triangle* triangle = new Triangle();
     /* Loop until the user closes the window */
-    renderer->BindVertex(triangle->vertices, triangle->size);
+    //renderer->BindVertex(triangle->vertices, triangle->size);
 	
     while (!window->WindowShouldClose(window->GetWindow()))
     {
         /* Render here */
         renderer->Clear(GL_COLOR_BUFFER_BIT);
         //triangle->Draw();
-        //renderer->DrawTriangle();
-        Draw(triangle);
+        Update();
+        //Draw(triangle);
         renderer->SwapBuffers(window->GetWindow());
 
         /* Poll for and process events */

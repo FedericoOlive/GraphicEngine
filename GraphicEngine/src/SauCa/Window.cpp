@@ -2,10 +2,12 @@
 
 Window::Window()
 {
+    window = nullptr;
 }
 
 Window::~Window()
 {
+    //delete window;
 }
 
 int Window::InitLibrary()

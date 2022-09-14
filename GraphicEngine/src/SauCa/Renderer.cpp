@@ -6,7 +6,7 @@ Renderer::Renderer()
 {
     VBO = 0;
     VAO = 0;
-    shader = NULL;
+    shader = nullptr;
 }
 
 Renderer::~Renderer()

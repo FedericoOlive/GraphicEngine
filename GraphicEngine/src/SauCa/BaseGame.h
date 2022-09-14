@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Entity/Entity2D/Triangle.h"
+
 using namespace std;
 
 class SAUCA_API BaseGame
@@ -18,7 +19,10 @@ private:
 	Renderer* renderer;
 	CollisionManager* collisionManager;
 public:
+	BaseGame();
+	~BaseGame();
 	int Init();
+	virtual void Update() = 0;
 	void Draw(Triangle* triangle);
 };
 
