@@ -8,7 +8,6 @@ public:
 	Triangle();
 	~Triangle();
 	float* vertices;
-	void Draw();
 };
 
 #endif

@@ -34,8 +34,9 @@ int BaseGame::Init()
     {
         /* Render here */
         renderer->Clear(GL_COLOR_BUFFER_BIT);
-        triangle->Draw();
-        renderer->DrawTriangle();
+        //triangle->Draw();
+        //renderer->DrawTriangle();
+        Draw(triangle);
         renderer->SwapBuffers(window->GetWindow());
 
         /* Poll for and process events */
@@ -47,4 +48,10 @@ int BaseGame::Init()
     delete window;
     delete renderer;
     return 0;
+}
+
+void BaseGame::Draw(Triangle* triangle)
+{
+    renderer->BindVertex(triangle->vertices, triangle->size);
+    renderer->DrawTriangle();
 }

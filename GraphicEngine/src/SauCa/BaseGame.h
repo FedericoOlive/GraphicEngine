@@ -7,6 +7,7 @@
 #include "CollisionManager.h"
 #include "Renderer.h"
 #include "Window.h"
+#include "Entity/Entity2D/Triangle.h"
 using namespace std;
 
 class SAUCA_API BaseGame
@@ -18,6 +19,7 @@ private:
 	CollisionManager* collisionManager;
 public:
 	int Init();
+	void Draw(Triangle* triangle);
 };
 
 #endif

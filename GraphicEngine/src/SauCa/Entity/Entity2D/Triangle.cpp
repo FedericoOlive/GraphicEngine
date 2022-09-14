@@ -16,8 +16,3 @@ Triangle::~Triangle()
 {
 	delete vertices;
 }
-
-void Triangle::Draw()
-{
-	
-}
