@@ -94,7 +94,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;SAUCA_EXPORTWIN32;VSPATH=R"($(ProjectDir)vs.shader)";FSPATH=R"($(ProjectDir)fs.shader)";_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;SAUCA_EXPORTWIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)libs\include\GLEW;$(SolutionDir)libs\include\GLFW;$(ProjectDir)src\SauCa;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -102,7 +102,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(ProjectDir)src\SauCa;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(ProjectDir)src\SauCa;$(SolutionDir)GraphicEngine;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -119,7 +119,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;SAUCA_EXPORTWIN32;VSPATH="$(ProjectDir)vs.shader";FSPATH="$(ProjectDir)fs.shader";NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLEW_STATIC;SAUCA_EXPORTWIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(SolutionDir)libs\include\GLEW;$(SolutionDir)libs\include\GLFW;$(ProjectDir)src\SauCa;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -129,7 +129,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(ProjectDir)src\SauCa;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(ProjectDir)src\SauCa;%(AdditionalLibraryDirectories);$(SolutionDir)GraphicEngine\</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -152,7 +152,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\glfw;%(AdditionalLibraryDirectories);$(SolutionDir)GraphicEngine\</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -176,7 +176,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\glfw;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)libs\glfw;%(AdditionalLibraryDirectories);$(SolutionDir)GraphicEngine\</AdditionalLibraryDirectories>
       <AdditionalDependencies>glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
@@ -199,6 +199,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\Entity2D\TextureImport.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp" />
     <ClCompile Include="src\SauCa\Window.cpp" />
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SauCa\Shaders\Shader.h" />
@@ -217,6 +218,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Entity\Entity2D\TextureImport.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
     <ClInclude Include="src\SauCa\Window.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Triangle.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SauCa\Shaders\BasicShader.fs" />

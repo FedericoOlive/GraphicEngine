@@ -4,45 +4,47 @@
 
 #include <glfw3.h>
 
+#include "Entity/Entity2D/Triangle.h"
+
 int BaseGame::Init()
 {
-        window = new Window();
-        renderer = new Renderer();
+    window = new Window();
+    renderer = new Renderer();
 
-        /* Initialize the library */
-        window->InitLibrary();
+    /* Initialize the library */
+    window->InitLibrary();
 
-        /* Create a windowed mode window and its OpenGL context */
-        window->CreateWindow();
-        
-        window->CheckWindow(window->GetWindow());
+    /* Create a windowed mode window and its OpenGL context */
+    window->CreateWindow();
 
-        /* Make the window's context current */
-        window->AssignContext(window->GetWindow());
+    window->CheckWindow(window->GetWindow());
 
-        glewExperimental = GL_TRUE;
-        glewInit();
+    /* Make the window's context current */
+    window->AssignContext(window->GetWindow());
 
-        renderer->CreateShader();
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+    renderer->CreateShader();
+    Triangle* triangle = new Triangle();
+    /* Loop until the user closes the window */
+    renderer->BindVertex(triangle->vertices, triangle->size);
 	
-        /* Loop until the user closes the window */
-        while (!window->WindowShouldClose(window->GetWindow()))
-        {
-            /* Render here */
-            renderer->Clear(GL_COLOR_BUFFER_BIT);
+    while (!window->WindowShouldClose(window->GetWindow()))
+    {
+        /* Render here */
+        renderer->Clear(GL_COLOR_BUFFER_BIT);
+        triangle->Draw();
+        renderer->DrawTriangle();
+        renderer->SwapBuffers(window->GetWindow());
 
-            renderer->DrawTriangle();
-        	
-            /* Swap front and back buffers */
-            renderer->SwapBuffers(window->GetWindow());
+        /* Poll for and process events */
+        window->PollEvents();
+    }
+    renderer->DestroyShader();
+    window->TerminateLibrary();
 
-            /* Poll for and process events */
-            window->PollEvents();
-        }
-        renderer->DestroyShader();
-        window->TerminateLibrary();
-
-        delete window;
-        delete renderer;
-        return 0;
+    delete window;
+    delete renderer;
+    return 0;
 }

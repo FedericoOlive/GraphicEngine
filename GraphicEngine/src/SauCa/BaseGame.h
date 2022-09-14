@@ -18,7 +18,6 @@ private:
 	CollisionManager* collisionManager;
 public:
 	int Init();
-	
 };
 
 #endif

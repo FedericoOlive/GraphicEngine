@@ -7,7 +7,9 @@
 
 class SAUCA_API Entity2D : public Entity
 {
+public:
 	Material* material;
+	Entity2D();
 };
 
 #endif

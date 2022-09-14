@@ -11,6 +11,7 @@ private:
 	unsigned int VBO;
 	unsigned int VAO;
 	Shader* shader;
+
 public:
 	Renderer();
 	~Renderer();
@@ -19,6 +20,8 @@ public:
 	void CreateShader();
 	void DrawTriangle();
 	void DestroyShader();
+	void Draw();
+	void BindVertex(float* vertices, int size);
 };
 
 #endif
