@@ -32,6 +32,10 @@ Shader::Shader()
     catch (std::ifstream::failure& e)
     {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << e.what() << std::endl;
+        std::cout << "Using Default Shader..." << std::endl;
+    	
+        vertexCode = vsDefaultSource;
+        fragmentCode = fsDefaultSource;    	
     }
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();

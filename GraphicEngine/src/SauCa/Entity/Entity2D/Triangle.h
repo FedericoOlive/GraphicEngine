@@ -7,7 +7,6 @@ class SAUCA_API Triangle : public Shape
 public:
 	Triangle();
 	~Triangle();
-	float* vertices;
 };
 
 #endif

@@ -8,6 +8,8 @@ class SAUCA_API Shape : public Entity2D
 public:
 	Shape();
 	int size;
+	float* vertices;
+	int* indices;
 protected:
 	
 };

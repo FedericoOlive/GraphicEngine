@@ -16,8 +16,6 @@ Renderer::~Renderer()
 
 void Renderer::CreateShader()
 {
-    // build and compile our shader program
-   
     shader = new Shader(); // you can name your shader files however you like    
 }
 

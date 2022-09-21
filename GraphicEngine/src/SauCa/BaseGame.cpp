@@ -1,7 +1,6 @@
 #include "BaseGame.h"
 #include "Window.h"
 #include "Renderer.h"
-
 #include <glfw3.h>
 
 #include "Entity/Entity2D/Triangle.h"
