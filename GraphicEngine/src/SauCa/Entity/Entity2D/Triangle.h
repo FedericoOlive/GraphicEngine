@@ -5,7 +5,7 @@
 class SAUCA_API Triangle : public Shape
 {
 public:
-	Triangle();
+	Triangle(Renderer* renderer);
 	~Triangle();
 };
 

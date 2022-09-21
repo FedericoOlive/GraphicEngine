@@ -5,9 +5,12 @@
 
 class SAUCA_API Shape : public Entity2D
 {
+
 public:
 	Shape();
-	int size;
+	int sizeVertices;
+	int sizeIndices;
+	
 	float* vertices;
 	int* indices;
 protected:

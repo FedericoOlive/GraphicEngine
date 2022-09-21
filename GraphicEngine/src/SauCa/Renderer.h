@@ -10,9 +10,7 @@
 class SAUCA_API Renderer
 {
 private:
-	
-	unsigned int VBO;
-	unsigned int VAO;
+
 	Shader* shader;
 
 public:
@@ -21,10 +19,10 @@ public:
 	void Clear(GLbitfield field);
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
-	void DrawTriangle();
-	void DestroyShader();
+	void DrawTriangle(int sizeIndices, unsigned int& VAO);
 	void Draw();
-	void BindVertex(float* vertices, int size);
+	void BindVertex(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+	void UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 };
 
 #endif

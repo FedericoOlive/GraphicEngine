@@ -18,12 +18,19 @@ private:
 	Window* window;
 	Renderer* renderer;
 	CollisionManager* collisionManager;
+	void BeforeDraw();
+	void AfterDraw();
 public:
 	BaseGame();
 	~BaseGame();
 	int Init();
+	virtual void Initialize() = 0;
+	virtual void Input() = 0;
 	virtual void Update() = 0;
-	void Draw(Triangle* triangle);
+	virtual void Draw() = 0;
+	virtual void DeInitialize() = 0;
+	void DrawShape(Triangle* triangle);
+	Triangle* CreateTriangle();
 };
 
 #endif

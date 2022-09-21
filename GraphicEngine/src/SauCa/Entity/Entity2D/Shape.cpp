@@ -2,5 +2,5 @@
 
 Shape::Shape()
 {
-	size = 0;
+
 }

@@ -1,10 +1,26 @@
 #include "Game.h"
-void Game::CreateTriangle()
+
+void Game::Initialize()
 {
-	triangle = new Triangle();
+	triangle = CreateTriangle();
+
+}
+void Game::Input()
+{
+	
+}
+
+void Game::Draw()
+{
+	DrawShape(triangle);
+}
+
+void Game::DeInitialize()
+{
+	
 }
 
 void Game::Update()
 {
-	Draw(triangle);
+	
 }

@@ -4,6 +4,15 @@
 #include <glfw3.h>
 
 #include "Entity/Entity2D/Triangle.h"
+void BaseGame::BeforeDraw()
+{
+    renderer->Clear(GL_COLOR_BUFFER_BIT);
+}
+
+void BaseGame::AfterDraw()
+{
+    renderer->SwapBuffers(window->GetWindow());
+}
 
 BaseGame::BaseGame()
 {
@@ -25,39 +34,30 @@ int BaseGame::Init()
 {
     window = new Window();
     renderer = new Renderer();
-
-    /* Initialize the library */
+    
     window->InitLibrary();
-
-    /* Create a windowed mode window and its OpenGL context */
     window->CreateWindow();
-
     window->CheckWindow(window->GetWindow());
-
-    /* Make the window's context current */
     window->AssignContext(window->GetWindow());
 
     glewExperimental = GL_TRUE;
     glewInit();
-
     renderer->CreateShader();
-    //Triangle* triangle = new Triangle();
-    /* Loop until the user closes the window */
-    //renderer->BindVertex(triangle->vertices, triangle->size);
 	
+    Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
-        /* Render here */
-        renderer->Clear(GL_COLOR_BUFFER_BIT);
-        //triangle->Draw();
+        Input();
         Update();
-        //Draw(triangle);
-        renderer->SwapBuffers(window->GetWindow());
 
-        /* Poll for and process events */
+        BeforeDraw();
+        Draw();
+        AfterDraw();
+    	
         window->PollEvents();
     }
-    renderer->DestroyShader();
+    DeInitialize();
+    
     window->TerminateLibrary();
 
     delete window;
@@ -65,8 +65,13 @@ int BaseGame::Init()
     return 0;
 }
 
-void BaseGame::Draw(Triangle* triangle)
+void BaseGame::DrawShape(Triangle* triangle)
 {
-    renderer->BindVertex(triangle->vertices, triangle->size);
-    renderer->DrawTriangle();
+    renderer->DrawTriangle(triangle->sizeIndices, triangle->VAO);
+}
+
+Triangle* BaseGame::CreateTriangle()
+{
+    Triangle* triangle = new Triangle(renderer);
+    return triangle;
 }

@@ -7,8 +7,11 @@ class Game : public BaseGame
 private:
 	Triangle* triangle;
 public:
-	void CreateTriangle();
-	void Update() override;
+	void Initialize()override;
+	void Input() override;
+	void Update()override;
+	void Draw()override;
+	void DeInitialize() override;
 };
 
 #endif

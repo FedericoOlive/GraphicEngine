@@ -6,7 +6,12 @@
 
 class SAUCA_API Entity
 {
+protected:
+	Renderer* renderer;
 public:
+	unsigned int VAO;
+	unsigned int VBO;
+	unsigned int EBO;
 	Entity();
 };
 
