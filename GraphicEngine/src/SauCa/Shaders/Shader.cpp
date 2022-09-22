@@ -3,7 +3,25 @@
 #include <fstream>
 #include <sstream>
 
-Shader::Shader()
+Shader::Shader(bool isPrimitive)
+{
+	if(isPrimitive)
+        CreateShapeShader();
+    else
+        CreateTextureShader();
+}
+
+void Shader::CreateShapeShader()
+{
+    CreateShader(vspath, fspath);
+}
+
+void Shader::CreateTextureShader()
+{
+    CreateShader(vspathTexture, fspathTexture);
+}
+
+void Shader::CreateShader(std::string vsPath, std::string fsPath)
 {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
@@ -12,12 +30,12 @@ Shader::Shader()
     std::ifstream fShaderFile;
     // ensure ifstream objects can throw exceptions:
     vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);	
+    fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try
     {
         // open files
-        vShaderFile.open(vspath, std::ios::in | std::ios::binary);
-        fShaderFile.open(fspath, std::ios::in | std::ios::binary);
+        vShaderFile.open(vsPath, std::ios::in | std::ios::binary);
+        fShaderFile.open(fsPath, std::ios::in | std::ios::binary);
         std::stringstream vShaderStream, fShaderStream;
         // read file's buffer contents into streams
         vShaderStream << vShaderFile.rdbuf();
@@ -33,9 +51,9 @@ Shader::Shader()
     {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << e.what() << std::endl;
         std::cout << "Using Default Shader..." << std::endl;
-    	
+
         vertexCode = vsDefaultSource;
-        fragmentCode = fsDefaultSource;    	
+        fragmentCode = fsDefaultSource;
     }
     const char* vShaderCode = vertexCode.c_str();
     const char* fShaderCode = fragmentCode.c_str();
@@ -60,8 +78,8 @@ Shader::Shader()
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
-	
 }
+
 Shader::~Shader() {}
 
 void Shader::Use()

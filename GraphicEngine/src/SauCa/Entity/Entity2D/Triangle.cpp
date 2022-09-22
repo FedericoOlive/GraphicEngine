@@ -16,6 +16,7 @@ Triangle::Triangle(Renderer* renderer)
 	indices = new int[sizeIndices] {0, 1, 2};
 
 	renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
+	renderer->SetShapeAttributes();
 }
 
 Triangle::~Triangle()
@@ -23,4 +24,9 @@ Triangle::~Triangle()
 	renderer->UnBindVertex(VAO, VBO, EBO);
 	delete vertices;
 	delete indices;
+}
+
+void Triangle::Draw()
+{
+	renderer->DrawShape(sizeIndices, VAO);
 }

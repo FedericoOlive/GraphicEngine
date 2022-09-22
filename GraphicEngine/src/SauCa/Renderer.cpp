@@ -14,12 +14,25 @@ Renderer::~Renderer()
 
 void Renderer::CreateShader()
 {
-    shader = new Shader(); // you can name your shader files however you like    
+    shader = new Shader(true); // you can name your shader files however you like
+    shaderTexture = new Shader(false); // you can name your shader files however you like
 }
 
-void Renderer::DrawTriangle(int sizeIndices, unsigned int& VAO)
+void Renderer::DrawShape(int sizeIndices, unsigned int& VAO)
 {
     shader->Use();
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, 0);
+}
+
+void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO)
+{
+    //glActiveTexture(GL_TEXTURE0);
+    shaderTexture->Use();
+    int uniform = glGetUniformLocation(shaderTexture->ID, "ourTexture");
+    glUniform1i(uniform, 0); // Todo: Ver porque 0
+    //shaderTexture->SetFloat("ourTexture", 1);
+	
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, 0);
 }
@@ -50,19 +63,31 @@ void Renderer::BindVertex(float* vertices, int sizeVertices, int* indices, int s
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float)* sizeVertices, vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertices, vertices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * sizeIndices, indices, GL_STATIC_DRAW);
-	
+}
+
+void Renderer::SetShapeAttributes()
+{
     // position attribute
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     // color attribute
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+}
 
-    // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-    // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-    // glBindVertexArray(0);	
+void Renderer::SetSpriteAttributes()
+{
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
 }

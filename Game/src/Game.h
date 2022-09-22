@@ -6,6 +6,7 @@ class Game : public BaseGame
 {
 private:
 	Triangle* triangle;
+	Sprite* sprite;
 public:
 	void Initialize()override;
 	void Input() override;

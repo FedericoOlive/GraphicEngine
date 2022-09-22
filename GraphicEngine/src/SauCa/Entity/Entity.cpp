@@ -6,3 +6,7 @@ Entity::Entity()
 	VBO = 0;
 	EBO = 0;
 }
+
+void Entity::BindVertex()
+{
+}

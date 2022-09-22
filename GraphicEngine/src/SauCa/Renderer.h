@@ -10,8 +10,8 @@
 class SAUCA_API Renderer
 {
 private:
-
 	Shader* shader;
+	Shader* shaderTexture;
 
 public:
 	Renderer();
@@ -19,10 +19,12 @@ public:
 	void Clear(GLbitfield field);
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
-	void DrawTriangle(int sizeIndices, unsigned int& VAO);
-	void Draw();
+	void DrawShape(int sizeIndices, unsigned int& VAO);
+	void DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO);
 	void BindVertex(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 	void UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+	void SetShapeAttributes();
+	void SetSpriteAttributes();
 };
 
 #endif

@@ -5,13 +5,11 @@
 #include <string>
 #include <iostream>
 
-
-
 class SAUCA_API Shader
 {
 public:
     int ID;
-    Shader();
+    Shader(bool isPrimitive);
     ~Shader();
     // constructor generates the shader on the fly
     // ------------------------------------------------------------------------
@@ -26,10 +24,13 @@ public:
     // ------------------------------------------------------------------------
     void SetFloat(const std::string& name, float value) const;
     //VSPATH = R"($(SolutionDir)Shader\vs.shader)"
-    //    FSPATH = R"($(SolutionDir)Shader\fs.shader)"
+    //FSPATH = R"($(SolutionDir)Shader\fs.shader)"
 private:
     const std::string vspath = "Shader/vs.shader";
     const std::string fspath = "Shader/fs.shader";
+	
+    const std::string vspathTexture = "Shader/vsTexture.shader";
+    const std::string fspathTexture = "Shader/fsTexture.shader";
 	
     const std::string vsDefaultSource =
         "#version 330 core\n"
@@ -51,6 +52,9 @@ private:
         "}\0";
 	 
 
+    void CreateShapeShader();
+    void CreateTextureShader();
+    void CreateShader(std::string vsPath, std::string fsPath);
     // utility function for checking shader compilation/linking errors.
     // ------------------------------------------------------------------------
     void CheckCompileErrors(unsigned int shader, std::string type);

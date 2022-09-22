@@ -9,6 +9,13 @@ class SAUCA_API Entity2D : public Entity
 {
 public:
 	Material* material;
+
+	float* vertices;
+	int sizeVertices;
+	
+	int* indices;
+	int sizeIndices;
+	
 	Entity2D();
 };
 

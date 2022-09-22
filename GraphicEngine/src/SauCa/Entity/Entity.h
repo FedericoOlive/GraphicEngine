@@ -13,6 +13,7 @@ public:
 	unsigned int VBO;
 	unsigned int EBO;
 	Entity();
+	void BindVertex();
 };
 
 #endif

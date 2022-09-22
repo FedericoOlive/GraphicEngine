@@ -65,13 +65,14 @@ int BaseGame::Init()
     return 0;
 }
 
-void BaseGame::DrawShape(Triangle* triangle)
-{
-    renderer->DrawTriangle(triangle->sizeIndices, triangle->VAO);
-}
-
 Triangle* BaseGame::CreateTriangle()
 {
     Triangle* triangle = new Triangle(renderer);
     return triangle;
+}
+
+Sprite* BaseGame::CreateSprite(Texture* texture)
+{
+    Sprite* sprite = new Sprite(texture, renderer);
+    return sprite;
 }

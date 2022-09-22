@@ -185,6 +185,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Texture.cpp" />
     <ClCompile Include="src\SauCa\Shaders\Shader.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Animation.cpp" />
     <ClCompile Include="src\SauCa\CollisionManager.cpp" />
@@ -196,12 +197,13 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\Entity2D\Sprite.cpp" />
     <ClCompile Include="src\SauCa\Input.cpp" />
     <ClCompile Include="src\SauCa\BaseGame.cpp" />
-    <ClCompile Include="src\SauCa\Entity\Entity2D\TextureImport.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp" />
     <ClCompile Include="src\SauCa\Window.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Entity\Entity2D\stbi.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Texture.h" />
     <ClInclude Include="src\SauCa\Shaders\Shader.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Animation.h" />
     <ClInclude Include="src\SauCa\CollisionManager.h" />
@@ -215,7 +217,6 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Exports.h" />
     <ClInclude Include="src\SauCa\BaseGame.h" />
     <ClInclude Include="src\SauCa.h" />
-    <ClInclude Include="src\SauCa\Entity\Entity2D\TextureImport.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
     <ClInclude Include="src\SauCa\Window.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Triangle.h" />

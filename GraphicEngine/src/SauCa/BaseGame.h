@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Window.h"
 #include "Entity/Entity2D/Triangle.h"
+#include "Entity/Entity2D/Sprite.h"
 
 using namespace std;
 
@@ -29,8 +30,8 @@ public:
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void DeInitialize() = 0;
-	void DrawShape(Triangle* triangle);
 	Triangle* CreateTriangle();
+	Sprite* CreateSprite(Texture* texture);
 };
 
 #endif
