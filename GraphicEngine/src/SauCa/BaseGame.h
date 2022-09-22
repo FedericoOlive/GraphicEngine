@@ -9,6 +9,7 @@
 #include "Window.h"
 #include "Entity/Entity2D/Triangle.h"
 #include "Entity/Entity2D/Sprite.h"
+#include "Entity/Entity2D/Quad.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ public:
 	virtual void Draw() = 0;
 	virtual void DeInitialize() = 0;
 	Triangle* CreateTriangle();
+	Quad* CreateQuad();
 	Sprite* CreateSprite(Texture* texture);
 };
 

@@ -30,7 +30,7 @@ void Sprite::Draw()
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
-    renderer->DrawSprite(texture, sizeIndices, VAO);
+    renderer->DrawSprite(texture, sizeIndices, VAO, colorTint);
 }
 
 Sprite::~Sprite()

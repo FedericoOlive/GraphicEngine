@@ -7,6 +7,7 @@ Entity::Entity()
 	EBO = 0;
 }
 
-void Entity::BindVertex()
+void Entity::SetColorTint(float r, float g, float b)
 {
+	colorTint = glm::vec4(r, g, b, 1.0f);
 }

@@ -71,6 +71,12 @@ Triangle* BaseGame::CreateTriangle()
     return triangle;
 }
 
+Quad* BaseGame::CreateQuad()
+{
+    Quad* quad = new Quad(renderer);
+    return quad;
+}
+
 Sprite* BaseGame::CreateSprite(Texture* texture)
 {
     Sprite* sprite = new Sprite(texture, renderer);

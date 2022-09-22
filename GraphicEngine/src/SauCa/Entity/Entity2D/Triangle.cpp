@@ -25,8 +25,3 @@ Triangle::~Triangle()
 	delete vertices;
 	delete indices;
 }
-
-void Triangle::Draw()
-{
-	renderer->DrawShape(sizeIndices, VAO);
-}

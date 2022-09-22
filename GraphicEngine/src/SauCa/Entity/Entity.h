@@ -12,8 +12,9 @@ public:
 	unsigned int VAO;
 	unsigned int VBO;
 	unsigned int EBO;
+	glm::vec4 colorTint;
 	Entity();
-	void BindVertex();
+	void SetColorTint(float r, float g, float b);
 };
 
 #endif

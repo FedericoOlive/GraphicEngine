@@ -25,15 +25,15 @@ void Renderer::DrawShape(int sizeIndices, unsigned int& VAO)
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, 0);
 }
 
-void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO)
+void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color)
 {
-    //glActiveTexture(GL_TEXTURE0);
     shaderTexture->Use();
-    int uniform = glGetUniformLocation(shaderTexture->ID, "ourTexture");
-    glUniform1i(uniform, 0); // Todo: Ver porque 0
-    //shaderTexture->SetFloat("ourTexture", 1);
-	
-    glBindVertexArray(VAO);
+    int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
+    int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
+    glUniform1f(locationTexture, (GLfloat)textureID);
+    glUniform4fv(locationColor, 1, value_ptr(color));
+
+	glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, 0);
 }
 
