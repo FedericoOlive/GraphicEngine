@@ -2,10 +2,11 @@
 #define RENDERER_H
 
 #include "Shaders/Shader.h"
+#include "glew.h"
 #include "Window.h"
-#include "../../../libs/glm/glm/glm.hpp"
-#include "../../../libs/glm/glm/gtc/matrix_transform.hpp"
-#include "../../../libs/glm/glm/gtc/type_ptr.hpp"
+#include "glm/glm/glm.hpp"
+#include "glm/glm/gtc/matrix_transform.hpp"
+#include "glm/glm/gtc/type_ptr.hpp"
 
 class SAUCA_API Renderer
 {

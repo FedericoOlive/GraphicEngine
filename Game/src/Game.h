@@ -9,6 +9,8 @@ private:
 	Quad* quad;
 	Sprite* sprite;
 	Sprite* sprite2;
+	Sprite* sprite3;
+	Sprite* sprite4;
 	int indexDraw = 0;
 public:
 	void Initialize()override;

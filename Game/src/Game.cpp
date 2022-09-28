@@ -11,6 +11,14 @@ void Game::Initialize()
 	sprite = CreateSprite(texture);
 	Texture* texture2 = new Texture("res/sprite2.png");
 	sprite2 = CreateSprite(texture2);
+	Texture* texture3 = new Texture("res/sprite3.png");
+	sprite3 = CreateSprite(texture3);
+	Texture* texture4 = new Texture("res/sprite4.png");
+	sprite4 = CreateSprite(texture4);
+
+	sprite->SetColorTint(1, 1, 1);
+	sprite2->SetColorTint(1, 1, 1);
+	sprite3->SetColorTint(1, 1, 1);
 	
 }
 void Game::Input()
@@ -22,22 +30,26 @@ void Game::Update()
 {
 	indexDraw++;
 	
-	sprite->SetColorTint(GetRandom(), GetRandom(), GetRandom());
-	sprite2->SetColorTint(GetRandom(), GetRandom(), GetRandom());
+	sprite4->SetColorTint(GetRandom(), GetRandom(), GetRandom());
 }
 
 void Game::Draw()
 {
-	if (indexDraw > 200)
+	if (indexDraw > 40000)
 		indexDraw = 0;
-	else if (indexDraw > 150)
-		triangle->Draw();
-	else if (indexDraw > 100)
+	else if (indexDraw > 25000)
+		sprite4->Draw();
+	else if (indexDraw > 20000)
+		sprite3->Draw();
+	else if (indexDraw > 15000)
 		sprite2->Draw();
-	else if (indexDraw > 50)
+	else if (indexDraw > 10000)
+		sprite->Draw();
+	else if (indexDraw > 5000)
 		quad->Draw();
 	else if (indexDraw > 0)
-		sprite->Draw();
+		triangle->Draw();
+		
 }
 float Game::GetRandom()
 {

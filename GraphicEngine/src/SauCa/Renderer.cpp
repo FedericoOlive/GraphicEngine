@@ -14,6 +14,8 @@ Renderer::~Renderer()
 
 void Renderer::CreateShader()
 {
+    glewExperimental = GL_TRUE;
+    glewInit();
     shader = new Shader(true); // you can name your shader files however you like
     shaderTexture = new Shader(false); // you can name your shader files however you like
 }
@@ -22,7 +24,7 @@ void Renderer::DrawShape(int sizeIndices, unsigned int& VAO)
 {
     shader->Use();
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color)
@@ -34,7 +36,7 @@ void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int&
     glUniform4fv(locationColor, 1, value_ptr(color));
 
 	glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::Clear(GLbitfield field)
@@ -45,13 +47,6 @@ void Renderer::Clear(GLbitfield field)
 void Renderer::SwapBuffers(GLFWwindow* window)
 {
 	glfwSwapBuffers(window);
-}
-
-void Renderer::UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
-{
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
 }
 
 void Renderer::BindVertex(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
@@ -67,6 +62,13 @@ void Renderer::BindVertex(float* vertices, int sizeVertices, int* indices, int s
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * sizeIndices, indices, GL_STATIC_DRAW);
+}
+
+void Renderer::UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+{
+    glDeleteVertexArrays(1, &VAO);
+    glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &EBO);
 }
 
 void Renderer::SetShapeAttributes()
