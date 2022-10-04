@@ -9,7 +9,7 @@ void Game::Initialize()
 
 	triangle->SetScale(0.5f, 0.5f, 0.5f);
 	quad->SetScale(0.5f, 0.5f, 0.5f);
-	triangle->SetPosition(-1.2f, 1.3f, 0.0f);
+	triangle->SetPosition(0.0f, 0.0f, 0.0f);
 	quad->SetPosition(1.2f, 1.3f, 0.0f);
 
 	
@@ -26,6 +26,7 @@ void Game::Initialize()
 	sprite2->SetColorTint(1, 1, 1);
 	sprite2->SetScale(0.5f, 0.5f, 0.5f);
 	sprite2->SetPosition(-1.2f, -1.3f, 0.0f);
+	sprite3->SetPosition(-0.3f, 0.3f, 0.0f);
 	sprite3->SetColorTint(1, 1, 1);
 	
 }
@@ -43,7 +44,7 @@ void Game::Update()
 	quad->SetRotation(0, indexDraw/5, 0);
 	sprite1->SetRotation(0, 0, indexDraw/5);
 	sprite2->SetRotation(0, 0, 0);
-	sprite3->SetRotation(0, 0, 0);
+	sprite3->SetRotation(0, 0, indexDraw / 20);
 }
 
 void Game::Draw()

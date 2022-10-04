@@ -18,7 +18,7 @@ int Window::InitLibrary()
 
 void Window::CreateWindow()
 {
-    window = glfwCreateWindow(1280, 720, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(800, 800, "Hello World", NULL, NULL);
 }
 
 int Window::CheckWindow(GLFWwindow* window)
