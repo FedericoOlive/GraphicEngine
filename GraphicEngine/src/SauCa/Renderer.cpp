@@ -20,20 +20,24 @@ void Renderer::CreateShader()
     shaderTexture = new Shader(false); // you can name your shader files however you like
 }
 
-void Renderer::DrawShape(int sizeIndices, unsigned int& VAO)
+void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::mat4 transform)
 {
     shader->Use();
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
 }
 
-void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color)
+void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color, glm::mat4 transform)
 {
     shaderTexture->Use();
     int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
     int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
     glUniform1f(locationTexture, (GLfloat)textureID);
     glUniform4fv(locationColor, 1, value_ptr(color));
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
 
 	glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
