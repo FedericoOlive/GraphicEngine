@@ -7,10 +7,9 @@ class Game : public BaseGame
 private:
 	Triangle* triangle;
 	Quad* quad;
-	Sprite* sprite;
+	Sprite* sprite1;
 	Sprite* sprite2;
 	Sprite* sprite3;
-	Sprite* sprite4;
 	int indexDraw = 0;
 public:
 	void Initialize()override;
