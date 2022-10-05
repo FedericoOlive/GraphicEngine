@@ -14,30 +14,40 @@ Renderer::~Renderer()
 
 void Renderer::CreateShader()
 {
+    viewMatrix = glm::mat4(1.0f);
+    projectionMatrix = glm::mat4(1.0f);
     glewExperimental = GL_TRUE;
     glewInit();
     shader = new Shader(true); // you can name your shader files however you like
     shaderTexture = new Shader(false); // you can name your shader files however you like
 }
 
-void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::mat4 transform)
+void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::mat4 model)
 {
     shader->Use();
-    unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+    unsigned int modelLoc = glGetUniformLocation(shader->ID, "modelMatrix");
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    unsigned int viewLoc = glGetUniformLocation(shader->ID, "viewMatrix");
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+    unsigned int projectionLoc = glGetUniformLocation(shader->ID, "projectionMatrix");
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
 }
 
-void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color, glm::mat4 transform)
+void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color, glm::mat4 model)
 {
     shaderTexture->Use();
     int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
     int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
-    unsigned int transformLoc = glGetUniformLocation(shader->ID, "transform");
+    unsigned int transformLoc = glGetUniformLocation(shader->ID, "modelMatrix");
+    unsigned int viewLoc = glGetUniformLocation(shader->ID, "viewMatrix");
+    unsigned int projectionLoc = glGetUniformLocation(shader->ID, "projectionMatrix");
     glUniform1f(locationTexture, (GLfloat)textureID);
     glUniform4fv(locationColor, 1, value_ptr(color));
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transform));
+    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
+    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
 	glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);

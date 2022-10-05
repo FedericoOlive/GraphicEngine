@@ -13,7 +13,8 @@ class SAUCA_API Renderer
 private:
 	Shader* shader;
 	Shader* shaderTexture;
-
+	glm::mat4 viewMatrix;
+	glm::mat4 projectionMatrix;
 public:
 	Renderer();
 	~Renderer();

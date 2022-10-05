@@ -28,15 +28,9 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
 
 void Sprite::Draw()
 {
-    transform = glm::mat4(1.0f);
-    transform = glm::translate(transform, translate);
-    transform = glm::rotate(transform, glm::radians(rotation.x), glm::vec3(1, 0, 0));
-    transform = glm::rotate(transform, glm::radians(rotation.y), glm::vec3(0, 1, 0));
-    transform = glm::rotate(transform, glm::radians(rotation.z), glm::vec3(0, 0, 1));
-    transform = glm::scale(transform, scale);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
-    renderer->DrawSprite(texture, sizeIndices, VAO, colorTint, transform);
+    renderer->DrawSprite(texture, sizeIndices, VAO, colorTint, modelMatrix);
 }
 
 Sprite::~Sprite()
