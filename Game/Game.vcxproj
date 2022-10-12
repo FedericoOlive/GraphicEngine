@@ -66,6 +66,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)res"
+MKDIR "$(OutDir)shader"
+XCOPY "$(ProjectDir)res\" "$(OutDir)/res" /e /h /y /s
+XCOPY "$(ProjectDir)Shader\" "$(OutDir)/Shader" /e /h /y /s</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -85,6 +91,12 @@
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)res"
+MKDIR "$(OutDir)shader"
+XCOPY "$(ProjectDir)res\" "$(OutDir)/res" /e /h /y /s
+XCOPY "$(ProjectDir)Shader\" "$(OutDir)/Shader" /e /h /y /s</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ProjectReference Include="..\GraphicEngine\GraphicEngine.vcxproj">
