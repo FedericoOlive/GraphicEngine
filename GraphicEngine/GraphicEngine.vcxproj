@@ -106,8 +106,8 @@
       <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
-XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s</Command>
+      <Command>MKDIR "$(SolutionDir)Exports"
+XCOPY "$(OutDir)GraphicEngine.dll" "$(SolutionDir)Exports" /e /h /y /s</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if not exist "$(SolutionDir)bin\$(configuration)" MKDIR "$(SolutionDir)bin\$(configuration)"</Command>
@@ -133,8 +133,8 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /
       <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
-XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s</Command>
+      <Command>MKDIR "$(SolutionDir)Exports"
+XCOPY "$(OutDir)GraphicEngine.dll" "$(SolutionDir)Exports" /e /h /y /s</Command>
     </PostBuildEvent>
     <PreBuildEvent>
       <Command>if not exist "$(SolutionDir)bin\$(configuration)" MKDIR "$(SolutionDir)bin\$(configuration)"</Command>

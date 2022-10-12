@@ -67,10 +67,14 @@
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
     </Link>
     <PostBuildEvent>
-      <Command>MKDIR "$(OutDir)res"
-MKDIR "$(OutDir)shader"
-XCOPY "$(ProjectDir)res\" "$(OutDir)/res" /e /h /y /s
-XCOPY "$(ProjectDir)Shader\" "$(OutDir)/Shader" /e /h /y /s</Command>
+      <Command>if not exist "$(OutDir)res" MKDIR "$(OutDir)res"
+if not exist "$(OutDir)Shader" MKDIR "$(OutDir)Shader"
+XCOPY "$(ProjectDir)res\" "$(OutDir)res" /e /h /y /s
+XCOPY "$(ProjectDir)Shader\" "$(OutDir)Shader" /e /h /y /s
+XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
+XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
+XCOPY "$(SolutionDir)Exports\" "$(OutDir)" /e /h /y /s
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -92,10 +96,14 @@ XCOPY "$(ProjectDir)Shader\" "$(OutDir)/Shader" /e /h /y /s</Command>
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
     <PostBuildEvent>
-      <Command>MKDIR "$(OutDir)res"
-MKDIR "$(OutDir)shader"
-XCOPY "$(ProjectDir)res\" "$(OutDir)/res" /e /h /y /s
-XCOPY "$(ProjectDir)Shader\" "$(OutDir)/Shader" /e /h /y /s</Command>
+      <Command>if not exist "$(OutDir)res" MKDIR "$(OutDir)res"
+if not exist "$(OutDir)Shader" MKDIR "$(OutDir)Shader"
+XCOPY "$(ProjectDir)res\" "$(OutDir)res" /e /h /y /s
+XCOPY "$(ProjectDir)Shader\" "$(OutDir)Shader" /e /h /y /s
+XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
+XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
+XCOPY "$(SolutionDir)Exports\" "$(OutDir)" /e /h /y /s
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
