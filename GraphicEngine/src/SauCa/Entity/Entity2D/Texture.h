@@ -7,7 +7,7 @@
 class SAUCA_API Texture
 {
 public:
-	unsigned int texture;	
+	unsigned int texture;
 	Texture(std::string path);
 };
 

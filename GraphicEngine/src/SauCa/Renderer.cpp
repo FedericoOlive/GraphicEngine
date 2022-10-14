@@ -40,9 +40,9 @@ void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int&
     shaderTexture->Use();
     int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
     int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
-    unsigned int transformLoc = glGetUniformLocation(shader->ID, "modelMatrix");
-    unsigned int viewLoc = glGetUniformLocation(shader->ID, "viewMatrix");
-    unsigned int projectionLoc = glGetUniformLocation(shader->ID, "projectionMatrix");
+    unsigned int transformLoc = glGetUniformLocation(shaderTexture->ID, "modelMatrix");
+    unsigned int viewLoc = glGetUniformLocation(shaderTexture->ID, "viewMatrix");
+    unsigned int projectionLoc = glGetUniformLocation(shaderTexture->ID, "projectionMatrix");
     glUniform1f(locationTexture, (GLfloat)textureID);
     glUniform4fv(locationColor, 1, value_ptr(color));
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));

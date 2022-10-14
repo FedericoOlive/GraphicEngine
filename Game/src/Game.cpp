@@ -7,7 +7,7 @@ void Game::Initialize()
 	srand(time(nullptr));
 	triangle = CreateTriangle();
 	quad = CreateQuad();
-	
+
 	triangle->SetPosition(0.7f, 0.7f, 0.0f);
 	triangle->SetScale(0.3f, 0.3f, 0.0f);
 
@@ -32,9 +32,8 @@ void Game::Initialize()
 	sprite3->SetColorTint(1, 1, 1);
 	sprite3->SetScale(1.0f, 1.0f, 0.0f);
 	sprite3->SetPosition(0.0f, 0.05f, 0.0f);
-
-	
 }
+
 void Game::Input()
 {
 	
@@ -53,18 +52,20 @@ void Game::Update()
 
 void Game::Draw()
 {
-		sprite3->Draw();
-		sprite2->Draw();
-		sprite1->Draw();
-		quad->Draw();
-		triangle->Draw();
+	sprite3->Draw();
+	sprite2->Draw();
+	sprite1->Draw();
+	quad->Draw();
+	triangle->Draw();
 }
+
 float Game::GetRandom()
 {
 	int random = rand() % 100;
 	float max = 100;
 	return random / max;
 }
+
 void Game::DeInitialize()
 {
 	delete triangle;
