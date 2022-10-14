@@ -9,10 +9,10 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
 	
     vertices = new float[sizeVertices] {
         // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f  // top left 
+         0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   1.0f, 1.0f, // top right
+         0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 0.0f, // bottom left
+        -0.5f,  0.5f, 0.0f,   0.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left 
     };
 
     sizeIndices = 6;
@@ -30,7 +30,7 @@ void Sprite::Draw()
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
-    renderer->DrawSprite(texture, sizeIndices, VAO, colorTint, modelMatrix);
+    renderer->DrawSprite(texture, sizeIndices, VAO, colorTint, alpha, modelMatrix);
 }
 
 Sprite::~Sprite()

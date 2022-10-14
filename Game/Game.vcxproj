@@ -73,8 +73,7 @@ XCOPY "$(ProjectDir)res\" "$(OutDir)res" /e /h /y /s
 XCOPY "$(ProjectDir)Shader\" "$(OutDir)Shader" /e /h /y /s
 XCOPY "$(ProjectDir)bin\$(Configuration)\GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
 XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y /s
-XCOPY "$(SolutionDir)Exports\" "$(OutDir)" /e /h /y /s
-</Command>
+XCOPY "$(SolutionDir)Exports\" "$(OutDir)" /e /h /y /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

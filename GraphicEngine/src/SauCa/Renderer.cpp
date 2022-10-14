@@ -5,6 +5,8 @@ using namespace std;
 Renderer::Renderer()
 {
     shader = nullptr;
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 Renderer::~Renderer()
@@ -22,29 +24,40 @@ void Renderer::CreateShader()
     shaderTexture = new Shader(false); // you can name your shader files however you like
 }
 
-void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::mat4 model)
+void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model)
 {
     shader->Use();
+	
+    unsigned int locationColor = glGetUniformLocation(shader->ID, "colorTint");
+    unsigned int locationAlpha = glGetUniformLocation(shader->ID, "alpha");
     unsigned int modelLoc = glGetUniformLocation(shader->ID, "modelMatrix");
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
     unsigned int viewLoc = glGetUniformLocation(shader->ID, "viewMatrix");
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     unsigned int projectionLoc = glGetUniformLocation(shader->ID, "projectionMatrix");
+	
+    glUniform3fv(locationColor, 1, value_ptr(color));
+    glUniform1fv(locationAlpha, 1, &alpha);	
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
 }
 
-void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color, glm::mat4 model)
+void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model)
 {
     shaderTexture->Use();
-    int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
-    int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
+	
+    unsigned int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
+    unsigned int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
+    unsigned int locationAlpha = glGetUniformLocation(shaderTexture->ID, "alpha");
     unsigned int transformLoc = glGetUniformLocation(shaderTexture->ID, "modelMatrix");
     unsigned int viewLoc = glGetUniformLocation(shaderTexture->ID, "viewMatrix");
     unsigned int projectionLoc = glGetUniformLocation(shaderTexture->ID, "projectionMatrix");
+	
     glUniform1f(locationTexture, (GLfloat)textureID);
-    glUniform4fv(locationColor, 1, value_ptr(color));
+    glUniform3fv(locationColor, 1, value_ptr(color));
+    glUniform1fv(locationAlpha, 1, &alpha);
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
@@ -55,7 +68,8 @@ void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int&
 
 void Renderer::Clear(GLbitfield field)
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+    glClearColor(0, 0, 0, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void Renderer::SwapBuffers(GLFWwindow* window)

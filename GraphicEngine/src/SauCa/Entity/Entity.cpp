@@ -12,11 +12,13 @@ Entity::Entity()
 	translate = glm::vec3(0.0f);
 	rotation = glm::vec3(0.0f);
 	scale = glm::vec3(1.0f);
+	alpha = 1.0f;
 }
 
-void Entity::SetColorTint(float r, float g, float b)
+void Entity::SetColorTint(float r, float g, float b, float a)
 {
-	colorTint = glm::vec4(r, g, b, 1.0f);
+	alpha = a;
+	colorTint = glm::vec3(r, g, b);
 }
 
 void Entity::SetPosition(float x, float y, float z)

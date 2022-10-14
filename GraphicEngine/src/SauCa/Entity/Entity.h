@@ -19,9 +19,10 @@ public:
 	glm::vec3 translate;
 	glm::vec3 rotation;
 	glm::vec3 scale;
-	glm::vec4 colorTint;
+	glm::vec3 colorTint;
+	float alpha;
 	Entity();
-	void SetColorTint(float r, float g, float b);
+	void SetColorTint(float r, float g, float b, float a);
 	void SetPosition(float x, float y, float z);
 	void SetScale(float x, float y, float z);
 	void SetRotation(float x, float y, float z, bool time);

@@ -21,8 +21,8 @@ public:
 	void Clear(GLbitfield field);
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
-	void DrawShape(int sizeIndices, unsigned int& VAO, glm::mat4 transform);
-	void DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec4 color, glm::mat4 transform);
+	void DrawShape(int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model);
+	void DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model);
 	void BindVertex(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 	void UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 	void SetShapeAttributes();
