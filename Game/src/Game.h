@@ -13,7 +13,7 @@ private:
 	int indexDraw = 0;
 public:
 	void Initialize()override;
-	void Input() override;
+	void Inputs() override;
 	void Update()override;
 	void Draw()override;
 	void DeInitialize() override;

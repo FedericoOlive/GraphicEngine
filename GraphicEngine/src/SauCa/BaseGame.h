@@ -3,14 +3,13 @@
 
 #include "Exports.h"
 #include <iostream>
-#include "Input.h"
 #include "CollisionManager.h"
 #include "Renderer.h"
 #include "Window.h"
 #include "Entity/Entity2D/Triangle.h"
 #include "Entity/Entity2D/Sprite.h"
 #include "Entity/Entity2D/Quad.h"
-
+#include "Input/Input.h"
 using namespace std;
 
 class SAUCA_API BaseGame
@@ -27,7 +26,7 @@ public:
 	~BaseGame();
 	int Init();
 	virtual void Initialize() = 0;
-	virtual void Input() = 0;
+	virtual void Inputs() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
 	virtual void DeInitialize() = 0;

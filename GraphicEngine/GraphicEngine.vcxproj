@@ -196,7 +196,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Renderer.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Shape.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Sprite.cpp" />
-    <ClCompile Include="src\SauCa\Input.cpp" />
+    <ClCompile Include="src\SauCa\Input\Input.cpp" />
     <ClCompile Include="src\SauCa\BaseGame.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp" />
     <ClCompile Include="src\SauCa\Window.cpp" />
@@ -206,6 +206,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Entity\Entity2D\Quad.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\stbi.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Texture.h" />
+    <ClInclude Include="src\SauCa\Input\KeyCodes.h" />
     <ClInclude Include="src\SauCa\Shaders\Shader.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Animation.h" />
     <ClInclude Include="src\SauCa\CollisionManager.h" />
@@ -215,7 +216,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Renderer.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Shape.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Sprite.h" />
-    <ClInclude Include="src\SauCa\Input.h" />
+    <ClInclude Include="src\SauCa\Input\Input.h" />
     <ClInclude Include="src\SauCa\Exports.h" />
     <ClInclude Include="src\SauCa\BaseGame.h" />
     <ClInclude Include="src\SauCa.h" />

@@ -18,7 +18,7 @@
     <ClCompile Include="src\SauCa\BaseGame.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Input.cpp">
+    <ClCompile Include="src\SauCa\Input\Input.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\SauCa\CollisionManager.cpp">
@@ -74,7 +74,7 @@
     <ClInclude Include="src\SauCa.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Input.h">
+    <ClInclude Include="src\SauCa\Input\Input.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\CollisionManager.h">
@@ -120,6 +120,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Entity\Entity2D\Quad.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Input\KeyCodes.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

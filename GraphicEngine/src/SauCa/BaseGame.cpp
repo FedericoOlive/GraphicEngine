@@ -1,8 +1,5 @@
 #include "BaseGame.h"
-#include "Window.h"
-#include "Renderer.h"
 
-#include "Entity/Entity2D/Triangle.h"
 void BaseGame::BeforeDraw()
 {
     renderer->Clear(GL_COLOR_BUFFER_BIT);
@@ -18,7 +15,7 @@ BaseGame::BaseGame()
     input = nullptr;
     window = nullptr;
     renderer = nullptr;
-    collisionManager = nullptr;	
+    //collisionManager = nullptr;	
 }
 
 BaseGame::~BaseGame()
@@ -33,19 +30,21 @@ int BaseGame::Init()
 {
     window = new Window();
     renderer = new Renderer();
-    
+    input = new Input();
+	
     window->InitLibrary();
     window->CreateWindow();
     window->CheckWindow(window->GetWindow());
     window->AssignContext(window->GetWindow());
-
-
+    
     renderer->CreateShader();
+
+    input->InitInput(window);
 	
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
-        Input();
+        Inputs();
         Update();
 
         BeforeDraw();

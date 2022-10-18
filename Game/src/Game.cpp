@@ -36,7 +36,7 @@ void Game::Initialize()
 	sprite3->SetScale(1.0f, 1.0f, 0.0f);
 }
 
-void Game::Input()
+void Game::Inputs()
 {
 	
 }
