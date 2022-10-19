@@ -44,58 +44,58 @@ void Game::Inputs()
 
 	bool modified = false;
 
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::W)) 
+	if(IsKeyDown(KeyCode::W))
 	{
 		modified = true;
 		pos.y += 0.001f;
 	}
-		
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::A))
+
+	if (IsKeyDown(KeyCode::A))
 	{
 		modified = true;
 		pos.x -= 0.001f;
 	}
 		
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::S))
+	if (IsKeyDown(KeyCode::S))
 	{
 		modified = true;
 		pos.y -= 0.001f;
 	}
 		
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::D))
+	if (IsKeyDown(KeyCode::D))
 	{
 		modified = true;
 		pos.x += 0.001f;
 	}
 		
 
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::Q))
+	if (IsKeyReleased(KeyCode::Q))
 	{
 		modified = true;
-		rot.z += 0.001f;
+		rot.z += 1;
 	}
 		
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::E))
+	if (IsKeyReleased(KeyCode::E))
 	{
 		modified = true;
-		rot.z -= 0.001f;
+		rot.z -= 1;
 	}
-		
 
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::Z))
+	if (IsKeyPressed(KeyCode::Z))
 	{
 		modified = true;
-		scale.x += 0.001f;
-		scale.y += 0.001f;
+		scale.x += 0.1f;
+		scale.y += 0.1f;
 		scale.z = 0;
 	}
-	if (IsKey(KeyState::KEY_HOLD, KeyCode::X))
+	if (IsKeyPressed(KeyCode::X))
 	{
 		modified = true;
-		scale.x -= 0.001f;
-		scale.y -= 0.001f;
+		scale.x -= 0.1f;
+		scale.y -= 0.1f;
 		scale.z = 0;
 	}
+
 	if (modified) 
 	{
 		sprite2->SetPosition(pos);

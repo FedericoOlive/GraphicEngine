@@ -40,7 +40,9 @@ public:
 
 	
 	// Inputs
-	bool IsKey(KeyState keyState, KeyCode keyCode);
+	bool IsKeyReleased(KeyCode keyCode);
+	bool IsKeyDown(KeyCode keyCode);
+	bool IsKeyPressed(KeyCode keyCode);
 	int GetKey();
 };
 

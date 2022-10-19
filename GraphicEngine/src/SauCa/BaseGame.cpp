@@ -79,9 +79,19 @@ Sprite* BaseGame::CreateSprite(Texture* texture)
     return sprite;
 }
 
-bool BaseGame::IsKey(KeyState keyState, KeyCode keyCode)
+bool BaseGame::IsKeyReleased(KeyCode keyCode)
 {
-    return input->IsKey(keyState, keyCode);
+    return input->IsKeyReleased(keyCode);
+}
+
+bool BaseGame::IsKeyDown(KeyCode keyCode)
+{
+    return input->IsKeyDown(keyCode);
+}
+
+bool BaseGame::IsKeyPressed(KeyCode keyCode)
+{
+    return input->IsKeyPressed(keyCode);
 }
 
 int BaseGame::GetKey()
