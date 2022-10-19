@@ -1,5 +1,7 @@
 #include "Input.h"
 
+int Input::key = 0;
+
 Input::Input()
 {
 	
@@ -7,16 +9,17 @@ Input::Input()
 
 Input::~Input()
 {
-	if (window != nullptr)
-	{
-		delete window;
-		window = nullptr;
-	}
+}
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	Input::key = key;
 }
 
 void Input::InitInput(Window* _window)
 {
 	window = _window;
+	glfwSetKeyCallback(window->GetWindow(), keyCallback);
 }
 
 bool Input::IsKey(KeyState keyState, KeyCode keyCode)
@@ -27,5 +30,6 @@ bool Input::IsKey(KeyState keyState, KeyCode keyCode)
 
 int Input::GetKey()
 {
-	return 0;
+	return key;
 }
+

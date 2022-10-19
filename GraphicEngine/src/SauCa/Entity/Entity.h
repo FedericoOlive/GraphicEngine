@@ -36,8 +36,8 @@ public:
 	void SetRotation(glm::vec3 rot, bool time) { SetRotation(rot.x, rot.y, rot.z, time); }
 
 	glm::vec3 GetPosition() { return translate; }
-	glm::vec3 GetScale() { return rotation; }
-	glm::vec3 GetRotation() { return scale; }
+	glm::vec3 GetScale() { return scale; }
+	glm::vec3 GetRotation() { return rotation; }
 	
 };
 

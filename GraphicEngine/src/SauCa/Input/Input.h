@@ -5,6 +5,8 @@
 #include "KeyCodes.h"
 #include "Window.h"
 
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
 class SAUCA_API Input
 {
 private:
@@ -15,9 +17,9 @@ public:
 	~Input();
 
 	void InitInput(Window* _window);
-
 	bool IsKey(KeyState keyState, KeyCode keyCode);
 	int GetKey();	
+	int static key;
 };
 
 #endif
