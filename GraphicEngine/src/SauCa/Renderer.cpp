@@ -5,8 +5,6 @@ using namespace std;
 Renderer::Renderer()
 {
     shader = nullptr;
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 Renderer::~Renderer()
@@ -22,6 +20,8 @@ void Renderer::CreateShader()
     glewInit();
     shader = new Shader(true); // you can name your shader files however you like
     shaderTexture = new Shader(false); // you can name your shader files however you like
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model)
