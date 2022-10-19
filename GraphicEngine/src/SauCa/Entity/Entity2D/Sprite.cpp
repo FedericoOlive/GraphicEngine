@@ -2,11 +2,11 @@
 
 Sprite::Sprite(Texture* texture, Renderer* renderer)
 {
-    this->texture = texture->texture;
-	
+    SetTexture(texture);
+
     this->renderer = renderer;
     sizeVertices = 32;
-	
+
     vertices = new float[sizeVertices] {
         // positions          // colors           // texture coords
          0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f, // top right
@@ -21,19 +21,25 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
         1, 2, 3  // second triangle
     };
 
-
     renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
-    renderer->SetSpriteAttributes();    
+    renderer->SetSpriteAttributes();
 }
+
+Sprite::~Sprite() { }
 
 void Sprite::Draw()
 {
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    renderer->DrawSprite(texture, sizeIndices, VAO, colorTint, alpha, modelMatrix);
+    glBindTexture(GL_TEXTURE_2D, texture->texture);
+    renderer->DrawSprite(texture->texture, sizeIndices, VAO, colorTint, alpha, modelMatrix);
 }
 
-Sprite::~Sprite()
+void Sprite::SetTexture(Texture* texture)
+{
+    this->texture = texture;
+}
+
+void Sprite::AddAnimation(int countX, int countY)
 {
 	
 }

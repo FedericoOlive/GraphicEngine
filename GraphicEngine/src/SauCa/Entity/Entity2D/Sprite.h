@@ -8,13 +8,18 @@
 
 class SAUCA_API Sprite : public Entity2D
 {
-public:
+private:
 	Animation* animation;
-	unsigned int texture;
+	Texture* texture;
+public:
+	int heightTexture;
+	int widthTexture;
 	
 	Sprite(Texture* texture, Renderer* renderer);
 	~Sprite();
 	void Draw();
+	void SetTexture(Texture* texture);
+	void AddAnimation(int countX, int countY);
 };
 
 #endif
