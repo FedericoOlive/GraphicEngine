@@ -78,3 +78,13 @@ Sprite* BaseGame::CreateSprite(Texture* texture)
     Sprite* sprite = new Sprite(texture, renderer);
     return sprite;
 }
+
+bool BaseGame::IsKey(KeyState keyState, KeyCode keyCode)
+{
+    return input->IsKey(keyState, keyCode);
+}
+
+int BaseGame::GetKey()
+{
+    return input->GetKey();
+}
