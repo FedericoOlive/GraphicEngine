@@ -63,6 +63,9 @@
     <ClCompile Include="src\SauCa\Entity\Entity2D\Quad.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SauCa\BaseGame.h">
@@ -123,6 +126,9 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Input\KeyCodes.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

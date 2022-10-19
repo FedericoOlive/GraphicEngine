@@ -201,6 +201,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp" />
     <ClCompile Include="src\SauCa\Window.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Triangle.cpp" />
+    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SauCa\Entity\Entity2D\Quad.h" />
@@ -223,6 +224,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
     <ClInclude Include="src\SauCa\Window.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Triangle.h" />
+    <ClInclude Include="Time.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SauCa\Shaders\BasicShader.fs" />

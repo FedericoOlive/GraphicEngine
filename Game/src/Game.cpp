@@ -38,7 +38,39 @@ void Game::Initialize()
 
 void Game::Inputs()
 {
-	
+	glm::vec3 pos = sprite2->GetPosition();
+	glm::vec3 rot = sprite2->GetRotation();
+	glm::vec3 scale = sprite2->GetScale();
+
+	if (IsKey(KeyState::KEY_HOLD, KeyCode::W))
+		pos.y += 0.1f;
+	if (IsKey(KeyState::KEY_HOLD, KeyCode::A))
+		pos.x -= 0.1f;
+	if (IsKey(KeyState::KEY_HOLD, KeyCode::S))
+		pos.y -= 0.1f;
+	if (IsKey(KeyState::KEY_HOLD, KeyCode::D))
+		pos.x += 0.1f;
+
+	if (IsKey(KeyState::KEY_PRESS, KeyCode::Q))
+		rot.z += 0.1f;
+	if (IsKey(KeyState::KEY_PRESS, KeyCode::E))
+		rot.z -= 0.1f;
+
+	if (IsKey(KeyState::KEY_RELEASE, KeyCode::Z))
+	{
+		scale.x += 0.25f;
+		scale.y += 0.25f;
+		scale.z += 0.25f;
+	}
+	if (IsKey(KeyState::KEY_RELEASE, KeyCode::X))
+	{
+		scale.x -= 0.25f;
+		scale.y -= 0.25f;
+		scale.z -= 0.25f;
+	}
+	sprite2->SetPosition(pos);
+	sprite2->SetRotation(rot, false);
+	sprite2->SetScale(scale);
 }
 
 void Game::Update()
