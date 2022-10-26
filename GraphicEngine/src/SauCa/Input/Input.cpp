@@ -22,7 +22,6 @@ void Input::InitInput(Window* _window)
 {
 	window = _window;
 	glfwSetKeyCallback(window->GetWindow(), keyCallback);
-	/*glfwSetInputMode(window->GetWindow(), GLFW_STICKY_KEYS, GLFW_TRUE);*/
 }
 
 bool Input::IsKeyReleased(KeyCode keyCode)

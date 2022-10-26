@@ -72,13 +72,13 @@ void Game::Inputs()
 	if (IsKeyReleased(KeyCode::Q))
 	{
 		modified = true;
-		rot.z += 1;
+		rot.z += 15;
 	}
 		
 	if (IsKeyReleased(KeyCode::E))
 	{
 		modified = true;
-		rot.z -= 1;
+		rot.z -= 15;
 	}
 
 	if (IsKeyPressed(KeyCode::Z))
