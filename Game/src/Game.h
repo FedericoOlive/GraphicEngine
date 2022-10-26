@@ -10,6 +10,7 @@ private:
 	Sprite* sprite1;
 	Sprite* sprite2;
 	Sprite* sprite3;
+	Sprite* backGround;
 	int indexDraw = 0;
 public:
 	void Initialize()override;

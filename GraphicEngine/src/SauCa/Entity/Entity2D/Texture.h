@@ -6,6 +6,13 @@
 
 class SAUCA_API Texture
 {
+private:
+	void BindTexture();
+	void SetTextureWrapping(int textureWrapping);
+	void SetTextureFiltering(int textureFiltering);
+	void LoadImage(std::string path);
+	Texture(std::string path, int textureWrapping, int textureFiltering);
+	
 public:
 	int width;
 	int height;
