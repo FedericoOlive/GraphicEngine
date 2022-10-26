@@ -10,6 +10,8 @@
 #include "Entity/Entity2D/Sprite.h"
 #include "Entity/Entity2D/Quad.h"
 #include "Input/Input.h"
+#include "../../Time.h"
+
 using namespace std;
 
 class SAUCA_API BaseGame
@@ -19,6 +21,8 @@ private:
 	Window* window;
 	Renderer* renderer;
 	CollisionManager* collisionManager;
+	Time* timer;
+
 	void BeforeDraw();
 	void AfterDraw();
 public:
@@ -38,12 +42,16 @@ public:
 	Quad* CreateQuad();
 	Sprite* CreateSprite(Texture* texture);
 
-	
+
 	// Inputs
 	bool IsKeyReleased(KeyCode keyCode);
 	bool IsKeyDown(KeyCode keyCode);
 	bool IsKeyPressed(KeyCode keyCode);
 	int GetKey();
-};
 
+	// Time
+	double DeltaTime();
+	double ElapsedTime();
+};
+	
 #endif

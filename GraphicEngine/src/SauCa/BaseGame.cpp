@@ -15,15 +15,37 @@ BaseGame::BaseGame()
     input = nullptr;
     window = nullptr;
     renderer = nullptr;
-    //collisionManager = nullptr;	
+    collisionManager = nullptr;	
+    timer = nullptr;
 }
 
 BaseGame::~BaseGame()
 {
-    //delete input;
-    delete window;
-    delete renderer;
-    //delete collisionManager;
+    if (input != nullptr)
+    {
+		delete input;
+        input = nullptr;
+    }
+    if (window != nullptr)
+    {
+        delete window;
+        window = nullptr;
+    }
+    if (renderer != nullptr)
+    {
+        delete renderer;
+        renderer = nullptr;
+    }
+    if (collisionManager != nullptr)
+    {
+        delete collisionManager;
+        collisionManager = nullptr;
+    }
+    if (timer != nullptr)
+    {
+        delete timer;
+        timer = nullptr;
+    }
 }
 
 int BaseGame::Init()
@@ -31,6 +53,7 @@ int BaseGame::Init()
     window = new Window();
     renderer = new Renderer();
     input = new Input();
+    timer = new Time();
 	
     window->InitLibrary();
     window->CreateWindow();
@@ -44,9 +67,10 @@ int BaseGame::Init()
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
+        timer->Update();
         Inputs();
         Update();
-
+        
         BeforeDraw();
         Draw();
         AfterDraw();
@@ -97,4 +121,14 @@ bool BaseGame::IsKeyPressed(KeyCode keyCode)
 int BaseGame::GetKey()
 {
     return input->GetKey();
+}
+
+double BaseGame::DeltaTime()
+{
+    return timer->DeltaTime();
+}
+
+double BaseGame::ElapsedTime()
+{
+    return timer->ElapsedTime();
 }

@@ -107,6 +107,10 @@ void Game::Inputs()
 void Game::Update()
 {
 	indexDraw++;
+
+	cout << "\nDelta Time: " << DeltaTime();
+	cout << "\nElaps Time: " << ElapsedTime();
+	cout << "\n----------------------------------------";
 	
 	//sprite3->SetColorTint(GetRandom(), GetRandom(), GetRandom(), 1);
 	/*sprite1->SetRotation(0, 0, indexDraw / 90, true);
