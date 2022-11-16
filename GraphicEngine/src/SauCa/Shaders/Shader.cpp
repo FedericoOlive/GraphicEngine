@@ -3,26 +3,18 @@
 #include <fstream>
 #include <sstream>
 
-Shader::Shader(bool isPrimitive)
+Shader::Shader(bool hasTexture)
 {
-	if(isPrimitive)
-        CreateShapeShader();
+    std::cout << "Loading default Shader.\n";
+	if(hasTexture)
+        CreateShaderBySource(vertexShaderTextureSource, fragmentShaderTextureSource);
     else
-        CreateTextureShader();
+        CreateShaderBySource(vertexShaderSolidSource, fragmentShaderSolidSource);
 }
 
-void Shader::CreateShapeShader()
+void Shader::CreateShader(std::string vsPath, std::string fsPath, bool hasTexture)
 {
-    CreateShader(vspath, fspath);
-}
-
-void Shader::CreateTextureShader()
-{
-    CreateShader(vspathTexture, fspathTexture);
-}
-
-void Shader::CreateShader(std::string vsPath, std::string fsPath)
-{
+    std::cout << "Loading custom Shader.\n";
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;
@@ -51,12 +43,22 @@ void Shader::CreateShader(std::string vsPath, std::string fsPath)
     {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << e.what() << std::endl;
         std::cout << "Using Default Shader..." << std::endl;
-
-        vertexCode = vsDefaultSource;
-        fragmentCode = fsDefaultSource;
+    	
+        std::cout << "Loading default Shader.\n";
+        if (hasTexture)
+            CreateShaderBySource(vertexShaderTextureSource, fragmentShaderTextureSource);
+        else
+            CreateShaderBySource(vertexShaderSolidSource, fragmentShaderSolidSource);
+        return;
     }
-    const char* vShaderCode = vertexCode.c_str();
-    const char* fShaderCode = fragmentCode.c_str();
+	
+    CreateShaderBySource(vertexCode, fragmentCode);
+}
+
+void Shader::CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource)
+{
+    const char* vShaderCode = vertexShaderSource.c_str();
+    const char* fShaderCode = fragmentShaderSource.c_str();
     // 2. compile shaders
     unsigned int vertex, fragment;
     // vertex shader

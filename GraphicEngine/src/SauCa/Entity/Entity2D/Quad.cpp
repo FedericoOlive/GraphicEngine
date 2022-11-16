@@ -2,6 +2,7 @@
 
 Quad::Quad(Renderer* renderer)
 {
+    material = renderer->GetMaterialSolid();
 	this->renderer = renderer;
 	sizeVertices = 24;
 	sizeIndices = 6;

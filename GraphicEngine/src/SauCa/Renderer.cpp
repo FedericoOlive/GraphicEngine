@@ -4,66 +4,52 @@ using namespace std;
 
 Renderer::Renderer()
 {
-    shader = nullptr;
+   
 }
 
 Renderer::~Renderer()
 {
-    delete shader;
+    delete defaultMaterialSolid;
+    delete defaultMaterialTexture;
 }
 
 void Renderer::CreateShader()
-{
+{	
     viewMatrix = glm::mat4(1.0f);
     projectionMatrix = glm::mat4(1.0f);
     glewExperimental = GL_TRUE;
     glewInit();
-    shader = new Shader(true); // you can name your shader files however you like
-    shaderTexture = new Shader(false); // you can name your shader files however you like
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+    defaultMaterialSolid = new Material(new Shader(false), false);
+    defaultMaterialTexture = new Material(new Shader(true), true);
 }
 
-void Renderer::DrawShape(int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model)
+void Renderer::DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned int& VAO, Material* material, float alpha, glm::mat4 model)
 {
-    shader->Use();
-	
-    unsigned int locationColor = glGetUniformLocation(shader->ID, "colorTint");
-    unsigned int locationAlpha = glGetUniformLocation(shader->ID, "alpha");
-    unsigned int modelLoc = glGetUniformLocation(shader->ID, "modelMatrix");
-    unsigned int viewLoc = glGetUniformLocation(shader->ID, "viewMatrix");
-    unsigned int projectionLoc = glGetUniformLocation(shader->ID, "projectionMatrix");
-	
-    glUniform3fv(locationColor, 1, value_ptr(color));
-    glUniform1fv(locationAlpha, 1, &alpha);	
-    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-	
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
-}
+    material->shader->Use();
+    int shaderID = material->shader->ID;
+    if (material->hasTexture)
+    {
+        unsigned int locationTexture = glGetUniformLocation(shaderID, "ourTexture");
+        glUniform1f(locationTexture, (GLfloat)textureID);
+    }
 
-void Renderer::DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, glm::vec3 color, float alpha, glm::mat4 model)
-{
-    shaderTexture->Use();
-	
-    unsigned int locationTexture = glGetUniformLocation(shaderTexture->ID, "ourTexture");
-    unsigned int locationColor = glGetUniformLocation(shaderTexture->ID, "colorTint");
-    unsigned int locationAlpha = glGetUniformLocation(shaderTexture->ID, "alpha");
-    unsigned int transformLoc = glGetUniformLocation(shaderTexture->ID, "modelMatrix");
-    unsigned int viewLoc = glGetUniformLocation(shaderTexture->ID, "viewMatrix");
-    unsigned int projectionLoc = glGetUniformLocation(shaderTexture->ID, "projectionMatrix");
-	
-    glUniform1f(locationTexture, (GLfloat)textureID);
-    glUniform3fv(locationColor, 1, value_ptr(color));
+    unsigned int locationColor = glGetUniformLocation(shaderID, "colorTint");
+    unsigned int locationAlpha = glGetUniformLocation(shaderID, "alpha");
+    unsigned int transformLoc = glGetUniformLocation(shaderID, "modelMatrix");
+    unsigned int viewLoc = glGetUniformLocation(shaderID, "viewMatrix");
+    unsigned int projectionLoc = glGetUniformLocation(shaderID, "projectionMatrix");
+
+    glUniform3fv(locationColor, 1, value_ptr(material->colorTint));
     glUniform1fv(locationAlpha, 1, &alpha);
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
-	glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::Clear(GLbitfield field)

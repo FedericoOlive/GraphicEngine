@@ -1,8 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "Exports.h"
 #include "Renderer.h"
+#include "Entity2D/Material.h"
 
 class SAUCA_API Entity
 {
@@ -11,7 +11,7 @@ protected:
 public:
 	unsigned int VAO;
 	unsigned int VBO;
-	unsigned int EBO;
+	unsigned int EBO;	
 	glm::mat4 modelMatrix;
 	glm::mat4 translateMatrix;
 	glm::mat4 rotationMatrix;
@@ -19,8 +19,8 @@ public:
 	glm::vec3 translate;
 	glm::vec3 rotation;
 	glm::vec3 scale;
-	glm::vec3 colorTint;
 	float alpha;
+	Material* material;
 	
 	Entity();
 	void SetModelMatrix();

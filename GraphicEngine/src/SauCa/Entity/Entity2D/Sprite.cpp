@@ -2,6 +2,7 @@
 
 Sprite::Sprite(Texture* texture, Renderer* renderer)
 {
+    material = renderer->GetMaterialTexture();
     SetTexture(texture);
 
     this->renderer = renderer;
@@ -31,7 +32,7 @@ void Sprite::Draw()
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture->texture);
-    renderer->DrawSprite(texture->texture, sizeIndices, VAO, colorTint, alpha, modelMatrix);
+    renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, modelMatrix);
 }
 
 void Sprite::SetTexture(Texture* texture)

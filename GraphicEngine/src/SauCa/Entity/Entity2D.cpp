@@ -2,5 +2,5 @@
 
 Entity2D::Entity2D()
 {
-	material = new Material();
+	
 }

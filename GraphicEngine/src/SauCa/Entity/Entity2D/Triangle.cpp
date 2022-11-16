@@ -2,6 +2,7 @@
 
 Triangle::Triangle(Renderer* renderer)
 {
+	material = renderer->GetMaterialSolid();
 	this->renderer = renderer;
 	sizeVertices = 18;
 	sizeIndices = 3;

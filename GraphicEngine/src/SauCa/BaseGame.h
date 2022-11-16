@@ -41,7 +41,7 @@ public:
 	Triangle* CreateTriangle();
 	Quad* CreateQuad();
 	Sprite* CreateSprite(Texture* texture);
-
+	void SetMaterial(Material* material);
 
 	// Inputs
 	bool IsKeyReleased(KeyCode keyCode);

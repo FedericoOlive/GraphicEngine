@@ -17,8 +17,8 @@ Entity::Entity()
 
 void Entity::SetColorTint(float r, float g, float b, float a)
 {
+	material->colorTint = glm::vec3(r, g, b);
 	alpha = a;
-	colorTint = glm::vec3(r, g, b);
 }
 
 void Entity::SetPosition(float x, float y, float z)

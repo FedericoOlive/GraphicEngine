@@ -4,35 +4,13 @@
 #include "Exports.h"
 #include <string>
 #include <iostream>
+#include <glm/glm/vec3.hpp>
 
 class SAUCA_API Shader
 {
-public:
-    int ID;
-    Shader(bool isPrimitive);
-    ~Shader();
-    // constructor generates the shader on the fly
-    // ------------------------------------------------------------------------
-    // activate the shader
-    // ------------------------------------------------------------------------
-    void Use();
-    // utility uniform functions
-    // ------------------------------------------------------------------------
-    void SetBool(const std::string& name, bool value) const;
-    // ------------------------------------------------------------------------
-    void SetInt(const std::string& name, int value) const;
-    // ------------------------------------------------------------------------
-    void SetFloat(const std::string& name, float value) const;
-    //VSPATH = R"($(SolutionDir)Shader\vs.shader)"
-    //FSPATH = R"($(SolutionDir)Shader\fs.shader)"
 private:
-    const std::string vspath = "Shader/vs.shader";
-    const std::string fspath = "Shader/fs.shader";
-	
-    const std::string vspathTexture = "Shader/vsTexture.shader";
-    const std::string fspathTexture = "Shader/fsTexture.shader";
-	
-    const std::string vsDefaultSource =
+#pragma region Source Shaders Defaults
+    const std::string vertexShaderSolidSource =
         "#version 330 core\n"
         "layout(location = 0) in vec3 aPos;\n"
         "layout(location = 1) in vec3 aColor;\n"
@@ -42,10 +20,20 @@ private:
         "uniform mat4 modelMatrix;\n"
         "void main()\n"
         "{\n"
-        "    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
-        "    ourColor = aColor;\n"
-        "}\0";
-    const std::string fsDefaultSource =
+        "gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
+        "ourColor = aColor;\n"
+        "}\n";
+    const std::string fragmentShaderSolidSource =
+        "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "in vec3 ourColor;\n"
+        "uniform vec3 colorTint;\n"
+        "uniform float alpha;\n"
+        "void main()\n"
+        "{\n"
+        "FragColor = vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+        "}";
+    const std::string vertexShaderTextureSource =
         "#version 330 core\n"
         "layout(location = 0) in vec3 aPos;\n"
         "layout(location = 1) in vec3 aColor;\n"
@@ -57,18 +45,40 @@ private:
         "uniform mat4 modelMatrix;\n"
         "void main()\n"
         "{\n"
-        "    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
-        "    ourColor = aColor;\n"
-        "    TexCoord = aTexCoord;\n"
-        "}\0";
-	 
+        "gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
+        "ourColor = aColor;\n"
+        "TexCoord = aTexCoord;\n"
+        "}\n";
+    const std::string fragmentShaderTextureSource =
+        "#version 330 core\n"
+        "out vec4 FragColor;\n"
 
-    void CreateShapeShader();
-    void CreateTextureShader();
-    void CreateShader(std::string vsPath, std::string fsPath);
-    // utility function for checking shader compilation/linking errors.
-    // ------------------------------------------------------------------------
+        "in vec3 ourColor;\n"
+        "in vec2 TexCoord;\n"
+
+        "uniform sampler2D ourTexture;\n"
+        "uniform vec3 colorTint;\n"
+        "uniform float alpha;\n"
+
+        "void main()\n"
+        "{\n"
+        "FragColor = texture(ourTexture, TexCoord) * vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+        "}\n";
+#pragma endregion
+    
     void CheckCompileErrors(unsigned int shader, std::string type);
+	
+public:
+    int ID;
+    Shader(bool hasTexture);
+    Shader(std::string vertexShaderPath, std::string fragmentShaderPath, bool hasTexture);
+    ~Shader();
+    void CreateShader(std::string vsPath, std::string fsPath, bool hasTexture);
+    void CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource);
+    void Use();
+    void SetBool(const std::string& name, bool value) const;
+    void SetInt(const std::string& name, int value) const;
+    void SetFloat(const std::string& name, float value) const;
+
 };
 #endif
-
