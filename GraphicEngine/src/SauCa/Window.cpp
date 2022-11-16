@@ -1,4 +1,6 @@
 #include "Window.h"
+float Window::Screen_Width = 1280;
+float Window::Screen_Height = 720;
 
 Window::Window()
 {
@@ -18,7 +20,7 @@ int Window::InitLibrary()
 
 void Window::CreateWindow()
 {
-    window = glfwCreateWindow(800, 800, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(Screen_Width, Screen_Height, "Hello World", NULL, NULL);
 }
 
 int Window::CheckWindow(GLFWwindow* window)

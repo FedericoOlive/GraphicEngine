@@ -9,6 +9,10 @@ class SAUCA_API Window
 	private:
 		GLFWwindow* window;
 	public:
+
+		static float Screen_Width;
+		static float Screen_Height;
+	
 		Window();
 		~Window();
 		int InitLibrary();

@@ -4,7 +4,8 @@ using namespace std;
 
 Renderer::Renderer()
 {
-   
+    viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
+    projectionMatrix = glm::perspective(glm::radians(45.0f), Window::Screen_Width / Window::Screen_Height, 0.1f, 100.0f);
 }
 
 Renderer::~Renderer()
@@ -15,8 +16,6 @@ Renderer::~Renderer()
 
 void Renderer::CreateShader()
 {	
-    viewMatrix = glm::mat4(1.0f);
-    projectionMatrix = glm::mat4(1.0f);
     glewExperimental = GL_TRUE;
     glewInit();
     glEnable(GL_BLEND);
