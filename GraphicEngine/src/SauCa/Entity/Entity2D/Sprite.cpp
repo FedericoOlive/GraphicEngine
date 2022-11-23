@@ -50,12 +50,18 @@ void Sprite::Draw()
             frame.coordinates[3].u,frame.coordinates[3].v,
         };
 
-        glBindBuffer(GL_ARRAY_BUFFER, UVBuffer);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(currentUv), currentUv, GL_DYNAMIC_DRAW);
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)0);
-        glEnableVertexAttribArray(2);
-    }
+        vertices[6] = currentUv[0];
+        vertices[7] = currentUv[1];
+        vertices[14] = currentUv[2];
+        vertices[15] = currentUv[3];
+        vertices[22] = currentUv[4];
+        vertices[23] = currentUv[5];
+        vertices[30] = currentUv[6];
+        vertices[31] = currentUv[7];
 
+        renderer->BindVertexs(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
+        renderer->SetSpriteAttributes();
+    }
     
 
     glActiveTexture(GL_TEXTURE0);

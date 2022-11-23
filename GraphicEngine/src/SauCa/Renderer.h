@@ -25,6 +25,7 @@ public:
 	void DrawSprite(unsigned int textureID, int sizeIndices, unsigned int& VAO, Material* material, float alpha, glm::mat4 model);
 	void DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned int& VAO, Material* material, float alpha, glm::mat4 model);
 	void BindVertex(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
+	void BindVertexs(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 	void UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 	void SetShapeAttributes();
 	void SetSpriteAttributes();
