@@ -28,7 +28,6 @@ public:
 	void UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO);
 	void SetShapeAttributes();
 	void SetSpriteAttributes();
-
 	Material* GetMaterialTexture() { return defaultMaterialTexture; }
 	Material* GetMaterialSolid() { return defaultMaterialSolid; }
 };

@@ -185,6 +185,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Frame.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Quad.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Texture.cpp" />
     <ClCompile Include="src\SauCa\Shaders\Shader.cpp" />
@@ -199,11 +200,12 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Input\Input.cpp" />
     <ClCompile Include="src\SauCa\BaseGame.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp" />
+    <ClCompile Include="src\SauCa\Timer.cpp" />
     <ClCompile Include="src\SauCa\Window.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Triangle.cpp" />
-    <ClCompile Include="Time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Frame.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Quad.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\stbi.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Texture.h" />
@@ -224,7 +226,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
     <ClInclude Include="src\SauCa\Window.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Triangle.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="src\SauCa\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SauCa\Shaders\BasicShader.fs" />

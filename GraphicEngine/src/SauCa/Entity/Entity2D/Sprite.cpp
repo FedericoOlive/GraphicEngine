@@ -1,8 +1,10 @@
 #include "Sprite.h"
+#include "Timer.h"
 
 Sprite::Sprite(Texture* texture, Renderer* renderer)
 {
     material = renderer->GetMaterialTexture();
+    hasAnimation = false;
     SetTexture(texture);
 
     this->renderer = renderer;
@@ -26,10 +28,36 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
     renderer->SetSpriteAttributes();
 }
 
-Sprite::~Sprite() { }
+Sprite::~Sprite() 
+{ 
+    if (animation != nullptr)
+        delete animation;
+}
 
 void Sprite::Draw()
 {
+    if (hasAnimation) 
+    {
+        animation->Update();
+
+
+        frame = animation->GetFrames()[animation->CurrentFrame()];
+        float currentUv[8] =
+        {
+            frame.coordinates[0].u,frame.coordinates[0].v,
+            frame.coordinates[1].u,frame.coordinates[1].v,
+            frame.coordinates[2].u,frame.coordinates[2].v,
+            frame.coordinates[3].u,frame.coordinates[3].v,
+        };
+
+        glBindBuffer(GL_ARRAY_BUFFER, UVBuffer);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(currentUv), currentUv, GL_DYNAMIC_DRAW);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)0);
+        glEnableVertexAttribArray(2);
+    }
+
+    
+
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture->texture);
     renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, modelMatrix);
@@ -40,7 +68,16 @@ void Sprite::SetTexture(Texture* texture)
     this->texture = texture;
 }
 
-void Sprite::AddAnimation(int countX, int countY)
+void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs)
 {
-	
+    glGenBuffers(1, &UVBuffer);
+    hasAnimation = true;
+    animation = new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs);
+}
+
+void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount)
+{
+    glGenBuffers(1, &UVBuffer);
+    hasAnimation = true;
+    animation = new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs, frameCount);
 }

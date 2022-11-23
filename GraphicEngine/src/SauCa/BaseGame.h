@@ -10,7 +10,7 @@
 #include "Entity/Entity2D/Sprite.h"
 #include "Entity/Entity2D/Quad.h"
 #include "Input/Input.h"
-#include "../../Time.h"
+#include "Timer.h"
 
 using namespace std;
 
@@ -21,7 +21,7 @@ private:
 	Window* window;
 	Renderer* renderer;
 	CollisionManager* collisionManager;
-	Time* timer;
+	Timer* timer;
 
 	void BeforeDraw();
 	void AfterDraw();

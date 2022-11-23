@@ -53,7 +53,7 @@ int BaseGame::Init()
     window = new Window();
     renderer = new Renderer();
     input = new Input();
-    timer = new Time();
+    timer = new Timer();
 	
     window->InitLibrary();
     window->CreateWindow();
@@ -125,7 +125,7 @@ int BaseGame::GetKey()
 
 double BaseGame::DeltaTime()
 {
-    return timer->DeltaTime();
+    return Timer::DeltaTime();
 }
 
 double BaseGame::ElapsedTime()

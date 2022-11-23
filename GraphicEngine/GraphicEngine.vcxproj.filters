@@ -63,7 +63,10 @@
     <ClCompile Include="src\SauCa\Entity\Entity2D\Quad.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
+    <ClCompile Include="src\SauCa\Timer.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Frame.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -128,7 +131,10 @@
     <ClInclude Include="src\SauCa\Input\KeyCodes.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
+    <ClInclude Include="src\SauCa\Timer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Frame.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

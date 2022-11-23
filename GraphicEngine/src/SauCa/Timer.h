@@ -3,16 +3,16 @@
 #include "Exports.h"
 #include "glfw3.h"
 
-class SAUCA_API Time
+class SAUCA_API Timer
 {
 private:
 	double currentTime;
-	double deltaTime;
+	static double deltaTime;
 
 public:
-	Time();
+	Timer();
 	void Update();
-	double DeltaTime();
+	double static DeltaTime();
 	double ElapsedTime();	
 };
 #endif
