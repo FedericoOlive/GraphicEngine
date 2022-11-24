@@ -11,7 +11,7 @@ protected:
 public:
 	unsigned int VAO;
 	unsigned int VBO;
-	unsigned int EBO;	
+	unsigned int EBO;
 	glm::mat4 modelMatrix;
 	glm::mat4 translateMatrix;
 	glm::mat4 rotationMatrix;
@@ -21,10 +21,10 @@ public:
 	glm::vec3 scale;
 	float alpha;
 	Material* material;
-	
+
 	Entity();
 	void SetModelMatrix();
-	
+
 	void SetColorTint(float r, float g, float b, float a);
 	void SetPosition(float x, float y, float z);
 	void SetScale(float x, float y, float z);
@@ -38,7 +38,8 @@ public:
 	glm::vec3 GetPosition() { return translate; }
 	glm::vec3 GetScale() { return scale; }
 	glm::vec3 GetRotation() { return rotation; }
-	
+
+	glm::vec3 GetViewportPosition();
 };
 
 #endif

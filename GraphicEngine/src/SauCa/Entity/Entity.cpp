@@ -54,6 +54,16 @@ void Entity::SetRotation(float x, float y, float z, bool time)
 	SetModelMatrix();
 }
 
+glm::vec3 Entity::GetViewportPosition()
+{
+	glm::vec3 pos = glm::vec3(translate.x + 1, translate.y + 1, translate.z + 1);
+	pos.x = (translate.x + 1) * Window::Screen_Width / 2;
+	pos.y = (translate.y + 1) * Window::Screen_Height / 2;
+	pos.z = (translate.z);
+
+	return pos;
+}
+
 void Entity::SetModelMatrix() 
 {
 	modelMatrix = glm::mat4(1.0f);
