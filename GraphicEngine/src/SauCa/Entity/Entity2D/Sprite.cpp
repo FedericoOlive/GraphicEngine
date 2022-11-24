@@ -31,7 +31,7 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
 Sprite::~Sprite() 
 { 
     if (animation != nullptr)
-        delete animation;
+        delete animation;	
 }
 
 void Sprite::Draw()
@@ -62,16 +62,19 @@ void Sprite::Draw()
         renderer->BindVertexs(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
         renderer->SetSpriteAttributes();
     }
-    
 
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture->texture);
+    renderer->BindTextures(texture->texture);
     renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, modelMatrix);
 }
 
 void Sprite::SetTexture(Texture* texture)
 {
     this->texture = texture;
+}
+
+void Sprite::DeleteTextureAsociate()
+{
+    delete texture;
 }
 
 void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs)

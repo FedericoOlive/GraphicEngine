@@ -21,6 +21,7 @@ public:
 		
 	Sprite(Texture* texture, Renderer* renderer);
 	~Sprite();
+	void DeleteTextureAsociate();
 	void Draw();
 	void SetTexture(Texture* texture);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs);
