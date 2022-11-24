@@ -4,6 +4,8 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stbi.h"
 
+int Texture::amountTextures = 0;
+
 void Texture::BindTexture()
 {
     glGenTextures(1, &texture);
@@ -64,30 +66,40 @@ void Texture::LoadImage(std::string path)
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
     if (data)
     {
+        amountTextures++;
+        internalRef = amountTextures;
         int channelType = GL_RGB;
+        std::string textChannels;
         switch (nrChannels)
         {
         case 1:
             channelType = GL_R;
+            textChannels = "R";
             break;
         case 2:
             channelType = GL_RG;
+            textChannels = "RG";
             break;
         case 3:
             channelType = GL_RGB;
+            textChannels = "RGB";
             break;
         case 4:
             channelType = GL_RGBA;
+            textChannels = "RGBA";
             break;
         default:
+            textChannels = "NONE";
             break;
         }
         glTexImage2D(GL_TEXTURE_2D, 0, channelType, width, height, 0, channelType, GL_UNSIGNED_BYTE, data);
         glGenerateMipmap(GL_TEXTURE_2D);
+        std::cout << "ID: " << amountTextures << " | Size: " << width << "x" << height << " | " << textChannels << " | " << "Loaded Image : " << path << std::endl;
+
     }
     else
     {
-        std::cout << "Failed to load texture" << std::endl;
+        std::cout << "Failed to load texture: " << path << std::endl;
     }
 
     stbi_image_free(data);
@@ -99,6 +111,12 @@ Texture::Texture(std::string path)
     SetTextureWrapping(99);
     SetTextureFiltering(99);
     LoadImage(path);
+}
+
+Texture::~Texture()
+{
+    std::cout << "[" << internalRef << "] Unloaded Image" << std::endl;
+    //amountTextures--;
 }
 
 /// <param name="textureWrapping">0: Repeat, 1: Mirrored Repeat, 2: Clamp To Edge, 3: Clamp To Border</param>

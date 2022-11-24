@@ -7,6 +7,8 @@
 class SAUCA_API Texture
 {
 private:
+	static int amountTextures;
+	int internalRef;
 	void BindTexture();
 	void SetTextureWrapping(int textureWrapping);
 	void SetTextureFiltering(int textureFiltering);
@@ -18,6 +20,7 @@ public:
 	int height;
 	unsigned int texture;
 	Texture(std::string path);
+	~Texture();
 };
 
 #endif
