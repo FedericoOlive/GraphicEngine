@@ -17,6 +17,7 @@ using namespace std;
 class SAUCA_API BaseGame
 {
 private:
+	static string version;
 	Input* input;
 	Window* window;
 	Renderer* renderer;
@@ -25,6 +26,8 @@ private:
 
 	void BeforeDraw();
 	void AfterDraw();
+
+	void LoadInfo();
 public:
 	BaseGame();
 	~BaseGame();
@@ -52,6 +55,9 @@ public:
 	// Time
 	double DeltaTime();
 	double ElapsedTime();
+
+	// Window
+	void ModifyWindow(const char* name, float width, float height);
 };
 	
 #endif

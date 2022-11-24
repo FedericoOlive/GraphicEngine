@@ -110,6 +110,8 @@ void Game::Inputs()
 		sprite2->SetScale(scale);
 		sprite2->SetRotation(rot, false);
 	}
+
+	std::cout << "Pos: " << sprite2->GetViewportPosition().x << ", " << sprite2->GetViewportPosition().y << ", " << sprite2->GetViewportPosition().z << std::endl;
 }
 
 void Game::Update()
@@ -134,10 +136,15 @@ float Game::GetRandom()
 
 void Game::DeInitialize()
 {
-	delete triangle;
-	delete quad;
+	sprite2->DeleteTextureAsociate();
+	sprite3->DeleteTextureAsociate();
+	sprite1->DeleteTextureAsociate();
+	sprite4->DeleteTextureAsociate();
 	delete sprite1;
 	delete sprite2;
 	delete sprite3;
+	delete sprite4;
+	delete triangle;
+	delete quad;
 	delete backGround;
 }

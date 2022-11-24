@@ -1,4 +1,6 @@
 #include "Window.h"
+
+#include <iostream>
 float Window::Screen_Width = 1280;
 float Window::Screen_Height = 720;
 
