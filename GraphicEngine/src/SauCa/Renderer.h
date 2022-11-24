@@ -18,6 +18,7 @@ private:
 public:
 	Renderer();
 	~Renderer();
+	void CreateRenderer();
 	void Clear(GLbitfield field);
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
@@ -31,6 +32,7 @@ public:
 	void SetSpriteAttributes();
 	Material* GetMaterialTexture() { return defaultMaterialTexture; }
 	Material* GetMaterialSolid() { return defaultMaterialSolid; }
+	void BindTextures(unsigned int& texture);
 };
 
 #endif

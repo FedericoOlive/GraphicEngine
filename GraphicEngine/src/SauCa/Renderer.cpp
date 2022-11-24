@@ -15,14 +15,18 @@ Renderer::~Renderer()
 }
 
 void Renderer::CreateShader()
-{	
+{
+    defaultMaterialSolid = new Material(new Shader(false), false);
+    defaultMaterialTexture = new Material(new Shader(true), true);
+    std::cout << "\n";
+}
+
+void Renderer::CreateRenderer()
+{
     glewExperimental = GL_TRUE;
     glewInit();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
-    defaultMaterialSolid = new Material(new Shader(false), false);
-    defaultMaterialTexture = new Material(new Shader(true), true);
 }
 
 void Renderer::DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned int& VAO, Material* material, float alpha, glm::mat4 model)
@@ -118,3 +122,8 @@ void Renderer::SetSpriteAttributes()
     glEnableVertexAttribArray(2);
 }
 
+void Renderer::BindTextures(unsigned int& texture)
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+}
