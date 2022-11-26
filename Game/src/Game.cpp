@@ -6,6 +6,13 @@ void Game::Initialize()
 {
 	srand(time(nullptr));
 
+	quad = CreateQuad();
+
+	quad->SetColorTint(1, 1, 1, 1);
+	quad->SetPosition(1, 1, 0);
+	quad->SetScale(1, 1, 1);
+
+
 	Texture* texture = new Texture("res/vegito.png");
 	sprite1 = CreateSprite(texture);
 
@@ -17,8 +24,8 @@ void Game::Initialize()
 	sprite2 = CreateSprite(texture2);
 	
 	sprite2->SetColorTint(1, 1, 1, 1);
-	sprite2->SetPosition(-1, 0.0f, 0.0f);
-	sprite2->SetScale(1, 1, 1);
+	sprite2->SetPosition(0, 0, 0.0f);
+	sprite2->SetScale(200, 200, 1);
 
 	Texture* texture3 = new Texture("res/vegito2.png");
 	sprite3 = CreateSprite(texture3);
@@ -55,48 +62,48 @@ void Game::Inputs()
 	if(IsKeyDown(KeyCode::W))
 	{
 		modified = true;
-		pos.y += 0.001f;
+		pos.y += 0.25f;
 	}
 
 	if (IsKeyDown(KeyCode::A))
 	{
 		modified = true;
-		pos.x -= 0.001f;
+		pos.x -= 0.25f;
 	}
 		
 	if (IsKeyDown(KeyCode::S))
 	{
 		modified = true;
-		pos.y -= 0.001f;
+		pos.y -= 0.25f;
 	}
 		
 	if (IsKeyDown(KeyCode::D))
 	{
 		modified = true;
-		pos.x += 0.001f;
+		pos.x += 0.25f;
 	}
 		
 
-	if (IsKeyReleased(KeyCode::Q))
+	if (IsKeyDown(KeyCode::Q))
 	{
 		modified = true;
 		rot.z += 15;
 	}
 		
-	if (IsKeyReleased(KeyCode::E))
+	if (IsKeyDown(KeyCode::E))
 	{
 		modified = true;
 		rot.z -= 15;
 	}
 
-	if (IsKeyPressed(KeyCode::Z))
+	if (IsKeyDown(KeyCode::Z))
 	{
 		modified = true;
 		scale.x += 0.1f;
 		scale.y += 0.1f;
 		scale.z = 0;
 	}
-	if (IsKeyPressed(KeyCode::X))
+	if (IsKeyDown(KeyCode::X))
 	{
 		modified = true;
 		scale.x -= 0.1f;
@@ -121,10 +128,11 @@ void Game::Update()
 
 void Game::Draw()
 {
-	sprite1->Draw();
+	/*sprite1->Draw();*/
 	sprite2->Draw();
-	sprite3->Draw();
-	sprite4->Draw();
+	quad->Draw();
+	/*sprite3->Draw();
+	sprite4->Draw();*/
 }
 
 float Game::GetRandom()

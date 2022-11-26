@@ -4,8 +4,8 @@ using namespace std;
 
 Renderer::Renderer()
 {
-    viewMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, -3.0f));
-    projectionMatrix = glm::perspective(glm::radians(45.0f), Window::Screen_Width / Window::Screen_Height, 0.1f, 100.0f);
+    viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 50.0f);
 }
 
 Renderer::~Renderer()

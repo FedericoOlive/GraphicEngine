@@ -61,7 +61,7 @@ glm::vec3 Entity::GetViewportPosition()
 	pos.y = (translate.y + 1) * Window::Screen_Height / 2;
 	pos.z = (translate.z);
 
-	return pos;
+	return translate;
 }
 
 void Entity::SetModelMatrix() 
