@@ -5,14 +5,10 @@
 class Game : public BaseGame
 {
 private:
-	Triangle* triangle;
-	Quad* quad;
-	Sprite* sprite1;
-	Sprite* sprite2;
-	Sprite* sprite3;
-	Sprite* sprite4;
-	Sprite* backGround;
+	Quad* floor;
+	Sprite* player;
 	int indexDraw = 0;
+	float multiply = 10;
 public:
 	void Initialize()override;
 	void Inputs() override;

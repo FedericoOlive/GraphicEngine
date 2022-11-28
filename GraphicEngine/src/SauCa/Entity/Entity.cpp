@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include "CollisionManager.h"
+
 Entity::Entity()
 {
 	VAO = 0;
@@ -41,17 +43,42 @@ void Entity::SetRotation(float x, float y, float z, bool time)
 {
 	rotation = glm::vec3(x, y, z);
 	rotationMatrix = glm::mat4(1.0f);
-	if (!time) 
+	if (!time)
 	{
 		rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
 		rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
 		rotationMatrix = glm::rotate(rotationMatrix, glm::radians(rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
-	else 
+	else
 	{
 		rotationMatrix = glm::rotate(rotationMatrix, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));
 	}
 	SetModelMatrix();
+}
+
+Entity* Entity::Move(glm::vec3 pos)
+{
+	return Move(pos.x, pos.y, pos.z);
+}
+
+Entity* Entity::Move(float x, float y, float z)
+{
+	glm::vec3 prevPos = GetPosition();
+	SetPosition(x, y, z);
+
+	for (auto it = CollisionManager::entitiesCollision.begin(); it != CollisionManager::entitiesCollision.end(); ++it)
+	{
+		if (this == *it)
+			continue;
+
+		if (CollisionManager::IsCollision2DRecRec(this, *it))
+		{
+			SetPosition(prevPos.x, prevPos.y, prevPos.z);
+			return this;
+		}
+	}
+
+	return nullptr;
 }
 
 glm::vec3 Entity::GetViewportPosition()
@@ -62,6 +89,11 @@ glm::vec3 Entity::GetViewportPosition()
 	pos.z = (translate.z);
 
 	return translate;
+}
+
+void Entity::AddCollision()
+{
+	CollisionManager::AddToList(this);
 }
 
 void Entity::SetModelMatrix() 

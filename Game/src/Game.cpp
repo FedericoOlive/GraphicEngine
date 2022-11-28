@@ -6,119 +6,92 @@ void Game::Initialize()
 {
 	srand(time(nullptr));
 
-	quad = CreateQuad();
+	floor = CreateQuad();
+	floor->SetColorTint(1, 1, 1, 1);
+	floor->SetPosition(640, 0, 0);
+	floor->SetScale(1280, 100, 1);
+	floor->AddCollision();
 
-	quad->SetColorTint(1, 1, 1, 1);
-	quad->SetPosition(1, 1, 0);
-	quad->SetScale(1, 1, 1);
-
-
-	Texture* texture = new Texture("res/vegito.png");
-	sprite1 = CreateSprite(texture);
-
-	sprite1->SetColorTint(1, 1, 1, 1);
-	sprite1->SetPosition(1, 0.0f, 0.0f);
-	sprite1->SetScale(1, 1, 1);
-
-	Texture* texture2 = new Texture("res/sprite2.png");
-	sprite2 = CreateSprite(texture2);
+	Texture* text = new Texture("player");
+	float width = text->width;
+	float height = text->height;
 	
-	sprite2->SetColorTint(1, 1, 1, 1);
-	sprite2->SetPosition(0, 0, 0.0f);
-	sprite2->SetScale(200, 200, 1);
-
-	Texture* texture3 = new Texture("res/vegito2.png");
-	sprite3 = CreateSprite(texture3);
-
-	sprite3->SetColorTint(1, 1, 1, 1);
-	sprite3->SetPosition(0.0f, 0.8f, 0.0f);
-	sprite3->SetScale(1, 1, 1);
-
-	Texture* texture4 = new Texture("res/god.png");
-	sprite4 = CreateSprite(texture4);
-
-	sprite4->SetColorTint(1, 1, 1, 1);
-	sprite4->SetPosition(0.0f, -0.8f, 0.0f);
-	sprite4->SetScale(1, 1, 1);
-
-
-	sprite1->AddAnimation(0, 0, 384, 384, 7296, 384, 2.5f, 19);
-	
-	sprite2->AddAnimation(0, 0, 309, 309, 1854, 309, 0.2f,6);	
-
-	sprite3->AddAnimation(0, 0, 498, 357, 8466, 357, 0.5f, 17);
-
-	sprite4->AddAnimation(0, 0, 500, 281, 5000, 281, 0.5f, 10);
+	player = CreateSprite(text);
+	player->SetColorTint(1.0f, 0.0f, 0.0f, 1);
+	player->SetPosition(640, 360, 0);
+	player->SetScale(400, 400, 1);
+	//player->AddAnimation(0.0f, 64.0f, 32.0f, 32.0f, width, height);
+	player->AddCollision();
 }
 
 void Game::Inputs()
 {
-	glm::vec3 pos = sprite2->GetPosition();
-	glm::vec3 rot = sprite2->GetRotation();
-	glm::vec3 scale = sprite2->GetScale();
+	glm::vec3 pos = player->GetPosition();
+	glm::vec3 rot = player->GetRotation();
+	glm::vec3 scale = player->GetScale();
 
 	bool modified = false;
 
 	if(IsKeyDown(KeyCode::W))
 	{
 		modified = true;
-		pos.y += 0.25f;
+		pos.y += 1 * multiply;
 	}
 
 	if (IsKeyDown(KeyCode::A))
 	{
 		modified = true;
-		pos.x -= 0.25f;
+		pos.x -= 1 * multiply;
 	}
 		
 	if (IsKeyDown(KeyCode::S))
 	{
 		modified = true;
-		pos.y -= 0.25f;
+		pos.y -= 1 * multiply;
 	}
 		
 	if (IsKeyDown(KeyCode::D))
 	{
 		modified = true;
-		pos.x += 0.25f;
+		pos.x += 1 * multiply;
 	}
 		
 
 	if (IsKeyDown(KeyCode::Q))
 	{
 		modified = true;
-		rot.z += 15;
+		rot.z += 1 * multiply;
 	}
 		
 	if (IsKeyDown(KeyCode::E))
 	{
 		modified = true;
-		rot.z -= 15;
+		rot.z -= 1 * multiply;
 	}
 
 	if (IsKeyDown(KeyCode::Z))
 	{
 		modified = true;
-		scale.x += 0.1f;
-		scale.y += 0.1f;
-		scale.z = 0;
+		scale.x += 1 * multiply;
+		scale.y += 1 * multiply;
+		scale.z = 0 * multiply;
 	}
 	if (IsKeyDown(KeyCode::X))
 	{
 		modified = true;
-		scale.x -= 0.1f;
-		scale.y -= 0.1f;
-		scale.z = 0;
+		scale.x -= 1 * multiply;
+		scale.y -= 1 * multiply;
+		scale.z = 0 * multiply;
 	}
 
-	if (modified) 
+	if (modified)
 	{
-		sprite2->SetPosition(pos);
-		sprite2->SetScale(scale);
-		sprite2->SetRotation(rot, false);
+		player->Move(pos);
+		player->SetScale(scale);
+		player->SetRotation(rot, false);
 	}
 
-	std::cout << "Pos: " << sprite2->GetViewportPosition().x << ", " << sprite2->GetViewportPosition().y << ", " << sprite2->GetViewportPosition().z << std::endl;
+	std::cout << "Pos: " << player->GetViewportPosition().x << ", " << player->GetViewportPosition().y << ", " << player->GetViewportPosition().z << std::endl;
 }
 
 void Game::Update()
@@ -128,11 +101,8 @@ void Game::Update()
 
 void Game::Draw()
 {
-	/*sprite1->Draw();*/
-	sprite2->Draw();
-	quad->Draw();
-	/*sprite3->Draw();
-	sprite4->Draw();*/
+	floor->Draw();
+	player->Draw();
 }
 
 float Game::GetRandom()
@@ -144,15 +114,6 @@ float Game::GetRandom()
 
 void Game::DeInitialize()
 {
-	sprite2->DeleteTextureAsociate();
-	sprite3->DeleteTextureAsociate();
-	sprite1->DeleteTextureAsociate();
-	sprite4->DeleteTextureAsociate();
-	delete sprite1;
-	delete sprite2;
-	delete sprite3;
-	delete sprite4;
-	delete triangle;
-	delete quad;
-	delete backGround;
+	delete floor;
+	delete player;
 }

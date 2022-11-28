@@ -31,7 +31,10 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
 Sprite::~Sprite() 
 { 
     if (animation != nullptr)
-        delete animation;	
+    {
+        delete animation;
+        animation = nullptr;
+    }
 }
 
 void Sprite::Draw()
@@ -74,7 +77,11 @@ void Sprite::SetTexture(Texture* texture)
 
 void Sprite::DeleteTextureAsociate()
 {
-    delete texture;
+    if (texture != nullptr)
+    {
+        delete texture;
+        texture = nullptr;
+    }
 }
 
 void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs)
