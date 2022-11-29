@@ -6,11 +6,12 @@
 #include "Texture.h"
 #include "Frame.h"
 #include "Entity/Entity2D.h"
+#include <vector>
 
 class SAUCA_API Sprite : public Entity2D
 {
 private:
-	Animation* animation;
+	std::vector<Animation*> animations;
 	Texture* texture;
 	Frame frame;
 	bool hasAnimation;
@@ -22,7 +23,7 @@ public:
 	Sprite(Texture* texture, Renderer* renderer);
 	~Sprite();
 	void DeleteTextureAsociate();
-	void Draw();
+	void Draw(int anim = 0);
 	void SetTexture(Texture* texture);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount);

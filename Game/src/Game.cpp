@@ -12,16 +12,16 @@ void Game::Initialize()
 	floor->SetScale(1280, 100, 1);
 	floor->AddCollision();
 
-	Texture* text = new Texture("player");
-	float width = text->width;
-	float height = text->height;
+	text = new Texture("res/player1.png");
+
 	
 	player = CreateSprite(text);
-	player->SetColorTint(1.0f, 0.0f, 0.0f, 1);
+	player->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
 	player->SetPosition(640, 360, 0);
 	player->SetScale(400, 400, 1);
-	//player->AddAnimation(0.0f, 64.0f, 32.0f, 32.0f, width, height);
 	player->AddCollision();
+	player->AddAnimation(0, 0, 512, 384, 4096, 384, 1, 8);
+	player->AddAnimation(256, 0, 512, 384, 4096, 384, 1, 4);
 }
 
 void Game::Inputs()
@@ -102,7 +102,7 @@ void Game::Update()
 void Game::Draw()
 {
 	floor->Draw();
-	player->Draw();
+	player->Draw(0);
 }
 
 float Game::GetRandom()

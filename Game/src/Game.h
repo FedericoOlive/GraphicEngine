@@ -7,8 +7,9 @@ class Game : public BaseGame
 private:
 	Quad* floor;
 	Sprite* player;
+	Texture* text;
 	int indexDraw = 0;
-	float multiply = 10;
+	float multiply = 1;
 public:
 	void Initialize()override;
 	void Inputs() override;

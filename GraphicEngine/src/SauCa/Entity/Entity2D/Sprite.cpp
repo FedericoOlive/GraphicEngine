@@ -30,21 +30,21 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
 
 Sprite::~Sprite() 
 { 
-    if (animation != nullptr)
+    while (!animations.empty()) 
     {
-        delete animation;
-        animation = nullptr;
+        delete animations.back();
+        animations.pop_back();
     }
 }
 
-void Sprite::Draw()
+void Sprite::Draw(int anim )
 {
     if (hasAnimation) 
     {
-        animation->Update();
+        animations[anim]->Update();
 
 
-        frame = animation->GetFrames()[animation->CurrentFrame()];
+        frame = animations[anim]->GetFrames()[animations[anim]->CurrentFrame()];
         float currentUv[8] =
         {
             frame.coordinates[0].u,frame.coordinates[0].v,
@@ -88,12 +88,13 @@ void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float fr
 {
     glGenBuffers(1, &UVBuffer);
     hasAnimation = true;
-    animation = new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs);
+    animations.push_back(new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs));
 }
 
 void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount)
 {
     glGenBuffers(1, &UVBuffer);
     hasAnimation = true;
-    animation = new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs, frameCount);
+    animations.push_back(new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs,frameCount));
 }
+
