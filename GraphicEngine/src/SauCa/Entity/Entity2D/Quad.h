@@ -5,5 +5,6 @@ class SAUCA_API Quad : public Shape
 {
 public:
 	Quad(Renderer* renderer);
+	Quad(Renderer* renderer, Material* mat);
 	~Quad();
 };

@@ -27,6 +27,7 @@ public:
 	void SetTexture(Texture* texture);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount);
+	std::vector<Animation*> GetAnimations();
 };
 
 #endif

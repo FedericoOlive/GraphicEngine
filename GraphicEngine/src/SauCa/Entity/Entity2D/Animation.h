@@ -18,7 +18,7 @@ public:
 	Animation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount);
 	~Animation();
 	void Update();
-
+	bool IsFinished();
 	int CurrentFrame();
 
 	vector<Frame>& GetFrames();
@@ -26,6 +26,8 @@ private:
 	float currentFrame;
 	float currentTime;
 	float length;
+	bool finished;
+
 	vector<Frame> anim;
 
 	

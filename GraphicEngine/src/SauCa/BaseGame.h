@@ -43,6 +43,7 @@ public:
 	// World Objects
 	Triangle* CreateTriangle();
 	Quad* CreateQuad();
+	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
 	void SetMaterial(Material* material);
 

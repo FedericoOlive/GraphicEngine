@@ -98,3 +98,8 @@ void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float fr
     animations.push_back(new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs,frameCount));
 }
 
+std::vector<Animation*> Sprite::GetAnimations()
+{
+    return animations;
+}
+

@@ -100,6 +100,12 @@ Quad* BaseGame::CreateQuad()
     return quad;
 }
 
+Quad* BaseGame::CreateQuad(Material* mat)
+{
+    Quad* quad = new Quad(renderer,mat);
+    return quad;
+}
+
 Sprite* BaseGame::CreateSprite(Texture* texture)
 {
     Sprite* sprite = new Sprite(texture, renderer);
