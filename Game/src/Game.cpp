@@ -12,7 +12,7 @@ void Game::Initialize()
 	floor->SetScale(1280, 100, 1);
 	floor->AddCollision();
 
-	text = new Texture("res/player1.png");
+	text = new Texture("res/gokucharge.png");
 
 	
 	player = CreateSprite(text);
@@ -20,8 +20,8 @@ void Game::Initialize()
 	player->SetPosition(640, 360, 0);
 	player->SetScale(400, 400, 1);
 	player->AddCollision();
-	player->AddAnimation(0, 0, 512, 384, 4096, 384, 1, 8);
-	player->AddAnimation(256, 0, 512, 384, 4096, 384, 1, 4);
+	player->AddAnimation(0, 0, 221, 219, 7514, 219, 0.7, 2);
+	player->AddAnimation(442, 0, 221, 219, 7514, 219, 0.7, 8);
 }
 
 void Game::Inputs()
@@ -83,6 +83,11 @@ void Game::Inputs()
 		scale.y -= 1 * multiply;
 		scale.z = 0 * multiply;
 	}
+	currentAnim = 0;
+	if (IsKeyDown(KeyCode::F))
+	{
+		currentAnim = 1;
+	}
 
 	if (modified)
 	{
@@ -102,7 +107,7 @@ void Game::Update()
 void Game::Draw()
 {
 	floor->Draw();
-	player->Draw(0);
+	player->Draw(currentAnim);
 }
 
 float Game::GetRandom()

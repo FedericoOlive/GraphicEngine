@@ -8,6 +8,7 @@ private:
 	Quad* floor;
 	Sprite* player;
 	Texture* text;
+	int currentAnim;
 	int indexDraw = 0;
 	float multiply = 1;
 public:
