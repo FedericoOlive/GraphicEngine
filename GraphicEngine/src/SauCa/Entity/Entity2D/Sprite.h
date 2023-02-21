@@ -10,7 +10,7 @@
 
 class SAUCA_API Sprite : public Entity2D
 {
-private:
+protected:
 	std::vector<Animation*> animations;
 	Texture* texture;
 	Frame frame;
@@ -28,6 +28,7 @@ public:
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount);
 	std::vector<Animation*> GetAnimations();
+	void SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, glm::vec2 bottomLeft, glm::vec2 topLeft);
 };
 
 #endif

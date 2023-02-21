@@ -11,17 +11,17 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
     sizeVertices = 32;
 
     vertices = new float[sizeVertices] {
-        // positions          // colors           // texture coords
-         0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f  // top left 
+        // Positions          // Colors           // Texture Coords
+         0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f, // Top Right
+         0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f, // Bottom Right
+        -0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f, // Bottom Left
+        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f  // Top Left 
     };
 
     sizeIndices = 6;
     indices = new int[sizeIndices] {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
+        0, 1, 3, // First Triangle
+        1, 2, 3  // Second Triangle
     };
 
     renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
@@ -43,24 +43,12 @@ void Sprite::Draw(int anim )
     {
         animations[anim]->Update();
 
-
         frame = animations[anim]->GetFrames()[animations[anim]->CurrentFrame()];
-        float currentUv[8] =
-        {
-            frame.coordinates[0].u,frame.coordinates[0].v,
-            frame.coordinates[1].u,frame.coordinates[1].v,
-            frame.coordinates[2].u,frame.coordinates[2].v,
-            frame.coordinates[3].u,frame.coordinates[3].v,
-        };
-
-        vertices[6] = currentUv[0];
-        vertices[7] = currentUv[1];
-        vertices[14] = currentUv[2];
-        vertices[15] = currentUv[3];
-        vertices[22] = currentUv[4];
-        vertices[23] = currentUv[5];
-        vertices[30] = currentUv[6];
-        vertices[31] = currentUv[7];
+        SetTextureCoordinates(
+            { frame.coordinates[0].u, frame.coordinates[0].v },
+            { frame.coordinates[1].u, frame.coordinates[1].v },
+            { frame.coordinates[2].u, frame.coordinates[2].v },
+            { frame.coordinates[3].u, frame.coordinates[3].v });
 
         renderer->BindVertexs(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
         renderer->SetSpriteAttributes();
@@ -103,3 +91,17 @@ std::vector<Animation*> Sprite::GetAnimations()
     return animations;
 }
 
+void Sprite::SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, glm::vec2 bottomLeft, glm::vec2 topLeft)
+{
+    vertices[6] = topRight.x;
+    vertices[7] = topRight.y;
+
+    vertices[14] = bottomRight.x;
+    vertices[15] = bottomRight.y;
+
+    vertices[22] = bottomLeft.x;
+    vertices[23] = bottomLeft.y;
+
+    vertices[30] = topLeft.x;
+    vertices[31] = topLeft.y;
+}
