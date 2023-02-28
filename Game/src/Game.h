@@ -2,7 +2,7 @@
 #define GAME_H
 #include "SauCa.h"
 
-class Player
+class MiniGameSayayin
 {
 public:
 	Sprite* ssj1;
@@ -19,7 +19,7 @@ public:
 	glm::vec3 rotation;
 	glm::vec3 scale;
 	
-	Player()
+	MiniGameSayayin()
 	{
 		ssj1 = nullptr;
 		ssj2 = nullptr;
@@ -36,7 +36,7 @@ public:
 		scale = { 0,0,0 };
 	}
 
-	~Player()
+	~MiniGameSayayin()
 	{
 		delete ssj1;
 		delete ssj2;
@@ -48,36 +48,9 @@ public:
 		delete godtext;
 	}
 
-	void Move(glm::vec3 newPos)
-	{
-		position = newPos;
-		ssj1->SetPosition(position);
-		ssj2->SetPosition(position);
-		ssj3->SetPosition(position);
-		god->SetPosition(position);
-	}
-	
-	void SetScale(glm::vec3 newScale)
-	{
-		scale = newScale;
-		ssj1->SetScale(scale);
-		ssj2->SetScale(scale);
-		ssj3->SetScale(scale);
-		god->SetScale(scale);
-	}
-	
-	void SetRotation(glm::vec3 newRot)
-	{
-		rotation = newRot;
-		ssj1->SetRotation(rotation, false);
-		ssj2->SetRotation(rotation, false);
-		ssj3->SetRotation(rotation, false);
-		god->SetRotation(rotation, false);
-	}
-
 	void CreatePlayerAssets()
 	{
-		position = { 640, 360, 1 };
+		position = { 1280 / 10 * 9, 720 / 2, 1 };
 		scale = { 400, 400, 1 };
 		
 		ssj1->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
@@ -113,11 +86,12 @@ public:
 class Game : public BaseGame
 {
 private:
-	Quad* floor;
 	Quad* totalKi;
 	Quad* actualKi;
+	Sprite* goku;
+	Texture* gokutext;
 
-	Player* player;
+	MiniGameSayayin* player;
 	int currentForm;
 	int currentAnim;
 	float ki = 0;
@@ -128,6 +102,7 @@ private:
 
 public:
 	void Initialize()override;
+	void InitGameSayayin();
 	void Inputs() override;
 	void Update()override;
 	void Draw()override;

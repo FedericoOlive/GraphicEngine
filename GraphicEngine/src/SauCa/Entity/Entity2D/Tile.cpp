@@ -31,11 +31,7 @@ Tile::~Tile()
 
 bool Tile::IsWalkable()
 {
-	if (!isWalkable)
-		return false;
-
-	else
-		return true;
+	return isWalkable;
 }
 
 void Tile::Walkability(bool bWalkable)

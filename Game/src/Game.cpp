@@ -1,31 +1,27 @@
 #include "Game.h"
 #include <time.h>
 
-
 void Game::Initialize()
 {
 	srand(time(nullptr));
 
-	floor = CreateQuad();
-	floor->SetColorTint(1, 1, 1, 1);
-	floor->SetPosition(640, 0, 0);
-	floor->SetScale(1280, 100, 1);
-	AddCollision(floor, true);
+	InitGameSayayin();
+	
+	gokutext = new Texture("res/goku.png");
+	goku = CreateSprite(gokutext);
+	goku->SetPosition(1280 / 2, 720 / 2, 0);
+	goku->SetScale(50, 50, 50);	
 
-	Material* m = new Material(new Shader(false), false);
-	Material* m2 = new Material(new Shader(false), false);
+	AddCollision(goku, false);
 
-	totalKi = CreateQuad(m);
-	totalKi->SetColorTint(1, 0.5f, 0, 1);
-	totalKi->SetPosition(640, 600, 0);
-	totalKi->SetScale(1100, 200, 1);
+	tileMap = CreateTileMap("res/TileMap/mymapa.tmx", "res/TileMap/E3.png");
+	tileMap->pos = { 640, 300, 0 };
+	tileMap->SetSize(2);
+}
 
-	actualKi = CreateQuad(m2);
-	actualKi->SetColorTint(1, 1, 0, 1);
-	actualKi->SetPosition(640, 600, 0);
-	actualKi->SetScale(0, 180, 1);
-
-	player = new Player();
+void Game::InitGameSayayin()
+{
+	player = new MiniGameSayayin();
 
 	player->ssj1text = new Texture("res/ssj1.png");
 	player->ssj2text = new Texture("res/ssj2.png");
@@ -36,29 +32,30 @@ void Game::Initialize()
 	player->ssj2 = CreateSprite(player->ssj2text);
 	player->ssj3 = CreateSprite(player->ssj3text);
 	player->god = CreateSprite(player->godtext);
+	
+	Material* m = new Material(new Shader(false), false);
+	Material* m2 = new Material(new Shader(false), false);
+	
+	totalKi = CreateQuad(m);
+	totalKi->SetColorTint(1, 0.5f, 0, 1);
+	totalKi->SetPosition(640, 700, 0);
+	totalKi->SetScale(1100, 50, 1);
 
+	actualKi = CreateQuad(m2);
+	actualKi->SetColorTint(1, 1, 0, 1);
+	actualKi->SetPosition(640, 700, 0);
+	actualKi->SetScale(0, 50, 1);
+	
 	player->CreatePlayerAssets();
 
-	AddCollision(player->ssj1, false);
-
 	currentForm = 0;
-
-	tileMap = CreateTileMap("res/TileMap/mymapa.tmx", "res/TileMap/E3.png");
-	tileMap->pos = { 1280 / 2, 720 / 2, 0 };
-	tileMap->SetSize(3.0f);
 }
 
 void Game::Inputs()
-{
-	
-	glm::vec3 pos = player->position;
-	glm::vec3 rot = player->rotation;
-	glm::vec3 scale = player->scale;
-	cout << "Player Pos: X: " << pos.x << " Y: " << pos.y << " Z:" << pos.z << " \n";
-	cout << "Player Pos: X: " << player->ssj1->GetPosition().x << " Y: " << player->ssj1->GetPosition().y << " Z:" << player->ssj1->GetPosition().z << " \n";
-	//cout << "Player Rot: X: " << rot.x << " Y: " << rot.y << " Z:" << rot.z << " \n";
-	//cout << "Player Scale: X: " << scale.x << " Y: " << scale.y << " Z:" << scale.z << " \n";
-	cout << "-----------------------------------------------\n";
+{	
+	glm::vec3 pos = goku->GetPosition();
+	glm::vec3 rot = goku->GetRotation();
+	glm::vec3 scale = goku->GetScale();
 
 	bool modified = false;
 
@@ -129,9 +126,9 @@ void Game::Inputs()
 
 	if (modified)
 	{
-		player->Move(pos);
-		player->SetScale(scale);
-		player->SetRotation(rot);
+		goku->SetPosition(pos);
+		goku->SetRotation(rot, false);
+		goku->SetScale(scale);
 	}
 
 	//std::cout << "Pos: " << player->GetViewportPosition().x << ", " << player->GetViewportPosition().y << ", " << player->GetViewportPosition().z << std::endl;
@@ -152,22 +149,18 @@ void Game::Update()
 		ki = 0;
 	}
 
-	actualKi->SetScale(ki * 1000, 180, 0);
+	actualKi->SetScale(ki * 1100, 50, 0);
 	UpdateCollisions(tileMap);
-
-	player->position = player->ssj1->GetPosition();
 }
 
 void Game::Draw()
 {
 	tileMap->Draw();
-	//floor->Draw();
-	//totalKi->Draw();
-	//actualKi->Draw();
-
-	player->ssj1->Draw(0);
+	totalKi->Draw();
+	actualKi->Draw();
+	goku->Draw();
 	
-	/*switch (currentForm)
+	switch (currentForm)
 	{
 	case 0:
 		player->ssj1->Draw(0);
@@ -222,7 +215,7 @@ void Game::Draw()
 		break;
 	default:
 		break;
-	}*/
+	}
 }
 
 float Game::GetRandom()
@@ -234,6 +227,5 @@ float Game::GetRandom()
 
 void Game::DeInitialize()
 {
-	delete floor;
 	delete player;
 }

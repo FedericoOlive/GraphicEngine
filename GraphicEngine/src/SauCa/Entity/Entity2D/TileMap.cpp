@@ -240,8 +240,8 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 
 bool TileMap::CheckCollision(Entity2D& object)
 {
-	convertedPosX = object.GetPosition().x + (width / 2.0f) * tileWidth;
-	convertedPosY = object.GetPosition().y + (height / 2.0f) * tileHeight;
+	convertedPosX = object.GetPosition().x + (width / 2.0f) * tileWidth - pos.x;
+	convertedPosY = object.GetPosition().y + (height / 2.0f) * tileHeight + pos.y;
 
 	int left_tile = convertedPosX / tileWidth;
 	int right_tile = (convertedPosX + object.GetScale().x) / tileWidth;
@@ -263,10 +263,8 @@ bool TileMap::CheckCollision(Entity2D& object)
 
 	for (int i = left_tile; i <= right_tile; i++)
 	{
-
 		for (int j = top_tile; j <= bottom_tile; j++)
 		{
-
 			for (int k = 0; k < tileMapGrid.size(); k++)
 			{
 				//std::cout << "caminable " << "[" << k << "]" << "[" << j << "]" << "[" << i << "] : "<< tileMapGrid[k][j][i].isWalkable(); // true == 1  ; false == 0
