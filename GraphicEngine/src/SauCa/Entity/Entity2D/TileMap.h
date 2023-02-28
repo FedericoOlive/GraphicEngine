@@ -28,6 +28,7 @@ private:
 	Renderer* renderer;
 	
 public:
+	glm::vec3 pos = { 0,0,0 };
 	TileMap(Renderer* render);
 	~TileMap();
 
@@ -37,7 +38,8 @@ public:
 
 	void SetDimensions(float width, float heigth);
 	void SetTileDimensions(float tileWidth, float tileHeigth);
-
+	void SetSize(float size);
+	
 	void SetTexture(Texture* rkTexture);
 	void Draw();
 

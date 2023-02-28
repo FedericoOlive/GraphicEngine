@@ -104,7 +104,7 @@ void TileMap::Draw()
 				if (tileMapGrid[i][y][x].GetId() != NULL)
 				{
 					glm::vec3 pos = glm::vec3(mapWidth + (tileWidth * x), mapHeight - (tileHeight * y), 0);
-					tileMapGrid[i][y][x].SetPosition(pos);
+					//tileMapGrid[i][y][x].SetPosition(pos);
 					tileMapGrid[i][y][x].Draw();
 				}
 			}
@@ -140,7 +140,7 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 	//imagePath = "../res/assets/";																//
 	//imagePath += pTileset->FirstChildElement("image")->Attribute("source");			// Loading Textures
 	
-	texture = new Texture(resPath); // textureImporter::loadTexture(imagePath.c_str(), true);
+	texture = new Texture(resPath,false); // textureImporter::loadTexture(imagePath.c_str(), true);
 	renderer->BindTextures(texture->texture);
 	renderer->SetSpriteAttributes();
 	// Save the Tiles in the TileMap
@@ -172,18 +172,18 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 		tileY += tileHeight;
 	}
 
-	tinyxml2::XMLElement* pTile = pTileset->FirstChildElement("Tile");
+	tinyxml2::XMLElement* pTile = pTileset->FirstChildElement("tile");
 
 	while (pTile) {
 		unsigned int id = pTile->IntAttribute("id");
 		tinyxml2::XMLElement* pProperty = pTile->FirstChildElement("properties")->FirstChildElement("property");
-		std::string propertyName = pProperty->Attribute("Collision");
+		std::string propertyName = pProperty->Attribute("value");
 		if (propertyName == "false")
 			tiles[id].Walkability(false);
 		else
 			tiles[id].Walkability(true);
 
-		pTile = pTile->NextSiblingElement("Tile");
+		pTile = pTile->NextSiblingElement("tile");
 	}
 
 	// Loading Layer element
@@ -282,7 +282,7 @@ bool TileMap::CheckCollision(Entity2D& object)
 					{
 						//std::cout << "overlapx = " << overlapX << std::endl;
 						//std::cout << "overlapy = " << overlapY << std::endl;
-					
+						cout << "Hay Colision!\n";
 						object.ApplyCollisionRestrictions(colType, overlapX, overlapY, false);
 						return true;
 					}
@@ -306,4 +306,31 @@ int TileMap::GetHeight()
 std::vector<Tile**> TileMap::GetTilesGrid()
 {
 	return tileMapGrid;
+}
+
+void TileMap::SetSize(float size)
+{
+	float mapWidth = -(width * tileWidth / 2.f);
+	float mapHeight = height * tileHeight / 2.f;
+
+	for (int i = 0; i < tileMapGrid.size(); i++)
+	{
+		for (int y = 0; y < this->height; y++)
+		{
+			for (int x = 0; x < this->width; x++)
+			{
+				if (tileMapGrid[i][y][x].GetId() != NULL)
+				{
+					glm::vec3 pos = this->pos;
+					pos.x += (mapWidth + (tileWidth * x)) * size;
+					pos.y += (mapHeight - (tileHeight * y)) * size;
+					tileMapGrid[i][y][x].SetPosition(pos.x, pos.y, pos.z);
+					tileMapGrid[i][y][x].SetScale(tileWidth * size, tileHeight * size, 1.f);
+				}
+			}
+		}
+	}
+
+	tileWidth *= size;
+	tileHeight *= size;
 }

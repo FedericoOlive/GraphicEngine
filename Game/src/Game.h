@@ -123,7 +123,7 @@ private:
 	float ki = 0;
 	bool chargeable = true;
 	int indexDraw = 0;
-	float multiply = 1;
+	float multiply = 5;
 	TileMap* tileMap;
 
 public:

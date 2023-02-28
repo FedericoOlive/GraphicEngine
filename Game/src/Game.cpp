@@ -43,8 +43,9 @@ void Game::Initialize()
 
 	currentForm = 0;
 	
-	tileMap = CreateTileMap("res/TileMap/TileMap.tmx", "res/TileMap/TileMap.png");
-	//tileMap->SetDimensions(600, 600);
+	tileMap = CreateTileMap("res/TileMap/mymapa.tmx", "res/TileMap/E3.png");
+	tileMap->pos = { 1280/2, 720/2, 0 };
+	tileMap->SetSize(2.0f);
 }
 
 void Game::Inputs()
@@ -53,10 +54,11 @@ void Game::Inputs()
 	glm::vec3 pos = player->position;
 	glm::vec3 rot = player->rotation;
 	glm::vec3 scale = player->scale;
-	//cout << "Player Pos: X: " << pos.x << " Y: " << pos.y << " Z:" << pos.z << " \n";
+	cout << "Player Pos: X: " << pos.x << " Y: " << pos.y << " Z:" << pos.z << " \n";
+	cout << "Player Pos: X: " << player->ssj1->GetPosition().x << " Y: " << player->ssj1->GetPosition().y << " Z:" << player->ssj1->GetPosition().z << " \n";
 	//cout << "Player Rot: X: " << rot.x << " Y: " << rot.y << " Z:" << rot.z << " \n";
 	//cout << "Player Scale: X: " << scale.x << " Y: " << scale.y << " Z:" << scale.z << " \n";
-	//cout << "-----------------------------------------------\n";
+	cout << "-----------------------------------------------\n";
 
 	bool modified = false;
 
@@ -151,14 +153,17 @@ void Game::Update()
 	}
 
 	actualKi->SetScale(ki * 1000, 180, 0);
+	UpdateCollisions(tileMap);
+
+	player->position = player->ssj1->GetPosition();
 }
 
 void Game::Draw()
 {
 	tileMap->Draw();
-	floor->Draw();
-	totalKi->Draw();
-	actualKi->Draw();
+	//floor->Draw();
+	//totalKi->Draw();
+	//actualKi->Draw();
 
 	player->ssj1->Draw(0);
 	

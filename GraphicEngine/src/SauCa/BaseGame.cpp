@@ -191,3 +191,8 @@ void BaseGame::LoadInfo()
     std::cout << dataTab << "GLSL:     " << glGetString(GL_SHADING_LANGUAGE_VERSION) << "\n";
     std::cout << "\n";
 }
+
+void BaseGame::UpdateCollisions(TileMap* tileMap)
+{
+    collisionManager->UpdateCollisionsInTileMap(tileMap);
+}

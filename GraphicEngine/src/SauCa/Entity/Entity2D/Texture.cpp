@@ -58,10 +58,10 @@ void Texture::SetTextureFiltering(int textureFiltering)
     }
 }
 
-void Texture::LoadImage(std::string path)
+void Texture::LoadImage(std::string path, bool invert = true)
 {
     int  nrChannels;
-    stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
+    stbi_set_flip_vertically_on_load(invert); // tell stb_image.h to flip loaded texture's on the y-axis.
 
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
     if (data)
@@ -105,12 +105,12 @@ void Texture::LoadImage(std::string path)
     stbi_image_free(data);
 }
 
-Texture::Texture(std::string path)
+Texture::Texture(std::string path, bool invert)
 {
     BindTexture();
     SetTextureWrapping(99);
     SetTextureFiltering(99);
-    LoadImage(path);
+    LoadImage(path, invert);
 }
 
 Texture::~Texture()
