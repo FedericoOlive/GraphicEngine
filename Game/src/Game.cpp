@@ -228,4 +228,9 @@ float Game::GetRandom()
 void Game::DeInitialize()
 {
 	delete player;
+	delete totalKi;
+	delete actualKi;
+	delete goku;
+	delete gokutext;
+	delete tileMap;
 }
