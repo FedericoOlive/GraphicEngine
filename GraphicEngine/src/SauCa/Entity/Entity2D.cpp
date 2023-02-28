@@ -1,6 +1,7 @@
 #include "Entity2D.h"
 #include <algorithm>
 #include <math.h>
+#include <windows.h>
 
 Entity2D::Entity2D()
 {
@@ -14,15 +15,13 @@ void Entity2D::SetCollisionManager(CollisionManager* collisionManager)
 
 CollisionType Entity2D::CheckCollision(Entity2D& target, float& xOverlap, float& yOverlap)
 {
-	xOverlap = 0;
-	yOverlap = 0;
-	//xOverlap = max(0.0f,
-	//	min(GetPosition().x + fabs(GetScale().x) / 2.0f, target.GetPosition().x + fabs(target.GetScale().x) / 2.0f) -
-	//	max(GetPosition().x - fabs(GetScale().x) / 2.0f, target.GetPosition().x - fabs(target.GetScale().x) / 2.0f));
-	//
-	//yOverlap = max(0.0f,
-	//	min(GetPosition().y + fabs(GetScale().y) / 2.0f, target.GetPosition().y + fabs(target.GetScale().y) / 2.0f) -
-	//	max(GetPosition().y - fabs(GetScale().y) / 2.0f, target.GetPosition().y - fabs(target.GetScale().y) / 2.0f));
+	xOverlap = max(0.0f,
+		min(GetPosition().x + fabs(GetScale().x) / 2.0f, target.GetPosition().x + fabs(target.GetScale().x) / 2.0f) -
+		max(GetPosition().x - fabs(GetScale().x) / 2.0f, target.GetPosition().x - fabs(target.GetScale().x) / 2.0f));
+	
+	yOverlap = max(0.0f,
+		min(GetPosition().y + fabs(GetScale().y) / 2.0f, target.GetPosition().y + fabs(target.GetScale().y) / 2.0f) -
+		max(GetPosition().y - fabs(GetScale().y) / 2.0f, target.GetPosition().y - fabs(target.GetScale().y) / 2.0f));
 
 	if (xOverlap != 0.0f && yOverlap != 0.0f)
 	{

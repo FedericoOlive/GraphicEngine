@@ -275,7 +275,7 @@ bool TileMap::CheckCollision(Entity2D& object)
 				{
 					float overlapX = 0;
 					float overlapY = 0;
-					//Todo Descomentar
+
 					CollisionType colType = object.CheckCollision(tileMapGrid[k][j][i], overlapX, overlapY);
 					
 					if (colType != CollisionType::none)

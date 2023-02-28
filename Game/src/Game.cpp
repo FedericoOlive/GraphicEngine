@@ -26,7 +26,7 @@ void Game::Initialize()
 	actualKi->SetScale(0, 180, 1);
 
 	player = new Player();
-	
+
 	player->ssj1text = new Texture("res/ssj1.png");
 	player->ssj2text = new Texture("res/ssj2.png");
 	player->ssj3text = new Texture("res/ssj3.png");
@@ -38,14 +38,14 @@ void Game::Initialize()
 	player->god = CreateSprite(player->godtext);
 
 	player->CreatePlayerAssets();
-	
+
 	AddCollision(player->ssj1, false);
 
 	currentForm = 0;
-	
+
 	tileMap = CreateTileMap("res/TileMap/mymapa.tmx", "res/TileMap/E3.png");
-	tileMap->pos = { 1280/2, 720/2, 0 };
-	tileMap->SetSize(2.0f);
+	tileMap->pos = { 1280 / 2, 720 / 2, 0 };
+	tileMap->SetSize(3.0f);
 }
 
 void Game::Inputs()
