@@ -1,5 +1,23 @@
 #include "Sprite.h"
 #include "Timer.h"
+Sprite::Sprite()
+{
+    sizeVertices = 32;
+
+    vertices = new float[sizeVertices] {
+        // Positions          // Colors           // Texture Coords
+        0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Top Right
+            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Bottom Right
+            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Bottom Left
+            -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Top Left 
+    };
+
+    sizeIndices = 6;
+    indices = new int[sizeIndices] {
+        0, 1, 3, // First Triangle
+            1, 2, 3  // Second Triangle
+    };
+}
 
 Sprite::Sprite(Texture* texture, Renderer* renderer)
 {
@@ -39,7 +57,7 @@ Sprite::~Sprite()
 
 void Sprite::Draw(int anim )
 {
-    if (hasAnimation) 
+    if (hasAnimation)
     {
         animations[anim]->Update();
 
@@ -49,9 +67,6 @@ void Sprite::Draw(int anim )
             { frame.coordinates[1].u, frame.coordinates[1].v },
             { frame.coordinates[2].u, frame.coordinates[2].v },
             { frame.coordinates[3].u, frame.coordinates[3].v });
-
-        renderer->BindVertexs(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
-        renderer->SetSpriteAttributes();
     }
 
     renderer->BindTextures(texture->texture);
@@ -104,4 +119,7 @@ void Sprite::SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, gl
 
     vertices[30] = topLeft.x;
     vertices[31] = topLeft.y;
+	
+    renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
+    renderer->SetSpriteAttributes();
 }

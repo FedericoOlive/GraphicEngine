@@ -25,7 +25,7 @@ private:
 
 	std::string imagePath;
 
-	Renderer* currentRender;
+	Renderer* renderer;
 	
 public:
 	TileMap(Renderer* render);
@@ -41,7 +41,7 @@ public:
 	void SetTexture(Texture* rkTexture);
 	void Draw();
 
-	bool ImportTileMap(std::string filePath);
+	bool ImportTileMap(string filePath, string resPath);
 	bool CheckCollision(Entity2D& object);
 
 	int GetWidth();

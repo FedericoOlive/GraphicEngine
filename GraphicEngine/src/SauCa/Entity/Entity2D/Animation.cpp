@@ -3,6 +3,8 @@
 #include <string>
 #include <sstream>
 
+#include "Timer.h"
+
 Animation::Animation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs)
 {
 	frameX *= frameWidth;

@@ -10,7 +10,7 @@ void Game::Initialize()
 	floor->SetColorTint(1, 1, 1, 1);
 	floor->SetPosition(640, 0, 0);
 	floor->SetScale(1280, 100, 1);
-	floor->AddCollision();
+	AddCollision(floor, true);
 
 	Material* m = new Material(new Shader(false), false);
 	Material* m2 = new Material(new Shader(false), false);
@@ -25,62 +25,38 @@ void Game::Initialize()
 	actualKi->SetPosition(640, 600, 0);
 	actualKi->SetScale(0, 180, 1);
 
-	ssj1text = new Texture("res/ssj1.png");
-
+	player = new Player();
 	
-	ssj1 = CreateSprite(ssj1text);
-	ssj1->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-	ssj1->SetPosition(640, 360, 0);
-	ssj1->SetScale(400, 400, 1);
-	ssj1->AddCollision();
-	ssj1->AddAnimation(0, 0, 410, 410, 6150, 410, 1);
-	ssj1->AddAnimation(0, 0, 410, 410, 6150, 410, 2, 13);
-	ssj1->AddAnimation(11, 0, 410, 410, 6150, 410, 1);
+	player->ssj1text = new Texture("res/ssj1.png");
+	player->ssj2text = new Texture("res/ssj2.png");
+	player->ssj3text = new Texture("res/ssj3.png");
+	player->godtext = new Texture("res/god.png");
 
-	ssj2text = new Texture("res/ssj2.png");
+	player->ssj1 = CreateSprite(player->ssj1text);
+	player->ssj2 = CreateSprite(player->ssj2text);
+	player->ssj3 = CreateSprite(player->ssj3text);
+	player->god = CreateSprite(player->godtext);
 
-
-	ssj2 = CreateSprite(ssj2text);
-	ssj2->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-	ssj2->SetPosition(640, 360, 0);
-	ssj2->SetScale(400, 400, 1);
-	ssj2->AddCollision();
-	ssj2->AddAnimation(0, 0, 410, 410, 6970, 410, 1);
-	ssj2->AddAnimation(0, 0, 410, 410, 6970, 410, 3, 17);
-	ssj2->AddAnimation(16, 0, 410, 410, 6970, 410, 1);
-
-	ssj3text = new Texture("res/ssj3.png");
-
-
-	ssj3 = CreateSprite(ssj3text);
-	ssj3->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-	ssj3->SetPosition(640, 360, 0);
-	ssj3->SetScale(400, 400, 1);
-	ssj3->AddCollision();
-	ssj3->AddAnimation(0, 0, 410, 410, 10660, 410, 1);
-	ssj3->AddAnimation(0, 0, 410, 410, 10660, 410, 3.2, 22);
-	ssj3->AddAnimation(21, 0, 410, 410, 10660, 410, 1);
-
-	godtext = new Texture("res/god.png");
-
-
-	god = CreateSprite(godtext);
-	god->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-	god->SetPosition(640, 360, 0);
-	god->SetScale(400, 400, 1);
-	god->AddCollision();
-	god->AddAnimation(0, 0, 410, 410, 13120, 410, 1);
-	god->AddAnimation(0, 0, 410, 410, 13120, 410, 3.2, 28);
-	god->AddAnimation(28, 0, 410, 410, 13120, 410, 1);
+	player->CreatePlayerAssets();
+	
+	AddCollision(player->ssj1, false);
 
 	currentForm = 0;
+	
+	tileMap = CreateTileMap("res/TileMap/TileMap.tmx", "res/TileMap/TileMap.png");
+	//tileMap->SetDimensions(600, 600);
 }
 
 void Game::Inputs()
 {
-	/*glm::vec3 pos = player->GetPosition();
-	glm::vec3 rot = player->GetRotation();
-	glm::vec3 scale = player->GetScale();
+	
+	glm::vec3 pos = player->position;
+	glm::vec3 rot = player->rotation;
+	glm::vec3 scale = player->scale;
+	//cout << "Player Pos: X: " << pos.x << " Y: " << pos.y << " Z:" << pos.z << " \n";
+	//cout << "Player Rot: X: " << rot.x << " Y: " << rot.y << " Z:" << rot.z << " \n";
+	//cout << "Player Scale: X: " << scale.x << " Y: " << scale.y << " Z:" << scale.z << " \n";
+	//cout << "-----------------------------------------------\n";
 
 	bool modified = false;
 
@@ -134,7 +110,7 @@ void Game::Inputs()
 		scale.x -= 1 * multiply;
 		scale.y -= 1 * multiply;
 		scale.z = 0 * multiply;
-	}*/
+	}
 	
 	if (IsKeyPressed(KeyCode::F) && chargeable)
 	{
@@ -149,94 +125,99 @@ void Game::Inputs()
 		currentAnim = 0;
 	}
 
-	/*if (modified)
+	if (modified)
 	{
 		player->Move(pos);
 		player->SetScale(scale);
-		player->SetRotation(rot, false);
-	}*/
+		player->SetRotation(rot);
+	}
 
 	//std::cout << "Pos: " << player->GetViewportPosition().x << ", " << player->GetViewportPosition().y << ", " << player->GetViewportPosition().z << std::endl;
 }
 
 void Game::Update()
 {
-	ki -= 0.05 * currentForm/2 * Timer::DeltaTime();
-	if (ki < 0) 
+	ki -= 0.05 * currentForm / 2 * Timer::DeltaTime();
+
+	if (ki < 0)
 	{
 		ki = 0;
 	}
-	if (ki > 1) 
+	else if (ki > 1)
 	{
 		currentForm++;
 		chargeable = false;
 		ki = 0;
 	}
+
 	actualKi->SetScale(ki * 1000, 180, 0);
 }
 
 void Game::Draw()
 {
+	tileMap->Draw();
 	floor->Draw();
 	totalKi->Draw();
 	actualKi->Draw();
-	switch (currentForm)
-	{
-		case 0:
-			ssj1->Draw(0);
-			break;
-		case 1:
-			ssj1->Draw(1);
-			if (ssj1->GetAnimations()[1]->IsFinished()) 
-			{
-				currentForm++;
-				chargeable = true;
-			}
-			break;
-		case 2:
-			ssj1->Draw(2);
-			chargeable = true;
-			break;
-		case 3:
-			ssj2->Draw(1);
-			if (ssj2->GetAnimations()[1]->IsFinished())
-			{
-				currentForm++;
-				chargeable = true;
-			}
-			break;
-		case 4:
-			ssj2->Draw(2);
-			chargeable = true;
-			break;
-		case 5:
-			ssj3->Draw(1);
-			if (ssj3->GetAnimations()[1]->IsFinished())
-			{
-				currentForm++;
-				chargeable = true;
-			}
-			break;
-		case 6:
-			ssj3->Draw(2);
-			chargeable = true;
-			break;
-		case 7:
-			god->Draw(1);
-			if (god->GetAnimations()[1]->IsFinished())
-			{
-				currentForm++;
-				chargeable = true;
-			}
-			break;
-		case 8:
-			god->Draw(2);
-			chargeable = false;
-			break;
-		default:
-			break;
-	}
+
+	player->ssj1->Draw(0);
 	
+	/*switch (currentForm)
+	{
+	case 0:
+		player->ssj1->Draw(0);
+		break;
+	case 1:
+		player->ssj1->Draw(1);
+		if (player->ssj1->GetAnimations()[1]->IsFinished())
+		{
+			currentForm++;
+			chargeable = true;
+		}
+		break;
+	case 2:
+		player->ssj1->Draw(2);
+		chargeable = true;
+		break;
+	case 3:
+		player->ssj2->Draw(1);
+		if (player->ssj2->GetAnimations()[1]->IsFinished())
+		{
+			currentForm++;
+			chargeable = true;
+		}
+		break;
+	case 4:
+		player->ssj2->Draw(2);
+		chargeable = true;
+		break;
+	case 5:
+		player->ssj3->Draw(1);
+		if (player->ssj3->GetAnimations()[1]->IsFinished())
+		{
+			currentForm++;
+			chargeable = true;
+		}
+		break;
+	case 6:
+		player->ssj3->Draw(2);
+		chargeable = true;
+		break;
+	case 7:
+		player->god->Draw(1);
+		if (player->god->GetAnimations()[1]->IsFinished())
+		{
+			currentForm++;
+			chargeable = true;
+		}
+		break;
+	case 8:
+		player->god->Draw(2);
+		chargeable = false;
+		break;
+	default:
+		break;
+	}*/
 }
 
 float Game::GetRandom()
@@ -249,5 +230,5 @@ float Game::GetRandom()
 void Game::DeInitialize()
 {
 	delete floor;
-	delete ssj1;
+	delete player;
 }

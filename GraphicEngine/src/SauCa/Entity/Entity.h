@@ -18,13 +18,14 @@ protected:
 	glm::vec3 translate;
 	glm::vec3 rotation;
 	glm::vec3 scale;
+	
 public:
 	float alpha;
 	Material* material;
 
 	Entity();
+	void SetRenderer(Renderer* renderer);
 	void SetModelMatrix();
-
 	void SetColorTint(float r, float g, float b, float a);
 	void SetPosition(float x, float y, float z);
 	void SetScale(float x, float y, float z);
@@ -35,17 +36,12 @@ public:
 	void SetPosition(glm::vec3 pos) { SetPosition(pos.x, pos.y, pos.z); }
 	void SetScale(glm::vec3 scale) { SetScale(scale.x, scale.y, scale.z); }
 	void SetRotation(glm::vec3 rot, bool time) { SetRotation(rot.x, rot.y, rot.z, time); }
-
-	Entity* Move(glm::vec3 pos);
-	Entity* Move(float x, float y, float z);
-	
+		
 	glm::vec3 GetPosition() { return translate; }
 	glm::vec3 GetScale() { return scale; }
 	glm::vec3 GetRotation() { return rotation; }
 
 	glm::vec3 GetViewportPosition();
-
-	void AddCollision();
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include "Entity/Entity2D/Quad.h"
 #include "Input/Input.h"
 #include "Timer.h"
+#include "Entity/Entity2D/TileMap.h"
 
 using namespace std;
 
@@ -47,6 +48,12 @@ public:
 	Sprite* CreateSprite(Texture* texture);
 	void SetMaterial(Material* material);
 
+	//Collisions
+	void AddCollision(Entity2D* entity, bool isStatic);
+
+	// Utilities
+	TileMap* CreateTileMap(string filePath, string resPath);
+	
 	// Inputs
 	bool IsKeyReleased(KeyCode keyCode);
 	bool IsKeyDown(KeyCode keyCode);

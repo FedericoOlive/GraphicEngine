@@ -1,12 +1,12 @@
 #ifndef ENTITY2D_H
 #define ENTITY2D_H
-
 #include "Exports.h"
 #include "Entity.h"
-#include "Entity2D/Material.h"
+class CollisionManager;
 
 class SAUCA_API Entity2D : public Entity
 {
+	CollisionManager* collisionManager;
 public:
 	float* vertices;
 	int sizeVertices;
@@ -15,6 +15,10 @@ public:
 	int sizeIndices;
 	
 	Entity2D();
+
+	void SetCollisionManager(CollisionManager* colManager);
+	CollisionType CheckCollision(Entity2D& target, float& xOverlap, float& yOverlap);
+	void ApplyCollisionRestrictions(CollisionType colType, float xOverlap, float yOverlap, bool halfOverlap);
 };
 
 #endif

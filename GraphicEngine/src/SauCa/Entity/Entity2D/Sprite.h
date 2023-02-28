@@ -2,10 +2,10 @@
 #define SPRITE_H
 
 #include "Exports.h"
+#include "Entity/Entity2D.h"
 #include "Animation.h"
 #include "Texture.h"
 #include "Frame.h"
-#include "Entity/Entity2D.h"
 #include <vector>
 
 class SAUCA_API Sprite : public Entity2D
@@ -14,12 +14,13 @@ protected:
 	std::vector<Animation*> animations;
 	Texture* texture;
 	Frame frame;
-	bool hasAnimation;
+	bool hasAnimation = false;
 public:
 	int heightTexture;
 	int widthTexture;
 	unsigned int UVBuffer;
-		
+
+	Sprite();
 	Sprite(Texture* texture, Renderer* renderer);
 	~Sprite();
 	void DeleteTextureAsociate();

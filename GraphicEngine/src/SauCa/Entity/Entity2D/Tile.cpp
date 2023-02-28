@@ -1,17 +1,13 @@
 #include "Tile.h"
 
-Tile::Tile() :Sprite(nullptr, nullptr)
+Tile::Tile()
 {
 	id = 0;
 	isWalkable = false;
-	this->renderer = nullptr;
-	this->texture = nullptr;
-	this->indices = nullptr;
-	this->vertices = nullptr;
-	texture = nullptr;
+	
 }
 
-Tile::Tile(int id, bool walkable, Renderer* render, const char* filePathImage, bool invertImage):Sprite(texture,render)
+Tile::Tile(int id, bool walkable, Renderer* render, const char* filePathImage, bool invertImage) : Sprite(texture, render)
 {
 	id = 0;
 	isWalkable = false;
@@ -20,7 +16,7 @@ Tile::Tile(int id, bool walkable, Renderer* render, const char* filePathImage, b
 	this->indices = nullptr;
 	this->vertices = nullptr;
 	texture = nullptr;
-	
+
 	this->renderer = render;
 	id = id;
 	isWalkable = walkable;
@@ -30,7 +26,7 @@ Tile::Tile(int id, bool walkable, Renderer* render, const char* filePathImage, b
 
 Tile::~Tile()
 {
-	this->DeleteTextureAsociate();
+
 }
 
 bool Tile::IsWalkable()
@@ -54,5 +50,5 @@ unsigned int Tile::GetId()
 
 void Tile::SetId(unsigned int id)
 {
-	id = id;
+	this->id = id;
 }

@@ -52,7 +52,7 @@ void Renderer::DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned in
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::Clear(GLbitfield field)

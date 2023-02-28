@@ -17,6 +17,11 @@ Entity::Entity()
 	alpha = 1.0f;
 }
 
+void Entity::SetRenderer(Renderer* renderer)
+{
+	this->renderer = renderer;
+}
+
 void Entity::SetColorTint(float r, float g, float b, float a)
 {
 	material->colorTint = glm::vec3(r, g, b);
@@ -56,31 +61,6 @@ void Entity::SetRotation(float x, float y, float z, bool time)
 	SetModelMatrix();
 }
 
-Entity* Entity::Move(glm::vec3 pos)
-{
-	return Move(pos.x, pos.y, pos.z);
-}
-
-Entity* Entity::Move(float x, float y, float z)
-{
-	glm::vec3 prevPos = GetPosition();
-	SetPosition(x, y, z);
-
-	for (auto it = CollisionManager::entitiesCollision.begin(); it != CollisionManager::entitiesCollision.end(); ++it)
-	{
-		if (this == *it)
-			continue;
-
-		if (CollisionManager::IsCollision2DRecRec(this, *it))
-		{
-			SetPosition(prevPos.x, prevPos.y, prevPos.z);
-			return this;
-		}
-	}
-
-	return nullptr;
-}
-
 glm::vec3 Entity::GetViewportPosition()
 {
 	glm::vec3 pos = glm::vec3(translate.x + 1, translate.y + 1, translate.z + 1);
@@ -89,11 +69,6 @@ glm::vec3 Entity::GetViewportPosition()
 	pos.z = (translate.z);
 
 	return translate;
-}
-
-void Entity::AddCollision()
-{
-	CollisionManager::AddToList(this);
 }
 
 void Entity::SetModelMatrix() 

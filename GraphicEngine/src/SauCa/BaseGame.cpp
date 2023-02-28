@@ -16,7 +16,7 @@ BaseGame::BaseGame()
     input = nullptr;
     window = nullptr;
     renderer = nullptr;
-    collisionManager = nullptr;	
+    collisionManager = new CollisionManager();	
     timer = nullptr;
 }
 
@@ -146,9 +146,28 @@ void BaseGame::ModifyWindow(const char* name, float width, float height)
 {
     //Window::Screen_Height = height;
     //Window::Screen_Width = width;
-    //
+    // 
     //glViewport(0, 0, width, height);
     //glfwSetWindowTitle(window->GetWindow(), name);
+}
+
+void BaseGame::AddCollision(Entity2D* entity, bool isStatic)
+{
+    collisionManager->AddToCollisionList(entity, isStatic);
+}
+
+TileMap* BaseGame::CreateTileMap(string filePath, string resPath)
+{
+    TileMap* tileMap = new TileMap(renderer);
+    if (tileMap->ImportTileMap(filePath, resPath))
+    {
+        cout << "TileMap load successfully.\n";
+    }
+    else
+    {
+        cout << "TileMap can not load.\n";
+    }
+    return tileMap;
 }
 
 void BaseGame::LoadInfo()

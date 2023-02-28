@@ -33,10 +33,13 @@ void color(std::string s)
 
 TileMap::TileMap(Renderer* render)
 {
-	currentRender = render;
+	renderer = render;
 }
 
-TileMap::~TileMap() {}
+TileMap::~TileMap()
+{
+	
+}
 
 const Tile& TileMap::GetTile(unsigned int uiId) {
 	Tile* NoTile = nullptr;
@@ -56,7 +59,7 @@ void TileMap::SetMapTileId(int layer, unsigned int uiCol, unsigned int uiRow, un
 }
 
 void TileMap::SetTile(const Tile& rkTile)
-{
+{	
 	tiles.push_back(rkTile);
 }
 
@@ -110,7 +113,7 @@ void TileMap::Draw()
 
 }
 
-bool TileMap::ImportTileMap(std::string filePath) {
+bool TileMap::ImportTileMap(string filePath, string resPath) {
 
 	tinyxml2::XMLDocument doc; //guarda el documento
 	tinyxml2::XMLError errorHandler; //guarda el resultado de las funciones
@@ -134,10 +137,12 @@ bool TileMap::ImportTileMap(std::string filePath) {
 	int columns = pTileset->IntAttribute("columns");  // Columns of Tiles in the Tileset
 	int rows = tileCount / columns;
 
-	imagePath = "../res/assets/";																//
-	imagePath += pTileset->FirstChildElement("image")->Attribute("source");			// Loading Textures
-	texture = new Texture(imagePath.c_str()); // textureImporter::loadTexture(imagePath.c_str(), true);
+	//imagePath = "../res/assets/";																//
+	//imagePath += pTileset->FirstChildElement("image")->Attribute("source");			// Loading Textures
 	
+	texture = new Texture(resPath); // textureImporter::loadTexture(imagePath.c_str(), true);
+	renderer->BindTextures(texture->texture);
+	renderer->SetSpriteAttributes();
 	// Save the Tiles in the TileMap
 	imageWidth = pTileset->FirstChildElement("image")->IntAttribute("width");
 	imageHeight = pTileset->FirstChildElement("image")->IntAttribute("height");
@@ -150,7 +155,9 @@ bool TileMap::ImportTileMap(std::string filePath) {
 			newTile.SetId(_id);
 			newTile.SetTexture(texture);
 			newTile.SetScale(glm::vec3(tileWidth, tileHeight, 1.0f));
-					
+			newTile.material = renderer->GetMaterialTexture();
+			newTile.SetRenderer(renderer);
+			
 			newTile.SetTextureCoordinates(
 				glm::vec2((tileX + tileWidth) / imageWidth, tileY / imageHeight),				 // Top Right
 				glm::vec2((tileX + tileWidth) / imageWidth, (tileY + tileHeight) / imageHeight), // Bottom Right
@@ -170,7 +177,7 @@ bool TileMap::ImportTileMap(std::string filePath) {
 	while (pTile) {
 		unsigned int id = pTile->IntAttribute("id");
 		tinyxml2::XMLElement* pProperty = pTile->FirstChildElement("properties")->FirstChildElement("property");
-		std::string propertyName = pProperty->Attribute("value");
+		std::string propertyName = pProperty->Attribute("Collision");
 		if (propertyName == "false")
 			tiles[id].Walkability(false);
 		else
@@ -205,9 +212,9 @@ bool TileMap::ImportTileMap(std::string filePath) {
 
 		while (pData) {
 			std::vector<int> tileGids;
-			for (tinyxml2::XMLElement* pTile = pData->FirstChildElement("Tile");
+			for (tinyxml2::XMLElement* pTile = pData->FirstChildElement("tile");
 				pTile != NULL;
-				pTile = pTile->NextSiblingElement("Tile"))
+				pTile = pTile->NextSiblingElement("tile"))
 			{
 				unsigned int gid = std::atoi(pTile->Attribute("gid")); // Tile's id is saved
 				tileGids.push_back(gid);
@@ -269,16 +276,16 @@ bool TileMap::CheckCollision(Entity2D& object)
 					float overlapX = 0;
 					float overlapY = 0;
 					//Todo Descomentar
-					//CollisionType colType = object.CheckCollision(tileMapGrid[k][j][i], overlapX, overlapY);
-					//
-					//if (colType != CollisionType::none)
-					//{
-					//	//std::cout << "overlapx = " << overlapX << std::endl;
-					//	//std::cout << "overlapy = " << overlapY << std::endl;
-					//
-					//	object.ApplyCollisionRestrictions(colType, overlapX, overlapY, false);
-					//	return true;
-					//}
+					CollisionType colType = object.CheckCollision(tileMapGrid[k][j][i], overlapX, overlapY);
+					
+					if (colType != CollisionType::none)
+					{
+						//std::cout << "overlapx = " << overlapX << std::endl;
+						//std::cout << "overlapy = " << overlapY << std::endl;
+					
+						object.ApplyCollisionRestrictions(colType, overlapX, overlapY, false);
+						return true;
+					}
 				}
 			}
 		}

@@ -7,11 +7,4 @@ Material::Material(Shader* newShader, bool hasTexture)
 	this->hasTexture = hasTexture;
 }
 
-Material::~Material()
-{
-	if (shader != nullptr)
-	{
-		delete shader;
-		shader = nullptr;
-	}
-}
+Material::~Material() { }

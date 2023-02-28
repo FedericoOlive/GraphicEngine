@@ -1,10 +1,6 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "Exports.h"
-#include "Texture.h"
-#include "Quad.h"
-#include "Timer.h"
 #include "Frame.h"
 
 #include <vector>
