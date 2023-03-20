@@ -1,6 +1,12 @@
 #include "Renderer.h"
-
 using namespace std;
+
+std::list<Component*> Renderer::renderList;
+
+void Renderer::AddToRenderList(Component* component)
+{
+    renderList.push_back(component);
+}
 
 Renderer::Renderer()
 {

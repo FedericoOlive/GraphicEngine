@@ -9,18 +9,27 @@ void Game::Initialize()
 	
 	gokutext = new Texture("res/goku.png");
 	goku = CreateSprite(gokutext);
-	goku->SetPosition(1280 / 2, 720 / 2, 0);
-	goku->SetScale(50, 50, 50);	
+	glm::vec3 pos = { 1280 / 2, 720 / 2, 0 };
+	glm::vec3 scale = { 50, 50, 50 };
+	
+	goku->transform->SetWorldPosition(pos);
+	goku->transform->SetScale(scale);
 
 	AddCollision(goku, false);
 
 	tileMap = CreateTileMap("res/TileMap/mymapa.tmx", "res/TileMap/E3.png");
 	tileMap->pos = { 640, 300, 0 };
 	tileMap->SetSize(2);
+	GameObject* go = new GameObject();
+	//go->AddComponent();
+	//Component* comp = new Component();
 }
 
 void Game::InitGameSayayin()
 {
+	glm::vec3 pos = { 640, 700, 0 };
+	glm::vec3 scale = { 1100, 50, 1 };
+	
 	player = new MiniGameSayayin();
 
 	player->ssj1text = new Texture("res/ssj1.png");
@@ -38,13 +47,15 @@ void Game::InitGameSayayin()
 	
 	totalKi = CreateQuad(m);
 	totalKi->SetColorTint(1, 0.5f, 0, 1);
-	totalKi->SetPosition(640, 700, 0);
-	totalKi->SetScale(1100, 50, 1);
+	totalKi->transform->SetWorldPosition(pos);
+	totalKi->transform->SetScale(scale);
 
 	actualKi = CreateQuad(m2);
 	actualKi->SetColorTint(1, 1, 0, 1);
-	actualKi->SetPosition(640, 700, 0);
-	actualKi->SetScale(0, 50, 1);
+	pos = { 640, 700, 0 };
+	scale = { 0, 50, 1 };
+	actualKi->transform->SetWorldPosition(pos);
+	actualKi->transform->SetScale(scale);
 	
 	player->CreatePlayerAssets();
 
@@ -53,9 +64,9 @@ void Game::InitGameSayayin()
 
 void Game::Inputs()
 {	
-	glm::vec3 pos = goku->GetPosition();
-	glm::vec3 rot = goku->GetRotation();
-	glm::vec3 scale = goku->GetScale();
+	glm::vec3 pos = goku->transform->GetWorldPosition();
+	glm::vec3 rot = goku->transform->GetRotation();
+	glm::vec3 scale = goku->transform->GetScale();
 
 	bool modified = false;
 
@@ -126,9 +137,9 @@ void Game::Inputs()
 
 	if (modified)
 	{
-		goku->SetPosition(pos);
-		goku->SetRotation(rot, false);
-		goku->SetScale(scale);
+		goku->transform->SetWorldPosition(pos);
+		goku->transform->SetRotation(rot);
+		goku->transform->SetScale(scale);
 	}
 
 	//std::cout << "Pos: " << player->GetViewportPosition().x << ", " << player->GetViewportPosition().y << ", " << player->GetViewportPosition().z << std::endl;
@@ -148,8 +159,8 @@ void Game::Update()
 		chargeable = false;
 		ki = 0;
 	}
-
-	actualKi->SetScale(ki * 1100, 50, 0);
+	glm::vec3 scale = { ki * 1100, 50, 0 };
+	actualKi->transform->SetScale(scale);
 	UpdateCollisions(tileMap);
 }
 

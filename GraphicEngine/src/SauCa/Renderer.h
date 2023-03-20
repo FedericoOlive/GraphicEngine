@@ -1,13 +1,15 @@
 #ifndef RENDERER_H
 #define RENDERER_H
+#include <list>
 
 #include "glew.h"
 #include "Window.h"
 #include "Entity/Entity2D/Material.h"
+#include "GameObjects/Component.h"
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtc/type_ptr.hpp"
 
-class SAUCA_API Renderer
+static class SAUCA_API Renderer
 {
 private:
 	glm::mat4 viewMatrix;
@@ -15,7 +17,12 @@ private:
 
 	Material* defaultMaterialSolid;
 	Material* defaultMaterialTexture;
+	
+	static std::list<Component*> renderList;
+	
 public:
+	static void AddToRenderList(Component* component);
+	
 	Renderer();
 	~Renderer();
 	void CreateRenderer();

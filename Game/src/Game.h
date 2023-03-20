@@ -54,29 +54,29 @@ public:
 		scale = { 400, 400, 1 };
 		
 		ssj1->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-		ssj1->SetPosition(position);
-		ssj1->SetScale(scale);
+		ssj1->transform->SetWorldPosition(position);
+		ssj1->transform->SetScale(scale);
 		ssj1->AddAnimation(0, 0, 410, 410, 6150, 410, 1);
 		ssj1->AddAnimation(0, 0, 410, 410, 6150, 410, 2, 13);
 		ssj1->AddAnimation(11, 0, 410, 410, 6150, 410, 1);
 
 		ssj2->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-		ssj2->SetPosition(position);
-		ssj2->SetScale(scale);
+		ssj2->transform->SetWorldPosition(position);
+		ssj2->transform->SetScale(scale);
 		ssj2->AddAnimation(0, 0, 410, 410, 6970, 410, 1);
 		ssj2->AddAnimation(0, 0, 410, 410, 6970, 410, 3, 17);
 		ssj2->AddAnimation(16, 0, 410, 410, 6970, 410, 1);
 		
 		ssj3->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-		ssj3->SetPosition(position);
-		ssj3->SetScale(scale);
+		ssj3->transform->SetWorldPosition(position);
+		ssj3->transform->SetScale(scale);
 		ssj3->AddAnimation(0, 0, 410, 410, 10660, 410, 1);
 		ssj3->AddAnimation(0, 0, 410, 410, 10660, 410, 3.2, 22);
 		ssj3->AddAnimation(21, 0, 410, 410, 10660, 410, 1);
 		
 		god->SetColorTint(1.0f, 1.0f, 1.0f, 1.0f);
-		god->SetPosition(position);
-		god->SetScale(scale);
+		god->transform->SetWorldPosition(position);
+		god->transform->SetScale(scale);
 		god->AddAnimation(0, 0, 410, 410, 13120, 410, 1);
 		god->AddAnimation(0, 0, 410, 410, 13120, 410, 3.2, 28);
 		god->AddAnimation(28, 0, 410, 410, 13120, 410, 1);

@@ -70,7 +70,7 @@ void Sprite::Draw(int anim )
     }
 
     renderer->BindTextures(texture->texture);
-    renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, modelMatrix);
+    renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, transform->GetModelMatrix());
 }
 
 void Sprite::SetTexture(Texture* texture)
