@@ -55,13 +55,13 @@ Sprite::~Sprite()
     }
 }
 
-void Sprite::Draw(int anim )
+void Sprite::Draw()
 {
     if (hasAnimation)
     {
-        animations[anim]->Update();
+        animations[currentAnim]->Update();
 
-        frame = animations[anim]->GetFrames()[animations[anim]->CurrentFrame()];
+        frame = animations[currentAnim]->GetFrames()[animations[currentAnim]->CurrentFrame()];
         SetTextureCoordinates(
             { frame.coordinates[0].u, frame.coordinates[0].v },
             { frame.coordinates[1].u, frame.coordinates[1].v },
@@ -70,7 +70,7 @@ void Sprite::Draw(int anim )
     }
 
     renderer->BindTextures(texture->texture);
-    renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, modelMatrix);
+    renderer->DrawEntity2D(texture->texture, sizeIndices, VAO, material, alpha, transform->GetModelMatrix());
 }
 
 void Sprite::SetTexture(Texture* texture)

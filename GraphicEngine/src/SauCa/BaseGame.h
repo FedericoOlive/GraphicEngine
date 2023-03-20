@@ -26,6 +26,7 @@ private:
 	Timer* timer;
 
 	void BeforeDraw();
+	void Draw();
 	void AfterDraw();
 
 	void LoadInfo();
@@ -38,7 +39,6 @@ public:
 	virtual void Initialize() = 0;
 	virtual void Inputs() = 0;
 	virtual void Update() = 0;
-	virtual void Draw() = 0;
 	virtual void DeInitialize() = 0;
 
 	// World Objects

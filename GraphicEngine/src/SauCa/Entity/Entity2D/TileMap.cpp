@@ -123,7 +123,7 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 
 			newTile.SetId(_id);
 			newTile.SetTexture(texture);
-			newTile.SetScale(glm::vec3(tileWidth, tileHeight, 1.0f));
+			newTile.transform->SetScale(glm::vec3(tileWidth, tileHeight, 1.0f));
 			newTile.material = renderer->GetMaterialTexture();
 			newTile.SetRenderer(renderer);
 			
@@ -209,14 +209,14 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 
 bool TileMap::CheckCollision(Entity2D& object)
 {
-	convertedPosX = object.GetPosition().x + (width / 2.0f) * tileWidth - pos.x;
-	convertedPosY = object.GetPosition().y + (height / 2.0f) * tileHeight + pos.y;
+	convertedPosX = object.transform->GetWorldPosition().x + (width / 2.0f) * tileWidth - pos.x;
+	convertedPosY = object.transform->GetWorldPosition().y + (height / 2.0f) * tileHeight + pos.y;
 
 	int left_tile = convertedPosX / tileWidth;
-	int right_tile = (convertedPosX + object.GetScale().x) / tileWidth;
+	int right_tile = (convertedPosX + object.transform->GetScale().x) / tileWidth;
 
 	int top_tile = (convertedPosY / tileHeight) * -1;
-	int bottom_tile = ((convertedPosY - object.GetScale().y) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
+	int bottom_tile = ((convertedPosY - object.transform->GetScale().y) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
 
 	if (left_tile < 0)
 		left_tile = 0;
@@ -288,11 +288,13 @@ void TileMap::SetSize(float size)
 			{
 				if (tileMapGrid[i][y][x].GetId() != NULL)
 				{
-					glm::vec3 pos = this->pos;
-					pos.x += (mapWidth + (tileWidth * x)) * size;
-					pos.y += (mapHeight - (tileHeight * y)) * size;
-					tileMapGrid[i][y][x].SetPosition(pos.x, pos.y, pos.z);
-					tileMapGrid[i][y][x].SetScale(tileWidth * size, tileHeight * size, 1.f);
+					glm::vec3 newPos = this->pos;
+					newPos.x += (mapWidth + (tileWidth * x)) * size;
+					newPos.y += (mapHeight - (tileHeight * y)) * size;
+					tileMapGrid[i][y][x].transform->SetWorldPosition(newPos);
+					
+					glm::vec3 newScale = { tileWidth * size, tileHeight * size, 1.f };
+					tileMapGrid[i][y][x].transform->SetScale(newScale);
 				}
 			}
 		}

@@ -2,13 +2,15 @@
 
 bool CollisionManager::IsCollision2DRecRec(Entity2D* entity1, Entity2D* entity2)
 {
-    glm::vec2 pos1 = glm::vec2(entity1->GetPosition().x - entity1->GetScale().x / 2, entity1->GetPosition().y - entity1->GetScale().y / 2);
-    glm::vec2 pos2 = glm::vec2(entity2->GetPosition().x - entity2->GetScale().x / 2, entity2->GetPosition().y - entity2->GetScale().y / 2);
+    glm::vec2 pos1 = glm::vec2(entity1->transform->GetWorldPosition().x - entity1->transform->GetScale().x / 2, 
+								entity1->transform->GetWorldPosition().y - entity1->transform->GetScale().y / 2);
+    glm::vec2 pos2 = glm::vec2(entity2->transform->GetWorldPosition().x - entity2->transform->GetScale().x / 2, 
+								entity2->transform->GetWorldPosition().y - entity2->transform->GetScale().y / 2);
 	
-    return (pos1.x < pos2.x + entity2->GetScale().x &&
-        pos1.x + entity1->GetScale().x > pos2.x &&
-        pos1.y < pos2.y + entity2->GetScale().y &&
-        pos1.y + entity1->GetScale().y > pos2.y);
+    return (pos1.x < pos2.x + entity2->transform->GetScale().x &&
+        pos1.x + entity1->transform->GetScale().x > pos2.x &&
+        pos1.y < pos2.y + entity2->transform->GetScale().y &&
+        pos1.y + entity1->transform->GetScale().y > pos2.y);
 }
 
 void CollisionManager::AddToCollisionList(Entity2D* entityToAdd, bool isStatic)

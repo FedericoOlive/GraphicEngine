@@ -19,12 +19,12 @@ public:
 	int heightTexture;
 	int widthTexture;
 	unsigned int UVBuffer;
-
+	int currentAnim = 0;
 	Sprite();
 	Sprite(Texture* texture, Renderer* renderer);
 	~Sprite();
 	void DeleteTextureAsociate();
-	void Draw(int anim = 0);
+	void Draw() override;
 	void SetTexture(Texture* texture);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs);
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount);
