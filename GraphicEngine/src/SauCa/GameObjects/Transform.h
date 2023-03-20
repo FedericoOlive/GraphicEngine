@@ -35,8 +35,7 @@ public:
 	void SetParent(Transform* parentTransform);
 	Transform* GetParent() const { return parent; }
 	std::list<Transform*> GetChildrens() const { return childrens; }
-
-	
+		
 	void SetLocalPosition(glm::vec3 position);
 	void SetWorldPosition(glm::vec3 position);
 	void SetRotation(glm::vec3 rotation);
