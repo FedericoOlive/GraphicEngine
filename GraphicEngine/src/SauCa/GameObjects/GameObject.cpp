@@ -7,8 +7,28 @@ GameObject::GameObject(std::string name)
 {
 	id++;
 	if (name.empty())
-		name = "GameObject " + id;
+		name = "GameObject " + std::to_string(id);
 	transform = new Transform();
+}
+
+GameObject::~GameObject()
+{
+	for (auto iter = components.begin(); iter != components.end(); ++iter)
+	{
+		if ((*iter) != nullptr)
+		{
+			delete* iter;
+			(*iter) = nullptr;
+		}
+	}
+
+	if (transform != nullptr)
+	{
+		delete transform;
+		transform = nullptr;
+	}
+	
+	components.clear();
 }
 
 template <typename T> T* GameObject::GetComponent()
@@ -20,6 +40,7 @@ template <typename T> T* GameObject::GetComponent()
 			return t;
 		}
 	}
+	
 	return nullptr;
 }
 
@@ -40,7 +61,7 @@ void GameObject::AddComponent(Component* component)
 {
 	component->gameobject = this;
 	component->transform = transform;
-	
+
 	components.push_back(component);
 	if (component->isRenderizable)
 	{

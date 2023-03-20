@@ -1,4 +1,6 @@
 #include "Renderer.h"
+
+#include "GameObjects/GameObject.h"
 using namespace std;
 
 std::list<Component*> Renderer::renderList;
@@ -65,6 +67,18 @@ void Renderer::Clear(GLbitfield field)
 {
     glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void Renderer::Draw()
+{
+    for (auto iter = renderList.begin(); iter != renderList.end(); ++iter)
+    {
+        bool isEnable = (*iter)->isEnable;
+        bool isActive = (*iter)->gameobject->isActive;  // Todo: Faltaría ActiveInHierarchy.
+
+        if (isEnable && isActive)
+            (*iter)->Draw();
+    }
 }
 
 void Renderer::SwapBuffers(GLFWwindow* window)

@@ -14,9 +14,9 @@ public:
 	std::string name;
     bool isActive = true;
     GameObject(std::string name = "");
+    ~GameObject();
 	
-    Transform* transform;
-	
+    Transform* transform;	
     std::vector<Component*> components;
 	
     void AddComponent(Component* component);

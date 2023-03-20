@@ -27,6 +27,7 @@ public:
 	~Renderer();
 	void CreateRenderer();
 	void Clear(GLbitfield field);
+	void Draw();
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
 	void DrawShape(int sizeIndices, unsigned int& VAO, Material* material, float alpha, glm::mat4 model);

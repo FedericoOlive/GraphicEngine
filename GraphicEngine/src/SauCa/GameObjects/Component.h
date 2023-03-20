@@ -17,6 +17,7 @@ public:
 	
 	Component(bool isRenderizable = false); // Destructor virtual
 	virtual ~Component() {} // Destructor virtual
+	virtual void Draw(){}
 };
 
 #endif

@@ -5,12 +5,15 @@
 class Game : public BaseGame
 {
 private:
+	GameObject* player = nullptr;
+	GameObject* floor = nullptr;
+	float multiply = 2;
 
 public:
 	void Initialize()override;
 	void Inputs() override;
 	void Update()override;
-	void Draw()override;
+	void Draw();
 	void DeInitialize() override;
 };
 

@@ -6,6 +6,11 @@ void BaseGame::BeforeDraw()
     renderer->Clear(GL_COLOR_BUFFER_BIT);
 }
 
+void BaseGame::Draw()
+{
+    renderer->Draw();
+}
+
 void BaseGame::AfterDraw()
 {
     renderer->SwapBuffers(window->GetWindow());

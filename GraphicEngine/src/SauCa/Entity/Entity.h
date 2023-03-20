@@ -16,7 +16,8 @@ protected:
 public:
 	float alpha;
 	Material* material;
-
+	int layerRender = 0;
+	
 	Entity();
 	void SetRenderer(Renderer* renderer);
 	

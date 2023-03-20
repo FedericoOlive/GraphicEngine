@@ -57,7 +57,9 @@ void Transform::UpdateModelMatrix()
 
 void Transform::SetParent(Transform* parentTransform)
 {
-	parent->RemoveChildren(this);
+	if (parent)
+		parent->RemoveChildren(this);
+
 	parent = parentTransform;
 	if (parentTransform)
 		parentTransform->SetChildren(this);
