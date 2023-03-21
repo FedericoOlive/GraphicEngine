@@ -16,8 +16,8 @@ public:
 	void Initialize()override;
 	void Inputs() override;
 	void Update()override;
-	void Draw();
 	void DeInitialize() override;
+	void Draw();
 };
 
 #endif

@@ -1,6 +1,16 @@
 #include "Game.h"
 #include <time.h>
 
+void MouseMovement(double xPos, double yPos)
+{
+	std::cout << "Mouse Pos: {" << xPos << ", " << yPos << "}\n";
+}
+
+void MouseScrollMovement(double xOffset, double yOffset)
+{
+	std::cout << "Mouse Scroll: {" << xOffset << ", " << yOffset << "}\n";
+}
+
 void Game::Initialize()
 {
 	//floor = new GameObject("Floor");
@@ -8,7 +18,7 @@ void Game::Initialize()
 	player = new GameObject("Player");
 	//player->transform->SetParent(floor->transform);
 	player->AddComponent(CreateQuad());
-	player->transform->SetWorldPosition(glm::vec3(1280/2, 720/2, 25));
+	player->transform->SetWorldPosition(glm::vec3(0, 0, 25));
 	player->transform->SetScale(glm::vec3(100, 100, 100));
 
 	camera = new GameObject("Camera");
@@ -17,6 +27,9 @@ void Game::Initialize()
 
 	//cam->SetCameraPerspective(60, 0.1f, 1000.0f);
 	target = player;
+
+	Input::OnMouseMove.AddListener(MouseMovement);
+	Input::OnMouseScrollMove.AddListener(MouseScrollMovement);
 }
 
 void Game::Inputs()
@@ -41,9 +54,9 @@ void Game::Inputs()
 	if (IsKeyDown(KeyCode::Num8)) { target->transform->SetRotation(t.GetRotation() + glm::vec3(0, 0, 01 * multiply)); }
 	if (IsKeyDown(KeyCode::Num9)) { target->transform->SetRotation(t.GetRotation() + glm::vec3(0, 0, -1 * multiply)); }
 
-	cout << "----------------------------- " << target->name << " -----------------------------\n";
-	cout << "Position: {" << t.GetWorldPosition().x << ", " << t.GetWorldPosition().y << ", " << t.GetWorldPosition().z << "}\n";
-	cout << "Rotation: {" << t.GetRotation().x << ", " << t.GetRotation().y << ", " << t.GetRotation().z << "}\n";
+	//cout << "----------------------------- " << target->name << " -----------------------------\n";
+	//cout << "Position: {" << t.GetWorldPosition().x << ", " << t.GetWorldPosition().y << ", " << t.GetWorldPosition().z << "}\n";
+	//cout << "Rotation: {" << t.GetRotation().x << ", " << t.GetRotation().y << ", " << t.GetRotation().z << "}\n";
 }
 
 void Game::Update()
