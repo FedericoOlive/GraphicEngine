@@ -5,14 +5,25 @@
 
 #include "GameObjects/Component.h"
 
+template<typename... Args>
 class Event
 {
 private:
-    std::vector<std::function<void()>> listeners_;
+    std::vector<std::function<void(Args...)>> listeners_;
 
 public:
-	void AddListener(std::function<void()> func);
-	void Invoke();
+    void AddListener(const std::function<void(Args...)>& func)
+    {
+        listeners_.push_back(func);
+    }
+
+    void Invoke(Args... args)
+    {
+        for (auto listener : listeners_)
+        {
+            listener(args...);
+        }
+    }
 };
 
 #endif
