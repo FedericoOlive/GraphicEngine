@@ -1,5 +1,7 @@
 #include "BaseGame.h"
+
 string BaseGame::version = "1.1.0";
+Event BaseGame::OnUpdateEvent;
 
 void BaseGame::BeforeDraw()
 {
@@ -29,7 +31,7 @@ BaseGame::~BaseGame()
 {
     if (input != nullptr)
     {
-		delete input;
+        delete input;
         input = nullptr;
     }
     if (window != nullptr)

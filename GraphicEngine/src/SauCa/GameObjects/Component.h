@@ -5,6 +5,7 @@
 
 class Transform;
 class GameObject;
+class BaseGame;
 
 class SAUCA_API Component
 {
@@ -18,6 +19,7 @@ public:
 	Component(bool isRenderizable = false); // Destructor virtual
 	virtual ~Component() {} // Destructor virtual
 	virtual void Draw(){}
+	virtual void Update();
 };
 
 #endif

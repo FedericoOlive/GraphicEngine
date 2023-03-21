@@ -5,8 +5,11 @@
 class Game : public BaseGame
 {
 private:
+	GameObject* target = nullptr;
 	GameObject* player = nullptr;
 	GameObject* floor = nullptr;
+	GameObject* camera = nullptr;
+	Camera* cam = nullptr;
 	float multiply = 2;
 
 public:

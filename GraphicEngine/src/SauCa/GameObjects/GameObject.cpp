@@ -5,9 +5,10 @@ unsigned int GameObject::id = 0;
 
 GameObject::GameObject(std::string name)
 {
+	this->name = name;
 	id++;
 	if (name.empty())
-		name = "GameObject " + std::to_string(id);
+		this->name = "GameObject " + std::to_string(id);
 	transform = new Transform();
 }
 

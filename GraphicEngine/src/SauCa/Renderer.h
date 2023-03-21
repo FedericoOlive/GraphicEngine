@@ -8,18 +8,16 @@
 #include "GameObjects/Component.h"
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtc/type_ptr.hpp"
+class Camera;
 
 static class SAUCA_API Renderer
 {
 private:
-	glm::mat4 viewMatrix;
-	glm::mat4 projectionMatrix;
-
 	Material* defaultMaterialSolid;
 	Material* defaultMaterialTexture;
 	
 	static std::list<Component*> renderList;
-	
+	static std::list<Camera*> cameras;
 public:
 	static void AddToRenderList(Component* component);
 	
@@ -41,6 +39,10 @@ public:
 	Material* GetMaterialTexture() { return defaultMaterialTexture; }
 	Material* GetMaterialSolid() { return defaultMaterialSolid; }
 	void BindTextures(unsigned int& texture);
+
+	static void RemoveCamera(Camera* cam);
+	static void AddCamera(Camera* cam);
+	
 };
 
 #endif

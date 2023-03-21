@@ -1,9 +1,11 @@
 #include "Renderer.h"
 
 #include "GameObjects/GameObject.h"
+#include "Render/Camera.h"
 using namespace std;
 
 std::list<Component*> Renderer::renderList;
+std::list<Camera*> Renderer::cameras;
 
 void Renderer::AddToRenderList(Component* component)
 {
@@ -12,8 +14,9 @@ void Renderer::AddToRenderList(Component* component)
 
 Renderer::Renderer()
 {
-    viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 50.0f);
+    //viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+    //projectionMatrix = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.01f, 50.0f);
+    //projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 50.0f);
 }
 
 Renderer::~Renderer()
@@ -56,6 +59,10 @@ void Renderer::DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned in
     glUniform3fv(locationColor, 1, value_ptr(material->colorTint));
     glUniform1fv(locationAlpha, 1, &alpha);
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+	// Todo: Agregar layers para distintas cámaras
+    glm::mat4 viewMatrix = cameras.front()->viewMatrix;
+    glm::mat4 projectionMatrix = cameras.front()->projectionMatrix;
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 
@@ -146,4 +153,21 @@ void Renderer::BindTextures(unsigned int& texture)
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
+}
+
+void Renderer::RemoveCamera(Camera* cam)
+{
+    for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
+    {
+        if ((*iter) == cam)
+        {
+            cameras.erase(iter);
+            break;
+        }
+    }
+}
+
+void Renderer::AddCamera(Camera* cam)
+{
+    cameras.push_back(cam);
 }

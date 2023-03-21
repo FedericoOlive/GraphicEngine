@@ -12,6 +12,8 @@
 #include "Input/Input.h"
 #include "Timer.h"
 #include "Entity/Entity2D/TileMap.h"
+#include "Render/Camera.h"
+#include "Utility/Event.h"
 
 using namespace std;
 
@@ -25,12 +27,14 @@ private:
 	CollisionManager* collisionManager;
 	Timer* timer;
 
+	
 	void BeforeDraw();
 	void Draw();
 	void AfterDraw();
 
 	void LoadInfo();
 public:
+	static Event OnUpdateEvent;
 	BaseGame();
 	~BaseGame();
 	int Init();
