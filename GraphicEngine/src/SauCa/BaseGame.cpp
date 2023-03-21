@@ -1,5 +1,5 @@
 #include "BaseGame.h"
-string BaseGame::version = "0.5.0";
+string BaseGame::version = "1.1.0";
 
 void BaseGame::BeforeDraw()
 {
