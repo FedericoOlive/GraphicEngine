@@ -5,8 +5,8 @@ Camera::Camera(int width, int height)
 {
 	aspect = (float)width / (float)height;
 	viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);
-	//SetCameraPerspective(45.0f, 0.1f, 1000.0f);
-	SetCameraOrthogonal(1280, 720);
+	SetCameraPerspective(45.0f, 0.1f, 1000.0f);
+	//SetCameraOrthogonal(1280, 720);
 	Renderer::AddCamera(this);
 }
 
