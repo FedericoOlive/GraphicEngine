@@ -1,7 +1,7 @@
 #include "BaseGame.h"
 
 string BaseGame::version = "1.1.0";
-Event BaseGame::OnUpdateEvent;
+Event<> BaseGame::OnUpdateEvent;
 
 void BaseGame::BeforeDraw()
 {

@@ -34,7 +34,7 @@ private:
 
 	void LoadInfo();
 public:
-	static Event OnUpdateEvent;
+	static Event<> OnUpdateEvent;
 	BaseGame();
 	~BaseGame();
 	int Init();
