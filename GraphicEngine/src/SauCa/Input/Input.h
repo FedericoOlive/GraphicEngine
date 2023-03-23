@@ -1,5 +1,6 @@
 #ifndef INPUT_H
 #define INPUT_H
+#include <glm/glm/vec2.hpp>
 
 #include "Exports.h"
 #include "KeyCodes.h"
@@ -16,19 +17,17 @@ public:
 	static Event<double, double> OnMouseMove;
 	static Event<double, double> OnMouseScrollMove;
 	
-	int static key;
-	int static action;
-	
+	static int key;
+	static int action;
+	static glm::vec2 mousePos;
+
 	Input();
 	~Input();
-	
-	void MouseCallback(GLFWwindow* window, double xposIn, double yposIn, Input* input);
-	void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset, Input* input);
-		
+
 	void InitInput(Window* _window);
-	bool IsKeyReleased(KeyCode keyCode);
-	bool IsKeyDown(KeyCode keyCode);
-	bool IsKeyPressed(KeyCode keyCode);
+	static bool IsKeyReleased(KeyCode keyCode);
+	static bool IsKeyDown(KeyCode keyCode);
+	static bool IsKeyPressed(KeyCode keyCode);
 	int GetKey();
 };
 

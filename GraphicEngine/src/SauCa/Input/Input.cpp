@@ -2,22 +2,24 @@
 
 int Input::key = 0;
 int Input::action = 0;
+glm::vec2 Input::mousePos = { 0.0, 0.0 };
 Event<double, double> Input::OnMouseMove;
 Event<double, double> Input::OnMouseScrollMove;
 
-Input::Input(){}
-Input::~Input(){}
-
-void Input::MouseCallback(GLFWwindow* window, double xposIn, double yposIn, Input* input)
+void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
 	// Acceder a los miembros de la instancia Input utilizando el puntero input
-	input->OnMouseMove.Invoke(xposIn, yposIn);
+	glm::vec2 currentPos = { xposIn, yposIn };
+	glm::vec2 lastPos = Input::mousePos;
+	glm::vec2 offset = currentPos - lastPos;
+
+	Input::mousePos = currentPos;
+	Input::OnMouseMove.Invoke(offset.x, offset.y);
 }
 
-void Input::ScrollCallback(GLFWwindow* window, double xoffset, double yoffset, Input* input)
+void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	// Acceder a los miembros de la instancia Input utilizando el puntero input
-	input->OnMouseScrollMove.Invoke(xoffset, yoffset);
+	Input::OnMouseScrollMove.Invoke(xoffset, yoffset);
 }
 
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -26,22 +28,18 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	Input::action = action;
 }
 
+Input::Input()
+{
+	mousePos = { 0.0, 0.0 };
+}
+Input::~Input(){}
+
 void Input::InitInput(Window* _window)
 {
 	window = _window;
 	glfwSetKeyCallback(window->GetWindow(), keyCallback);
-
-	glfwSetCursorPosCallback(window->GetWindow(), [](GLFWwindow* window, double xposIn, double yposIn)
-		{
-			Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-			input->MouseCallback(window, xposIn, yposIn, input);
-		});
-
-	glfwSetScrollCallback(window->GetWindow(), [](GLFWwindow* window, double xoffset, double yoffset)
-		{
-			Input* input = static_cast<Input*>(glfwGetWindowUserPointer(window));
-			input->ScrollCallback(window, xoffset, yoffset, input);
-		});
+	glfwSetCursorPosCallback(window->GetWindow(), MouseCallback);
+	glfwSetScrollCallback(window->GetWindow(), ScrollCallback);
 }
 
 bool Input::IsKeyReleased(KeyCode keyCode)
