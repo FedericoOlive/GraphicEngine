@@ -62,6 +62,7 @@ void GameObject::AddComponent(Component* component)
 {
 	component->gameobject = this;
 	component->transform = transform;
+	component->OnAsigned();
 
 	components.push_back(component);
 	if (component->isRenderizable)

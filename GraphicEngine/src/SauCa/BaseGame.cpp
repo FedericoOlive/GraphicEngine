@@ -2,6 +2,7 @@
 
 string BaseGame::version = "1.2.0";
 Event<> BaseGame::OnUpdateEvent;
+Event<> BaseGame::OnInputEvent;
 
 void BaseGame::BeforeDraw()
 {
@@ -62,36 +63,36 @@ int BaseGame::Init()
     renderer = new Renderer();
     input = new Input();
     timer = new Timer();
-	
+
     window->InitLibrary();
     window->CreateWindow();
     window->CheckWindow(window->GetWindow());
     window->AssignContext(window->GetWindow());
     renderer->CreateRenderer();
-    
+
     LoadInfo();
 
     renderer->CreateShader();
     input->InitInput(window);
-    
+
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
+        window->PollEvents();    	
         timer->Update();
+
+        OnInputEvent.Invoke();
         Inputs();
+        OnUpdateEvent.Invoke();
         Update();
-        
+
         BeforeDraw();
         Draw();
         AfterDraw();
-    	
-        window->PollEvents();
     }
     DeInitialize();
-    
-    window->TerminateLibrary();
 
-    
+    window->TerminateLibrary();
     return 0;
 }
 

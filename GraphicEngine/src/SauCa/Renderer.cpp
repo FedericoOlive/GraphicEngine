@@ -1,7 +1,7 @@
 #include "Renderer.h"
-
 #include "GameObjects/GameObject.h"
 #include "Render/Camera.h"
+
 using namespace std;
 
 std::list<Component*> Renderer::renderList;
@@ -14,9 +14,7 @@ void Renderer::AddToRenderList(Component* component)
 
 Renderer::Renderer()
 {
-    //viewMatrix = glm::lookAt(glm::vec3(0.0f, 0.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-    //projectionMatrix = glm::perspective(glm::radians(45.0f), 1280.0f / 720.0f, 0.01f, 50.0f);
-    //projectionMatrix = glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f, 0.0f, 50.0f);
+
 }
 
 Renderer::~Renderer()
@@ -37,6 +35,7 @@ void Renderer::CreateRenderer()
     glewExperimental = GL_TRUE;
     glewInit();
     glEnable(GL_BLEND);
+    //glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 

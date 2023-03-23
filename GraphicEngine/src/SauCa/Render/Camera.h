@@ -16,18 +16,19 @@ private:
 	glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
 	glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
 
-	
 public:
 	glm::mat4 viewMatrix;
 	glm::mat4 projectionMatrix;
 	float aspect;
+	GameObject* target;
 	
 	Camera(int width, int height);
 	~Camera();
 
 	void SetCameraOrthogonal(int width, int height, float near = 0.0f, float far = 1000.0f);
 	void SetCameraPerspective(float fov = 45.0f, float near = 0.1f, float far = 1000.0f);
-	
+	void OnAsigned() override;
+	void OnUpdatePosition();
 };
 
 #endif

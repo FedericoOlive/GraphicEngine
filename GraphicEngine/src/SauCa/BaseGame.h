@@ -14,6 +14,7 @@
 #include "Entity/Entity2D/TileMap.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
+#include "Movement/FirstPerson.h"
 
 using namespace std;
 
@@ -33,8 +34,10 @@ private:
 	void AfterDraw();
 
 	void LoadInfo();
+	
 public:
 	static Event<> OnUpdateEvent;
+	static Event<> OnInputEvent;
 	BaseGame();
 	~BaseGame();
 	int Init();
@@ -51,6 +54,7 @@ public:
 	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
 	void SetMaterial(Material* material);
+	
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);
 	void UpdateCollisions(TileMap* tileMap);

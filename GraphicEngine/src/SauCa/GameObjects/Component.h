@@ -9,6 +9,7 @@ class BaseGame;
 
 class SAUCA_API Component
 {
+protected:
 public:
 	GameObject* gameobject = nullptr;
 	Transform* transform = nullptr;
@@ -20,6 +21,8 @@ public:
 	virtual ~Component() {} // Destructor virtual
 	virtual void Draw(){}
 	virtual void Update();
+	virtual void Input();
+	virtual void OnAsigned();
 };
 
 #endif

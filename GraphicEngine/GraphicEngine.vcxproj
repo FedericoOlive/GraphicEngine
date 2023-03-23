@@ -185,6 +185,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Movement\FirstPerson.cpp" />
     <ClCompile Include="src\SauCa\Utility\Event.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D.cpp" />
     <ClCompile Include="src\SauCa\GameObjects\Component.cpp" />
@@ -211,8 +212,10 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\Entity2D\Triangle.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Tile.cpp" />
     <ClCompile Include="src\SauCa\GameObjects\Transform.cpp" />
+    <ClCompile Include="src\SauCa\Movement\ThirdPerson.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Movement\FirstPerson.h" />
     <ClInclude Include="src\SauCa\Utility\Event.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D.h" />
     <ClInclude Include="src\SauCa\GameObjects\Component.h" />
@@ -243,6 +246,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Timer.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Tile.h" />
     <ClInclude Include="src\SauCa\GameObjects\Transform.h" />
+    <ClInclude Include="src\SauCa\Movement\ThirdPerson.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SauCa\Shaders\BasicShader.fs" />

@@ -5,12 +5,27 @@
 Component::Component(bool isRenderizable)
 {
 	this->isRenderizable = isRenderizable;
-	std::function<void()> func = [this] { Update(); }; // == std::function<void()> func = std::bind(&Component::Update, this);
-	BaseGame::OnUpdateEvent.AddListener(func);
+	std::function<void()> update = [this] { Update(); };
+	std::function<void()> input = [this] { Input(); };
+	BaseGame::OnUpdateEvent.AddListener(update);
+	BaseGame::OnInputEvent.AddListener(input);
 }
 
 void Component::Update()
 {
 	if (gameobject != nullptr)
-		std::cout << "Update de " << gameobject->name << "\n";
+	{
+		//std::cout << "Update de " << gameobject->name << "\n";
+		
+	}
+}
+
+void Component::Input()
+{
+	
+}
+
+void Component::OnAsigned()
+{
+
 }

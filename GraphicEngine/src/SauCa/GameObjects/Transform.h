@@ -5,6 +5,7 @@
 #include "Exports.h"
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtc/type_ptr.hpp"
+#include "Utility/Event.h"
 
 class SAUCA_API Transform
 {
@@ -27,12 +28,19 @@ protected:
 	void SetChildren(Transform* transformChildren);
 	void UpdatePosition();
 	void UpdateModelMatrix();
-
+	
 public:
+
+	glm::vec3 forward;
+	glm::vec3 right;
+	glm::vec3 up;
+	
+	Event<> OnUpdateModelMatrix;
 	Transform();
 	~Transform();
 
 	void SetParent(Transform* parentTransform);
+	void SetParent(GameObject* gameObject);
 	Transform* GetParent() const { return parent; }
 	std::list<Transform*> GetChildrens() const { return childrens; }
 		
