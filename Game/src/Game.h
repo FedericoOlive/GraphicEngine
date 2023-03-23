@@ -7,11 +7,15 @@ class Game : public BaseGame
 private:
 	GameObject* target = nullptr;
 	GameObject* player = nullptr;
+	GameObject* worldContent = nullptr;
 	GameObject* floor = nullptr;
+	GameObject* wallRight = nullptr;
+	GameObject* wallLeft = nullptr;
+	GameObject* wallBack = nullptr;
+	GameObject* wallFront = nullptr;
 	GameObject* camera = nullptr;
 	Camera* cam = nullptr;
 	float multiply = 2;
-
 public:
 	void Initialize()override;
 	void Inputs() override;
