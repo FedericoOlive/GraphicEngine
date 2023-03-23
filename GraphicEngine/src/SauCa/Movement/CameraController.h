@@ -1,12 +1,16 @@
 #ifndef FIRSTPERSON_H
 #define FIRSTPERSON_H
 #include <glm/glm/vec2.hpp>
+#include <glm/glm/vec3.hpp>
 
 #include "GameObjects/Component.h"
 #include "Input/KeyCodes.h"
+#include "Render/Camera.h"
 
-class SAUCA_API FirstPerson : public Component
+class SAUCA_API CameraController : public Component
 {
+protected:
+	Camera* camera;
 	KeyCode forward = KeyCode::W;
 	KeyCode left = KeyCode::A;
 	KeyCode back = KeyCode::S;
@@ -18,10 +22,12 @@ class SAUCA_API FirstPerson : public Component
 	float speedRight = 1.0f;
 
 	glm::vec2 mouseSensitive = { 0.50f, 0.50f };
+	glm::vec3 offset = { 0.0f, 0.0f, 0.0f };
+	GameObject* target;
 	
 public:
-	FirstPerson();
-	~FirstPerson() override;
+	CameraController(Camera* camera);
+	~CameraController() override;
 	void BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed);
 	void SetSpeedMovements(float speed);
 	void SetSpeedMovements(float speedForward, float speedLeft, float speedBack, float speedRight);
@@ -30,6 +36,10 @@ public:
 	void Input() override;
 	void OnAsigned() override;
 	void OnMouseMove(double x, double y);
+	void SetTarget(GameObject* target);
+	void SetOffset(glm::vec3 offset);
+	void SetFirstPersonDefault();
+	void SetThirdPersonDefault();
 };
 
 #endif

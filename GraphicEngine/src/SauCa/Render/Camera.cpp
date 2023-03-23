@@ -42,6 +42,6 @@ void Camera::OnUpdatePosition()
 	}
 	else
 	{
-		viewMatrix = glm::lookAt(transform->GetWorldPosition(), target->transform->GetWorldPosition(), up);
+		viewMatrix = glm::lookAt(transform->GetWorldPosition() + offsetViewport*transform->forward, target->transform->GetWorldPosition(), up);
 	}
 }
