@@ -14,7 +14,7 @@
 #include "Entity/Entity2D/TileMap.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
-#include "Movement/FirstPerson.h"
+#include "Movement/CameraController.h"
 
 using namespace std;
 
@@ -74,6 +74,7 @@ public:
 
 	// Window
 	void ModifyWindow(const char* name, float width, float height);
+	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
 };
 	
 #endif

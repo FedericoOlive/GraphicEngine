@@ -23,7 +23,7 @@ class SAUCA_API Window
 		void TerminateLibrary();
 		void PollEvents();
 		GLFWwindow* GetWindow();
-
+		void LockCursor(bool enable);
 };
 
 #endif

@@ -13,7 +13,6 @@ private:
 	GameObject* wallLeft = nullptr;
 	GameObject* wallBack = nullptr;
 	GameObject* wallFront = nullptr;
-	GameObject* camera = nullptr;
 	Camera* cam = nullptr;
 	float multiply = 2;
 public:

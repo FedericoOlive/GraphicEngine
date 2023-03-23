@@ -58,3 +58,11 @@ GLFWwindow* Window::GetWindow()
 {
     return window;
 }
+
+void Window::LockCursor(bool enable)
+{
+    if (enable)
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    else
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+}
