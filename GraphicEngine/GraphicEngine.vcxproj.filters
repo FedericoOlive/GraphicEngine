@@ -96,9 +96,6 @@
     <ClCompile Include="src\SauCa\Movement\CameraController.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Movement\ThirdPerson.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SauCa\BaseGame.h">
@@ -192,9 +189,6 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Movement\CameraController.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SauCa\Movement\ThirdPerson.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

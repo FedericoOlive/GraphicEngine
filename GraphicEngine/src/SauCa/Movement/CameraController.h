@@ -22,8 +22,9 @@ protected:
 	float speedRight = 1.0f;
 
 	glm::vec2 mouseSensitive = { 0.50f, 0.50f };
-	glm::vec3 offset = { 0.0f, 0.0f, 0.0f };
+	float offset = 0.0f;
 	GameObject* target;
+	bool isVerticalLocked;
 	
 public:
 	CameraController(Camera* camera);
@@ -37,7 +38,7 @@ public:
 	void OnAsigned() override;
 	void OnMouseMove(double x, double y);
 	void SetTarget(GameObject* target);
-	void SetOffset(glm::vec3 offset);
+	void SetOffset(float offset);
 	void SetFirstPersonDefault();
 	void SetThirdPersonDefault();
 };

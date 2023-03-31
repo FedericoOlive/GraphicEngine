@@ -5,7 +5,7 @@
 class Game : public BaseGame
 {
 private:
-	GameObject* target = nullptr;
+	Transform* target = nullptr;
 	GameObject* player = nullptr;
 	GameObject* worldContent = nullptr;
 	GameObject* floor = nullptr;
@@ -15,6 +15,9 @@ private:
 	GameObject* wallFront = nullptr;
 	Camera* cam = nullptr;
 	float multiply = 2;
+
+	GameObject* miniGoku = nullptr;
+	GameObject* miniGoku2 = nullptr;
 public:
 	void Initialize()override;
 	void Inputs() override;

@@ -20,8 +20,10 @@ CameraController::~CameraController()
 void CameraController::OnMouseMove(double x, double y)
 {
 	glm::vec3 newRot = { y * static_cast<double>(mouseSensitive.x), x * static_cast<double>(mouseSensitive.y), 0 };
-	transform->SetRotation(transform->GetRotation() + newRot);
-	
+	newRot += transform->GetWorldRotation();
+	if(isVerticalLocked)
+	newRot.x = 0;
+	transform->SetWorldRotation(newRot);	
 }
 
 void CameraController::SetTarget(GameObject* target)
@@ -29,20 +31,21 @@ void CameraController::SetTarget(GameObject* target)
 	this->target = target;
 	camera->target = target;
 }
-void CameraController::SetOffset(glm::vec3 offset)
+void CameraController::SetOffset(float offset)
 {
 	this->offset = offset;
-	camera->offsetViewport = offset;
+	camera->distanceOffset = offset;
 	camera->target = target;
 }
 
 void CameraController::SetFirstPersonDefault()
 {
-	BindMovements(KeyCode::W, KeyCode::A, KeyCode::S, KeyCode::D, 1.0f);
+	BindMovements(KeyCode::W, KeyCode::A, KeyCode::S, KeyCode::D, 10.0f);
 	SetCameraSensitive(0.5f, 0.5f);
 	
 	SetTarget(nullptr);
-	SetOffset({ 0, 0, 0 });
+	SetOffset(0);
+	isVerticalLocked = false;
 }
 
 void CameraController::SetThirdPersonDefault()
@@ -51,7 +54,8 @@ void CameraController::SetThirdPersonDefault()
 	SetCameraSensitive(0.5f, 0.5f);
 	
 	SetTarget(gameobject);
-	SetOffset({ 0, 200, -200 });
+	SetOffset(200);
+	isVerticalLocked = true;
 }
 
 void CameraController::BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed)
@@ -96,15 +100,15 @@ void CameraController::Input()
 		return;
 
 	glm::vec3 direction = { 0.0f, 0.0f, 0.0f };
-
-	if (Input::IsKeyDown(forward)) { direction = transform->forward * speedForward; }
-	if (Input::IsKeyDown(left)) { direction = -transform->right * speedLeft; }
-	if (Input::IsKeyDown(back)) { direction = -transform->forward * speedBack; }
-	if (Input::IsKeyDown(right)) { direction = transform->right * speedRight; }
+	bool hasMoved = false;
+	if (Input::IsKeyDown(forward)) { direction = transform->forward * speedForward; hasMoved = true; }
+	if (Input::IsKeyDown(left)) { direction = -transform->right * speedLeft; hasMoved = true; }
+	if (Input::IsKeyDown(back)) { direction = -transform->forward * speedBack; hasMoved = true; }
+	if (Input::IsKeyDown(right)) { direction = transform->right * speedRight; hasMoved = true; }
 
 	direction.y = 0.0f;
 	//direction = glm::normalize(direction);
-	
+	if(hasMoved)
 	transform->SetWorldPosition(direction + transform->GetWorldPosition());
 }
 

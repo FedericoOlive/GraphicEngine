@@ -20,7 +20,8 @@ public:
 	glm::mat4 viewMatrix;
 	glm::mat4 projectionMatrix;
 	float aspect;
-	glm::vec3 offsetViewport;
+	float distanceOffset;
+	float heightOffset = 100.0f;
 	GameObject* target;
 	
 	Camera(int width, int height);

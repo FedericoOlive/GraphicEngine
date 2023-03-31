@@ -35,13 +35,17 @@ void Camera::OnAsigned()
 void Camera::OnUpdatePosition()
 {
 	cameraPos = gameobject->transform->GetWorldPosition();
+	glm::vec3 targetPos = gameobject->transform->GetWorldPosition();
 
-	if (target == nullptr)
+	if (target == nullptr)	// First Person
 	{
-		viewMatrix = glm::lookAt(transform->GetWorldPosition(), transform->GetWorldPosition() + transform->forward, up);
+		targetPos = transform->GetWorldPosition() + transform->forward;
+		viewMatrix = glm::lookAt(transform->GetWorldPosition(), targetPos, up);
 	}
-	else
+	else	// Third Person
 	{
-		viewMatrix = glm::lookAt(transform->GetWorldPosition() + offsetViewport*transform->forward, target->transform->GetWorldPosition(), up);
+		targetPos = gameobject->transform->GetWorldPosition();
+		cameraPos += -transform->forward * distanceOffset + up * heightOffset;
+		viewMatrix = glm::lookAt(cameraPos, targetPos, up);
 	}
 }
