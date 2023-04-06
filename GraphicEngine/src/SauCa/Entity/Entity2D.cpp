@@ -16,16 +16,16 @@ void Entity2D::SetCollisionManager(CollisionManager* collisionManager)
 CollisionType Entity2D::CheckCollision(Entity2D& target, float& xOverlap, float& yOverlap)
 {
 	xOverlap = max(0.0f,
-		min(transform->GetWorldPosition().x + fabs(transform->GetScale().x) / 2.0f, 
-			target.transform->GetWorldPosition().x + fabs(target.transform->GetScale().x) / 2.0f) -
-		max(transform->GetWorldPosition().x - fabs(transform->GetScale().x) / 2.0f, 
-			target.transform->GetWorldPosition().x - fabs(target.transform->GetScale().x) / 2.0f));
+		min(transform->GetWorldPosition().x + fabs(transform->GetWorldScale().x) / 2.0f, 
+			target.transform->GetWorldPosition().x + fabs(target.transform->GetWorldScale().x) / 2.0f) -
+		max(transform->GetWorldPosition().x - fabs(transform->GetWorldScale().x) / 2.0f, 
+			target.transform->GetWorldPosition().x - fabs(target.transform->GetWorldScale().x) / 2.0f));
 	
 	yOverlap = max(0.0f,
-		min(transform->GetWorldPosition().y + fabs(transform->GetScale().y) / 2.0f, 
-			target.transform->GetWorldPosition().y + fabs(target.transform->GetScale().y) / 2.0f) -
-		max(transform->GetWorldPosition().y - fabs(transform->GetScale().y) / 2.0f, 
-			target.transform->GetWorldPosition().y - fabs(target.transform->GetScale().y) / 2.0f));
+		min(transform->GetWorldPosition().y + fabs(transform->GetWorldScale().y) / 2.0f, 
+			target.transform->GetWorldPosition().y + fabs(target.transform->GetWorldScale().y) / 2.0f) -
+		max(transform->GetWorldPosition().y - fabs(transform->GetWorldScale().y) / 2.0f, 
+			target.transform->GetWorldPosition().y - fabs(target.transform->GetWorldScale().y) / 2.0f));
 
 	if (xOverlap != 0.0f && yOverlap != 0.0f)
 	{

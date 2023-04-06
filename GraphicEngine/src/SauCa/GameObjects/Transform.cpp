@@ -12,7 +12,7 @@ Transform::Transform()
 	localPosition = glm::vec3(0.0f);
 	worldPosition = glm::vec3(0.0f);
 	worldRotation = glm::vec3(0.0f);
-	scale = glm::vec3(1.0f);
+	localScale = glm::vec3(1.0f);
 
 	parent = nullptr;
 }
@@ -42,11 +42,21 @@ void Transform::SetChildren(Transform* transformChildren)
 void Transform::SetParent(Transform* parentTransform)
 {
 	if (parent)
+	{
 		parent->RemoveChildren(this);
+	}
 
 	parent = parentTransform;
-	if (parentTransform)
-		parentTransform->SetChildren(this);
+	
+	if (parent)
+	{	
+		parent->SetChildren(this);
+
+		// Todo: Pendiente recalcular Locales
+		//localPosition = parent->worldPosition - worldPosition;
+		//localRotation = parent->worldRotation - worldRotation;
+		//localScale = parent->worldScale - worldScale;
+	}
 }
 
 void Transform::SetParent(GameObject* gameObject)
@@ -107,6 +117,7 @@ void Transform::SetWorldRotation(glm::vec3 rotation)
 {
 	worldRotation = rotation;
 	localRotation = parent ? rotation - parent->worldRotation : rotation;
+	
 	UpdateDirectionVectors();
 	UpdateRotationMatrix();
 	UpdateModelMatrix();
@@ -121,6 +132,7 @@ void Transform::SetLocalRotation(glm::vec3 rotation)
 {
 	worldRotation = (parent == nullptr) ? rotation : parent->worldRotation + rotation;
 	localRotation = rotation;
+	
 	UpdateDirectionVectors();
 	UpdateRotationMatrix();
 	UpdateModelMatrix();
@@ -161,18 +173,28 @@ void Transform::UpdateChildRotationMatrix()
 
 // ============================================ SCALE ============================================
 
-void Transform::SetScale(glm::vec3 scale)
+void Transform::SetLocalScale(glm::vec3 scale)
 {
-	this->scale = scale;
+	localScale = (parent == nullptr) ? scale : parent->localScale + scale;
+	localScale = scale;
+	
 	UpdateChildScaleMatrix();
+	UpdateModelMatrix();
+}
 
+void Transform::SetWorldScale(glm::vec3 scale)
+{
+	worldScale = scale;
+	localScale = parent ? scale - parent->worldScale : scale;
+	
+	UpdateChildScaleMatrix();
 	UpdateModelMatrix();
 }
 
 void Transform::UpdateChildScaleMatrix()
 {
 	scaleMatrix = glm::mat4(1.0f);
-	scaleMatrix = glm::scale(scaleMatrix, scale);
+	scaleMatrix = glm::scale(scaleMatrix, localScale);
 }
 
 // ============================================ MODEL ============================================
@@ -182,7 +204,7 @@ void Transform::UpdateModelMatrix()
 	modelMatrix = glm::mat4(1.0f);
 	modelMatrix = translateMatrix * rotationMatrix * scaleMatrix;
 	if (parent)
-		modelMatrix = modelMatrix * parent->modelMatrix;
+		modelMatrix = parent->modelMatrix * modelMatrix;
 	
 	OnUpdateModelMatrix.Invoke();
 }

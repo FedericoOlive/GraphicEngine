@@ -22,7 +22,8 @@ protected:
 	glm::vec3 worldRotation;
 	glm::vec3 localRotation;
 
-	glm::vec3 scale;
+	glm::vec3 localScale;
+	glm::vec3 worldScale;
 	
 	Transform* parent;
 	std::list<Transform*> childrens;
@@ -58,15 +59,18 @@ public:
 	void SetWorldRotation(glm::vec3 rotation);
 	void SetLocalRotation(glm::vec3 rotation);
 	
-	void SetScale(glm::vec3 scale);
+	void SetLocalScale(glm::vec3 scale);
+	void SetWorldScale(glm::vec3 scale);
 
 	// Vector 3
 	glm::vec3 GetLocalPosition() const { return localPosition; }
 	glm::vec3 GetWorldPosition() const { return worldPosition; }
+	
 	glm::vec3 GetLocalRotation() const { return localRotation; }
 	glm::vec3 GetWorldRotation() const { return worldRotation; }
 	
-	glm::vec3 GetScale() const { return scale; }
+	glm::vec3 GetLocalScale() const { return localScale; }
+	glm::vec3 GetWorldScale() const { return worldScale; }
 
 	// Matrix
 	glm::mat4 GetModelMatrix() const { return modelMatrix; }

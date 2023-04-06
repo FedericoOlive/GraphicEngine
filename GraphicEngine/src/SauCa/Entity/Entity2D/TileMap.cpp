@@ -123,7 +123,7 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 
 			newTile.SetId(_id);
 			newTile.SetTexture(texture);
-			newTile.transform->SetScale(glm::vec3(tileWidth, tileHeight, 1.0f));
+			newTile.transform->SetLocalScale(glm::vec3(tileWidth, tileHeight, 1.0f));
 			newTile.material = renderer->GetMaterialTexture();
 			newTile.SetRenderer(renderer);
 			
@@ -213,10 +213,10 @@ bool TileMap::CheckCollision(Entity2D& object)
 	convertedPosY = object.transform->GetWorldPosition().y + (height / 2.0f) * tileHeight + pos.y;
 
 	int left_tile = convertedPosX / tileWidth;
-	int right_tile = (convertedPosX + object.transform->GetScale().x) / tileWidth;
+	int right_tile = (convertedPosX + object.transform->GetLocalScale().x) / tileWidth;
 
 	int top_tile = (convertedPosY / tileHeight) * -1;
-	int bottom_tile = ((convertedPosY - object.transform->GetScale().y) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
+	int bottom_tile = ((convertedPosY - object.transform->GetLocalScale().y) / tileHeight) * -1; // Se resta porque el eje Y crece hacia arriba
 
 	if (left_tile < 0)
 		left_tile = 0;
@@ -294,7 +294,7 @@ void TileMap::SetSize(float size)
 					tileMapGrid[i][y][x].transform->SetWorldPosition(newPos);
 					
 					glm::vec3 newScale = { tileWidth * size, tileHeight * size, 1.f };
-					tileMapGrid[i][y][x].transform->SetScale(newScale);
+					tileMapGrid[i][y][x].transform->SetLocalScale(newScale);
 				}
 			}
 		}
