@@ -5,17 +5,17 @@ Sprite::Sprite()
     sizeVertices = 32;
 
     vertices = new float[sizeVertices] {
-        // Positions          // Colors           // Texture Coords
-        0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, // Top Right
-            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, // Bottom Right
-            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, // Bottom Left
-            -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f  // Top Left 
+        // Positions          // Colors            // Coords
+        0.5f,  0.5f, 0.0f,    1.0f, 1.0f, 1.0f,    1.0f, 1.0f, // Top Right
+        0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 1.0f,    1.0f, 0.0f, // Bottom Right
+       -0.5f, -0.5f, 0.0f,    1.0f, 1.0f, 1.0f,    0.0f, 0.0f, // Bottom Left
+       -0.5f,  0.5f, 0.0f,    1.0f, 1.0f, 1.0f,    0.0f, 1.0f  // Top Left 
     };
 
     sizeIndices = 6;
     indices = new int[sizeIndices] {
         0, 1, 3, // First Triangle
-            1, 2, 3  // Second Triangle
+        1, 2, 3  // Second Triangle
     };
 }
 

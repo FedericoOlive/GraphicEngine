@@ -9,7 +9,7 @@ GameObject::GameObject(std::string name)
 	id++;
 	if (name.empty())
 		this->name = "GameObject " + std::to_string(id);
-	transform = new Transform();
+	transform = new Transform(this);
 }
 
 GameObject::~GameObject()

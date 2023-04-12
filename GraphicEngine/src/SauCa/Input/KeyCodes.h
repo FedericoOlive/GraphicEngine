@@ -9,6 +9,7 @@ enum class KeyState {
 
 enum class KeyCode
 {
+	None = -1,
 	// Numbers
 	Num0 = GLFW_KEY_0,
 	Num1 = GLFW_KEY_1,

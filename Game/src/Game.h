@@ -5,25 +5,32 @@
 class Game : public BaseGame
 {
 private:
+	float multiply = 0.5f;
 	Transform* target = nullptr;
-	GameObject* player = nullptr;
+	
 	GameObject* worldContent = nullptr;
 	GameObject* floor = nullptr;
 	GameObject* wallRight = nullptr;
 	GameObject* wallLeft = nullptr;
 	GameObject* wallBack = nullptr;
 	GameObject* wallFront = nullptr;
-	Camera* cam = nullptr;
-	float multiply = 2;
-
-	GameObject* miniGoku = nullptr;
-	GameObject* miniGoku2 = nullptr;
+	
+	GameObject* player = nullptr;
+	GameObject* cameraPivot = nullptr;
+	GameObject* camera = nullptr;
+	
+	GameObject* objectFoward = nullptr;
 public:
 	void Initialize()override;
 	void Inputs() override;
 	void Update()override;
 	void DeInitialize() override;
 	void Draw();
+
+	void SetEnviroment();
+	void AddListeners();
+	void ShowChildrens(Transform* transf, string preText);
+	std::string	AsString(glm::vec3 pos);
 };
 
 #endif

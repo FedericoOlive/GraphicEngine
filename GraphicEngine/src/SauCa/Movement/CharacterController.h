@@ -7,10 +7,9 @@
 #include "Input/KeyCodes.h"
 #include "Render/Camera.h"
 
-class SAUCA_API CameraController : public Component
+class SAUCA_API CharacterController : public Component
 {
 protected:
-	Camera* camera;
 	KeyCode forward = KeyCode::W;
 	KeyCode left = KeyCode::A;
 	KeyCode back = KeyCode::S;
@@ -21,14 +20,14 @@ protected:
 	float speedBack = 1.0f;
 	float speedRight = 1.0f;
 
+	bool rotateX = true;
+	bool rotateY = true;
 	glm::vec2 mouseSensitive = { 0.50f, 0.50f };
-	float offset = 0.0f;
 	GameObject* target;
-	bool isVerticalLocked;
 	
 public:
-	CameraController(Camera* camera);
-	~CameraController() override;
+	CharacterController();
+	~CharacterController() override;
 	void BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed);
 	void SetSpeedMovements(float speed);
 	void SetSpeedMovements(float speedForward, float speedLeft, float speedBack, float speedRight);
@@ -37,10 +36,8 @@ public:
 	void Input() override;
 	void OnAsigned() override;
 	void OnMouseMove(double x, double y);
-	void SetTarget(GameObject* target);
-	void SetOffset(float offset);
-	void SetFirstPersonDefault();
-	void SetThirdPersonDefault();
+	void RemoveMovement(bool foward = true, bool left = true, bool back = true, bool right = true);
+	void RemoveRotation(bool xAxis = true, bool yAxis = true);
 };
 
 #endif

@@ -2,6 +2,8 @@
 #define TRANSFORM_H
 
 #include <list>
+#include <string>
+
 #include "Exports.h"
 #include "glm/glm/glm.hpp"
 #include "glm/glm/gtc/type_ptr.hpp"
@@ -22,30 +24,36 @@ protected:
 	glm::vec3 worldRotation;
 	glm::vec3 localRotation;
 
-	glm::vec3 localScale;
 	glm::vec3 worldScale;
+	glm::vec3 localScale;
 	
-	Transform* parent;
-	std::list<Transform*> childrens;
 
 	void RemoveChildren(Transform* transformParent);
 	void SetChildren(Transform* transformChildren);
 	void UpdateModelMatrix();
 	void UpdateTranslateMatrix();
 	void UpdateRotationMatrix();
+	void UpdateScaleMatrix();
 	void UpdateChildTranslateMatrix();
 	void UpdateChildRotationMatrix();
 	void UpdateChildScaleMatrix();
 	void UpdateDirectionVectors();
 
 public:
+	
+	std::list<Transform*> childrens;
+	Transform* parent;
+	GameObject* gameObject;
 
+	const float deg2rad = (glm::pi<float>() * 2.0f) / 360.0f;
+	const float rad2deg = 360.0f / (glm::pi<float>() * 2.0f);
+	
 	glm::vec3 forward;
 	glm::vec3 right;
 	glm::vec3 up;
 	
 	Event<> OnUpdateModelMatrix;
-	Transform();
+	Transform(GameObject* go);
 	~Transform();
 
 	void SetParent(Transform* parentTransform);
@@ -78,6 +86,13 @@ public:
 	glm::mat4 GetTranslateMatrix() const { return translateMatrix; }
 	glm::mat4 GetRotationMatrix() const { return rotationMatrix; }
 	glm::mat4 GetScaleMatrix() const { return scaleMatrix; }
+
+	// Tools
+	glm::quat EulerToQuat(glm::vec3 euler);
+	glm::vec3 QuatToVec(glm::quat quat, glm::vec3 vec);
+	glm::vec3 QuatToEuler(glm::quat rot);
+	glm::vec3 NormalizeAngles(glm::vec3 angles);
+	float NormalizeAngle(float angle);
 };
 
 #endif

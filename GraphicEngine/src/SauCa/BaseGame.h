@@ -14,7 +14,7 @@
 #include "Entity/Entity2D/TileMap.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
-#include "Movement/CameraController.h"
+#include "Movement/CharacterController.h"
 
 using namespace std;
 

@@ -4,9 +4,7 @@
 
 Camera::Camera(int width, int height)
 {
-	target = nullptr;
 	aspect = (float)width / (float)height;
-	viewMatrix = glm::lookAt(cameraPos, cameraTarget, up);
 	SetCameraPerspective();
 	Renderer::AddCamera(this);
 }
@@ -30,22 +28,18 @@ void Camera::OnAsigned()
 {
 	std::function<void()> onUpdatePosition = [this] { OnUpdatePosition(); };
 	gameobject->transform->OnUpdateModelMatrix.AddListener(onUpdatePosition);
+	UpdateViewMatrix();
 }
 
 void Camera::OnUpdatePosition()
 {
-	cameraPos = gameobject->transform->GetWorldPosition();
-	glm::vec3 targetPos = gameobject->transform->GetWorldPosition();
+	UpdateViewMatrix();
+}
 
-	if (target == nullptr)	// First Person
-	{
-		targetPos = transform->GetWorldPosition() + transform->forward;
-		viewMatrix = glm::lookAt(transform->GetWorldPosition(), targetPos, up);
-	}
-	else	// Third Person
-	{
-		targetPos = gameobject->transform->GetWorldPosition();
-		cameraPos += -transform->forward * distanceOffset + up * heightOffset;
-		viewMatrix = glm::lookAt(cameraPos, targetPos, up);
-	}
+void Camera::UpdateViewMatrix()
+{
+	glm::vec3 cameraPos = transform->GetWorldPosition();
+	glm::vec3 targetPos = transform->GetWorldPosition() + transform->forward;
+	
+	viewMatrix = glm::lookAt(cameraPos, targetPos, transform->up);
 }
