@@ -101,46 +101,46 @@ void Game::Draw()
 
 void Game::SetEnviroment()
 {
-	float cubeDimensions = 25.0f;
+	float cubeDimensions = 250.0f;
 
 	worldContent = new GameObject("World Content");
-	worldContent->transform->SetLocalPosition({0,0,0});
-	worldContent->transform->SetLocalScale({1,1,1});
-	worldContent->transform->SetLocalRotation({0,0,0});
-	
+	worldContent->transform->SetLocalPosition({ 0, 0, 0 });
+	worldContent->transform->SetLocalScale({ 1, 1, 1 });
+	worldContent->transform->SetLocalRotation({ 0, 0, 0 });
+
 	floor = new GameObject("Floor");
 	floor->AddComponent(CreateSprite(new Texture("res/Layer2.png")));
-	floor->transform->SetLocalPosition(glm::vec3(0, -cubeDimensions, 0));
-	floor->transform->SetLocalScale(glm::vec3(cubeDimensions * 2, cubeDimensions * 2, 0));
-	floor->transform->SetLocalRotation(glm::vec3(90, 0, 0));
+	floor->transform->SetLocalPosition({ 0, 0, 0 });
+	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	floor->transform->SetLocalRotation({ 90, 0, 0 });
 
 	wallRight = new GameObject("Wall Right");
 	wallRight->transform->SetParent(worldContent);
 	wallRight->AddComponent(CreateSprite(new Texture("res/Layer3.png")));
-	wallRight->transform->SetLocalPosition(glm::vec3(cubeDimensions, 0, 0));
-	wallRight->transform->SetLocalScale(glm::vec3(cubeDimensions * 2, cubeDimensions * 2, 0));
-	wallRight->transform->SetLocalRotation(glm::vec3(0, -90, 0));
+	wallRight->transform->SetLocalPosition({ cubeDimensions, cubeDimensions / 2, 0 });
+	wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	wallRight->transform->SetLocalRotation({ 0, -90, 0 });
 
 	wallLeft = new GameObject("Wall Left");
 	wallLeft->transform->SetParent(worldContent);
 	wallLeft->AddComponent(CreateSprite(new Texture("res/Layer4.png")));
-	wallLeft->transform->SetLocalPosition(glm::vec3(-cubeDimensions, 0, 0));
-	wallLeft->transform->SetLocalScale(glm::vec3(cubeDimensions * 2, cubeDimensions * 2, 0));
-	wallLeft->transform->SetLocalRotation(glm::vec3(0, 90, 0));
+	wallLeft->transform->SetLocalPosition({ -cubeDimensions, cubeDimensions / 2, 0 });
+	wallLeft->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	wallLeft->transform->SetLocalRotation({ 0, 90, 0 });
 
 	wallBack = new GameObject("Wall Back");
 	wallBack->transform->SetParent(worldContent);
 	wallBack->AddComponent(CreateSprite(new Texture("res/Layer5.png")));
-	wallBack->transform->SetLocalPosition(glm::vec3(0, 0, -cubeDimensions));
-	wallBack->transform->SetLocalScale(glm::vec3(cubeDimensions * 2, cubeDimensions * 2, 0));
-	wallBack->transform->SetLocalRotation(glm::vec3(0, 180, 0));
+	wallBack->transform->SetLocalPosition({ 0, cubeDimensions / 2, -cubeDimensions });
+	wallBack->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	wallBack->transform->SetLocalRotation({ 0, 180, 0 });
 
 	wallFront = new GameObject("Wall Front");
 	wallFront->transform->SetParent(worldContent);
 	wallFront->AddComponent(CreateSprite(new Texture("res/Layer6.png")));
-	wallFront->transform->SetLocalPosition(glm::vec3(0, 0, cubeDimensions));
-	wallFront->transform->SetLocalScale(glm::vec3(cubeDimensions * 2, cubeDimensions * 2, 0));
-	wallFront->transform->SetLocalRotation(glm::vec3(0, 0, 0));
+	wallFront->transform->SetLocalPosition({ 0, cubeDimensions / 2, cubeDimensions });
+	wallFront->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	wallFront->transform->SetLocalRotation({ 0, 0, 0 });
 }
 
 void Game::ShowChildrens(Transform* transf, string preText)
