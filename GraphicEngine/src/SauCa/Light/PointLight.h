@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseLight.h"
 
-class PointLight : public BaseLight
+class SAUCA_API PointLight : public BaseLight
 {
 	float constant;
 	float linear;

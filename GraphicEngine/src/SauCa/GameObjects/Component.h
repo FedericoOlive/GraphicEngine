@@ -9,7 +9,6 @@ class BaseGame;
 
 class SAUCA_API Component
 {
-protected:
 public:
 	GameObject* gameobject = nullptr;
 	Transform* transform = nullptr;
@@ -17,7 +16,7 @@ public:
 	bool isRenderizable = false;
 	bool isEnable = true;
 	
-	Component(bool isRenderizable = false); // Destructor virtual
+	Component(bool isRenderizable = false);
 	virtual ~Component() {} // Destructor virtual
 	virtual void Draw(){}
 	virtual void Update();

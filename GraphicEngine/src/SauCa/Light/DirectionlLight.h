@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseLight.h"
 
-class DirectionlLight : public BaseLight
+class SAUCA_API DirectionlLight : public BaseLight
 {
 public:
 	DirectionlLight();
