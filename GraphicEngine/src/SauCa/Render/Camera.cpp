@@ -39,7 +39,7 @@ void Camera::OnUpdatePosition()
 void Camera::UpdateViewMatrix()
 {
 	glm::vec3 cameraPos = transform->GetWorldPosition();
-	glm::vec3 targetPos = transform->GetWorldPosition() + transform->forward;
+	glm::vec3 targetPos = transform->GetWorldPosition() + transform->forward();
 	
-	viewMatrix = glm::lookAt(cameraPos, targetPos, transform->up);
+	viewMatrix = glm::lookAt(cameraPos, targetPos, transform->up());
 }

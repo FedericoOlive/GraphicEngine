@@ -47,10 +47,10 @@ public:
 
 	const float deg2rad = (glm::pi<float>() * 2.0f) / 360.0f;
 	const float rad2deg = 360.0f / (glm::pi<float>() * 2.0f);
-	
-	glm::vec3 forward;
-	glm::vec3 right;
-	glm::vec3 up;
+
+	glm::vec3 forward() const { return -modelMatrix[2]; }
+	glm::vec3 right() const { return modelMatrix[0]; }
+	glm::vec3 up() const { return modelMatrix[1]; }
 	
 	Event<> OnUpdateModelMatrix;
 	Transform(GameObject* go);

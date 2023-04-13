@@ -205,20 +205,8 @@ void Transform::UpdateModelMatrix()
 	// worldPosition = parent ? parent->worldPosition + localPosition : localPosition;
 	// worldRotation = parent ? parent->worldRotation + localRotation : localRotation;
 	// worldScale = parent ? parent->worldScale + localScale : localScale;
-	
-	UpdateDirectionVectors();
-	
+		
 	OnUpdateModelMatrix.Invoke();
-}
-
-void Transform::UpdateDirectionVectors()
-{
-	forward.x = cos(glm::radians(worldRotation.y)) * cos(glm::radians(worldRotation.x));
-	forward.y = sin(glm::radians(worldRotation.x));
-	forward.z = sin(glm::radians(worldRotation.y)) * cos(glm::radians(worldRotation.x));
-
-	right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
-	up = glm::normalize(glm::cross(right, forward));
 }
 
 // ============================================ TOOLS ============================================

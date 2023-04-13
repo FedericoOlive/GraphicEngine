@@ -31,7 +31,7 @@ void Game::Initialize()
 	camera = new GameObject("Camera");
 	camera->AddComponent(sprite);
 	camera->transform->SetParent(cameraPivot);
-	camera->transform->SetLocalPosition({ 0, 0, -100 });
+	camera->transform->SetLocalPosition({ 0, 0, 100 });
 	
 	Camera* cam = new Camera(1280, 720);
 	camera->AddComponent(cam);
@@ -100,10 +100,10 @@ void Game::Inputs()
 void Game::Update()
 {
 
-	objectFoward->transform->SetWorldPosition(cube->transform->GetWorldPosition() + cube->transform->forward * 10.0f);
+	objectFoward->transform->SetWorldPosition(cube->transform->GetWorldPosition() + cube->transform->forward() * 10.0f);
 	return;
 	glm::vec3 pos = player->transform->GetWorldPosition();
-	glm::vec3 forward = player->transform->forward;
+	glm::vec3 forward = player->transform->forward();
 
 	Transform t = *player->transform;
 	cout << "----------------------------------------------------------\n";
@@ -165,7 +165,7 @@ void Game::SetEnviroment()
 
 void Game::ShowChildrens(Transform* transf, string preText)
 {
-	std::cout << preText << "* " << transf->gameObject->name << " Pos: " << AsString(transf->GetWorldPosition()) << " Rot: " << AsString(transf->GetWorldRotation()) << " foward: " << AsString(transf->forward) << "\n";
+	std::cout << preText << "* " << transf->gameObject->name << " Pos: " << AsString(transf->GetWorldPosition()) << " Rot: " << AsString(transf->GetWorldRotation()) << " foward: " << AsString(transf->forward()) << "\n";
 	preText += "\t";
 	for (auto iter = transf->childrens.begin(); iter != transf->childrens.end(); ++iter)
 	{
