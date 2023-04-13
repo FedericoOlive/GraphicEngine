@@ -37,7 +37,6 @@ protected:
 	void UpdateChildTranslateMatrix();
 	void UpdateChildRotationMatrix();
 	void UpdateChildScaleMatrix();
-	void UpdateDirectionVectors();
 
 public:
 	
