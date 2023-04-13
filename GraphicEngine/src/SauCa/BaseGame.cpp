@@ -120,6 +120,12 @@ Sprite* BaseGame::CreateSprite(Texture* texture)
     return sprite;
 }
 
+Cube* BaseGame::CreateCube()
+{
+    Cube* sprite = new Cube(renderer);
+    return sprite;
+}
+
 bool BaseGame::IsKeyReleased(KeyCode keyCode)
 {
     return input->IsKeyReleased(keyCode);

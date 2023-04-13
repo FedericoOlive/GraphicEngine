@@ -136,15 +136,6 @@ void Transform::SetLocalRotation(glm::vec3 rotation)
 	}
 }
 
-void Transform::UpdateDirectionVectors()
-{
-	forward.x = cos(glm::radians(worldRotation.y)) * cos(glm::radians(worldRotation.x));
-	forward.y = sin(glm::radians(worldRotation.x));
-	forward.z = sin(glm::radians(worldRotation.y)) * cos(glm::radians(worldRotation.x));
-	right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
-	up = glm::normalize(glm::cross(right, forward));
-}
-
 void Transform::UpdateRotationMatrix()
 {
 	rotationMatrix = glm::mat4(1.0f);
@@ -209,9 +200,25 @@ void Transform::UpdateModelMatrix()
 	worldPosition = modelMatrix[3];
 	worldRotation = QuatToEuler(glm::quat_cast(modelMatrix));
 	worldScale = { glm::length(glm::vec3(modelMatrix[0])),	glm::length(glm::vec3(modelMatrix[1])),	glm::length(glm::vec3(modelMatrix[2])) };
+	
+	// Así no porque necesita la posicion con respecto a la rotación heredada. Si o si necesita extraerse del modelMatrix
+	// worldPosition = parent ? parent->worldPosition + localPosition : localPosition;
+	// worldRotation = parent ? parent->worldRotation + localRotation : localRotation;
+	// worldScale = parent ? parent->worldScale + localScale : localScale;
+	
 	UpdateDirectionVectors();
 	
 	OnUpdateModelMatrix.Invoke();
+}
+
+void Transform::UpdateDirectionVectors()
+{
+	forward.x = cos(glm::radians(worldRotation.y)) * cos(glm::radians(worldRotation.x));
+	forward.y = sin(glm::radians(worldRotation.x));
+	forward.z = sin(glm::radians(worldRotation.y)) * cos(glm::radians(worldRotation.x));
+
+	right = glm::normalize(glm::cross(forward, glm::vec3(0.0f, 1.0f, 0.0f)));
+	up = glm::normalize(glm::cross(right, forward));
 }
 
 // ============================================ TOOLS ============================================

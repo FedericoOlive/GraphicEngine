@@ -22,7 +22,7 @@ void Game::Initialize()
 	
 	player = new GameObject("Player");
 	player->AddComponent(sprite);
-	player->transform->SetWorldPosition(glm::vec3(0, 0, 0));
+	player->transform->SetWorldPosition(glm::vec3(0, 100, 0));
 	player->transform->SetLocalScale(glm::vec3(1, 1, 1));
 
 	cameraPivot = new GameObject("Camera Pivot");
@@ -31,7 +31,7 @@ void Game::Initialize()
 	camera = new GameObject("Camera");
 	camera->AddComponent(sprite);
 	camera->transform->SetParent(cameraPivot);
-	camera->transform->SetLocalPosition({ 0, -1, -1 });
+	camera->transform->SetLocalPosition({ 0, 0, -100 });
 	
 	Camera* cam = new Camera(1280, 720);
 	camera->AddComponent(cam);
@@ -43,19 +43,39 @@ void Game::Initialize()
 	movementCamPivot->RemoveRotation(true, false);
 	
 	objectFoward = new GameObject("miniGoku3");
-	//objectFoward->AddComponent(CreateSprite(miniGokuTexture));
-	//objectFoward->transform->SetLocalScale({1, 1, 1});
+	objectFoward->AddComponent(CreateSprite(miniGokuTexture));
+	objectFoward->transform->SetLocalScale({5, 5, 5});
 
 	player->AddComponent(movementPlayer);
 	cameraPivot->AddComponent(movementCamPivot);
 	
-	//target = objectFoward->transform;
+
+	cube = new GameObject("The Cube");
+	cube->AddComponent(CreateCube());
+	cube->transform->SetWorldScale({ 10, 10, 10 });
+	cube->transform->SetWorldRotation({ -90, 0, 0 });
+	cube->transform->SetWorldPosition({ 0, 50, 0 });
+
+	cube2 = new GameObject("The Cube");
+	cube2->AddComponent(CreateCube());
+	cube2->transform->SetParent(cube);
+	cube2->transform->SetLocalScale({ 1, 1, 1 });
+	cube2->transform->SetLocalPosition({ 0, 0, 20 });
+
+	cube3 = new GameObject("The Cube");
+	cube3->AddComponent(CreateCube());
+	cube3->transform->SetParent(cube2);
+	cube3->transform->SetLocalScale({ 1, 1, 1 });
+	cube3->transform->SetLocalPosition({ 0, 0, -10 });
+
+	
+	target = cube->transform;
 }
 
 void Game::Inputs()
 {
-	if (IsKeyDown(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(0,  1 * multiply, 0)); }
-	if (IsKeyDown(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
+	if (IsKeyDown(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
+	if (IsKeyDown(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply,0, 0)); }
 	if (IsKeyDown(KeyCode::Z)) { multiply += 1; }
 	if (IsKeyDown(KeyCode::X)) { multiply -= 1; }
 	if (IsKeyDown(KeyCode::Num0)) { target == camera->transform ? target = player->transform : target = camera->transform; }
@@ -80,7 +100,7 @@ void Game::Inputs()
 void Game::Update()
 {
 
-	//objectFoward->transform->SetWorldPosition(player->transform->GetWorldPosition() + player->transform->forward * 5.0f);
+	objectFoward->transform->SetWorldPosition(cube->transform->GetWorldPosition() + cube->transform->forward * 10.0f);
 	return;
 	glm::vec3 pos = player->transform->GetWorldPosition();
 	glm::vec3 forward = player->transform->forward;

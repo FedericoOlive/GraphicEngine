@@ -20,6 +20,12 @@ private:
 	GameObject* camera = nullptr;
 	
 	GameObject* objectFoward = nullptr;
+
+
+	GameObject* cube = nullptr;
+	GameObject* cube2 = nullptr;
+	GameObject* cube3 = nullptr;
+
 public:
 	void Initialize()override;
 	void Inputs() override;

@@ -12,6 +12,7 @@
 #include "Input/Input.h"
 #include "Timer.h"
 #include "Entity/Entity2D/TileMap.h"
+#include "Entity/Entity3D/Cube.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
 #include "Movement/CharacterController.h"
@@ -53,6 +54,7 @@ public:
 	Quad* CreateQuad();
 	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
+	Cube* CreateCube();
 	void SetMaterial(Material* material);
 	
 	//Collisions

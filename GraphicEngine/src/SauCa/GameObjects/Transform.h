@@ -95,4 +95,5 @@ public:
 	float NormalizeAngle(float angle);
 };
 
+
 #endif

@@ -185,6 +185,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Cube.cpp" />
     <ClCompile Include="src\SauCa\Movement\CharacterController.cpp" />
     <ClCompile Include="src\SauCa\Utility\Event.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D.cpp" />
@@ -214,6 +215,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\GameObjects\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Cube.h" />
     <ClInclude Include="src\SauCa\Movement\CharacterController.h" />
     <ClInclude Include="src\SauCa\Utility\Event.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D.h" />
