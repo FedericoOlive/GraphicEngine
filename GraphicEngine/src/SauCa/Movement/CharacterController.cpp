@@ -21,9 +21,9 @@ void CharacterController::OnMouseMove(double x, double y)
 	glm::vec3 newRot = transform->GetLocalRotation();
 
 	if (rotateX)
-		newRot.x += y * static_cast<double>(mouseSensitive.y);
+		newRot.x -= y * static_cast<double>(mouseSensitive.y);
 	if (rotateY)
-		newRot.y += x * static_cast<double>(mouseSensitive.x);
+		newRot.y -= x * static_cast<double>(mouseSensitive.x);
 
 	if (rotateX || rotateY)
 		transform->SetLocalRotation(newRot);
@@ -89,22 +89,22 @@ void CharacterController::Input()
 	if (Input::IsKeyDown(forward))
 	{
 		hasMoved = true;
-		direction = transform->forward * speedForward;
+		direction = transform->forward() * speedForward;
 	}
 	if (Input::IsKeyDown(left))
 	{
 		hasMoved = true;
-		direction = -transform->right * speedLeft;
+		direction = -transform->right() * speedLeft;
 	}
 	if (Input::IsKeyDown(back))
 	{
 		hasMoved = true;
-		direction = -transform->forward * speedBack;
+		direction = -transform->forward() * speedBack;
 	}
 	if (Input::IsKeyDown(right))
 	{
 		hasMoved = true;
-		direction = transform->right * speedRight;
+		direction = transform->right() * speedRight;
 	}
 
 	//direction.y = 0.0f;
