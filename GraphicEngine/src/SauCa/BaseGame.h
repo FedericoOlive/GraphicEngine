@@ -28,14 +28,15 @@ private:
 	Renderer* renderer;
 	CollisionManager* collisionManager;
 	Timer* timer;
-
+	list<GameObject*> gameobjects;
 	
 	void BeforeDraw();
 	void Draw();
 	void AfterDraw();
 
 	void LoadInfo();
-	
+	void ShowHierarchyInConsole(Transform* transf, string preText);
+
 public:
 	static Event<> OnUpdateEvent;
 	static Event<> OnInputEvent;
@@ -55,6 +56,8 @@ public:
 	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
 	Cube* CreateCube();
+	GameObject* CreateGameObject(string name = "");
+	
 	void SetMaterial(Material* material);
 	
 	//Collisions
@@ -63,7 +66,9 @@ public:
 
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
-	
+	void ShowHierarchyInConsole();
+	std::string	AsString(glm::vec3 pos);
+
 	// Inputs
 	bool IsKeyReleased(KeyCode keyCode);
 	bool IsKeyDown(KeyCode keyCode);

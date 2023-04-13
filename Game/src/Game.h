@@ -22,9 +22,11 @@ private:
 	GameObject* objectFoward = nullptr;
 
 
-	GameObject* cube = nullptr;
+	GameObject* cubeContent = nullptr;
+	GameObject* cube1 = nullptr;
 	GameObject* cube2 = nullptr;
 	GameObject* cube3 = nullptr;
+	GameObject* cube4 = nullptr;
 
 public:
 	void Initialize()override;
@@ -35,8 +37,6 @@ public:
 
 	void SetEnviroment();
 	void AddListeners();
-	void ShowChildrens(Transform* transf, string preText);
-	std::string	AsString(glm::vec3 pos);
 };
 
 #endif

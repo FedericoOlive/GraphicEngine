@@ -126,6 +126,13 @@ Cube* BaseGame::CreateCube()
     return sprite;
 }
 
+GameObject* BaseGame::CreateGameObject(string name)
+{
+    GameObject* gameObject = new GameObject(name);
+    gameobjects.push_back(gameObject);
+    return gameObject;
+}
+
 bool BaseGame::IsKeyReleased(KeyCode keyCode)
 {
     return input->IsKeyReleased(keyCode);
@@ -182,6 +189,35 @@ TileMap* BaseGame::CreateTileMap(string filePath, string resPath)
         cout << "TileMap can not load.\n";
     }
     return tileMap;
+}
+
+void BaseGame::ShowHierarchyInConsole(Transform* transf, string preText)
+{
+    std::cout << preText << "* " << transf->gameObject->name << " Pos: " << AsString(transf->GetWorldPosition()) << " Rot: " << AsString(transf->GetWorldRotation()) << " Scale: " << AsString(transf->GetWorldScale()) << "\n";
+    preText += "\t";
+    for (auto iter = transf->childrens.begin(); iter != transf->childrens.end(); ++iter)
+    {
+        ShowHierarchyInConsole((*iter), preText);
+    }
+    if (!transf->childrens.empty())
+        std::cout << "\n";
+}
+
+void BaseGame::ShowHierarchyInConsole()
+{	
+    std::string preText = "";
+    std::cout << "++++++++++ Scene Hierarchy ++++++++++\n";
+    for (auto iter = gameobjects.begin(); iter != gameobjects.end(); ++iter)
+    {
+        ShowHierarchyInConsole((*iter)->transform, preText);
+    }
+    std::cout << "---------- Scene Hierarchy ----------\n";
+}
+
+std::string BaseGame::AsString(glm::vec3 vec)
+{
+    std::string text = "{ " + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", " + std::to_string(vec.z) + " }";
+    return text;
 }
 
 void BaseGame::LoadInfo()
