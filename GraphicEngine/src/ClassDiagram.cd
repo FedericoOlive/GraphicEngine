@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Comment CommentText="">
+    <Position X="1.208" Y="5.247" Height="0.75" Width="1.7" />
+  </Comment>
+  <Class Name="BaseGame" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EA5JCCAAAAAAg0gBABIAAAwAEAiJABAMASACQJGQgAA=</HashCode>
+      <FileName>src\SauCa\BaseGame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CollisionManager" Collapsed="true">
+    <Position X="2.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQABAAAAAAAABAAAAAAAAAAAAAAAABACAAAAAQAAA=</HashCode>
+      <FileName>src\SauCa\CollisionManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer" Collapsed="true">
+    <Position X="1.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIEgEAAAAEAEBkAAAAAAQMAAAAAAAAQAIAGAFABQIIA=</HashCode>
+      <FileName>src\SauCa\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer">
+    <Position X="1" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBAAAAAAEAAAABAAAAAAAAAAAAAACAAAAAAAAEAAA=</HashCode>
+      <FileName>src\SauCa\Timer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Window" Collapsed="true">
+    <Position X="2.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAQQAAAAIAAAAAAAAAAAAAQAQCAAIABAACFCACAA=</HashCode>
+      <FileName>src\SauCa\Window.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity" Collapsed="true">
+    <Position X="5.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAgAAAAACAAAAAAAAAAAAAAAAAAAABEAQAABEgCA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity2D">
+    <Position X="6.75" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAAAQAQAAAAAoAAAiAAAAAAAAAAQAACAAAAAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entity3D">
+    <Position X="4.25" Y="4.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>gAAAQAIAAAAAIAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity3D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Animation" Collapsed="true">
+    <Position X="1.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAEAAAgAAAAAAAgEAAAAAEAAAAAACABQAAAAAAAAE=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Animation.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Frame" Collapsed="true">
+    <Position X="1.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAAEAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Frame.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Material" Collapsed="true">
+    <Position X="11.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAQAEAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Material.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Quad" Collapsed="true">
+    <Position X="4.5" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAEAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Quad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shape" Collapsed="true">
+    <Position X="5.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Shape.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Sprite" Collapsed="true">
+    <Position X="9" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAgAAABAAgAAAAAAAAAAACBAEgAQAAIIAQAQABI=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Sprite.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="1.25" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAhASBQAAAAAAQAAAAIgAAAQIAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tile" Collapsed="true">
+    <Position X="9" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAQAAAAIAAAAAAAAAAAAAAAAAAAAAAAACIAAwA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Tile.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TileMap" Collapsed="true">
+    <Position X="11" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ARgAAAAEAAAAggQAwAYIAOBCAiAgAgCBAYAAAEACgAE=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\TileMap.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Triangle" Collapsed="true">
+    <Position X="6.25" Y="9.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Triangle.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Component" Collapsed="true">
+    <Position X="5.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQgAAAAAAQAAwAAAwAAAAAAEAAEAAAAAABAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\GameObjects\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject" Collapsed="true">
+    <Position X="9" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAACABBAAAAAEAAAEAAAAAAIAAgA=</HashCode>
+      <FileName>src\SauCa\GameObjects\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="coordinate" Collapsed="true">
+    <Position X="1.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAA=</HashCode>
+      <FileName>src\SauCa\Entity\Entity2D\Frame.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="CollisionType" Collapsed="true">
+    <Position X="1" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAACAAAAAAAAAAAAAAAIAAAAAAAAAgAAgAA=</HashCode>
+      <FileName>src\SauCa\Exports.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

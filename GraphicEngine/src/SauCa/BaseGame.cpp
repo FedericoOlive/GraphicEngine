@@ -24,7 +24,7 @@ BaseGame::BaseGame()
     input = nullptr;
     window = nullptr;
     renderer = nullptr;
-    collisionManager = new CollisionManager();	
+    collisionManager = new CollisionManager();
     timer = nullptr;
 }
 

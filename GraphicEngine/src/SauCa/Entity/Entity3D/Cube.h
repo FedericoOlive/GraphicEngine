@@ -1,6 +1,8 @@
-#pragma once
+#ifndef CUBE_H
+#define CUBE_H
 #include "../Entity3D.h"
-class Cube : public Entity3D
+
+class SAUCA_API Cube : public Entity3D
 {
 public:
 	Cube(Renderer* renderer);
@@ -10,3 +12,4 @@ public:
 	void Input() override;
 	void OnAsigned() override;
 };
+#endif

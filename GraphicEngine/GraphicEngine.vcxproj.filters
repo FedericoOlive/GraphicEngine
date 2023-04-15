@@ -225,5 +225,6 @@
   <ItemGroup>
     <None Include="src\SauCa\Shaders\BasicShader.vs" />
     <None Include="src\SauCa\Shaders\BasicShader.fs" />
+    <None Include="src\ClassDiagram.cd" />
   </ItemGroup>
 </Project>
