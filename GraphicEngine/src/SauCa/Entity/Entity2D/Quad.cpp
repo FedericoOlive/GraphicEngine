@@ -2,7 +2,7 @@
 
 Quad::Quad(Renderer* renderer)
 {
-    this->renderer = renderer;
+    SetRenderer(renderer);
     material = renderer->GetMaterialSolid();
     CreateVertexData();
 
@@ -13,7 +13,7 @@ Quad::Quad(Renderer* renderer)
 Quad::Quad(Renderer* renderer, Material* mat)
 {
     material = mat;
-    this->renderer = renderer;
+    SetRenderer(renderer);
     CreateVertexData();
 
     Quad::GenBufferEntity();
@@ -22,7 +22,7 @@ Quad::Quad(Renderer* renderer, Material* mat)
 
 Quad::~Quad()
 {
-    renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->COL, vertexData->LVAO, vertexData->UVB, vertexData->EBO);
+    UnBindObject();
 }
 
 void Quad::CreateVertexData()

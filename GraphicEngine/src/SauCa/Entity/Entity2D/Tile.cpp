@@ -9,16 +9,13 @@ Tile::Tile()
 
 Tile::Tile(int id, bool walkable, Renderer* render, const char* filePathImage, bool invertImage) : Sprite(texture, render)
 {
-	id = 0;
-	isWalkable = false;
-	this->renderer = nullptr;
 	this->texture = nullptr;
 	this->vertexData->indexes = nullptr;
 	this->vertexData->vertices = nullptr;
 	texture = nullptr;
 
-	this->renderer = render;
-	id = id;
+	SetRenderer(render);
+	this->id = id;
 	isWalkable = walkable;
 	texture = new Texture(filePathImage);
 	SetTexture(texture);

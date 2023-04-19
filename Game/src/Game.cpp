@@ -109,7 +109,6 @@ void Game::Inputs()
 
 void Game::Update()
 {
-
 	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 10.0f);
 	return;
 	glm::vec3 pos = player->transform->GetWorldPosition();

@@ -3,18 +3,16 @@
 Triangle::Triangle(Renderer* renderer)
 {
 	material = renderer->GetMaterialSolid();
-	this->renderer = renderer;
+	SetRenderer(renderer);
 	CreateVertexData();
 
 	Triangle::GenBufferEntity();
 	Triangle::BindBufferEntity();
-	//renderer->BindAllData(vertexData);
-	//renderer->SetShapeAttributes();
 }
 
 Triangle::~Triangle()
 {
-	renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->COL, vertexData->LVAO, vertexData->UVB, vertexData->EBO);
+	UnBindObject();
 }
 
 void Triangle::CreateVertexData()

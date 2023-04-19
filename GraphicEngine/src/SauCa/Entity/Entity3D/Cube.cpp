@@ -2,7 +2,7 @@
 
 Cube::Cube(Renderer* renderer)
 {
-    this->renderer = renderer;
+    SetRenderer(renderer);
     texture = nullptr;
     CreateVertexData();
 	
@@ -12,14 +12,12 @@ Cube::Cube(Renderer* renderer)
 
     GenBufferEntity();
     BindBufferEntity();
-    //renderer->BindAllData(vertexData);
-    //renderer->SetSpriteAttributes();
 }
 
 Cube::~Cube()
 {
     DeleteTextureAsociate();
-    renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->COL, vertexData->LVAO, vertexData->UVB, vertexData->EBO);
+    UnBindObject();
 }
 
 void Cube::CreateVertexData()

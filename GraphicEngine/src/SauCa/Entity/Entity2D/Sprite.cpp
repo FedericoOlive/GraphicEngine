@@ -13,13 +13,11 @@ Sprite::Sprite(Texture* texture, Renderer* renderer)
     hasAnimation = false;
     SetTexture(texture);
 
-    this->renderer = renderer;
+    SetRenderer(renderer);
     CreateVertexData();
 
     Sprite::GenBufferEntity();
     Sprite::BindBufferEntity();
-    //renderer->BindAllData(vertexData);
-    //renderer->SetSpriteAttributes();
 }
 
 Sprite::~Sprite() 
@@ -152,8 +150,6 @@ void Sprite::SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, gl
     vertexData->uvs[7] = topLeft.y;
 
     BindBufferTextures(1);
-    //renderer->BindAllData(vertexData);
-    //renderer->SetSpriteAttributes();
 }
 
 void Sprite::GenBufferEntity()
