@@ -4,25 +4,69 @@ Triangle::Triangle(Renderer* renderer)
 {
 	material = renderer->GetMaterialSolid();
 	this->renderer = renderer;
-	sizeVertices = 18;
-	sizeIndices = 3;
-	
-	vertices = new float[sizeVertices] {
-		// positions         // colors
-		 0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,  // bottom right
-		-0.5f, -0.5f, 0.0f,  1.0f, 1.0f, 1.0f,  // bottom left
-		 0.0f,  0.5f, 0.0f,  1.0f, 1.0f, 1.0f   // top 
-	};
+	CreateVertexData();
 
-	indices = new int[sizeIndices] {0, 1, 2};
-
-	renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
-	renderer->SetShapeAttributes();
+	Triangle::GenBufferEntity();
+	Triangle::BindBufferEntity();
+	//renderer->BindAllData(vertexData);
+	//renderer->SetShapeAttributes();
 }
 
 Triangle::~Triangle()
 {
-	renderer->UnBindVertex(VAO, VBO, EBO);
-	delete vertices;
-	delete indices;
+	renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->COL, vertexData->LVAO, vertexData->UVB, vertexData->EBO);
+}
+
+void Triangle::CreateVertexData()
+{
+	vertexData = new VertexData();
+
+	vertexData->sizeVertices = 9;
+	vertexData->vertices = new float[vertexData->sizeVertices]{
+		 0.5f, -0.5f, 0.0f,		// bottom right
+		-0.5f, -0.5f, 0.0f,		// bottom left
+		 0.0f,  0.5f, 0.0f,		// top 
+	};
+
+	vertexData->sizeColor = 9;
+	vertexData->colors = new float[vertexData->sizeColor]{
+		 0.5f, -0.5f, 0.0f,		// bottom right
+		-0.5f, -0.5f, 0.0f,		// bottom left
+		 0.0f,  0.5f, 0.0f,		// top 
+	};
+
+	vertexData->sizeNormals = 9;
+	vertexData->normals = new float[vertexData->sizeNormals]{
+		0.0f, 0.0f, -1.0f,		// bottom right
+		0.0f, 0.0f, -1.0f,		// bottom left
+		0.0f, 0.0f, -1.0f,		// top 
+	};
+
+	vertexData->sizeIndex = 3;
+	vertexData->indexes = new int[vertexData->sizeIndex]{
+		0, 1, 2
+	};
+}
+
+void Triangle::Draw()
+{
+	renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha);
+}
+
+void Triangle::GenBufferEntity()
+{
+	GenBufferObject();
+	GenBufferVertex();
+	GenBufferColor();
+	GenBufferNormal();
+	GenBufferIndexes();
+}
+
+void Triangle::BindBufferEntity()
+{
+	BindBufferVertex();
+	BindBufferColors();
+	BindBufferNormals();
+	BindBufferIndex();
+	UnBind();
 }

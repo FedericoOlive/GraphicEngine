@@ -39,7 +39,7 @@ void Renderer::CreateRenderer()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned int& VAO, Material* material, float alpha, glm::mat4 model)
+void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha)
 {
     material->shader->Use();
     int shaderID = material->shader->ID;
@@ -48,25 +48,25 @@ void Renderer::DrawEntity2D(unsigned int textureID, int sizeIndices, unsigned in
         unsigned int locationTexture = glGetUniformLocation(shaderID, "ourTexture");
         glUniform1f(locationTexture, (GLfloat)textureID);
     }
-
+    
     unsigned int locationColor = glGetUniformLocation(shaderID, "colorTint");
     unsigned int locationAlpha = glGetUniformLocation(shaderID, "alpha");
     unsigned int transformLoc = glGetUniformLocation(shaderID, "modelMatrix");
     unsigned int viewLoc = glGetUniformLocation(shaderID, "viewMatrix");
     unsigned int projectionLoc = glGetUniformLocation(shaderID, "projectionMatrix");
-
+    
     glUniform3fv(locationColor, 1, value_ptr(material->colorTint));
     glUniform1fv(locationAlpha, 1, &alpha);
     glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
-
+    
 	// Todo: Agregar layers para distintas cámaras
     glm::mat4 viewMatrix = cameras.front()->viewMatrix;
     glm::mat4 projectionMatrix = cameras.front()->projectionMatrix;
     glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
     glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
-
+    
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, sizeIndices, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, sizeIndex, GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::Clear(GLbitfield field)
@@ -92,60 +92,46 @@ void Renderer::SwapBuffers(GLFWwindow* window)
 	glfwSwapBuffers(window);
 }
 
-void Renderer::BindVertex(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+void Renderer::BindGenBufferObject(unsigned int& buffer)
 {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
-    // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertices, vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * sizeIndices, indices, GL_STATIC_DRAW);
+    glGenVertexArrays(1, &buffer);
+    glBindVertexArray(buffer);
 }
 
-void Renderer::BindVertexs(float* vertices, int sizeVertices, int* indices, int sizeIndices, unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+void Renderer::UnBindGenBufferObject()
 {
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * sizeVertices, vertices, GL_STATIC_DRAW);
-
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(int) * sizeIndices, indices, GL_STATIC_DRAW);
+    glBindVertexArray(0);
 }
 
-void Renderer::UnBindVertex(unsigned int& VAO, unsigned int& VBO, unsigned int& EBO)
+void Renderer::GenBuffer(int amount, unsigned int& buffer)
+{
+    // Generar objeto de búfer de vértices para posición de vértices
+    glGenBuffers(amount, &buffer);
+}
+
+void Renderer::BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore)
+{
+	// Enlazar objeto de búfer de vértices para posición de vértices
+    glEnableVertexAttribArray(atribPointer);
+    glBindBuffer(GL_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), arrayData, (modeDataStore == 0) ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
+    glVertexAttribPointer(atribPointer, atribPointerSize, GL_FLOAT, GL_FALSE, 0, (void*)0);
+}
+
+void Renderer::BindIndex(unsigned int buffer, int size, int* arrayData)
+{
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(int), arrayData, GL_STATIC_DRAW);
+}
+
+void Renderer::UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO)
 {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
+    glDeleteBuffers(1, &COL);
+    glDeleteBuffers(1, &LVAO);
+    glDeleteBuffers(1, &UVB);
     glDeleteBuffers(1, &EBO);
-}
-
-void Renderer::SetShapeAttributes()
-{
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-}
-
-void Renderer::SetSpriteAttributes()
-{
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);
 }
 
 void Renderer::BindTextures(unsigned int& texture)

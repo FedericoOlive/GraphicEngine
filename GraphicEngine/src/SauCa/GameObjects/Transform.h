@@ -26,7 +26,6 @@ protected:
 	glm::vec3 worldScale;
 	glm::vec3 localScale;
 	
-
 	void RemoveChildren(Transform* transformParent);
 	void SetChildren(Transform* transformChildren);
 	void UpdateModelMatrix();
@@ -92,6 +91,5 @@ public:
 	glm::vec3 NormalizeAngles(glm::vec3 angles);
 	float NormalizeAngle(float angle);
 };
-
 
 #endif

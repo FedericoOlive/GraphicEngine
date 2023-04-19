@@ -2,11 +2,15 @@
 #define TRIANGLE_H
 
 #include "Shape.h"
-class SAUCA_API Triangle : public Shape
+class SAUCA_API Triangle final : public Shape
 {
 public:
 	Triangle(Renderer* renderer);
 	~Triangle();
+	void CreateVertexData() override;
+	void Draw() override;
+	void GenBufferEntity() override;
+	void BindBufferEntity() override;
 };
 
 #endif

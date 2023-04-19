@@ -18,11 +18,11 @@ protected:
 public:
 	int heightTexture;
 	int widthTexture;
-	unsigned int UVBuffer;
 	int currentAnim = 0;
 	Sprite();
 	Sprite(Texture* texture, Renderer* renderer);
 	~Sprite();
+	void CreateVertexData() override;
 	void DeleteTextureAsociate();
 	void Draw() override;
 	void SetTexture(Texture* texture);
@@ -30,6 +30,7 @@ public:
 	void AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount);
 	std::vector<Animation*> GetAnimations();
 	void SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, glm::vec2 bottomLeft, glm::vec2 topLeft);
+	void GenBufferEntity() override;
+	void BindBufferEntity() override;
 };
-
 #endif

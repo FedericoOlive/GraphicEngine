@@ -7,11 +7,7 @@ class SAUCA_API Entity2D : public Entity
 {
 	CollisionManager* collisionManager;
 public:
-	float* vertices;
-	int sizeVertices;
 	
-	int* indices;
-	int sizeIndices;
 	
 	Entity2D();
 

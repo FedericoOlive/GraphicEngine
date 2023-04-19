@@ -13,8 +13,8 @@ Tile::Tile(int id, bool walkable, Renderer* render, const char* filePathImage, b
 	isWalkable = false;
 	this->renderer = nullptr;
 	this->texture = nullptr;
-	this->indices = nullptr;
-	this->vertices = nullptr;
+	this->vertexData->indexes = nullptr;
+	this->vertexData->vertices = nullptr;
 	texture = nullptr;
 
 	this->renderer = render;

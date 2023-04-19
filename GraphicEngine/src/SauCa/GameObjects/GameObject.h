@@ -16,7 +16,7 @@ public:
     GameObject(std::string name = "");
     ~GameObject();
 	
-    Transform* transform;	
+    Transform* transform;
     std::vector<Component*> components;
 	
     void AddComponent(Component* component);

@@ -111,7 +111,7 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 	
 	texture = new Texture(resPath,false); // textureImporter::loadTexture(imagePath.c_str(), true);
 	renderer->BindTextures(texture->texture);
-	renderer->SetSpriteAttributes();
+	//renderer->SetSpriteAttributes();
 	// Save the Tiles in the TileMap
 	imageWidth = pTileset->FirstChildElement("image")->IntAttribute("width");
 	imageHeight = pTileset->FirstChildElement("image")->IntAttribute("height");

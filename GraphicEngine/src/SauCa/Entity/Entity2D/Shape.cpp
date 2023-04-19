@@ -7,5 +7,5 @@ Shape::Shape()
 
 void Shape::Draw()
 {
-	renderer->DrawEntity2D(NULL, sizeIndices, VAO, material, alpha, transform->GetModelMatrix());
+	renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha);
 }

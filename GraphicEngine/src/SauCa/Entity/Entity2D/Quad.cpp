@@ -2,57 +2,81 @@
 
 Quad::Quad(Renderer* renderer)
 {
-	this->renderer = renderer;
+    this->renderer = renderer;
     material = renderer->GetMaterialSolid();
-	sizeVertices = 24;
-	sizeIndices = 6;
+    CreateVertexData();
 
-    vertices = new float[sizeVertices] {
-        // positions          // colors
-         0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f, // top right
-         0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f, // bottom right
-        -0.5f, -0.5f, 0.0f,   1.0f, 1.0f, 1.0f, // bottom left
-        -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 1.0f  // top left 
-    };
-	
-    indices = new int[sizeIndices] {
-        0, 1, 3, // first triangle
-        1, 2, 3  // second triangle
-    };
-   
-
-	renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
-	renderer->SetShapeAttributes();
+    Quad::GenBufferEntity();
+    Quad::BindBufferEntity();
 }
 
 Quad::Quad(Renderer* renderer, Material* mat)
 {
     material = mat;
     this->renderer = renderer;
-    sizeVertices = 24;
-    sizeIndices = 6;
+    CreateVertexData();
 
-    vertices = new float[sizeVertices] {
-        // positions          // colors
-        0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f, // top right
-            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, // bottom right
-            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, // bottom left
-            -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 1.0f  // top left 
-    };
-
-    indices = new int[sizeIndices] {
-        0, 1, 3, // first triangle
-            1, 2, 3  // second triangle
-    };
-
-
-    renderer->BindVertex(vertices, sizeVertices, indices, sizeIndices, VAO, VBO, EBO);
-    renderer->SetShapeAttributes();
+    Quad::GenBufferEntity();
+    Quad::BindBufferEntity();
 }
 
 Quad::~Quad()
 {
-    renderer->UnBindVertex(VAO, VBO, EBO);
-    delete vertices;
-    delete indices;
+    renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->COL, vertexData->LVAO, vertexData->UVB, vertexData->EBO);
+}
+
+void Quad::CreateVertexData()
+{
+    vertexData = new VertexData();
+	
+    vertexData->sizeVertices = 12;
+    vertexData->vertices = new float[vertexData->sizeVertices]{
+        // Positions      
+        0.5f,  0.5f, 0.0f,  // Top Right
+        0.5f, -0.5f, 0.0f,  // Bottom Right
+       -0.5f, -0.5f, 0.0f,  // Bottom Left
+       -0.5f,  0.5f, 0.0f   // Top Left 
+    };
+
+    vertexData->sizeColor = 12;
+    vertexData->colors = new float[vertexData->sizeColor]{
+        // Colors        
+        1.0f, 1.0f, 1.0f,    // Top Right
+        1.0f, 1.0f, 1.0f,    // Bottom Right
+        1.0f, 1.0f, 1.0f,    // Bottom Left
+        1.0f, 1.0f, 1.0f     // Top Left 
+    };
+
+    vertexData->sizeNormals = 12;
+    vertexData->normals = new float[vertexData->sizeNormals]{
+        // Normals        
+        0.0f, 0.0f, -1.0f,    // Top Right
+        0.0f, 0.0f, -1.0f,    // Bottom Right
+        0.0f, 0.0f, -1.0f,    // Bottom Left
+        0.0f, 0.0f, -1.0f     // Top Left 
+    };
+
+    vertexData->sizeIndex = 6;
+    vertexData->indexes = new int[vertexData->sizeIndex]{
+        0, 1, 3,              // First Triangle
+        1, 2, 3               // Second Triangle
+    };
+}
+
+void Quad::GenBufferEntity()
+{
+    GenBufferObject();
+    GenBufferVertex();
+    GenBufferColor();
+    GenBufferNormal();
+    GenBufferIndexes();    
+}
+
+void Quad::BindBufferEntity()
+{
+    BindBufferVertex();
+    BindBufferColors();
+    BindBufferNormals();
+    BindBufferIndex();
+    UnBind();
 }

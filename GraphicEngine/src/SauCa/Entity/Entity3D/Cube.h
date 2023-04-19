@@ -1,15 +1,21 @@
 #ifndef CUBE_H
 #define CUBE_H
-#include "../Entity3D.h"
+#include "Entity/Entity3D.h"
+#include "Entity/Entity2D/Texture.h"
 
-class SAUCA_API Cube : public Entity3D
+class SAUCA_API Cube final : public Entity3D
 {
 public:
 	Cube(Renderer* renderer);
 	~Cube() override;
+	void CreateVertexData() override;
 	void Draw() override;
-	void Update() override;
-	void Input() override;
-	void OnAsigned() override;
+	void SetTexture(Texture* texture);
+	void DeleteTextureAsociate();
+	void SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, glm::vec2 bottomLeft, glm::vec2 topLeft);
+protected:
+	Texture* texture;
+	void GenBufferEntity() override;
+	void BindBufferEntity() override;
 };
 #endif

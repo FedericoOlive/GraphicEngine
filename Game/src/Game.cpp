@@ -18,9 +18,12 @@ void Game::Initialize()
 	AddListeners();
 
 	Texture* miniGokuTexture = new Texture("res/Goku.png");
+	Texture* playerCubeTexture = new Texture("res/Layer9.png");
 	Sprite* sprite = CreateSprite(miniGokuTexture);
 	
 	player = CreateGameObject("Player");
+	Cube* playerCube = CreateCube();
+	playerCube->SetTexture(playerCubeTexture);
 	player->AddComponent(CreateCube());
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 	player->transform->SetLocalScale(glm::vec3(1, 1, 1));
@@ -56,7 +59,7 @@ void Game::Initialize()
 	float distance = 2;
 	cube1 = CreateGameObject("Cube 1");
 	cube1->transform->SetParent(cubeContent);
-	cube1->AddComponent(CreateCube());
+	cube1->AddComponent(playerCube);
 	cube1->transform->SetLocalPosition({ distance, 0, distance });
 
 	cube2 = CreateGameObject("Cube 2");
@@ -73,8 +76,7 @@ void Game::Initialize()
 	cube4->transform->SetParent(cubeContent);
 	cube4->AddComponent(CreateCube());
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
-
-	
+		
 	target = cubeContent->transform;
 }
 
