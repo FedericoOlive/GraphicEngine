@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SPOT_LIGHT_H
+#define SPOT_LIGHT_H
 #include "BaseLight.h"
 
 class SAUCA_API SpotLight : public BaseLight
@@ -12,3 +13,5 @@ class SAUCA_API SpotLight : public BaseLight
 	SpotLight();
 	void OnAsigned() override;
 };
+
+#endif

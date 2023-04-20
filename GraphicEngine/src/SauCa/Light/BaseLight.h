@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BASE_LIGHT_H
+#define BASE_LIGHT_H
+
 #include "GameObjects/Component.h"
 #include "glm/glm/gtc/type_ptr.hpp"
 
@@ -12,3 +14,5 @@ protected:
 	public:
 	BaseLight();
 };
+
+#endif
