@@ -1,5 +1,4 @@
 #include "Shader.h"
-#include "glew.h"
 #include <fstream>
 #include <sstream>
 
@@ -7,9 +6,9 @@ Shader::Shader(bool hasTexture)
 {
     std::cout << "Loading default Shader.\n";
 	if(hasTexture)
-        CreateShaderBySource(vertexShaderTextureSource, fragmentShaderTextureSource);
+        CreateShaderBySource(vertexShaderLightSource, fragmentShaderLightSource);
     else
-        CreateShaderBySource(vertexShaderSolidSource, fragmentShaderSolidSource);
+        CreateShaderBySource(vertexShaderBasicLightSource, fragmentShaderBasicLightSource);
 }
 
 void Shader::CreateShader(std::string vsPath, std::string fsPath, bool hasTexture)
@@ -87,21 +86,6 @@ Shader::~Shader() {}
 void Shader::Use()
 {
     glUseProgram(ID);
-}
-
-void Shader::SetBool(const std::string& name, bool value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
-}
-
-void Shader::SetInt(const std::string& name, int value) const
-{
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-void Shader::SetFloat(const std::string& name, float value) const
-{
-    glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
 void Shader::CheckCompileErrors(unsigned int shader, std::string type)
