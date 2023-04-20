@@ -172,6 +172,13 @@ void BaseGame::ModifyWindow(const char* name, float width, float height)
     //glfwSetWindowTitle(window->GetWindow(), name);
 }
 
+DirectionlLight* BaseGame::CreateDirectionalLight()
+{
+    DirectionlLight* dirLight = new DirectionlLight();
+	renderer-> directionalLights.push_back(dirLight);
+    return dirLight;
+}
+
 void BaseGame::AddCollision(Entity2D* entity, bool isStatic)
 {
     collisionManager->AddToCollisionList(entity, isStatic);

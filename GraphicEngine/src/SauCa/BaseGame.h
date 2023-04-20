@@ -13,6 +13,7 @@
 #include "Timer.h"
 #include "Entity/Entity2D/TileMap.h"
 #include "Entity/Entity3D/Cube.h"
+#include "Light/DirectionlLight.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
 #include "Movement/CharacterController.h"
@@ -59,6 +60,9 @@ public:
 	GameObject* CreateGameObject(string name = "");
 	
 	void SetMaterial(Material* material);
+
+	// Lights
+	DirectionlLight* CreateDirectionalLight();
 	
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);

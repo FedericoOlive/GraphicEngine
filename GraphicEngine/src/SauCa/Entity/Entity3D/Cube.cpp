@@ -188,7 +188,7 @@ void Cube::Draw()
 
 void Cube::SetTexture(Texture* texture)
 {
-    material = renderer->GetMaterialTexture();
+    material = renderer->GetMaterialLight();
     this->texture = texture;
 }
 

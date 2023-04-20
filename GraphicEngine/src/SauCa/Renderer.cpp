@@ -27,6 +27,7 @@ void Renderer::CreateShader()
 {
     defaultMaterialSolid = new Material(new Shader(false), false);
     defaultMaterialTexture = new Material(new Shader(true), true);
+    defaultMaterialLight = new Material(new Shader(true), true);
     std::cout << "\n";
 }
 
@@ -41,30 +42,86 @@ void Renderer::CreateRenderer()
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha)
 {
-    material->shader->Use();
+    // Todo: Agregar layers para distintas cámaras
+
+	material->shader->Use();
     int shaderID = material->shader->ID;
+	
     if (material->hasTexture)
     {
         unsigned int locationTexture = glGetUniformLocation(shaderID, "ourTexture");
         glUniform1f(locationTexture, (GLfloat)textureID);
     }
-    
-    unsigned int locationColor = glGetUniformLocation(shaderID, "colorTint");
-    unsigned int locationAlpha = glGetUniformLocation(shaderID, "alpha");
-    unsigned int transformLoc = glGetUniformLocation(shaderID, "modelMatrix");
-    unsigned int viewLoc = glGetUniformLocation(shaderID, "viewMatrix");
-    unsigned int projectionLoc = glGetUniformLocation(shaderID, "projectionMatrix");
-    
-    glUniform3fv(locationColor, 1, value_ptr(material->colorTint));
-    glUniform1fv(locationAlpha, 1, &alpha);
-    glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(model));
-    
-	// Todo: Agregar layers para distintas cámaras
+
     glm::mat4 viewMatrix = cameras.front()->viewMatrix;
     glm::mat4 projectionMatrix = cameras.front()->projectionMatrix;
-    glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(viewMatrix));
-    glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+
+    material->shader->setVec3("colorTint", material->colorTint);
+    material->shader->setFloat("alpha", alpha);
+    material->shader->setMat4("modelMatrix", model);
+    material->shader->setMat4("viewMatrix", viewMatrix);
+    material->shader->setMat4("projectionMatrix", projectionMatrix);
+    material->shader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+    material->shader->setVec3("lightPos", { 0, 0, 0});
+    material->shader->setVec3("viewPos", cameras.front()->transform->GetWorldPosition());
+	
+    material->shader->setFloat("material.shininess", 320);
+	
+    material->shader->setVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
+    material->shader->setVec3("dirLight.ambient", 0.05f, 0.05f, 0.05f);
+    material->shader->setVec3("dirLight.diffuse", 0.4f, 0.4f, 0.4f);
+    material->shader->setVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
+    // point light 1
+    material->shader->setVec3("pointLights[0].position", { 5, 5, 5 });
+    material->shader->setVec3("pointLights[0].ambient", 0.05f, 0.05f, 0.05f);
+    material->shader->setVec3("pointLights[0].diffuse", 0.8f, 0.8f, 0.8f);
+    material->shader->setVec3("pointLights[0].specular", 1.0f, 1.0f, 1.0f);
+    material->shader->setFloat("pointLights[0].constant", 1.0f);
+    material->shader->setFloat("pointLights[0].linear", 0.09f);
+    material->shader->setFloat("pointLights[0].quadratic", 0.032f);
+    // point light 2
+    material->shader->setVec3("pointLights[1].position", { 5, 5, -5 });
+    material->shader->setVec3("pointLights[1].ambient", 0.05f, 0.05f, 0.05f);
+    material->shader->setVec3("pointLights[1].diffuse", 0.8f, 0.8f, 0.8f);
+    material->shader->setVec3("pointLights[1].specular", 1.0f, 1.0f, 1.0f);
+    material->shader->setFloat("pointLights[1].constant", 1.0f);
+    material->shader->setFloat("pointLights[1].linear", 0.09f);
+    material->shader->setFloat("pointLights[1].quadratic", 0.032f);
+    // point light 3
+    material->shader->setVec3("pointLights[2].position", { -5, 5, 5 });
+    material->shader->setVec3("pointLights[2].ambient", 0.05f, 0.05f, 0.05f);
+    material->shader->setVec3("pointLights[2].diffuse", 0.8f, 0.8f, 0.8f);
+    material->shader->setVec3("pointLights[2].specular", 1.0f, 1.0f, 1.0f);
+    material->shader->setFloat("pointLights[2].constant", 1.0f);
+    material->shader->setFloat("pointLights[2].linear", 0.09f);
+    material->shader->setFloat("pointLights[2].quadratic", 0.032f);
+    // point light 4
+    material->shader->setVec3("pointLights[3].position", { -5, 5, -5 });
+    material->shader->setVec3("pointLights[3].ambient", 0.05f, 0.05f, 0.05f);
+    material->shader->setVec3("pointLights[3].diffuse", 0.8f, 0.8f, 0.8f);
+    material->shader->setVec3("pointLights[3].specular", 1.0f, 1.0f, 1.0f);
+    material->shader->setFloat("pointLights[3].constant", 1.0f);
+    material->shader->setFloat("pointLights[3].linear", 0.09f);
+    material->shader->setFloat("pointLights[3].quadratic", 0.032f);
+    // spotLight
+    material->shader->setVec3("spotLight.position", cameras.front()->transform->GetWorldPosition());
+    material->shader->setVec3("spotLight.direction", cameras.front()->transform->forward());
+    material->shader->setVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
+    material->shader->setVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
+    material->shader->setVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
+    material->shader->setFloat("spotLight.constant", 1.0f);
+    material->shader->setFloat("spotLight.linear", 0.09f);
+    material->shader->setFloat("spotLight.quadratic", 0.032f);
+    material->shader->setFloat("spotLight.cutOff", glm::cos(glm::radians(12.5f)));
+    material->shader->setFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.0f)));
     
+    // bind diffuse map
+    //glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, diffuseMap);
+    //// bind specular map
+    //glActiveTexture(GL_TEXTURE1);
+    //glBindTexture(GL_TEXTURE_2D, specularMap);
+	
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndex, GL_UNSIGNED_INT, nullptr);
 }

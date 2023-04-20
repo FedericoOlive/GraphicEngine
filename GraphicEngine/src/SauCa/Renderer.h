@@ -7,8 +7,7 @@
 #include "Entity/Entity2D/Material.h"
 #include "GameObjects/Component.h"
 #include "glm/glm/glm.hpp"
-#include "Entity/VertexData.h"
-
+#include "Light/DirectionlLight.h"
 class Camera;
 
 static class SAUCA_API Renderer
@@ -16,10 +15,13 @@ static class SAUCA_API Renderer
 private:
 	Material* defaultMaterialSolid;
 	Material* defaultMaterialTexture;
+	Material* defaultMaterialLight;
 	
 	static std::list<Component*> renderList;
 	static std::list<Camera*> cameras;
+	
 public:
+	std::list<DirectionlLight*> directionalLights;
 	static void AddToRenderList(Component* component);
 	
 	Renderer();
@@ -37,8 +39,9 @@ public:
 	void GenBuffer(int amount, unsigned int& buffer);	
 	void BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore);
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
-		
+	
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO);
+	Material* GetMaterialLight() { return defaultMaterialLight; }
 	Material* GetMaterialTexture() { return defaultMaterialTexture; }
 	Material* GetMaterialSolid() { return defaultMaterialSolid; }
 	void BindTextures(unsigned int& texture);
