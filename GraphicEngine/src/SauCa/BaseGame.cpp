@@ -175,8 +175,22 @@ void BaseGame::ModifyWindow(const char* name, float width, float height)
 DirectionlLight* BaseGame::CreateDirectionalLight()
 {
     DirectionlLight* dirLight = new DirectionlLight();
-	renderer-> directionalLights.push_back(dirLight);
+    renderer->directionalLights.push_back(dirLight);
     return dirLight;
+}
+
+PointLight* BaseGame::CreatePointLight()
+{
+    PointLight* pointLight = new PointLight();
+    renderer->pointLights.push_back(pointLight);
+    return pointLight;
+}
+
+SpotLight* BaseGame::CreateSpotLight()
+{
+    SpotLight* spotLight = new SpotLight();
+    renderer->spotLights.push_back(spotLight);
+    return spotLight;
 }
 
 void BaseGame::AddCollision(Entity2D* entity, bool isStatic)

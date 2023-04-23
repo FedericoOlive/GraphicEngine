@@ -63,6 +63,8 @@ public:
 
 	// Lights
 	DirectionlLight* CreateDirectionalLight();
+	PointLight* CreatePointLight();
+	SpotLight* CreateSpotLight();
 	
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);

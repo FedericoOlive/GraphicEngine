@@ -7,9 +7,7 @@ class SAUCA_API DirectionlLight : public BaseLight
 {
 public:
 	DirectionlLight();
-	void OnAsigned() override;
-
-	
+	void OnAsigned() override;	
 };
 
 #endif

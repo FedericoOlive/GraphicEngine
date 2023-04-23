@@ -4,6 +4,7 @@
 
 class SAUCA_API SpotLight : public BaseLight
 {
+public:
 	float constant;
 	float linear;
 	float quadratic;

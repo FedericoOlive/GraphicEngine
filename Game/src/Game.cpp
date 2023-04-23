@@ -15,6 +15,7 @@ void MouseScrollMovement(double xOffset, double yOffset)
 void Game::Initialize()
 {
 	SetEnviroment();
+	SetLights();
 	AddListeners();
 
 	Texture* miniGokuTexture = new Texture("res/Goku.png");
@@ -76,7 +77,12 @@ void Game::Initialize()
 	cube4->transform->SetParent(cubeContent);
 	cube4->AddComponent(CreateCube());
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
-		
+
+
+	GameObject* spotGo = CreateGameObject();
+	spotGo->AddComponent(CreateSpotLight());
+	spotGo->transform->SetParent(player);
+	
 	target = cubeContent->transform;
 }
 
@@ -126,6 +132,47 @@ void Game::Update()
 void Game::Draw()
 {
 
+}
+void Game::SetLights()
+{
+	goLightDir01 = CreateGameObject();
+	goLightDir02 = CreateGameObject();
+	goLightPoint01 = CreateGameObject();
+	goLightPoint02 = CreateGameObject();
+	goLightPoint03 = CreateGameObject();
+	goLightPoint04 = CreateGameObject();
+	goLightSpot01 = CreateGameObject();
+	goLightSpot02 = CreateGameObject();
+
+	lightDir1 = CreateDirectionalLight();
+	lightDir2 = CreateDirectionalLight();
+	lightPoint1 = CreatePointLight();
+	lightPoint2 = CreatePointLight();
+	lightPoint3 = CreatePointLight();
+	lightPoint4 = CreatePointLight();
+	lightSpot1 = CreateSpotLight();
+	lightSpot2 = CreateSpotLight();
+
+	goLightDir01->AddComponent(lightDir1);
+	goLightDir02->AddComponent(lightDir2);
+	goLightPoint01->AddComponent(lightPoint1);
+	goLightPoint02->AddComponent(lightPoint2);
+	goLightPoint03->AddComponent(lightPoint3);
+	goLightPoint04->AddComponent(lightPoint4);
+	goLightSpot01->AddComponent(lightSpot1);
+	goLightSpot02->AddComponent(lightSpot2);
+
+	goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
+	goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
+	goLightPoint01->transform->SetWorldPosition({ 7, 1, 7 });
+	goLightPoint02->transform->SetWorldPosition({ 7, 1, -7 });
+	goLightPoint03->transform->SetWorldPosition({ -7, 1, 7 });
+	goLightPoint04->transform->SetWorldPosition({ -7, 1, -7 });
+	goLightSpot01->transform->SetWorldPosition({ 7, 1, 0 });
+	goLightSpot02->transform->SetWorldPosition({ -7, 1, 0 });
+	
+	lightSpot1->transform->SetWorldRotation({ -90, 0, 0 });
+	lightSpot2->transform->SetWorldRotation({ -90, 0, 0 });
 }
 
 void Game::SetEnviroment()
@@ -187,4 +234,13 @@ void Game::DeInitialize()
 	delete wallLeft;
 	delete wallBack;
 	delete wallFront;
+	
+	delete goLightDir01;
+	delete goLightDir02;
+	delete goLightPoint01;
+	delete goLightPoint02;
+	delete goLightPoint03;
+	delete goLightPoint04;
+	delete goLightSpot01;
+	delete goLightSpot02;
 }

@@ -28,6 +28,29 @@ private:
 	GameObject* cube3 = nullptr;
 	GameObject* cube4 = nullptr;
 
+
+	
+	GameObject* goLightDir01 = nullptr;
+	GameObject* goLightDir02 = nullptr;
+	DirectionlLight* lightDir1 = nullptr;
+	DirectionlLight* lightDir2 = nullptr;
+	
+	GameObject* goLightPoint01	= nullptr;
+	GameObject* goLightPoint02	= nullptr;
+	GameObject* goLightPoint03	= nullptr;
+	GameObject* goLightPoint04	= nullptr;
+	PointLight* lightPoint1	= nullptr;
+	PointLight* lightPoint2	= nullptr;
+	PointLight* lightPoint3	= nullptr;
+	PointLight* lightPoint4	= nullptr;
+
+	GameObject* goLightSpot01 = nullptr;
+	GameObject* goLightSpot02 = nullptr;
+	SpotLight* lightSpot1 = nullptr;
+	SpotLight* lightSpot2 = nullptr;
+
+	
+
 public:
 	void Initialize()override;
 	void Inputs() override;
@@ -35,6 +58,7 @@ public:
 	void DeInitialize() override;
 	void Draw();
 
+	void SetLights();
 	void SetEnviroment();
 	void AddListeners();
 };

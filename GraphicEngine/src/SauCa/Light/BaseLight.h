@@ -6,12 +6,11 @@
 
 class SAUCA_API BaseLight : public Component
 {
-protected:
+	public:
 	glm::vec3 ambient;
 	glm::vec3 diffuse;
 	glm::vec3 specular;
-
-	public:
+	glm::vec3 lightColor;
 	BaseLight();
 };
 
