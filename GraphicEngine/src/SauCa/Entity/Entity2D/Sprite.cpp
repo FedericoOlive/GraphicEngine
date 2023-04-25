@@ -3,13 +3,15 @@
 
 Sprite::Sprite()
 {
-    material = renderer->GetMaterialTexture();
+    material = new Material(renderer->GetShaderSolid(), false);
     CreateVertexData();
 }
 
-Sprite::Sprite(Texture* texture, Renderer* renderer)
+Sprite::Sprite(Texture* texture, Renderer* renderer, bool deleteExistingMaterial)
 {
-    material = renderer->GetMaterialTexture();
+    if (deleteExistingMaterial && material != nullptr)
+        delete material;
+    material = new Material(renderer->GetShaderTexture(), true);
     hasAnimation = false;
     SetTexture(texture);
 

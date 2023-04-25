@@ -6,9 +6,9 @@ Shader::Shader(bool hasTexture)
 {
     std::cout << "Loading default Shader.\n";
 	if(hasTexture)
-        CreateShaderBySource(vertexShaderLightSource, fragmentShaderLightSource);
+        CreateShaderBySource(vertexShaderSource, fragmentShaderSource);
     else
-        CreateShaderBySource(vertexShaderBasicLightSource, fragmentShaderBasicLightSource);
+        CreateShaderBySource(vertexShaderSource, fragmentShaderSource);
 }
 
 void Shader::CreateShader(std::string vsPath, std::string fsPath, bool hasTexture)

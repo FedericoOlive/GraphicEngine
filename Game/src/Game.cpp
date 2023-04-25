@@ -67,7 +67,7 @@ void Game::Initialize()
 	cube2->transform->SetParent(cubeContent);
 	cube2->AddComponent(CreateCube());
 	cube2->transform->SetLocalPosition({ distance, 0, -distance });
-
+	
 	cube3 = CreateGameObject("Cube 3");
 	cube3->transform->SetParent(cubeContent);
 	cube3->AddComponent(CreateCube());
@@ -78,10 +78,17 @@ void Game::Initialize()
 	cube4->AddComponent(CreateCube());
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
 
-
 	GameObject* spotGo = CreateGameObject();
 	spotGo->AddComponent(CreateSpotLight());
 	spotGo->transform->SetParent(player);
+
+	
+	GameObject* triangle = CreateGameObject();
+	triangle->AddComponent(CreateTriangle());
+	triangle->transform->SetWorldPosition({0, 8, 0});
+
+
+	
 	
 	target = cubeContent->transform;
 }

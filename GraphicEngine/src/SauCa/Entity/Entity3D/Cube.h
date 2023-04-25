@@ -10,7 +10,7 @@ public:
 	~Cube() override;
 	void CreateVertexData() override;
 	void Draw() override;
-	void SetTexture(Texture* texture);
+	void SetTexture(Texture* texture, bool deleteExitingMaterial = true, bool deleteExitingTexture = true);
 	void DeleteTextureAsociate();
 	void SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, glm::vec2 bottomLeft, glm::vec2 topLeft);
 protected:

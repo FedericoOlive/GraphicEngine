@@ -27,8 +27,8 @@ private:
         "uniform mat4 modelMatrix;\n"
         "void main()\n"
         "{\n"
-        "gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
-        "ourColor = aColor;\n"
+        "	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
+        "	ourColor = aColor;\n"
         "}\n";
     const std::string fragmentShaderSolidSource =
         "#version 330 core\n"
@@ -38,7 +38,7 @@ private:
         "uniform float alpha;\n"
         "void main()\n"
         "{\n"
-        "FragColor = vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+        "	FragColor = vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
         "}";
     const std::string vertexShaderTextureSource =
         "#version 330 core\n"
@@ -53,9 +53,9 @@ private:
         "uniform mat4 modelMatrix;\n"
         "void main()\n"
         "{\n"
-        "gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
-        "ourColor = aColor;\n"
-        "TexCoord = aTexCoord;\n"
+        "	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
+        "	ourColor = aColor;\n"
+        "	TexCoord = aTexCoord;\n"
         "}\n";
     const std::string fragmentShaderTextureSource =
         "#version 330 core\n"
@@ -67,60 +67,11 @@ private:
         "uniform float alpha;\n"
         "void main()\n"
         "{\n"
-        "FragColor = texture(ourTexture, TexCoord) * vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+		"	vec4 color = texture(ourTexture, TexCoord) * vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+		"	if (color.a < 0.9) {discard;}\n"
+		"	FragColor = color;\n"
         "}\n";
-	const std::string vertexShaderBasicLightSource = 
-		"#version 330 core\n"
-		"layout(location = 0) in vec3 aPos;\n"
-		"layout(location = 1) in vec3 aNormal;\n"
-
-		"out vec3 FragPos;\n"
-		"out vec3 Normal;\n"
-
-		"uniform mat4 modelMatrix;\n"
-		"uniform mat4 viewMatrix;\n"
-		"uniform mat4 projectionMatrix;\n"
-
-		"void main()\n"
-		"{\n"
-			"FragPos = vec3(modelMatrix * vec4(aPos, 1.0));\n"
-			"Normal = mat3(transpose(inverse(modelMatrix))) * aNormal;\n"
-			"gl_Position = projectionMatrix * viewMatrix * vec4(FragPos, 1.0);\n"
-		"}\n";
-	const std::string fragmentShaderBasicLightSource =
-		"#version 330 core\n"
-		"out vec4 FragColor;\n"
-
-		"in vec3 Normal;\n"
-		"in vec3 FragPos;\n"
-
-		"uniform vec3 lightPos;\n"
-		"uniform vec3 viewPos;\n"
-		"uniform vec3 lightColor;\n"
-		"uniform vec3 colorTint;\n"
-
-		"void main()\n"
-		"{\n"
-			// ambient
-			"float ambientStrength = 0.1;\n"
-			"vec3 ambient = ambientStrength * lightColor;\n"
-			// diffuse 
-			"vec3 norm = normalize(Normal);\n"
-			"vec3 lightDir = normalize(lightPos - FragPos);\n"
-			"float diff = max(dot(norm, lightDir), 0.0);\n"
-			"vec3 diffuse = diff * lightColor;\n"
-			// specular
-			"float specularStrength = 0.5;\n"
-			"vec3 viewDir = normalize(viewPos - FragPos);\n"
-			"vec3 reflectDir = reflect(-lightDir, norm);\n"
-			"float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);\n"
-			"vec3 specular = specularStrength * spec * lightColor;\n"
-
-			"vec3 result = (ambient + diffuse + specular) * colorTint;\n"
-			"FragColor = vec4(result, 1.0);\n"
-		"}\n";
-	
-    const std::string vertexShaderLightSource =
+    const std::string vertexShaderSource =
         "#version 330 core\n"
         "layout(location = 0) in vec3 aPos; \n"
         "layout(location = 1) in vec3 aColor; \n"
@@ -139,12 +90,14 @@ private:
         "    TexCoords = aTexCoords; \n"
         "    gl_Position = projectionMatrix * viewMatrix * vec4(FragPos, 1.0); \n"
         "}\n";
-    const std::string fragmentShaderLightSource =
+    const std::string fragmentShaderSource =
 	    "#version 330 core\n"
 		"out vec4 FragColor;\n"
 		"struct Material {\n"
 		"    sampler2D diffuse;\n"
 		"    sampler2D specular;\n"
+		"    bool hasTexture;\n"
+		"    vec3 colorTint;\n"
 		"    float shininess;\n"
 		"};\n"
 		"struct DirLight {\n"
@@ -174,40 +127,57 @@ private:
 		"    vec3 diffuse;\n"
 		"    vec3 specular;\n"
 		"};\n"
-		"#define NR_POINT_LIGHTS 4\n"
+		"#define NR_DIREC_LIGHTS 5\n"
+		"#define NR_POINT_LIGHTS 5\n"
+		"#define NR_SPOTS_LIGHTS 5\n"
 		"in vec3 FragPos;\n"
 		"in vec3 Normal;\n"
 		"in vec2 TexCoords;\n"
 		"uniform vec3 viewPos;\n"
-		"uniform DirLight dirLight;\n"
+		"uniform int dirLightAmount;\n"
+		"uniform int pointLightAmount;\n"
+		"uniform int spotLightAmount;\n"
+		"uniform DirLight dirLights[NR_DIREC_LIGHTS];\n"
 		"uniform PointLight pointLights[NR_POINT_LIGHTS];\n"
-		"uniform SpotLight spotLight;\n"
+		"uniform SpotLight spotLights[NR_SPOTS_LIGHTS];\n"
 		"uniform Material material;\n"
-		"vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);\n"
-		"vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);\n"
-		"vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir);\n"
+		"vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 diffuseColor, vec3 specularColor);\n"
+		"vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseColor, vec3 specularColor);\n"
+		"vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseColor, vec3 specularColor);\n"
 		"void main()\n"
 		"{\n"
-		"    vec3 norm = normalize(Normal);\n"
-		"    vec3 viewDir = normalize(viewPos - FragPos);\n"
-		"    vec3 result = CalcDirLight(dirLight, norm, viewDir);\n"
-		"    for (int i = 0; i < NR_POINT_LIGHTS; i++)\n"
-		"        result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);\n"
-		"    result += CalcSpotLight(spotLight, norm, FragPos, viewDir);\n"
-		"    FragColor = vec4(result, 1.0);\n"
+		"	vec4 diffuseColor = texture(material.diffuse, TexCoords);\n"
+		"	vec4 specularColor = texture(material.specular, TexCoords);\n"
+		"	if (diffuseColor.a < 0.1) { discard; }\n"
+		"	if(!material.hasTexture){;\n"
+		"	diffuseColor = vec4(material.colorTint, 1.0);\n"
+		"	specularColor = vec4(material.colorTint, 1.0);}\n"
+		"	int amountDirLight = min(dirLightAmount, NR_DIREC_LIGHTS);\n"
+		"	int amountPointLight = min(pointLightAmount, NR_POINT_LIGHTS);\n"
+		"	int amountSpotLight = min(spotLightAmount, NR_SPOTS_LIGHTS);\n"
+		"   vec3 norm = normalize(Normal);\n"
+		"   vec3 viewDir = normalize(viewPos - FragPos);\n"
+		"   vec3 result = vec3(0, 0, 0);\n"
+		"   for (int i = 0; i < amountDirLight; i++)\n"
+		"       result += CalcDirLight(dirLights[i], norm, viewDir, vec3(diffuseColor), vec3(specularColor));\n"
+		"   for (int i = 0; i < amountPointLight; i++)\n"
+		"       result += CalcPointLight(pointLights[i], norm, FragPos, viewDir, vec3(diffuseColor), vec3(specularColor));\n"
+		"   for (int i = 0; i < amountSpotLight; i++)\n"
+		"       result += CalcSpotLight(spotLights[i], norm, FragPos, viewDir, vec3(diffuseColor), vec3(specularColor));\n"
+		"	FragColor = vec4(result, 1.0);\n"
 		"}\n"
-		"vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)\n"
+		"vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir, vec3 diffuseColor, vec3 specularColor)\n"
 		"{\n"
 		"    vec3 lightDir = normalize(-light.direction);\n"
 		"    float diff = max(dot(normal, lightDir), 0.0);\n"
 		"    vec3 reflectDir = reflect(-lightDir, normal);\n"
 		"    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);\n"
-		"    vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));\n"
-		"    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));\n"
-		"    vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));\n"
+		"    vec3 ambient = light.ambient * diffuseColor;\n"
+		"    vec3 diffuse = light.diffuse * diff * diffuseColor;\n"
+		"    vec3 specular = light.specular * spec * specularColor;\n"
 		"    return (ambient + diffuse + specular);\n"
 		"}\n"
-		"vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)\n"
+		"vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseColor, vec3 specularColor)\n"
 		"{\n"
 		"    vec3 lightDir = normalize(light.position - fragPos);\n"
 		"    float diff = max(dot(normal, lightDir), 0.0);\n"
@@ -215,15 +185,15 @@ private:
 		"    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);\n"
 		"    float distance = length(light.position - fragPos);\n"
 		"    float attenuation = 1.0 / (light.constant + light.linear * distance + light.quadratic * (distance * distance));\n"
-		"    vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));\n"
-		"    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));\n"
-		"    vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));\n"
+		"    vec3 ambient = light.ambient * diffuseColor;\n"
+		"    vec3 diffuse = light.diffuse * diff * diffuseColor;\n"
+		"    vec3 specular = light.specular * spec * specularColor;\n"
 		"    ambient *= attenuation;\n"
 		"    diffuse *= attenuation;\n"
 		"    specular *= attenuation;\n"
 		"    return (ambient + diffuse + specular);\n"
 		"}\n"
-		"vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir)\n"
+		"vec3 CalcSpotLight(SpotLight light, vec3 normal, vec3 fragPos, vec3 viewDir, vec3 diffuseColor, vec3 specularColor)\n"
 		"{\n"
 		"    vec3 lightDir = normalize(light.position - fragPos);\n"
 		"    float diff = max(dot(normal, lightDir), 0.0);\n"
@@ -234,9 +204,9 @@ private:
 		"    float theta = dot(lightDir, normalize(-light.direction));\n"
 		"    float epsilon = light.cutOff - light.outerCutOff;\n"
 		"    float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);\n"
-		"    vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoords));\n"
-		"    vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoords));\n"
-		"    vec3 specular = light.specular * spec * vec3(texture(material.specular, TexCoords));\n"
+		"    vec3 ambient = light.ambient * diffuseColor;\n"
+		"    vec3 diffuse = light.diffuse * diff * diffuseColor;\n"
+		"    vec3 specular = light.specular * spec * specularColor;\n"
 		"    ambient *= attenuation * intensity;\n"
 		"    diffuse *= attenuation * intensity;\n"
 		"    specular *= attenuation * intensity;\n"
@@ -245,6 +215,7 @@ private:
 #pragma endregion
     
     void CheckCompileErrors(unsigned int shader, std::string type);
+    void CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource);
 	
 public:
     int ID;
@@ -252,7 +223,6 @@ public:
     Shader(std::string vertexShaderPath, std::string fragmentShaderPath, bool hasTexture);
     ~Shader();
     void CreateShader(std::string vsPath, std::string fsPath, bool hasTexture);
-    void CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource);
     void Use();
 
     void setBool(const std::string& name, bool value) const { glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value); }

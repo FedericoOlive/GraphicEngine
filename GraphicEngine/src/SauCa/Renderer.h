@@ -8,20 +8,24 @@
 #include "GameObjects/Component.h"
 #include "glm/glm/glm.hpp"
 #include "Light/DirectionlLight.h"
+#include "Light/PointLight.h"
+#include "Light/SpotLight.h"
 class Camera;
 
 static class SAUCA_API Renderer
 {
 private:
-	Material* defaultMaterialSolid;
-	Material* defaultMaterialTexture;
-	Material* defaultMaterialLight;
+	Shader* shaderSolid;
+	Shader* shaderTexture;
 	
 	static std::list<Component*> renderList;
 	static std::list<Camera*> cameras;
 	
 public:
 	std::list<DirectionlLight*> directionalLights;
+	std::list<PointLight*> pointLights;
+	std::list<SpotLight*> spotLights;
+	
 	static void AddToRenderList(Component* component);
 	
 	Renderer();
@@ -41,9 +45,9 @@ public:
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
 	
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO);
-	Material* GetMaterialLight() { return defaultMaterialLight; }
-	Material* GetMaterialTexture() { return defaultMaterialTexture; }
-	Material* GetMaterialSolid() { return defaultMaterialSolid; }
+
+	Shader* GetShaderSolid() const { return shaderTexture; }
+	Shader* GetShaderTexture() const { return shaderTexture; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);

@@ -2,7 +2,7 @@
 
 Triangle::Triangle(Renderer* renderer)
 {
-	material = renderer->GetMaterialSolid();
+	material = new Material(renderer->GetShaderSolid(), false);
 	SetRenderer(renderer);
 	CreateVertexData();
 
@@ -21,23 +21,23 @@ void Triangle::CreateVertexData()
 
 	vertexData->sizeVertices = 9;
 	vertexData->vertices = new float[vertexData->sizeVertices]{
-		 0.5f, -0.5f, 0.0f,		// bottom right
-		-0.5f, -0.5f, 0.0f,		// bottom left
-		 0.0f,  0.5f, 0.0f,		// top 
+		 0.5f, 0.0f, -0.5f, 	// bottom right
+		-0.5f, 0.0f, -0.5f, 	// bottom left
+		 0.0f, 0.0f,  0.5f		// top 
 	};
 
 	vertexData->sizeColor = 9;
 	vertexData->colors = new float[vertexData->sizeColor]{
-		 0.5f, -0.5f, 0.0f,		// bottom right
-		-0.5f, -0.5f, 0.0f,		// bottom left
-		 0.0f,  0.5f, 0.0f,		// top 
+		1.0f, 0.0f, 0.0f,		// bottom right
+		1.0f, 0.0f, 0.0f,		// bottom left
+		1.0f, 0.0f, 0.0f		// top 
 	};
 
 	vertexData->sizeNormals = 9;
 	vertexData->normals = new float[vertexData->sizeNormals]{
-		0.0f, 0.0f, -1.0f,		// bottom right
-		0.0f, 0.0f, -1.0f,		// bottom left
-		0.0f, 0.0f, -1.0f,		// top 
+		0.0f, 1.0f, 0.0f,		// bottom right
+		0.0f, 1.0f, 0.0f,		// bottom left
+		0.0f, 1.0f, 0.0f		// top 
 	};
 
 	vertexData->sizeIndex = 3;
