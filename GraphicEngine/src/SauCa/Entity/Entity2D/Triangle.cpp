@@ -2,7 +2,7 @@
 
 Triangle::Triangle(Renderer* renderer)
 {
-	material = new Material(renderer->GetShaderSolid(), false);
+	material = new Material(renderer->GetDefaultShader(), false);
 	SetRenderer(renderer);
 	CreateVertexData();
 

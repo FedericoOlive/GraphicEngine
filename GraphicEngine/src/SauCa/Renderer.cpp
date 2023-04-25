@@ -24,9 +24,12 @@ Renderer::~Renderer()
 
 void Renderer::CreateShader()
 {
-    shaderSolid = new Shader(false);
-    shaderTexture = new Shader(true);
-
+    defaultShaderSolid = new Shader();
+    defaultShaderSolid->CreateDefaultSolidShader();
+    defaultShaderTexture = new Shader();
+    defaultShaderTexture->CreateDefaultTextureShader();
+    defaultShader = new Shader();
+    defaultShader->CreateDefaultShader();
     std::cout << "\n";
 }
 

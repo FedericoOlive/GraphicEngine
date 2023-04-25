@@ -3,8 +3,8 @@
 Quad::Quad(Renderer* renderer)
 {
     SetRenderer(renderer);
-    material = new Material(renderer->GetShaderSolid(), false);
-    CreateVertexData();
+    material = new Material(renderer->GetDefaultShader(), false);
+    Quad::CreateVertexData();
 
     Quad::GenBufferEntity();
     Quad::BindBufferEntity();
@@ -14,7 +14,7 @@ Quad::Quad(Renderer* renderer, Material* mat)
 {
     material = mat;
     SetRenderer(renderer);
-    CreateVertexData();
+    Quad::CreateVertexData();
 
     Quad::GenBufferEntity();
     Quad::BindBufferEntity();

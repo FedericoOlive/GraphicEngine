@@ -4,7 +4,7 @@ Cube::Cube(Renderer* renderer)
 {
 	SetRenderer(renderer);
 	texture = nullptr;
-	material = new Material(renderer->GetShaderSolid(), false);
+	material = new Material(renderer->GetDefaultShader(), false);
 	CreateVertexData();
 
 	isRenderizable = true;
@@ -209,7 +209,7 @@ void Cube::SetTexture(Texture* texture, bool deleteExitingMaterial, bool deleteE
 	if (deleteExitingTexture && this->texture != nullptr)
 		delete this->texture;
 
-	material = new Material(renderer->GetShaderTexture(), true);
+	material = new Material(renderer->GetDefaultShader(), true);
 	this->texture = texture;
 }
 

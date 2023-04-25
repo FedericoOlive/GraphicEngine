@@ -15,8 +15,9 @@ class Camera;
 static class SAUCA_API Renderer
 {
 private:
-	Shader* shaderSolid;
-	Shader* shaderTexture;
+	Shader* defaultShaderSolid;
+	Shader* defaultShaderTexture;
+	Shader* defaultShader;
 	
 	static std::list<Component*> renderList;
 	static std::list<Camera*> cameras;
@@ -46,8 +47,9 @@ public:
 	
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO);
 
-	Shader* GetShaderSolid() const { return shaderTexture; }
-	Shader* GetShaderTexture() const { return shaderTexture; }
+	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }
+	Shader* GetDefaultShaderTexture() const { return defaultShaderTexture; }
+	Shader* GetDefaultShader() const { return defaultShader; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);
