@@ -27,7 +27,13 @@ void CharacterController::OnMouseMove(double x, double y)
 		newRot.y -= x * static_cast<double>(mouseSensitive.x);
 
 	if (rotateX || rotateY)
+	{
+		if (newRot.x > maxVerticalAngle)
+			newRot.x = maxVerticalAngle;
+		else if (newRot.x < minVerticalAngle)
+			newRot.x = minVerticalAngle;
 		transform->SetLocalRotation(newRot);
+	}
 }
 
 void CharacterController::RemoveMovement(bool foward, bool left, bool back, bool right)

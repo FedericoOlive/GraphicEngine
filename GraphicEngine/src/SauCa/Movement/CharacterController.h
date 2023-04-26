@@ -24,7 +24,9 @@ protected:
 	bool rotateY = true;
 	glm::vec2 mouseSensitive = { 0.50f, 0.50f };
 	GameObject* target;
-	
+
+	float maxVerticalAngle = 45;
+	float minVerticalAngle = -45;
 public:
 	CharacterController();
 	~CharacterController() override;
