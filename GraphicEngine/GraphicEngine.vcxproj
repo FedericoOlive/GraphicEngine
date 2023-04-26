@@ -255,6 +255,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
     <ClInclude Include="src\SauCa\Utility\PrintInConsole.h" />
+    <ClInclude Include="src\SauCa\Utility\ShadersSource.h" />
     <ClInclude Include="src\SauCa\Window.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Triangle.h" />
     <ClInclude Include="src\SauCa\Timer.h" />

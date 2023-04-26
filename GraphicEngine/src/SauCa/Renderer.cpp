@@ -46,6 +46,9 @@ void Renderer::CreateRenderer()
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha)
 {
+    const int maxDirLights = 4;
+    const int maxPointLights = 4;
+    const int maxSpotLights = 4;
     // Todo: Agregar layers para distintas cámaras
 
 	material->shader->Use();
@@ -94,7 +97,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             material->shader->setVec3(dirLightString + "specular", (*dirLight)->specular);
 
             i++;
-            if (i > 4)
+            if (i > maxDirLights)
                 break;
         }
     }
@@ -115,7 +118,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             material->shader->setFloat(pointLightString + "quadratic", (*pointLight)->quadratic);
 
             i++;
-            if (i > 4)
+            if (i > maxPointLights)
                 break;
         }
     }
@@ -139,7 +142,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             material->shader->setFloat(spotLightString + "outerCutOff", glm::cos(glm::radians((*spotLight)->outerCutOff)));
 
             i++;
-            if (i > 4)
+            if (i > maxSpotLights)
                 break;
         }
     }

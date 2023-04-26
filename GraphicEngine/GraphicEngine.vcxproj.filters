@@ -239,6 +239,9 @@
     <ClInclude Include="src\SauCa\Utility\PrintInConsole.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="src\SauCa\Utility\ShadersSource.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\SauCa\Shaders\BasicShader.vs" />

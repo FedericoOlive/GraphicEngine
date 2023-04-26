@@ -1,6 +1,7 @@
 #include "Shader.h"
 #include <fstream>
 #include <sstream>
+#include "Utility/ShadersSource.h"
 
 Shader::Shader()
 {
@@ -46,25 +47,25 @@ void Shader::CreateShader(std::string vsPath, std::string fsPath)
 void Shader::CreateDefaultSkyboxShader()
 {
     std::cout << "Loading default Skybox Shader.\n";
-    CreateShaderBySource(vertexShaderSkybox, fragmentShaderSkybox);
+    CreateShaderBySource(ShaderSource::vertexShaderSkybox, ShaderSource::fragmentShaderSkybox);
 }
 
 void Shader::CreateDefaultSolidShader()
 {
     std::cout << "Loading default Solid Shader.\n";
-    CreateShaderBySource(vertexShaderSolidSource, fragmentShaderSolidSource);
+    CreateShaderBySource(ShaderSource::vertexShaderSolidSource, ShaderSource::fragmentShaderSolidSource);
 }
 
 void Shader::CreateDefaultTextureShader()
 {
     std::cout << "Loading default Texture Shader.\n";
-    CreateShaderBySource(vertexShaderTextureSource, fragmentShaderTextureSource);
+    CreateShaderBySource(ShaderSource::vertexShaderTextureSource, ShaderSource::fragmentShaderTextureSource);
 }
 
 void Shader::CreateDefaultShader()
 {
     std::cout << "Loading default Shader.\n";
-    CreateShaderBySource(vertexShaderSource, fragmentShaderSource);
+    CreateShaderBySource(ShaderSource::vertexShaderSource, ShaderSource::fragmentShaderSource);
 }
 
 void Shader::CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource)
