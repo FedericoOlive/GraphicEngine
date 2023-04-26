@@ -3,7 +3,10 @@
 Triangle::Triangle(Renderer* renderer, bool setAsIcon)
 {
 	name = "Triangle";
-	material = new Material(renderer->GetDefaultShader(), false);
+	if (setAsIcon)
+		material = new Material(renderer->GetDefaultShaderSolid(), false);
+	else
+		material = new Material(renderer->GetDefaultShader(), false);
 	SetRenderer(renderer);
 	CreateVertexData();
 
@@ -22,9 +25,9 @@ void Triangle::CreateVertexData()
 
 	vertexData->sizeVertices = 9;
 	vertexData->vertices = new float[vertexData->sizeVertices]{
-		 0.5f, 0.0f, -0.5f, 	// bottom right
-		-0.5f, 0.0f, -0.5f, 	// bottom left
-		 0.0f, 0.0f,  0.5f		// top 
+		 0.5f, 0.0f,  0.5f, 	// bottom right
+		-0.5f, 0.0f,  0.5f, 	// bottom left
+		 0.0f, 0.0f, -0.5f		// top 
 	};
 
 	vertexData->sizeColor = 9;

@@ -131,7 +131,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             string spotLightString = "spotLights[" + to_string(i) + "].";
 
             material->shader->setVec3(spotLightString + "position", (*spotLight)->transform->GetWorldPosition());
-            material->shader->setVec3(spotLightString + "direction", cameras.front()->transform->forward());
+            material->shader->setVec3(spotLightString + "direction", (*spotLight)->transform->forward());
             material->shader->setVec3(spotLightString + "ambient", (*spotLight)->ambient);
             material->shader->setVec3(spotLightString + "diffuse", (*spotLight)->diffuse);
             material->shader->setVec3(spotLightString + "specular", (*spotLight)->specular);

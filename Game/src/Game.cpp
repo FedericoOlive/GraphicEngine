@@ -19,7 +19,6 @@ void Game::Initialize()
 	AddListeners();
 	Texture* miniGokuTexture = new Texture("res/Goku.png");
 	Texture* playerCubeTexture = new Texture("res/Layer9.png");
-	Sprite* sprite = CreateSprite(miniGokuTexture);
 
 	player = CreateGameObject("Player");
 	Cube* playerCube = CreateCube();
@@ -47,7 +46,8 @@ void Game::Initialize()
 
 	objectFoward = CreateGameObject("miniGoku3");
 	objectFoward->AddComponent(CreateSprite(miniGokuTexture));
-	objectFoward->transform->SetLocalScale({ 5, 5, 5 });
+	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
+	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
 
 	player->AddComponent(movementPlayer);
 	cameraPivot->AddComponent(movementCamPivot);
@@ -76,11 +76,11 @@ void Game::Initialize()
 	cube4->transform->SetParent(cubeContent);
 	cube4->AddComponent(CreateCube());
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
-	cube4->SetActive(false);
+	//cube4->SetActive(false);
 	
 	GameObject* spotGo = CreateGameObject("SpotLight Player");
 	spotGo->AddComponent(CreateSpotLight());
-	spotGo->transform->SetParent(player);
+	spotGo->transform->SetParent(cameraPivot);
 	
 	target = cubeContent->transform;
 }
@@ -114,7 +114,7 @@ void Game::Inputs()
 
 void Game::Update()
 {
-	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 10.0f);
+	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{0,5,0});
 	return;
 	glm::vec3 pos = player->transform->GetWorldPosition();
 	glm::vec3 forward = player->transform->forward();
@@ -134,8 +134,8 @@ void Game::Draw()
 }
 void Game::SetLights()
 {
-	goLightDir01 = CreateGameObject("Dir Light 1");
-	goLightDir02 = CreateGameObject("Dir Light 2");
+	//goLightDir01 = CreateGameObject("Dir Light 1");
+	//goLightDir02 = CreateGameObject("Dir Light 2");
 	goLightPoint01 = CreateGameObject("Point Light 1");
 	goLightPoint02 = CreateGameObject("Point Light 2");
 	goLightPoint03 = CreateGameObject("Point Light 3");
@@ -143,8 +143,8 @@ void Game::SetLights()
 	goLightSpot01 = CreateGameObject("Spot Light 1");
 	goLightSpot02 = CreateGameObject("Spot Light 2");
 
-	lightDir1 = CreateDirectionalLight();
-	lightDir2 = CreateDirectionalLight();
+	//lightDir1 = CreateDirectionalLight();
+	//lightDir2 = CreateDirectionalLight();
 	lightPoint1 = CreatePointLight();
 	lightPoint2 = CreatePointLight();
 	lightPoint3 = CreatePointLight();
@@ -152,8 +152,8 @@ void Game::SetLights()
 	lightSpot1 = CreateSpotLight();
 	lightSpot2 = CreateSpotLight();
 
-	goLightDir01->AddComponent(lightDir1);
-	goLightDir02->AddComponent(lightDir2);
+	//goLightDir01->AddComponent(lightDir1);
+	//goLightDir02->AddComponent(lightDir2);
 	goLightPoint01->AddComponent(lightPoint1);
 	goLightPoint02->AddComponent(lightPoint2);
 	goLightPoint03->AddComponent(lightPoint3);
@@ -161,24 +161,25 @@ void Game::SetLights()
 	goLightSpot01->AddComponent(lightSpot1);
 	goLightSpot02->AddComponent(lightSpot2);
 
-	float distance = 30;	
-	goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
-	goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
+	float distance = 40;	
+	//goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
+	//goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
+	//goLightDir02->transform->SetWorldRotation({ 0, 180, 0 });
 	goLightPoint01->transform->SetWorldPosition({ distance, 1, distance });
 	goLightPoint02->transform->SetWorldPosition({ distance, 1, -distance });
 	goLightPoint03->transform->SetWorldPosition({ -distance, 1, distance });
 	goLightPoint04->transform->SetWorldPosition({ -distance, 1, -distance });
-	goLightSpot01->transform->SetWorldPosition({ distance, 1, 0 });
-	goLightSpot02->transform->SetWorldPosition({ -distance, 1, 0 });
+	goLightSpot01->transform->SetWorldPosition({ distance/2, 5, 0 });
+	goLightSpot02->transform->SetWorldPosition({ -distance/2, 5, 0 });
 	
-	lightSpot1->transform->SetWorldRotation({ 90, 0, 0 });
-	lightSpot2->transform->SetWorldRotation({ 90, 0, 0 });
+	lightSpot1->transform->SetWorldRotation({ 0, 0, 90 });
+	lightSpot2->transform->SetWorldRotation({ 0, 0, -90 });
 }
 
 void Game::SetEnviroment()
 {
 	CreateSkybox("res/Skybox/Skybox_Right.jpg", "res/Skybox/Skybox_Left.jpg", "res/Skybox/Skybox_Top.jpg", "res/Skybox/Skybox_Bottom.jpg", "res/Skybox/Skybox_Front.jpg", "res/Skybox/Skybox_Back.jpg");
-	float cubeDimensions = 250.0f;
+	float cubeDimensions = 50.0f;
 
 	worldContent = CreateGameObject("World Content");
 	worldContent->transform->SetLocalPosition({ 0, 0, 0 });
@@ -188,36 +189,38 @@ void Game::SetEnviroment()
 	floor = CreateGameObject("Floor");
 	floor->AddComponent(CreateSprite(new Texture("res/Layer2.png")));
 	floor->transform->SetLocalPosition({ 0, 0, 0 });
-	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
-	floor->transform->SetLocalRotation({ 90, 0, 0 });
+	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	floor->transform->SetLocalRotation({ 90, 180, 0 });
 
 	wallRight = CreateGameObject("Wall Right");
 	wallRight->transform->SetParent(worldContent);
-	wallRight->AddComponent(CreateSprite(new Texture("res/Layer3.png")));
+	wallRight->AddComponent(CreateSprite(new Texture("res/World/Right.png")));
+	wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0.01f });
 	wallRight->transform->SetLocalPosition({ cubeDimensions, cubeDimensions / 2, 0 });
-	wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
 	wallRight->transform->SetLocalRotation({ 0, -90, 0 });
 
 	wallLeft = CreateGameObject("Wall Left");
 	wallLeft->transform->SetParent(worldContent);
-	wallLeft->AddComponent(CreateSprite(new Texture("res/Layer4.png")));
+	wallLeft->AddComponent(CreateSprite(new Texture("res/World/Left.png")));
 	wallLeft->transform->SetLocalPosition({ -cubeDimensions, cubeDimensions / 2, 0 });
-	wallLeft->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	wallLeft->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	wallLeft->transform->SetLocalRotation({ 0, 90, 0 });
 
 	wallBack = CreateGameObject("Wall Back");
 	wallBack->transform->SetParent(worldContent);
-	wallBack->AddComponent(CreateSprite(new Texture("res/Layer5.png")));
-	wallBack->transform->SetLocalPosition({ 0, cubeDimensions / 2, -cubeDimensions });
-	wallBack->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
+	wallBack->AddComponent(CreateSprite(new Texture("res/World/Back.png")));
+	wallBack->transform->SetLocalPosition({ 0, cubeDimensions / 2, cubeDimensions });
+	wallBack->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	wallBack->transform->SetLocalRotation({ 0, 180, 0 });
 
+	Texture* front = new Texture("res/World/Front.png");
+	Sprite* spriteFront = CreateSprite(front);
 	wallFront = CreateGameObject("Wall Front");
 	wallFront->transform->SetParent(worldContent);
-	wallFront->AddComponent(CreateSprite(new Texture("res/Layer6.png")));
-	wallFront->transform->SetLocalPosition({ 0, cubeDimensions / 2, cubeDimensions });
-	wallFront->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0 });
-	wallFront->transform->SetLocalRotation({ 0, 0, 0 });
+	wallFront->AddComponent(spriteFront);
+	wallFront->transform->SetLocalPosition({ 0, cubeDimensions / 2, -cubeDimensions });
+	wallFront->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	//wallFront->transform->SetLocalRotation({ 0, 0, 0 });
 }
 
 void Game::AddListeners()
