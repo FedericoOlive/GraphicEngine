@@ -21,7 +21,6 @@ private:
 public:
     int ID;
     Shader();
-    Shader(std::string vertexShaderPath, std::string fragmentShaderPath);
     ~Shader();
 	
     void CreateShader(std::string vsPath, std::string fsPath);

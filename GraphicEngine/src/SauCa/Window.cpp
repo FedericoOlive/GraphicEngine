@@ -6,6 +6,7 @@ float Window::Screen_Height = 720;
 
 Window::Window()
 {
+    windowBaseName = "No Name";
     window = nullptr;
 }
 
@@ -22,7 +23,19 @@ int Window::InitLibrary()
 
 void Window::CreateWindow()
 {
-    window = glfwCreateWindow(Screen_Width, Screen_Height, "Hello World", NULL, NULL);
+    windowBaseName = "Hello World";
+    window = glfwCreateWindow(Screen_Width, Screen_Height, windowBaseName.c_str(), NULL, NULL);
+}
+
+void Window::SetWindowTitle(std::string newTitle)
+{
+    windowBaseName = newTitle;
+    glfwSetWindowTitle(window, windowBaseName.c_str());
+}
+
+void Window::AddStringToNameWindow(std::string stringToAdd) const
+{
+    glfwSetWindowTitle(window, (windowBaseName + "  " + stringToAdd).c_str());
 }
 
 int Window::CheckWindow(GLFWwindow* window)

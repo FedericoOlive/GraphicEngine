@@ -46,7 +46,6 @@ void Sprite::CreateVertexData()
        -0.5f, -0.5f, 0.0f,  // Bottom Left
        -0.5f,  0.5f, 0.0f   // Top Left 
     };
-
     vertexData->sizeColor = 12;
     vertexData->colors = new float[vertexData->sizeColor]{
         // Colors        
@@ -59,10 +58,10 @@ void Sprite::CreateVertexData()
     vertexData->sizeNormals = 12;
     vertexData->normals = new float[vertexData->sizeNormals]{
         // Normals        
-        0.0f, 0.0f, -1.0f,  // Top Right
-        0.0f, 0.0f, -1.0f,  // Bottom Right
-        0.0f, 0.0f, -1.0f,  // Bottom Left
-        0.0f, 0.0f, -1.0f   // Top Left 
+        0.0f, 0.0f, 1.0f,  // Top Right
+        0.0f, 0.0f, 1.0f,  // Bottom Right
+        0.0f, 0.0f, 1.0f,  // Bottom Left
+        0.0f, 0.0f, 1.0f   // Top Left 
     };
 
     vertexData->sizeUvs = 8;

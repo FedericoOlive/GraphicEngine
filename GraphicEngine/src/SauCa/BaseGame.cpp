@@ -74,14 +74,17 @@ int BaseGame::Init()
     renderer->CreateRenderer();
 
     LoadInfo();
-
+	
     renderer->CreateShader();
     input->InitInput(window);
 
+    glfwSwapInterval(1);
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
-        window->PollEvents();    	
+        if (timer->IsEndCounter())
+            window->AddStringToNameWindow(timer->GetTimeInfo());
+        window->PollEvents();
         timer->Update();
 
         OnInputEvent.Invoke();

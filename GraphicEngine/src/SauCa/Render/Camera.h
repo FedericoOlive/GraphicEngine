@@ -8,7 +8,6 @@
 class SAUCA_API  Camera : public Component
 {
 private:
-	// Todo: Agregar comportamiento de movimiento (No se actualizan las matrices)
 	
 public:
 	glm::mat4 viewMatrix;

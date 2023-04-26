@@ -25,6 +25,7 @@ class SAUCA_API BaseGame
 {
 private:
 	static string version;
+		
 	Input* input;
 	Window* window;
 	Renderer* renderer;
