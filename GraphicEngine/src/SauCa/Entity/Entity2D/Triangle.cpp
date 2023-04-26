@@ -2,6 +2,7 @@
 
 Triangle::Triangle(Renderer* renderer, bool setAsIcon)
 {
+	name = "Triangle";
 	material = new Material(renderer->GetDefaultShader(), false);
 	SetRenderer(renderer);
 	CreateVertexData();

@@ -9,16 +9,20 @@ class SAUCA_API GameObject
 {
 private:
     unsigned static int id;
+    bool isActive = true;
+    bool isActiveInHierarchy = true;
 	
 public:
 	std::string name;
-    bool isActive = true;
     GameObject(std::string name = "");
     ~GameObject();
 	
     Transform* transform;
     std::vector<Component*> components;
-	
+    bool IsActive();
+    bool IsActiveInHierarch();
+    void SetActive(bool isActive);
+    void SetActiveInHierarch(bool isActiveInHierarchy);
     void AddComponent(Component* component);
     template<typename T> T* GetComponent();
     template<typename T> void RemoveComponent();

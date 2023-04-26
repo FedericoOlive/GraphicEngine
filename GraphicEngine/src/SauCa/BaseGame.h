@@ -75,8 +75,7 @@ public:
 
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
-	void ShowHierarchyInConsole();
-	std::string	AsString(glm::vec3 pos);
+	void ShowHierarchyInConsole() const;
 
 	// Inputs
 	bool IsKeyReleased(KeyCode keyCode);

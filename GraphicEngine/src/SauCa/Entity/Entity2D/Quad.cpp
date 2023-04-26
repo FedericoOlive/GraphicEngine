@@ -2,6 +2,7 @@
 
 Quad::Quad(Renderer* renderer)
 {
+    name = "Quad";
     SetRenderer(renderer);
     material = new Material(renderer->GetDefaultShader(), false);
     Quad::CreateVertexData();

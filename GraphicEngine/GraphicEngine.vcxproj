@@ -214,6 +214,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\BaseGame.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\TileMap.cpp" />
     <ClCompile Include="src\SauCa\Timer.cpp" />
+    <ClCompile Include="src\SauCa\Utility\PrintInConsole.cpp" />
     <ClCompile Include="src\SauCa\Window.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Triangle.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Tile.cpp" />
@@ -253,6 +254,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\BaseGame.h" />
     <ClInclude Include="src\SauCa.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\TileMap.h" />
+    <ClInclude Include="src\SauCa\Utility\PrintInConsole.h" />
     <ClInclude Include="src\SauCa\Window.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Triangle.h" />
     <ClInclude Include="src\SauCa\Timer.h" />

@@ -76,23 +76,13 @@ void Game::Initialize()
 	cube4->transform->SetParent(cubeContent);
 	cube4->AddComponent(CreateCube());
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
-
-	GameObject* spotGo = CreateGameObject();
+	cube4->SetActive(false);
+	
+	GameObject* spotGo = CreateGameObject("SpotLight Player");
 	spotGo->AddComponent(CreateSpotLight());
 	spotGo->transform->SetParent(player);
-
-
-	GameObject* triangle = CreateGameObject();
-	triangle->AddComponent(CreateTriangle());
-	triangle->transform->SetWorldPosition({ 0, 8, 0 });
-
-
-
-
-	target = cubeContent->transform;
 	
-	//GameObject* skyboxGo = CreateGameObject("Skybox");
-	//skyboxGo->AddComponent(CreateCubemap());
+	target = cubeContent->transform;
 }
 
 void Game::Inputs()
@@ -114,7 +104,7 @@ void Game::Inputs()
 	{
 		target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply));
 	}
-	if (IsKeyPressed(KeyCode::P)) { ShowHierarchyInConsole(); }
+	if (IsKeyPressed(KeyCode::H)) { ShowHierarchyInConsole(); }
 
 	
 	//cout << "----------------------------- " << target->gameObject->name << " -----------------------------\n";
@@ -144,14 +134,14 @@ void Game::Draw()
 }
 void Game::SetLights()
 {
-	goLightDir01 = CreateGameObject();
-	goLightDir02 = CreateGameObject();
-	goLightPoint01 = CreateGameObject();
-	goLightPoint02 = CreateGameObject();
-	goLightPoint03 = CreateGameObject();
-	goLightPoint04 = CreateGameObject();
-	goLightSpot01 = CreateGameObject();
-	goLightSpot02 = CreateGameObject();
+	goLightDir01 = CreateGameObject("Dir Light 1");
+	goLightDir02 = CreateGameObject("Dir Light 2");
+	goLightPoint01 = CreateGameObject("Point Light 1");
+	goLightPoint02 = CreateGameObject("Point Light 2");
+	goLightPoint03 = CreateGameObject("Point Light 3");
+	goLightPoint04 = CreateGameObject("Point Light 4");
+	goLightSpot01 = CreateGameObject("Spot Light 1");
+	goLightSpot02 = CreateGameObject("Spot Light 2");
 
 	lightDir1 = CreateDirectionalLight();
 	lightDir2 = CreateDirectionalLight();

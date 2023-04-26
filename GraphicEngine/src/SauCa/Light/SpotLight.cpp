@@ -4,6 +4,7 @@
 
 SpotLight::SpotLight(Renderer* renderer): BaseLight(renderer)
 {
+	name = "Spot Light";
 	ambient = {0.0f, 0.0f, 0.0f};
 	diffuse = {1.0f, 1.0f, 1.0f};
 	specular = {1.0f, 1.0f, 1.0f};

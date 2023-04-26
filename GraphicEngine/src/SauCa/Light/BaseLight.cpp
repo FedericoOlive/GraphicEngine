@@ -6,6 +6,7 @@
 BaseLight::BaseLight(Renderer* renderer) : Component()
 {
 	isRenderizable = false;
+	isLighteable = true;
 	this->renderer = renderer;
 	
 	ambient = { 0, 0, 0 };

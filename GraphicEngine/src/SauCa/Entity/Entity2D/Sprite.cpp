@@ -3,12 +3,14 @@
 
 Sprite::Sprite()
 {
+    name = "Sprite";
     material = new Material(renderer->GetDefaultShader(), false);
     Sprite::CreateVertexData();
 }
 
 Sprite::Sprite(Texture* texture, Renderer* renderer, bool deleteExistingMaterial)
 {
+    name = "Sprite";
     if (deleteExistingMaterial && material != nullptr)
         delete material;
     material = new Material(renderer->GetDefaultShader(), true);

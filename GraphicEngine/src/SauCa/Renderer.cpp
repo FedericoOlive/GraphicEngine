@@ -84,7 +84,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     int i = 0;
     for (auto dirLight = directionalLights.begin(); dirLight != directionalLights.end(); ++dirLight)
     {
-        if ((*dirLight)->isEnable && (*dirLight)->gameobject->isActive)
+        if ((*dirLight)->isEnable && (*dirLight)->gameobject->IsActive() && (*dirLight)->gameobject->IsActiveInHierarch())
         {
             string dirLightString = "dirLights[" + to_string(i) + "].";
 
@@ -102,7 +102,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     i = 0;
     for (auto pointLight = pointLights.begin(); pointLight != pointLights.end(); ++pointLight)
     {
-        if ((*pointLight)->isEnable && (*pointLight)->gameobject->isActive)
+        if ((*pointLight)->isEnable && (*pointLight)->gameobject->IsActive() && (*pointLight)->gameobject->IsActiveInHierarch())
         {
             string pointLightString = "pointLights[" + to_string(i) + "].";
 
@@ -123,7 +123,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     i = 0;
     for (auto spotLight = spotLights.begin(); spotLight != spotLights.end(); ++spotLight)
     {
-        if ((*spotLight)->isEnable && (*spotLight)->gameobject->isActive)
+        if ((*spotLight)->isEnable && (*spotLight)->gameobject->IsActive() && (*spotLight)->gameobject->IsActiveInHierarch())
         {
             string spotLightString = "spotLights[" + to_string(i) + "].";
 
@@ -188,9 +188,10 @@ void Renderer::Draw()
     for (auto iter = renderList.begin(); iter != renderList.end(); ++iter)
     {
         bool isEnable = (*iter)->isEnable;
-        bool isActive = (*iter)->gameobject->isActive;  // Todo: Faltaría ActiveInHierarchy.
+        bool isActive = (*iter)->gameobject->IsActive();
+        bool isActiveInHierarch = (*iter)->gameobject->IsActiveInHierarch();
 
-        if (isEnable && isActive)
+        if (isEnable && isActive && isActiveInHierarch)
             (*iter)->Draw();
     }
 }

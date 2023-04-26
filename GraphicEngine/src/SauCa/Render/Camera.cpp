@@ -4,6 +4,7 @@
 
 Camera::Camera(int width, int height)
 {
+	name = "Camera";
 	aspect = (float)width / (float)height;
 	SetCameraPerspective();
 	Renderer::AddCamera(this);

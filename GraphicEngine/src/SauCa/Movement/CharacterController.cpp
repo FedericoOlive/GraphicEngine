@@ -7,6 +7,7 @@
 
 CharacterController::CharacterController()
 {
+	name = "CharacterController";
 	std::function<void(double, double)> onMouseMove = [this](double x, double y) { OnMouseMove(x, y); };
 	Input::OnMouseMove.AddListener(onMouseMove);
 }

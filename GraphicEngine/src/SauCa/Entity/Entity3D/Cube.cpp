@@ -2,7 +2,8 @@
 
 Cube::Cube(Renderer* renderer)
 {
-	SetRenderer(renderer);
+	name = "Cube";
+	SetRenderer(renderer); 
 	texture = nullptr;
 	material = new Material(renderer->GetDefaultShader(), false);
 	CreateVertexData();

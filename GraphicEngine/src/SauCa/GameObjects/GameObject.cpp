@@ -32,6 +32,39 @@ GameObject::~GameObject()
 	components.clear();
 }
 
+bool GameObject::IsActive()
+{
+	return isActive;
+}
+
+bool GameObject::IsActiveInHierarch()
+{
+	return isActiveInHierarchy;
+}
+
+void GameObject::SetActive(bool isActive)
+{
+	this->isActive = isActive;
+	SetActiveInHierarch(isActive);
+}
+
+void GameObject::SetActiveInHierarch(bool isActiveInHierarchy)
+{
+	this->isActiveInHierarchy = isActiveInHierarchy;
+	
+	if (isActiveInHierarchy)
+	{
+		if(isActive)
+			for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
+				(*iter)->gameObject->SetActiveInHierarch(true);
+	}
+	else
+	{
+		for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)		
+			(*iter)->gameObject->SetActiveInHierarch(false);		
+	}
+}
+
 template <typename T> T* GameObject::GetComponent()
 {
 	for (Component* component : components)
@@ -65,7 +98,7 @@ void GameObject::AddComponent(Component* component)
 	component->OnAsigned();
 
 	components.push_back(component);
-	if (component->isRenderizable)
+	if (component->IsRenderizable())
 	{
 		Renderer::AddToRenderList(component);
 	}
