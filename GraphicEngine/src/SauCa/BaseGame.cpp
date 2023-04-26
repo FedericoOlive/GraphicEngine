@@ -11,7 +11,8 @@ void BaseGame::BeforeDraw()
 
 void BaseGame::Draw()
 {
-    skybox->Draw();
+    if (skybox != nullptr)
+        skybox->Draw();
     renderer->Draw();
 }
 
