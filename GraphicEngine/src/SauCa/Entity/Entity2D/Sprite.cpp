@@ -3,18 +3,20 @@
 
 Sprite::Sprite()
 {
-    material = renderer->GetMaterialTexture();
-    CreateVertexData();
+    material = new Material(renderer->GetDefaultShader(), false);
+    Sprite::CreateVertexData();
 }
 
-Sprite::Sprite(Texture* texture, Renderer* renderer)
+Sprite::Sprite(Texture* texture, Renderer* renderer, bool deleteExistingMaterial)
 {
-    material = renderer->GetMaterialTexture();
+    if (deleteExistingMaterial && material != nullptr)
+        delete material;
+    material = new Material(renderer->GetDefaultShader(), true);
     hasAnimation = false;
     SetTexture(texture);
 
     SetRenderer(renderer);
-    CreateVertexData();
+    Sprite::CreateVertexData();
 
     Sprite::GenBufferEntity();
     Sprite::BindBufferEntity();

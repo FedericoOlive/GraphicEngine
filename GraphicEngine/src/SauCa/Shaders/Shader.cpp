@@ -2,16 +2,12 @@
 #include <fstream>
 #include <sstream>
 
-Shader::Shader(bool hasTexture)
+Shader::Shader()
 {
-    std::cout << "Loading default Shader.\n";
-	if(hasTexture)
-        CreateShaderBySource(vertexShaderLightSource, fragmentShaderLightSource);
-    else
-        CreateShaderBySource(vertexShaderBasicLightSource, fragmentShaderBasicLightSource);
+	
 }
 
-void Shader::CreateShader(std::string vsPath, std::string fsPath, bool hasTexture)
+void Shader::CreateShader(std::string vsPath, std::string fsPath)
 {
     std::cout << "Loading custom Shader.\n";
     // 1. retrieve the vertex/fragment source code from filePath
@@ -41,17 +37,34 @@ void Shader::CreateShader(std::string vsPath, std::string fsPath, bool hasTextur
     catch (std::ifstream::failure& e)
     {
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << e.what() << std::endl;
-        std::cout << "Using Default Shader..." << std::endl;
-    	
-        std::cout << "Loading default Shader.\n";
-        if (hasTexture)
-            CreateShaderBySource(vertexShaderTextureSource, fragmentShaderTextureSource);
-        else
-            CreateShaderBySource(vertexShaderSolidSource, fragmentShaderSolidSource);
         return;
     }
 	
     CreateShaderBySource(vertexCode, fragmentCode);
+}
+
+void Shader::CreateDefaultSkyboxShader()
+{
+    std::cout << "Loading default Skybox Shader.\n";
+    CreateShaderBySource(vertexShaderSkybox, fragmentShaderSkybox);
+}
+
+void Shader::CreateDefaultSolidShader()
+{
+    std::cout << "Loading default Solid Shader.\n";
+    CreateShaderBySource(vertexShaderSolidSource, fragmentShaderSolidSource);
+}
+
+void Shader::CreateDefaultTextureShader()
+{
+    std::cout << "Loading default Texture Shader.\n";
+    CreateShaderBySource(vertexShaderTextureSource, fragmentShaderTextureSource);
+}
+
+void Shader::CreateDefaultShader()
+{
+    std::cout << "Loading default Shader.\n";
+    CreateShaderBySource(vertexShaderSource, fragmentShaderSource);
 }
 
 void Shader::CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource)

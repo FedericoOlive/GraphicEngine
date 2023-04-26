@@ -17,11 +17,10 @@ void Game::Initialize()
 	SetEnviroment();
 	SetLights();
 	AddListeners();
-
 	Texture* miniGokuTexture = new Texture("res/Goku.png");
 	Texture* playerCubeTexture = new Texture("res/Layer9.png");
 	Sprite* sprite = CreateSprite(miniGokuTexture);
-	
+
 	player = CreateGameObject("Player");
 	Cube* playerCube = CreateCube();
 	playerCube->SetTexture(playerCubeTexture);
@@ -32,27 +31,27 @@ void Game::Initialize()
 	cameraPivot = CreateGameObject("Camera Pivot");
 	cameraPivot->transform->SetLocalPosition({ 0, 1, 0 });
 	cameraPivot->transform->SetParent(player);
-	
+
 	camera = CreateGameObject("Camera");
 	camera->transform->SetParent(cameraPivot);
 	camera->transform->SetLocalPosition({ 0, 0, 5 });
-	
+
 	Camera* cam = new Camera(1280, 720);
 	camera->AddComponent(cam);
-	
+
 	CharacterController* movementPlayer = new CharacterController();
 	movementPlayer->RemoveRotation(false, true);
 	CharacterController* movementCamPivot = new CharacterController();
 	movementCamPivot->RemoveMovement();
 	movementCamPivot->RemoveRotation(true, false);
-	
+
 	objectFoward = CreateGameObject("miniGoku3");
 	objectFoward->AddComponent(CreateSprite(miniGokuTexture));
-	objectFoward->transform->SetLocalScale({5, 5, 5});
+	objectFoward->transform->SetLocalScale({ 5, 5, 5 });
 
 	player->AddComponent(movementPlayer);
 	cameraPivot->AddComponent(movementCamPivot);
-	
+
 
 	cubeContent = CreateGameObject("Cube Content");
 	cubeContent->transform->SetWorldScale({ 10, 10, 10 });
@@ -78,12 +77,22 @@ void Game::Initialize()
 	cube4->AddComponent(CreateCube());
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
 
-
 	GameObject* spotGo = CreateGameObject();
 	spotGo->AddComponent(CreateSpotLight());
 	spotGo->transform->SetParent(player);
-	
+
+
+	GameObject* triangle = CreateGameObject();
+	triangle->AddComponent(CreateTriangle());
+	triangle->transform->SetWorldPosition({ 0, 8, 0 });
+
+
+
+
 	target = cubeContent->transform;
+	
+	//GameObject* skyboxGo = CreateGameObject("Skybox");
+	//skyboxGo->AddComponent(CreateCubemap());
 }
 
 void Game::Inputs()
@@ -95,7 +104,7 @@ void Game::Inputs()
 	if (IsKeyDown(KeyCode::Num0)) { target == camera->transform ? target = player->transform : target = camera->transform; }
 	if (IsKeyDown(KeyCode::Num1)) { LockCursor(true);  }
 	if (IsKeyDown(KeyCode::Num2)) { LockCursor(false); }
-	if (IsKeyDown(KeyCode::Num3)) {  }
+	if (IsKeyDown(KeyCode::Num3)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0 , -1 * multiply, 0)); }
 	if (IsKeyDown(KeyCode::Num4)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(01 * multiply, 0, 0)); }
 	if (IsKeyDown(KeyCode::Num5)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(-1 * multiply, 0, 0)); }
 	if (IsKeyDown(KeyCode::Num6)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 01 * multiply, 0)); }
@@ -162,21 +171,23 @@ void Game::SetLights()
 	goLightSpot01->AddComponent(lightSpot1);
 	goLightSpot02->AddComponent(lightSpot2);
 
+	float distance = 30;	
 	goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
 	goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
-	goLightPoint01->transform->SetWorldPosition({ 7, 1, 7 });
-	goLightPoint02->transform->SetWorldPosition({ 7, 1, -7 });
-	goLightPoint03->transform->SetWorldPosition({ -7, 1, 7 });
-	goLightPoint04->transform->SetWorldPosition({ -7, 1, -7 });
-	goLightSpot01->transform->SetWorldPosition({ 7, 1, 0 });
-	goLightSpot02->transform->SetWorldPosition({ -7, 1, 0 });
+	goLightPoint01->transform->SetWorldPosition({ distance, 1, distance });
+	goLightPoint02->transform->SetWorldPosition({ distance, 1, -distance });
+	goLightPoint03->transform->SetWorldPosition({ -distance, 1, distance });
+	goLightPoint04->transform->SetWorldPosition({ -distance, 1, -distance });
+	goLightSpot01->transform->SetWorldPosition({ distance, 1, 0 });
+	goLightSpot02->transform->SetWorldPosition({ -distance, 1, 0 });
 	
-	lightSpot1->transform->SetWorldRotation({ -90, 0, 0 });
-	lightSpot2->transform->SetWorldRotation({ -90, 0, 0 });
+	lightSpot1->transform->SetWorldRotation({ 90, 0, 0 });
+	lightSpot2->transform->SetWorldRotation({ 90, 0, 0 });
 }
 
 void Game::SetEnviroment()
 {
+	CreateSkybox("res/Skybox/Skybox_Right.jpg", "res/Skybox/Skybox_Left.jpg", "res/Skybox/Skybox_Top.jpg", "res/Skybox/Skybox_Bottom.jpg", "res/Skybox/Skybox_Front.jpg", "res/Skybox/Skybox_Back.jpg");
 	float cubeDimensions = 250.0f;
 
 	worldContent = CreateGameObject("World Content");

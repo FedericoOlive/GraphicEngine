@@ -11,6 +11,7 @@
 #include "Entity/Entity2D/Quad.h"
 #include "Input/Input.h"
 #include "Timer.h"
+#include "Entity/Entity2D/Skybox.h"
 #include "Entity/Entity2D/TileMap.h"
 #include "Entity/Entity3D/Cube.h"
 #include "Light/DirectionlLight.h"
@@ -30,6 +31,7 @@ private:
 	CollisionManager* collisionManager;
 	Timer* timer;
 	list<GameObject*> gameobjects;
+	Skybox* skybox;
 	
 	void BeforeDraw();
 	void Draw();
@@ -57,6 +59,7 @@ public:
 	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
 	Cube* CreateCube();
+	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
 	GameObject* CreateGameObject(string name = "");
 	
 	void SetMaterial(Material* material);
@@ -88,6 +91,8 @@ public:
 	// Window
 	void ModifyWindow(const char* name, float width, float height);
 	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
+
+	
 };
 	
 #endif

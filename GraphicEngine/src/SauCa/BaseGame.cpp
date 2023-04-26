@@ -11,6 +11,7 @@ void BaseGame::BeforeDraw()
 
 void BaseGame::Draw()
 {
+    skybox->Draw();
     renderer->Draw();
 }
 
@@ -126,6 +127,20 @@ Cube* BaseGame::CreateCube()
     return sprite;
 }
 
+void BaseGame::CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back)
+{
+    std::vector<std::string> faces
+    {
+        right,
+        left,
+        top,
+        bottom,
+        front,
+        back
+    };
+    skybox = new Skybox(renderer, faces);
+}
+
 GameObject* BaseGame::CreateGameObject(string name)
 {
     GameObject* gameObject = new GameObject(name);
@@ -174,21 +189,21 @@ void BaseGame::ModifyWindow(const char* name, float width, float height)
 
 DirectionlLight* BaseGame::CreateDirectionalLight()
 {
-    DirectionlLight* dirLight = new DirectionlLight();
+    DirectionlLight* dirLight = new DirectionlLight(renderer);
     renderer->directionalLights.push_back(dirLight);
     return dirLight;
 }
 
 PointLight* BaseGame::CreatePointLight()
 {
-    PointLight* pointLight = new PointLight();
+    PointLight* pointLight = new PointLight(renderer);
     renderer->pointLights.push_back(pointLight);
     return pointLight;
 }
 
 SpotLight* BaseGame::CreateSpotLight()
 {
-    SpotLight* spotLight = new SpotLight();
+    SpotLight* spotLight = new SpotLight(renderer);
     renderer->spotLights.push_back(spotLight);
     return spotLight;
 }

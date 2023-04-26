@@ -20,7 +20,7 @@ public:
 	int widthTexture;
 	int currentAnim = 0;
 	Sprite();
-	Sprite(Texture* texture, Renderer* renderer);
+	Sprite(Texture* texture, Renderer* renderer, bool deleteExistingMaterial = true);
 	~Sprite();
 	void CreateVertexData() override;
 	void DeleteTextureAsociate();

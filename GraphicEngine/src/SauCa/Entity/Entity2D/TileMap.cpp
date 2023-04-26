@@ -124,7 +124,7 @@ bool TileMap::ImportTileMap(string filePath, string resPath) {
 			newTile.SetId(_id);
 			newTile.SetTexture(texture);
 			newTile.transform->SetLocalScale(glm::vec3(tileWidth, tileHeight, 1.0f));
-			newTile.material = renderer->GetMaterialTexture();
+			//newTile.material = renderer->GetMaterialTexture();
 			newTile.SetRenderer(renderer);
 			
 			newTile.SetTextureCoordinates(

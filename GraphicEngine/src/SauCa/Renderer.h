@@ -8,20 +8,26 @@
 #include "GameObjects/Component.h"
 #include "glm/glm/glm.hpp"
 #include "Light/DirectionlLight.h"
+#include "Light/PointLight.h"
+#include "Light/SpotLight.h"
 class Camera;
 
 static class SAUCA_API Renderer
 {
 private:
-	Material* defaultMaterialSolid;
-	Material* defaultMaterialTexture;
-	Material* defaultMaterialLight;
+	Shader* defaultShaderSkybox;
+	Shader* defaultShaderSolid;
+	Shader* defaultShaderTexture;
+	Shader* defaultShader;
 	
 	static std::list<Component*> renderList;
 	static std::list<Camera*> cameras;
 	
 public:
 	std::list<DirectionlLight*> directionalLights;
+	std::list<PointLight*> pointLights;
+	std::list<SpotLight*> spotLights;
+	
 	static void AddToRenderList(Component* component);
 	
 	Renderer();
@@ -33,7 +39,7 @@ public:
 	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha);
-
+	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material);
 	void BindGenBufferObject(unsigned int& buffer);
 	void UnBindGenBufferObject();
 	void GenBuffer(int amount, unsigned int& buffer);	
@@ -41,9 +47,11 @@ public:
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
 	
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO);
-	Material* GetMaterialLight() { return defaultMaterialLight; }
-	Material* GetMaterialTexture() { return defaultMaterialTexture; }
-	Material* GetMaterialSolid() { return defaultMaterialSolid; }
+
+	Shader* GetDefaultShaderSkybox() const { return defaultShaderSkybox; }
+	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }
+	Shader* GetDefaultShaderTexture() const { return defaultShaderTexture; }
+	Shader* GetDefaultShader() const { return defaultShader; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);

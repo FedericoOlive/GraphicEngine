@@ -4,9 +4,8 @@ Cube::Cube(Renderer* renderer)
 {
 	SetRenderer(renderer);
 	texture = nullptr;
+	material = new Material(renderer->GetDefaultShader(), false);
 	CreateVertexData();
-
-	material = renderer->GetMaterialSolid();    // Todo: agregar la posibilidad de meter otro material
 
 	isRenderizable = true;
 
@@ -203,9 +202,14 @@ void Cube::Draw()
 	}
 }
 
-void Cube::SetTexture(Texture* texture)
+void Cube::SetTexture(Texture* texture, bool deleteExitingMaterial, bool deleteExitingTexture)
 {
-	material = renderer->GetMaterialLight();
+	if (deleteExitingMaterial && material != nullptr)
+		delete material;
+	if (deleteExitingTexture && this->texture != nullptr)
+		delete this->texture;
+
+	material = new Material(renderer->GetDefaultShader(), true);
 	this->texture = texture;
 }
 
@@ -234,6 +238,7 @@ void Cube::DeleteTextureAsociate()
 		texture = nullptr;
 	}
 }
+
 void Cube::GenBufferEntity()
 {
 	GenBufferObject();
