@@ -187,11 +187,12 @@ void Renderer::Draw()
 {
     for (auto iter = renderList.begin(); iter != renderList.end(); ++iter)
     {
+        bool isRenderizable = (*iter)->IsRenderizable();
         bool isEnable = (*iter)->isEnable;
         bool isActive = (*iter)->gameobject->IsActive();
         bool isActiveInHierarch = (*iter)->gameobject->IsActiveInHierarch();
 
-        if (isEnable && isActive && isActiveInHierarch)
+        if (isRenderizable && isEnable && isActive && isActiveInHierarch)
             (*iter)->Draw();
     }
 }
