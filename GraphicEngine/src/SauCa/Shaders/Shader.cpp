@@ -4,8 +4,7 @@
 
 Shader::Shader()
 {
-    //std::cout << "Loading default Shader.\n";
-    //CreateShaderBySource(vertexShaderSource, fragmentShaderSource);
+	
 }
 
 void Shader::CreateShader(std::string vsPath, std::string fsPath)
@@ -42,6 +41,12 @@ void Shader::CreateShader(std::string vsPath, std::string fsPath)
     }
 	
     CreateShaderBySource(vertexCode, fragmentCode);
+}
+
+void Shader::CreateDefaultSkyboxShader()
+{
+    std::cout << "Loading default Skybox Shader.\n";
+    CreateShaderBySource(vertexShaderSkybox, fragmentShaderSkybox);
 }
 
 void Shader::CreateDefaultSolidShader()

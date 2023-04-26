@@ -15,6 +15,7 @@ class Camera;
 static class SAUCA_API Renderer
 {
 private:
+	Shader* defaultShaderSkybox;
 	Shader* defaultShaderSolid;
 	Shader* defaultShaderTexture;
 	Shader* defaultShader;
@@ -38,7 +39,7 @@ public:
 	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha);
-
+	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material);
 	void BindGenBufferObject(unsigned int& buffer);
 	void UnBindGenBufferObject();
 	void GenBuffer(int amount, unsigned int& buffer);	
@@ -47,6 +48,7 @@ public:
 	
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO);
 
+	Shader* GetDefaultShaderSkybox() const { return defaultShaderSkybox; }
 	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }
 	Shader* GetDefaultShaderTexture() const { return defaultShaderTexture; }
 	Shader* GetDefaultShader() const { return defaultShader; }
