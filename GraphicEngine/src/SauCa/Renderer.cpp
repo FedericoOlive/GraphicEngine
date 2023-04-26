@@ -62,24 +62,25 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     material->shader->setVec3("colorTint", material->colorTint);
     material->shader->setFloat("alpha", alpha);
 	
-    unsigned int locationTexture = glGetUniformLocation(shaderID, "ourTexture");
-    glUniform1f(locationTexture, (GLfloat)textureID);
+    material->shader->setUnsignedInt("ourTexture", textureID);
     
     // Basic
-    material->shader->setVec3("lightPos", { 0, 0, 0 });
+    //material->shader->setVec3("lightPos", { 0, 0, 0 });
     material->shader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
     // Both
     material->shader->setVec3("viewPos", cameras.front()->transform->GetWorldPosition());
 
-    // Multiple
-    material->shader->setInt("material.diffuse", 0);
-    material->shader->setInt("material.specular", 0);
-    material->shader->setFloat("material.shininess", 32);
-    material->shader->setVec3("material.colorTint", material->colorTint);
+    // Material
     material->shader->setBool("material.hasTexture", material->hasTexture);
+    material->shader->setUnsignedInt("material.texture", textureID);
+    material->shader->setVec3("material.ambient", material->ambient);
+    material->shader->setVec3("material.diffuse", material->diffuse);
+    material->shader->setVec3("material.specular", material->specular);
+    material->shader->setVec3("material.colorTint", material->colorTint);
+    material->shader->setFloat("material.shininess", material->shininess);
 
-    // Set lights
+    // Lights
     material->shader->setInt("dirLightAmount", directionalLights.size());
     material->shader->setInt("pointLightAmount", pointLights.size());
     material->shader->setInt("spotLightAmount", spotLights.size());

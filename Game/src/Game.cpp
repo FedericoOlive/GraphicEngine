@@ -134,7 +134,7 @@ void Game::Draw()
 }
 void Game::SetLights()
 {
-	//goLightDir01 = CreateGameObject("Dir Light 1");
+	goLightDir01 = CreateGameObject("Dir Light 1");
 	//goLightDir02 = CreateGameObject("Dir Light 2");
 	goLightPoint01 = CreateGameObject("Point Light 1");
 	goLightPoint02 = CreateGameObject("Point Light 2");
@@ -143,7 +143,7 @@ void Game::SetLights()
 	goLightSpot01 = CreateGameObject("Spot Light 1");
 	goLightSpot02 = CreateGameObject("Spot Light 2");
 
-	//lightDir1 = CreateDirectionalLight();
+	lightDir1 = CreateDirectionalLight();
 	//lightDir2 = CreateDirectionalLight();
 	lightPoint1 = CreatePointLight();
 	lightPoint2 = CreatePointLight();
@@ -152,7 +152,7 @@ void Game::SetLights()
 	lightSpot1 = CreateSpotLight();
 	lightSpot2 = CreateSpotLight();
 
-	//goLightDir01->AddComponent(lightDir1);
+	goLightDir01->AddComponent(lightDir1);
 	//goLightDir02->AddComponent(lightDir2);
 	goLightPoint01->AddComponent(lightPoint1);
 	goLightPoint02->AddComponent(lightPoint2);
@@ -162,7 +162,7 @@ void Game::SetLights()
 	goLightSpot02->AddComponent(lightSpot2);
 
 	float distance = 40;	
-	//goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
+	goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
 	//goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
 	//goLightDir02->transform->SetWorldRotation({ 0, 180, 0 });
 	goLightPoint01->transform->SetWorldPosition({ distance, 1, distance });

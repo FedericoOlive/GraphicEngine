@@ -7,4 +7,7 @@ Material::Material(Shader* newShader, bool hasTexture)
 	this->hasTexture = hasTexture;
 }
 
-Material::~Material() { }
+Material::~Material()
+{
+	
+}
