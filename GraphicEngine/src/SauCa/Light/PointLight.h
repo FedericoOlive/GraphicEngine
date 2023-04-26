@@ -9,8 +9,7 @@ public:
 	float linear;
 	float quadratic;
 	
-	PointLight();
-	void OnAsigned() override;
+	PointLight(Renderer* renderer);
 };
 
 #endif

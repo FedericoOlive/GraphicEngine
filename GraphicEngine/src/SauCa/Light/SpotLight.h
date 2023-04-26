@@ -11,8 +11,7 @@ public:
 	float cutOff;
 	float outerCutOff;
 	
-	SpotLight();
-	void OnAsigned() override;
+	SpotLight(Renderer* renderer);
 };
 
 #endif

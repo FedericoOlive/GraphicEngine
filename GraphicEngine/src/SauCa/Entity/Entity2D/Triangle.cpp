@@ -1,6 +1,6 @@
 #include "Triangle.h"
 
-Triangle::Triangle(Renderer* renderer)
+Triangle::Triangle(Renderer* renderer, bool setAsIcon)
 {
 	material = new Material(renderer->GetDefaultShader(), false);
 	SetRenderer(renderer);
@@ -29,8 +29,8 @@ void Triangle::CreateVertexData()
 	vertexData->sizeColor = 9;
 	vertexData->colors = new float[vertexData->sizeColor]{
 		1.0f, 0.0f, 0.0f,		// bottom right
-		1.0f, 0.0f, 0.0f,		// bottom left
-		1.0f, 0.0f, 0.0f		// top 
+		0.0f, 0.0f, 1.0f,		// bottom left
+		1.0f, 1.0f, 1.0f		// top 
 	};
 
 	vertexData->sizeNormals = 9;
