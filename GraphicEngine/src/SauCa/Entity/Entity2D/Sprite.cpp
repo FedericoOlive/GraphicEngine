@@ -31,7 +31,7 @@ Sprite::~Sprite()
         delete animations.back();
         animations.pop_back();
     }
-    renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->COL, vertexData->LVAO, vertexData->UVB, vertexData->EBO);
+    renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->CBO, vertexData->NBO, vertexData->UVB, vertexData->EBO);
 }
 
 void Sprite::CreateVertexData()

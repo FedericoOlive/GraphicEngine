@@ -58,7 +58,7 @@ public:
 	Skybox(Renderer* renderer, std::vector<std::string> faces);
 	~Skybox();
 	unsigned int LoadCubemap(std::vector<std::string> faces);
-	void Draw(Camera* camera);
+	void Draw(std::list<Camera*> cameras);
 };
 
 #endif

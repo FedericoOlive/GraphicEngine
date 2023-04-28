@@ -12,6 +12,7 @@ public:
 	enum CameraType { Perspective, Orthogonal };
 	float aspect;
 	bool autoAddGameObjects = true;
+	bool isDrawSkybox = true;
 	std::list<Component*> renderList;
 	
 	glm::vec2 viewportPosition;

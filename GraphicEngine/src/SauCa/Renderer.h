@@ -21,9 +21,9 @@ private:
 	Shader* defaultShader;
 	
 	static std::list<Component*> renderList;
-	static std::list<Camera*> cameras;
 	
 public:
+	static std::list<Camera*> cameras;
 	std::list<DirectionlLight*> directionalLights;
 	std::list<PointLight*> pointLights;
 	std::list<SpotLight*> spotLights;
@@ -39,14 +39,14 @@ public:
 	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
-	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, Camera* camera);
+	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras);
 	void BindGenBufferObject(unsigned int& buffer);
 	void UnBindGenBufferObject();
 	void GenBuffer(int amount, unsigned int& buffer);	
 	void BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore);
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
 	
-	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO);
+	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& CBO, unsigned int& NBO, unsigned int& UVB, unsigned int& EBO);
 
 	Shader* GetDefaultShaderSkybox() const { return defaultShaderSkybox; }
 	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }

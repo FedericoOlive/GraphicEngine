@@ -22,9 +22,9 @@ Skybox::~Skybox()
 }
 
 
-void Skybox::Draw(Camera* camera)
+void Skybox::Draw(std::list<Camera*> cameras)
 {
-    renderer->DrawCubemap(VAO, cubemapTexture, material, camera);
+    renderer->DrawCubemap(VAO, cubemapTexture, material, cameras);
 }
 
 unsigned int Skybox::LoadCubemap(std::vector<std::string> faces)

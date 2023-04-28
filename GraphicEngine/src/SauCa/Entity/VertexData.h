@@ -15,13 +15,13 @@ public:
 	int sizeVertices;
 	float* vertices;
 	
-	unsigned int COL;
+	unsigned int CBO;
 	const int atribColor = 1;
 	const int atribColorSize = 3;
 	int sizeColor;
 	float* colors;
 	
-	unsigned int LVAO;
+	unsigned int NBO;
 	const int atribNormal = 2;
 	const int atribNormalSize = 3;
 	int sizeNormals;

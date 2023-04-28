@@ -122,17 +122,6 @@ void Game::Inputs()
 void Game::Update()
 {
 	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{0,5,0});
-	return;
-	glm::vec3 pos = player->transform->GetWorldPosition();
-	glm::vec3 forward = player->transform->forward();
-
-	Transform t = *player->transform;
-	cout << "----------------------------------------------------------\n";
-	//cout << "MiniGoku Rotation: {" << t.GetWorldRotation().x << ", " << t.GetWorldRotation().y << ", " << t.GetWorldRotation().z << "}\n";
-	//cout << "Player Position: {" << t.GetWorldPosition().x << ", " << t.GetWorldPosition().y << ", " << t.GetWorldPosition().z << "}\n";
-	//t = *miniGoku2->transform;
-	cout << "MiniGoku2 Position: {" << t.GetWorldPosition().x << ", " << t.GetWorldPosition().y << ", " << t.GetWorldPosition().z << "}\n";
-	cout << "MiniGoku2 Rotation: {" << t.GetWorldRotation().x << ", " << t.GetWorldRotation().y << ", " << t.GetWorldRotation().z << "}\n";
 }
 
 void Game::Draw()
@@ -176,10 +165,10 @@ void Game::SetLights()
 	goLightPoint02->transform->SetWorldPosition({ distance, 1, -distance });
 	goLightPoint03->transform->SetWorldPosition({ -distance, 1, distance });
 	goLightPoint04->transform->SetWorldPosition({ -distance, 1, -distance });
-	goLightSpot01->transform->SetWorldPosition({ distance/2, 5, 0 });
-	goLightSpot02->transform->SetWorldPosition({ -distance/2, 5, 0 });
+	goLightSpot01->transform->SetWorldPosition({ distance / 2, 5, 0 });
+	goLightSpot02->transform->SetWorldPosition({ -distance / 2, 5, 0 });
 
-	lightDir1->lightColor = { 1,0,0 };
+	lightDir1->lightColor = { 1, 1, 1 };
 	
 	lightSpot1->transform->SetWorldRotation({ 0, 0, 90 });
 	lightSpot2->transform->SetWorldRotation({ 0, 0, -90 });

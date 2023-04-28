@@ -156,25 +156,35 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, Camera* camera)
+void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras)
 {
-    glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = camera->viewMatrix;
-    glm::mat4 projection = camera->projectionMatrix;
-	
-    // draw skybox as last
-    glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-    material->shader->Use();
-    view = glm::mat4(glm::mat3(camera->viewMatrix)); // remove translation from the view matrix
-    material->shader->setMat4("view", view);
-    material->shader->setMat4("projection", projection);
-    // skybox cube
-    glBindVertexArray(VAO);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-    glDrawArrays(GL_TRIANGLES, 0, 36);
-    glBindVertexArray(0);
-    glDepthFunc(GL_LESS); // set depth function back to default
+    for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
+    {
+        if ((*iterCamera)->isEnable && (*iterCamera)->gameobject->IsActive() && (*iterCamera)->gameobject->IsActiveInHierarch())
+        {
+            if ((*iterCamera)->isDrawSkybox)
+            {
+                (*iterCamera)->BeginDraw();
+                glm::mat4 model = glm::mat4(1.0f);
+                glm::mat4 view = (*iterCamera)->viewMatrix;
+                glm::mat4 projection = (*iterCamera)->projectionMatrix;
+
+                // draw skybox as last
+                glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+                material->shader->Use();
+                view = glm::mat4(glm::mat3((*iterCamera)->viewMatrix)); // remove translation from the view matrix
+                material->shader->setMat4("view", view);
+                material->shader->setMat4("projection", projection);
+                // skybox cube
+                glBindVertexArray(VAO);
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+                glDrawArrays(GL_TRIANGLES, 0, 36);
+                glBindVertexArray(0);
+                glDepthFunc(GL_LESS); // set depth function back to default
+            }
+        }
+    }
 }
 
 void Renderer::Clear(GLbitfield field)
@@ -225,7 +235,6 @@ void Renderer::GenBuffer(int amount, unsigned int& buffer)
 
 void Renderer::BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore)
 {
-	// Enlazar objeto de búfer de vértices para posición de vértices
     glEnableVertexAttribArray(atribPointer);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glBufferData(GL_ARRAY_BUFFER, size * sizeof(float), arrayData, (modeDataStore == 0) ? GL_STATIC_DRAW : GL_DYNAMIC_DRAW);
@@ -238,12 +247,12 @@ void Renderer::BindIndex(unsigned int buffer, int size, int* arrayData)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(int), arrayData, GL_STATIC_DRAW);
 }
 
-void Renderer::UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& COL, unsigned int& LVAO, unsigned int& UVB, unsigned int& EBO)
+void Renderer::UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& CBO, unsigned int& NBO, unsigned int& UVB, unsigned int& EBO)
 {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &COL);
-    glDeleteBuffers(1, &LVAO);
+    glDeleteBuffers(1, &CBO);
+    glDeleteBuffers(1, &NBO);
     glDeleteBuffers(1, &UVB);
     glDeleteBuffers(1, &EBO);
 }
