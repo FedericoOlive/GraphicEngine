@@ -31,12 +31,19 @@ void Game::Initialize()
 	cameraPivot->transform->SetLocalPosition({ 0, 1, 0 });
 	cameraPivot->transform->SetParent(player);
 
-	camera = CreateGameObject("Camera");
+	camera = CreateGameObject("Camera Gameplay");
 	camera->transform->SetParent(cameraPivot);
 	camera->transform->SetLocalPosition({ 0, 0, 5 });
 
-	Camera* cam = CreateCamera();
+	Camera* cam = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
 	camera->AddComponent(cam);
+
+	cameraMinimapGo = CreateGameObject("Camera miniMap");
+	cameraMinimapGo->transform->SetWorldPosition({ -100, 10, 100 });
+	cameraMinimapGo->transform->SetWorldRotation({ -90, 0, 0 });
+	cameraMinimap = CreateCamera({ 0, 720- 200 }, { 200, 200 }, Camera::Orthogonal, true);
+	cameraMinimapGo->AddComponent(cameraMinimap);
+	//cameraMinimap->renderList.push_back(floorSprite);
 
 	CharacterController* movementPlayer = new CharacterController();
 	movementPlayer->RemoveRotation(false, true);
@@ -171,6 +178,8 @@ void Game::SetLights()
 	goLightPoint04->transform->SetWorldPosition({ -distance, 1, -distance });
 	goLightSpot01->transform->SetWorldPosition({ distance/2, 5, 0 });
 	goLightSpot02->transform->SetWorldPosition({ -distance/2, 5, 0 });
+
+	lightDir1->lightColor = { 1,0,0 };
 	
 	lightSpot1->transform->SetWorldRotation({ 0, 0, 90 });
 	lightSpot2->transform->SetWorldRotation({ 0, 0, -90 });
@@ -187,7 +196,8 @@ void Game::SetEnviroment()
 	worldContent->transform->SetLocalRotation({ 0, 0, 0 });
 
 	floor = CreateGameObject("Floor");
-	floor->AddComponent(CreateSprite(new Texture("res/Layer2.png")));
+	floorSprite = CreateSprite(new Texture("res/Layer2.png"));
+	floor->AddComponent(floorSprite);
 	floor->transform->SetLocalPosition({ 0, 0, 0 });
 	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	floor->transform->SetLocalRotation({ 90, 180, 0 });

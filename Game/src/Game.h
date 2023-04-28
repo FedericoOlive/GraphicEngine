@@ -10,6 +10,7 @@ private:
 	
 	GameObject* worldContent = nullptr;
 	GameObject* floor = nullptr;
+	Sprite* floorSprite = nullptr;
 	GameObject* wallRight = nullptr;
 	GameObject* wallLeft = nullptr;
 	GameObject* wallBack = nullptr;
@@ -49,7 +50,8 @@ private:
 	SpotLight* lightSpot1 = nullptr;
 	SpotLight* lightSpot2 = nullptr;
 
-	
+	GameObject* cameraMinimapGo = nullptr;
+	Camera* cameraMinimap;
 
 public:
 	void Initialize()override;

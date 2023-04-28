@@ -62,7 +62,7 @@ public:
 	Cube* CreateCube();
 	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
 	GameObject* CreateGameObject(string name = "");
-	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective);
+	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective, bool autoAddGameObjects = true);
 	
 
 	// Lights
@@ -73,7 +73,7 @@ public:
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);
 	void UpdateCollisions(TileMap* tileMap);
-
+	
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
 	void ShowHierarchyInConsole() const;

@@ -7,11 +7,6 @@ using namespace std;
 std::list<Component*> Renderer::renderList;
 std::list<Camera*> Renderer::cameras;
 
-void Renderer::AddToRenderList(Component* component)
-{
-    renderList.push_back(component);
-}
-
 Renderer::Renderer()
 {
 
@@ -49,7 +44,6 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     const int maxDirLights = 4;
     const int maxPointLights = 4;
     const int maxSpotLights = 4;
-    // Todo: Agregar layers para distintas cámaras
 
 	material->shader->Use();
     int shaderID = material->shader->ID;
@@ -66,7 +60,6 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     
     // Basic
     //material->shader->setVec3("lightPos", { 0, 0, 0 });
-    material->shader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
     // Both
     material->shader->setVec3("viewPos", camera->transform->GetWorldPosition());
@@ -93,6 +86,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             string dirLightString = "dirLights[" + to_string(i) + "].";
 
             material->shader->setVec3(dirLightString + "direction", (*dirLight)->transform->forward());
+            material->shader->setVec3(dirLightString + "lightColor", (*dirLight)->lightColor);
             material->shader->setVec3(dirLightString + "ambient", (*dirLight)->ambient);
             material->shader->setVec3(dirLightString + "diffuse", (*dirLight)->diffuse);
             material->shader->setVec3(dirLightString + "specular", (*dirLight)->specular);
@@ -111,6 +105,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             string pointLightString = "pointLights[" + to_string(i) + "].";
 
             material->shader->setVec3(pointLightString + "position", (*pointLight)->transform->GetWorldPosition());
+            material->shader->setVec3(pointLightString + "lightColor", (*pointLight)->lightColor);
             material->shader->setVec3(pointLightString + "ambient", (*pointLight)->ambient);
             material->shader->setVec3(pointLightString + "diffuse", (*pointLight)->diffuse);
             material->shader->setVec3(pointLightString + "specular", (*pointLight)->specular);
@@ -133,6 +128,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
 
             material->shader->setVec3(spotLightString + "position", (*spotLight)->transform->GetWorldPosition());
             material->shader->setVec3(spotLightString + "direction", (*spotLight)->transform->forward());
+            material->shader->setVec3(spotLightString + "lightColor", (*spotLight)->lightColor);
             material->shader->setVec3(spotLightString + "ambient", (*spotLight)->ambient);
             material->shader->setVec3(spotLightString + "diffuse", (*spotLight)->diffuse);
             material->shader->setVec3(spotLightString + "specular", (*spotLight)->specular);
@@ -191,7 +187,8 @@ void Renderer::Draw()
 {
     for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
     {
-        for (auto iterComponent = renderList.begin(); iterComponent != renderList.end(); ++iterComponent)
+        (*iterCamera)->BeginDraw();
+        for (auto iterComponent = (*iterCamera)->renderList.begin(); iterComponent != (*iterCamera)->renderList.end(); ++iterComponent)
         {
             bool isRenderizable = (*iterComponent)->IsRenderizable();
             bool isEnable = (*iterComponent)->isEnable;
@@ -257,6 +254,28 @@ void Renderer::BindTextures(unsigned int& texture)
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
+void Renderer::AddCamera(Camera* cam)
+{
+    cameras.push_back(cam);
+
+    if (cam->autoAddGameObjects)
+    {
+        for (auto iter = renderList.begin(); iter != renderList.end(); ++iter)
+        {
+            cam->renderList.push_back((*iter));
+        }
+    }
+}
+
+void Renderer::AddToRenderList(Component* component)
+{
+    renderList.push_back(component);
+
+    for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
+        if ((*iter)->autoAddGameObjects)
+            (*iter)->renderList.push_back(component);
+}
+
 void Renderer::RemoveCamera(Camera* cam)
 {
     for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
@@ -267,9 +286,4 @@ void Renderer::RemoveCamera(Camera* cam)
             break;
         }
     }
-}
-
-void Renderer::AddCamera(Camera* cam)
-{
-    cameras.push_back(cam);
 }

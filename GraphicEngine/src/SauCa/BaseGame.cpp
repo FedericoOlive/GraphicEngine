@@ -12,7 +12,7 @@ void BaseGame::BeforeDraw()
 
 void BaseGame::Draw()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //if (skybox != nullptr)
     //    skybox->Draw();
     renderer->Draw();
@@ -154,10 +154,11 @@ GameObject* BaseGame::CreateGameObject(string name)
     return gameObject;
 }
 
-Camera* BaseGame::CreateCamera(glm::vec2 viewportPosition, glm::vec2 viewportSize, Camera::CameraType cameraType)
+Camera* BaseGame::CreateCamera(glm::vec2 viewportPosition, glm::vec2 viewportSize, Camera::CameraType cameraType, bool autoAddGameObjects)
 {
     Camera* camera = new Camera(viewportPosition, viewportSize, cameraType);
-    renderer->AddCamera(camera);
+    camera->autoAddGameObjects = autoAddGameObjects;
+    renderer->AddCamera(camera);	
     return camera;
 }
 
