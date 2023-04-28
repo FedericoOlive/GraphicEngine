@@ -2,11 +2,27 @@
 #include "Renderer.h"
 #include "GameObjects/GameObject.h"
 
-Camera::Camera(int width, int height)
+Camera::Camera(glm::vec2 viewportPosition, glm::vec2 viewportSize, CameraType cameraType)
 {
+	aspect = viewportSize.x / viewportSize.y;
+	this->viewportPosition = viewportPosition;
+	this->viewportSize = viewportSize;
+	//glViewport((GLint)viewportPosition.x, (GLint)viewportPosition.y, (GLint)viewportSize.x, (GLint)viewportSize.y);
+	
+	switch (cameraType)
+	{
+	case Perspective:
+		SetCameraPerspective();
+		break;
+	case Orthogonal:
+		SetCameraOrthogonal();
+		break;
+	default:
+		SetCameraPerspective();
+		break;
+	}
 	name = "Camera";
-	aspect = (float)width / (float)height;
-	SetCameraPerspective();
+
 	Renderer::AddCamera(this);
 }
 

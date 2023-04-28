@@ -62,8 +62,8 @@ public:
 	Cube* CreateCube();
 	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
 	GameObject* CreateGameObject(string name = "");
+	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective);
 	
-	void SetMaterial(Material* material);
 
 	// Lights
 	DirectionlLight* CreateDirectionalLight();

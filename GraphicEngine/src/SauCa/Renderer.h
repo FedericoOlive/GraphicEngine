@@ -38,8 +38,8 @@ public:
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
 	
-	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha);
-	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material);
+	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
+	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, Camera* camera);
 	void BindGenBufferObject(unsigned int& buffer);
 	void UnBindGenBufferObject();
 	void GenBuffer(int amount, unsigned int& buffer);	

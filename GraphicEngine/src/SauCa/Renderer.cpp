@@ -44,7 +44,7 @@ void Renderer::CreateRenderer()
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha)
+void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera)
 {
     const int maxDirLights = 4;
     const int maxPointLights = 4;
@@ -53,8 +53,8 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
 
 	material->shader->Use();
     int shaderID = material->shader->ID;
-    glm::mat4 viewMatrix = cameras.front()->viewMatrix;
-    glm::mat4 projectionMatrix = cameras.front()->projectionMatrix;
+    glm::mat4 viewMatrix = camera->viewMatrix;
+    glm::mat4 projectionMatrix = camera->projectionMatrix;
 	
     material->shader->setMat4("projectionMatrix", projectionMatrix);
     material->shader->setMat4("viewMatrix", viewMatrix);
@@ -69,7 +69,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     material->shader->setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
     // Both
-    material->shader->setVec3("viewPos", cameras.front()->transform->GetWorldPosition());
+    material->shader->setVec3("viewPos", camera->transform->GetWorldPosition());
 
     // Material
     material->shader->setBool("material.hasTexture", material->hasTexture);
@@ -160,16 +160,16 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material)
+void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, Camera* camera)
 {
     glm::mat4 model = glm::mat4(1.0f);
-    glm::mat4 view = cameras.front()->viewMatrix;
-    glm::mat4 projection = cameras.front()->projectionMatrix;
+    glm::mat4 view = camera->viewMatrix;
+    glm::mat4 projection = camera->projectionMatrix;
 	
     // draw skybox as last
     glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
     material->shader->Use();
-    view = glm::mat4(glm::mat3(cameras.front()->viewMatrix)); // remove translation from the view matrix
+    view = glm::mat4(glm::mat3(camera->viewMatrix)); // remove translation from the view matrix
     material->shader->setMat4("view", view);
     material->shader->setMat4("projection", projection);
     // skybox cube
@@ -189,15 +189,18 @@ void Renderer::Clear(GLbitfield field)
 
 void Renderer::Draw()
 {
-    for (auto iter = renderList.begin(); iter != renderList.end(); ++iter)
+    for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
     {
-        bool isRenderizable = (*iter)->IsRenderizable();
-        bool isEnable = (*iter)->isEnable;
-        bool isActive = (*iter)->gameobject->IsActive();
-        bool isActiveInHierarch = (*iter)->gameobject->IsActiveInHierarch();
+        for (auto iterComponent = renderList.begin(); iterComponent != renderList.end(); ++iterComponent)
+        {
+            bool isRenderizable = (*iterComponent)->IsRenderizable();
+            bool isEnable = (*iterComponent)->isEnable;
+            bool isActive = (*iterComponent)->gameobject->IsActive();
+            bool isActiveInHierarch = (*iterComponent)->gameobject->IsActiveInHierarch();
 
-        if (isRenderizable && isEnable && isActive && isActiveInHierarch)
-            (*iter)->Draw();
+            if (isRenderizable && isEnable && isActive && isActiveInHierarch)
+                (*iterComponent)->Draw((*iterCamera));
+        }
     }
 }
 

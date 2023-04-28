@@ -50,9 +50,9 @@ void Triangle::CreateVertexData()
 	};
 }
 
-void Triangle::Draw()
+void Triangle::Draw(Camera* camera)
 {
-	renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha);
+	renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha, camera);
 }
 
 void Triangle::GenBufferEntity()

@@ -7,6 +7,7 @@
 class Transform;
 class GameObject;
 class BaseGame;
+class Camera;
 
 class SAUCA_API Component
 {
@@ -22,7 +23,7 @@ public:
 	
 	Component(bool isRenderizable = false);
 	virtual ~Component() {} // Destructor virtual
-	virtual void Draw(){}
+	virtual void Draw(Camera* camera){}
 	virtual void Update();
 	virtual void Input();
 	virtual void OnAsigned();

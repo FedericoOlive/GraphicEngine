@@ -80,7 +80,7 @@ void Sprite::CreateVertexData()
     };
 }
 
-void Sprite::Draw()
+void Sprite::Draw(Camera* camera)
 {
     if (hasAnimation)
     {
@@ -97,11 +97,11 @@ void Sprite::Draw()
     if (texture)
     {
         renderer->BindTextures(texture->texture);
-        renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), texture->texture, material, alpha);
+        renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), texture->texture, material, alpha, camera);
     }
     else
     {
-        renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha);
+        renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha, camera);
     }
 }
 

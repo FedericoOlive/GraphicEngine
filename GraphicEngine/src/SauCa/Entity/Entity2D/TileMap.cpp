@@ -74,7 +74,7 @@ void TileMap::Draw()
 				{
 					glm::vec3 pos = glm::vec3(mapWidth + (tileWidth * x), mapHeight - (tileHeight * y), 0);
 					//tileMapGrid[i][y][x].SetPosition(pos);
-					tileMapGrid[i][y][x].Draw();
+					//tileMapGrid[i][y][x].Draw();
 				}
 			}
 		}

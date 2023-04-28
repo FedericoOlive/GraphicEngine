@@ -35,7 +35,7 @@ void Game::Initialize()
 	camera->transform->SetParent(cameraPivot);
 	camera->transform->SetLocalPosition({ 0, 0, 5 });
 
-	Camera* cam = new Camera(1280, 720);
+	Camera* cam = CreateCamera();
 	camera->AddComponent(cam);
 
 	CharacterController* movementPlayer = new CharacterController();

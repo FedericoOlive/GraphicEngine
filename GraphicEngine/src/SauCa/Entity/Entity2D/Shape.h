@@ -8,7 +8,7 @@ class SAUCA_API Shape : public Entity2D
 
 public:
 	Shape();
-	void Draw() override;
+	void Draw(Camera* camera) override;
 protected:
 	
 };

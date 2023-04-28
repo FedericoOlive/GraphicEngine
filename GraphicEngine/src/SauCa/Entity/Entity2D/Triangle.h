@@ -8,7 +8,7 @@ public:
 	Triangle(Renderer* renderer, bool setAsIcon = false);
 	~Triangle();
 	void CreateVertexData() override;
-	void Draw() override;
+	void Draw(Camera* camera) override;
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
 };
