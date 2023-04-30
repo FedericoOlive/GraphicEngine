@@ -9,9 +9,10 @@ class SAUCA_API Window
 {
 private:
 	std::string windowBaseName;
+	static bool isLocked;
 public:
 	static GLFWwindow* window;
-
+	
 	static float Screen_Width;
 	static float Screen_Height;
 
@@ -27,7 +28,8 @@ public:
 	void TerminateLibrary();
 	void PollEvents();
 	GLFWwindow* GetWindow();
-	void LockCursor(bool enable);
+	static void LockCursor(bool enable);
+	static bool IsLockedCursor() { return isLocked; }
 };
 
 #endif

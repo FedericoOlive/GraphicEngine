@@ -27,9 +27,11 @@ protected:
 	glm::vec2 mouseSensitive = { 0.50f, 0.50f };
 	GameObject* target;
 
+public:
 	float maxVerticalAngle = 45;
 	float minVerticalAngle = -45;
-public:
+	bool lockDirectionByLockCursor = true;
+	
 	CharacterController();
 	~CharacterController() override;
 	void BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed);

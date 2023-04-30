@@ -3,6 +3,7 @@
 
 float Window::Screen_Width = 1280;
 float Window::Screen_Height = 720;
+bool Window::isLocked = false;
 GLFWwindow* Window::window = nullptr;
 
 Window::Window()
@@ -75,6 +76,7 @@ GLFWwindow* Window::GetWindow()
 
 void Window::LockCursor(bool enable)
 {
+    isLocked = enable;
     if (enable)
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     else

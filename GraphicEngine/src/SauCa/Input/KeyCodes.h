@@ -1,6 +1,13 @@
 #pragma once
 #include <glfw3.h>
 
+enum class MouseCode
+{
+	MouseLeft = GLFW_MOUSE_BUTTON_1,
+	MouseRight = GLFW_MOUSE_BUTTON_2,
+	MoudeMiddle = GLFW_MOUSE_BUTTON_3
+};
+
 enum class KeyCode
 {
 	None = -1,

@@ -19,6 +19,23 @@ CharacterController::~CharacterController()
 
 void CharacterController::OnMouseMove(double x, double y)
 {
+	if (lockDirectionByLockCursor)
+	{
+		if (!Input::IsMouseButtonHolding(MouseCode::MouseRight))
+		{
+			if (Window::IsLockedCursor())
+			{
+				Window::LockCursor(false);
+			}
+			return;
+		}
+
+		if (!Window::IsLockedCursor())
+		{
+			Window::LockCursor(true);
+		}
+	}
+	
 	glm::vec3 newRot = transform->GetLocalRotation();
 
 	if (rotateX)
@@ -92,7 +109,7 @@ void CharacterController::Input()
 {
 	if (transform == nullptr)
 		return;
-
+	
 	direction = { 0.0f, 0.0f, 0.0f };
 	bool hasMoved = false;
 
