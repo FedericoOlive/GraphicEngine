@@ -1,10 +1,10 @@
 #include "Input.h"
-
 #include <iostream>
+
 glm::vec2 Input::mousePos = { 0.0, 0.0 };
 Event<double, double> Input::OnMouseMove;
 Event<double, double> Input::OnMouseScrollMove;
-std::list<KeyState> Input::currentKeysDown;
+std::list<KeyCode> Input::currentKeysDown;
 
 void MouseCallback(GLFWwindow* window, double xposIn, double yposIn)
 {
@@ -26,29 +26,17 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 	switch (action)
 	{
 	case GLFW_RELEASE:
-		for (auto iter = Input::currentKeysDown.begin(); iter != Input::currentKeysDown.end(); ++iter)
-		{
-			if ((*iter).keyCode == (KeyCode)key)
-			{
-				Input::currentKeysDown.erase(iter);
-				break;
-			}
-		}
+		Input::currentKeysDown.remove((KeyCode)key);
+		//std::cout << "Key Down: " << key << " State: RELEASE \n";
 		break;
 		
 	case GLFW_PRESS:
-		Input::currentKeysDown.push_back({ (KeyCode)key, false });
-		//std::cout << "Key Down: " << (int)key << " State: " << false << "\n";
+		Input::currentKeysDown.push_back((KeyCode)key);
+		//std::cout << "Key Down: " << key << " State: PRESS \n";
 		break;
 		
 	case GLFW_REPEAT:
-		for (auto iter = Input::currentKeysDown.begin(); iter != Input::currentKeysDown.end(); ++iter)
-		{
-			if ((*iter).keyCode == (KeyCode)key && !((*iter).isHolding))
-				(*iter).isHolding = true;
-			
-			//std::cout << "Key Hold: " << (int)((*iter).keyCode) << " State: " << (*iter).isHolding << "\n";
-		}
+		Input::currentKeysDown.remove((KeyCode)key);
 		break;
 		
 	default:
@@ -70,33 +58,33 @@ void Input::InitInput(Window* window)
 	glfwSetScrollCallback(window->GetWindow(), ScrollCallback);
 }
 
-bool Input::IsKeyUp(KeyCode keycode)
+bool Input::IsKeyUp(KeyCode keyCode)
 {
-	int aux = glfwGetKey(Window::window, (int)keycode);
-	return aux == GLFW_RELEASE;
+	int state = glfwGetKey(Window::window, (int)keyCode);
+	return state == GLFW_RELEASE;
 }
 
-bool Input::IsKeyDown(KeyCode keycode)
+bool Input::IsKeyDown(KeyCode keyCode)
 {
-	if (!currentKeysDown.empty())
-		for (auto iter = currentKeysDown.begin(); iter != currentKeysDown.end(); ++iter)
-			if ((*iter).keyCode == keycode)
-				return !(*iter).isHolding;
-	
+	int state = glfwGetKey(Window::window, (int)keyCode);
+	if (state == GLFW_PRESS)
+	{
+		if (std::find(currentKeysDown.begin(), currentKeysDown.end(), keyCode) != currentKeysDown.end())
+		{
+			currentKeysDown.remove(keyCode);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	return false;
 }
 
-bool Input::IsKeyHolding(KeyCode keycode)
+bool Input::IsKeyHolding(KeyCode keyCode)
 {
-	if (!currentKeysDown.empty())
-		for (auto iter = currentKeysDown.begin(); iter != currentKeysDown.end(); ++iter)
-			if ((*iter).keyCode == keycode)
-				return true;
-
-	return false;
-}
-
-KeyState Input::GetKey()
-{
-	return currentKeysDown.back();
+	int state = glfwGetKey(Window::window, (int)keyCode);
+	return state == GLFW_PRESS;
 }

@@ -18,7 +18,7 @@ public:
 	static Event<double, double> OnMouseMove;
 	static Event<double, double> OnMouseScrollMove;
 	
-	static std::list<KeyState> currentKeysDown;
+	static std::list<KeyCode> currentKeysDown;
 	static glm::vec2 mousePos;
 
 	Input();
@@ -28,7 +28,6 @@ public:
 	static bool IsKeyUp(KeyCode keyCode);
 	static bool IsKeyDown(KeyCode keyCode);
 	static bool IsKeyHolding(KeyCode keyCode);
-	KeyState GetKey();
 };
 
 #endif

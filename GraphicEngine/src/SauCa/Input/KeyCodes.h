@@ -128,9 +128,3 @@ enum class KeyCode
 	RightSuper = GLFW_KEY_RIGHT_SUPER,
 	Menu = GLFW_KEY_MENU
 };
-
-struct KeyState
-{
-	KeyCode keyCode;
-	bool isHolding = false;
-};
