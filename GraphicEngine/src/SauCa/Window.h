@@ -8,9 +8,9 @@
 class SAUCA_API Window
 {
 private:
-	GLFWwindow* window;
 	std::string windowBaseName;
 public:
+	static GLFWwindow* window;
 
 	static float Screen_Width;
 	static float Screen_Height;

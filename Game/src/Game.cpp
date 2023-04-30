@@ -111,7 +111,7 @@ void Game::Inputs()
 	{
 		target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply));
 	}
-	if (IsKeyPressed(KeyCode::H)) { ShowHierarchyInConsole(); }
+	if (IsKeyDown(KeyCode::H)) { ShowHierarchyInConsole(); }
 
 	
 	//cout << "----------------------------- " << target->gameObject->name << " -----------------------------\n";

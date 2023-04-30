@@ -50,6 +50,8 @@ void CharacterController::RemoveRotation(bool xAxis, bool yAxis)
 	rotateY = yAxis;
 }
 
+
+
 void CharacterController::BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed)
 {
 	this->forward = forward;
@@ -91,30 +93,36 @@ void CharacterController::Input()
 	if (transform == nullptr)
 		return;
 
-	glm::vec3 direction = { 0.0f, 0.0f, 0.0f };
+	direction = { 0.0f, 0.0f, 0.0f };
 	bool hasMoved = false;
-	if (Input::IsKeyDown(forward))
+
+	bool isGoingForward = Input::IsKeyHolding(forward);
+	bool isGoingBack = Input::IsKeyHolding(back);
+	bool isGoingRight = Input::IsKeyHolding(right);
+	bool isGoingLeft = Input::IsKeyHolding(left);
+		
+	if (isGoingForward && !isGoingBack)
 	{
 		hasMoved = true;
-		direction = transform->forward() * speedForward;
+		direction += transform->forward() * speedForward;
 	}
-	if (Input::IsKeyDown(left))
+	if (isGoingBack && !isGoingForward)
 	{
 		hasMoved = true;
-		direction = -transform->right() * speedLeft;
+		direction += -transform->forward() * speedBack;
 	}
-	if (Input::IsKeyDown(back))
+	if (isGoingRight && !isGoingLeft)
 	{
 		hasMoved = true;
-		direction = -transform->forward() * speedBack;
+		direction += transform->right() * speedRight;
 	}
-	if (Input::IsKeyDown(right))
+	if (isGoingLeft && !isGoingRight)
 	{
 		hasMoved = true;
-		direction = transform->right() * speedRight;
+		direction += -transform->right() * speedLeft;
 	}
 
-	//direction.y = 0.0f;
+	direction = glm::normalize(direction);
 
 	if (hasMoved)
 		transform->SetLocalPosition(transform->GetLocalPosition() + direction);

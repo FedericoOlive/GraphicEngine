@@ -1,34 +1,34 @@
 #ifndef INPUT_H
 #define INPUT_H
+#include <list>
 #include <glm/glm/vec2.hpp>
 
 #include "Exports.h"
 #include "KeyCodes.h"
 #include "Window.h"
 #include "Utility/Event.h"
+
+void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 class SAUCA_API Input
 {
-private:
-	Window* window;
-
 public:
 	static Event<double, double> OnMouseMove;
 	static Event<double, double> OnMouseScrollMove;
 	
-	static int key;
-	static int action;
+	static std::list<KeyState> currentKeysDown;
 	static glm::vec2 mousePos;
 
 	Input();
 	~Input();
 
-	void InitInput(Window* _window);
-	static bool IsKeyReleased(KeyCode keyCode);
+	void InitInput(Window* window);
+	static bool IsKeyUp(KeyCode keyCode);
 	static bool IsKeyDown(KeyCode keyCode);
-	static bool IsKeyPressed(KeyCode keyCode);
-	int GetKey();
+	static bool IsKeyHolding(KeyCode keyCode);
+	KeyState GetKey();
 };
 
 #endif

@@ -1,12 +1,6 @@
 #pragma once
 #include <glfw3.h>
 
-enum class KeyState {
-	KEY_RELEASE = 0,
-	KEY_PRESS = 1,
-	KEY_HOLD = 2,
-};
-
 enum class KeyCode
 {
 	None = -1,
@@ -133,4 +127,10 @@ enum class KeyCode
 	RightAlt = GLFW_KEY_RIGHT_ALT,
 	RightSuper = GLFW_KEY_RIGHT_SUPER,
 	Menu = GLFW_KEY_MENU
+};
+
+struct KeyState
+{
+	KeyCode keyCode;
+	bool isHolding = false;
 };

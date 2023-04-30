@@ -14,6 +14,8 @@ protected:
 	KeyCode left = KeyCode::A;
 	KeyCode back = KeyCode::S;
 	KeyCode right = KeyCode::D;
+
+	glm::vec3 direction = { 0, 0, 0};
 	
 	float speedForward = 1.0f;
 	float speedLeft = 1.0f;
@@ -40,6 +42,7 @@ public:
 	void OnMouseMove(double x, double y);
 	void RemoveMovement(bool foward = true, bool left = true, bool back = true, bool right = true);
 	void RemoveRotation(bool xAxis = true, bool yAxis = true);
+	
 };
 
 #endif

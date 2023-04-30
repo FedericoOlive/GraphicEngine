@@ -75,7 +75,7 @@ int BaseGame::Init()
     renderer->CreateRenderer();
 
     LoadInfo();
-	
+
     renderer->CreateShader();
     input->InitInput(window);
 
@@ -85,7 +85,9 @@ int BaseGame::Init()
     {
         if (timer->IsEndCounter())
             window->AddStringToNameWindow(timer->GetTimeInfo());
+        
         window->PollEvents();
+    	
         timer->Update();
 
         OnInputEvent.Invoke();
@@ -164,7 +166,7 @@ Camera* BaseGame::CreateCamera(glm::vec2 viewportPosition, glm::vec2 viewportSiz
 
 bool BaseGame::IsKeyReleased(KeyCode keyCode)
 {
-    return input->IsKeyReleased(keyCode);
+    return input->IsKeyUp(keyCode);
 }
 
 bool BaseGame::IsKeyDown(KeyCode keyCode)
@@ -174,13 +176,13 @@ bool BaseGame::IsKeyDown(KeyCode keyCode)
 
 bool BaseGame::IsKeyPressed(KeyCode keyCode)
 {
-    return input->IsKeyPressed(keyCode);
+    return input->IsKeyHolding(keyCode);
 }
 
-int BaseGame::GetKey()
-{
-    return input->GetKey();
-}
+//int BaseGame::GetKey()
+//{
+//    return input->GetKey();
+//}
 
 double BaseGame::DeltaTime()
 {
