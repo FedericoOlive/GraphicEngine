@@ -34,9 +34,13 @@ void Renderer::CreateRenderer()
 {
     glewExperimental = GL_TRUE;
     glewInit();
+	
     glEnable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
 }
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera)

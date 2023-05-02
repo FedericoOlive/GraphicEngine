@@ -230,6 +230,7 @@ std::string ShaderSource::fragmentShaderSource =
 	"{\n"
 	"    vec3 lightDir = normalize(light.position - fragPos);\n"
 	"    float diff = max(dot(normal, lightDir), 0.0);\n"
+	//"    float diff = abs(dot(normal, lightDir));\n"
 	"    vec3 reflectDir = reflect(-lightDir, normal);\n"
 	"    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);\n"
 	"    float distance = length(light.position - fragPos);\n"
