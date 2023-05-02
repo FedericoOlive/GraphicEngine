@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 #define INPUT_H
 #include <list>
-#include <glm/glm/vec2.hpp>
+#include <glm/vec2.hpp>
 
 #include "Exports.h"
 #include "KeyCodes.h"

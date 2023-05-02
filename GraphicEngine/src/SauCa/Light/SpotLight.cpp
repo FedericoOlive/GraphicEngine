@@ -1,6 +1,6 @@
 #include "SpotLight.h"
 
-#include <glm/glm/trigonometric.hpp>
+#include <glm/trigonometric.hpp>
 
 SpotLight::SpotLight(Renderer* renderer) : BaseLight(renderer)
 {

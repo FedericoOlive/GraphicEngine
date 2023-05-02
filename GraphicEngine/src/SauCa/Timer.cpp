@@ -1,5 +1,5 @@
 #include "Timer.h"
-#include <glfw3.h>
+#include <glfw/glfw3.h>
 
 double Timer::deltaTime = 0;
 double Timer::currentTime;

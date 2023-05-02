@@ -96,14 +96,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;SAUCA_EXPORT;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\include\GLEW;$(SolutionDir)libs\include\GLFW;$(ProjectDir)src\SauCa;$(SolutionDir)libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\SauCa;$(SolutionDir)include\;$(SolutionDir)libs\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(ProjectDir)src\SauCa;$(SolutionDir)GraphicEngine;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)src\SauCa;$(SolutionDir)GraphicEngine\;$(SolutionDir)include\;$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(SolutionDir)libs\assimp</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>MKDIR "$(SolutionDir)Exports"
@@ -121,7 +121,7 @@ XCOPY "$(OutDir)GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>GLEW_STATIC;SAUCA_EXPORT;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\include\GLEW;$(SolutionDir)libs\include\GLFW;$(ProjectDir)src\SauCa;$(SolutionDir)libs;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src\SauCa;$(SolutionDir)include\;$(SolutionDir)libs\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,8 +129,8 @@ XCOPY "$(OutDir)GraphicEngine.dll" "$(SolutionDir)bin\$(Configuration)" /e /h /y
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(SolutionDir)obj\$(Configuration)\$(TargetName).pdb</ProgramDatabaseFile>
-      <AdditionalLibraryDirectories>$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(ProjectDir)src\SauCa;%(AdditionalLibraryDirectories);$(SolutionDir)GraphicEngine\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);$(ProjectDir)src\SauCa;$(SolutionDir)GraphicEngine\;$(SolutionDir)include\;$(SolutionDir)libs\glew;$(SolutionDir)libs\glfw;$(SolutionDir)libs\assimp</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;glfw3dll.lib;opengl32.lib;assimp-vc142-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>MKDIR "$(SolutionDir)Exports"

@@ -1,16 +1,16 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include "glew.h"
+#include "glew/glew.h"
 #include "Exports.h"
 #include <string>
 #include <iostream>
-#include <glm/glm/vec2.hpp>
-#include <glm/glm/vec3.hpp>
-#include <glm/glm/vec4.hpp>
-#include <glm/glm/mat2x2.hpp>
-#include <glm/glm/mat3x3.hpp>
-#include <glm/glm/mat4x4.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
+#include <glm/mat2x2.hpp>
+#include <glm/mat3x3.hpp>
+#include <glm/mat4x4.hpp>
 
 class SAUCA_API Shader
 {

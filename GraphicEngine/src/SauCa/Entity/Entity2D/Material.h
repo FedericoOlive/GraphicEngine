@@ -3,7 +3,7 @@
 
 #include "Exports.h"
 #include "Shaders/Shader.h"
-#include <glm/glm/vec3.hpp>
+#include <glm/vec3.hpp>
 
 class SAUCA_API Material
 {

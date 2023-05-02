@@ -2,7 +2,7 @@
 #define BASE_LIGHT_H
 
 #include "GameObjects/Component.h"
-#include "glm/glm/gtc/type_ptr.hpp"
+#include "glm/gtc/type_ptr.hpp"
 class Renderer;
 
 class SAUCA_API BaseLight : public Component

@@ -1,5 +1,5 @@
 #pragma once
-#include <glfw3.h>
+#include <glfw/glfw3.h>
 
 enum class MouseCode
 {

@@ -1,7 +1,7 @@
 #ifndef FIRSTPERSON_H
 #define FIRSTPERSON_H
-#include <glm/glm/vec2.hpp>
-#include <glm/glm/vec3.hpp>
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 
 #include "GameObjects/Component.h"
 #include "Input/KeyCodes.h"

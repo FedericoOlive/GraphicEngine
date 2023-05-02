@@ -4,7 +4,7 @@
 
 #include "Exports.h"
 #include "GameObjects/Component.h"
-#include "glm/glm/gtc/type_ptr.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 class SAUCA_API  Camera : public Component
 {

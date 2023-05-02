@@ -2,11 +2,11 @@
 #define RENDERER_H
 #include <list>
 
-#include "glew.h"
+#include "glew/glew.h"
 #include "Window.h"
 #include "Entity/Entity2D/Material.h"
 #include "GameObjects/Component.h"
-#include "glm/glm/glm.hpp"
+#include "glm/glm.hpp"
 #include "Light/DirectionlLight.h"
 #include "Light/PointLight.h"
 #include "Light/SpotLight.h"
