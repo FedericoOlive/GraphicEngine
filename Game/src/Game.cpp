@@ -24,7 +24,6 @@ void Game::Initialize()
 	Cube* playerCube = CreateCube();
 	playerCube->SetTexture(playerCubeTexture);
 	player->AddComponent(CreateCube());
-	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 	player->transform->SetLocalScale(glm::vec3(1, 1, 1));
 
 	cameraPivot = CreateGameObject("Camera Pivot");
@@ -90,6 +89,7 @@ void Game::Initialize()
 	spotGo->transform->SetParent(cameraPivot);
 	
 	target = cubeContent->transform;
+	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 }
 
 void Game::Inputs()
@@ -121,7 +121,12 @@ void Game::Inputs()
 
 void Game::Update()
 {
-	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{0,5,0});
+	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
+	
+	float sinTime = glm::sin(Timer::ElapsedTime());
+	float cosTime = glm::cos(Timer::ElapsedTime());
+	
+	goLightPointArround->transform->SetWorldPosition(glm::vec3{ sinTime * 50, 10, cosTime * 50 });
 }
 
 void Game::Draw()
@@ -130,7 +135,7 @@ void Game::Draw()
 }
 void Game::SetLights()
 {
-	goLightDir01 = CreateGameObject("Dir Light 1");
+	//goLightDir01 = CreateGameObject("Dir Light 1");
 	//goLightDir02 = CreateGameObject("Dir Light 2");
 	goLightPoint01 = CreateGameObject("Point Light 1");
 	goLightPoint02 = CreateGameObject("Point Light 2");
@@ -139,7 +144,7 @@ void Game::SetLights()
 	goLightSpot01 = CreateGameObject("Spot Light 1");
 	goLightSpot02 = CreateGameObject("Spot Light 2");
 
-	lightDir1 = CreateDirectionalLight();
+	//lightDir1 = CreateDirectionalLight();
 	//lightDir2 = CreateDirectionalLight();
 	lightPoint1 = CreatePointLight();
 	lightPoint2 = CreatePointLight();
@@ -148,7 +153,7 @@ void Game::SetLights()
 	lightSpot1 = CreateSpotLight();
 	lightSpot2 = CreateSpotLight();
 
-	goLightDir01->AddComponent(lightDir1);
+	//goLightDir01->AddComponent(lightDir1);
 	//goLightDir02->AddComponent(lightDir2);
 	goLightPoint01->AddComponent(lightPoint1);
 	goLightPoint02->AddComponent(lightPoint2);
@@ -158,7 +163,7 @@ void Game::SetLights()
 	goLightSpot02->AddComponent(lightSpot2);
 
 	float distance = 40;	
-	goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
+	//goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
 	//goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
 	//goLightDir02->transform->SetWorldRotation({ 0, 180, 0 });
 	goLightPoint01->transform->SetWorldPosition({ distance, 1, distance });
@@ -168,10 +173,17 @@ void Game::SetLights()
 	goLightSpot01->transform->SetWorldPosition({ distance / 2, 5, 0 });
 	goLightSpot02->transform->SetWorldPosition({ -distance / 2, 5, 0 });
 
-	lightDir1->lightColor = { 1, 1, 1 };
+	//lightDir1->lightColor = { 1, 1, 1 };
 	
 	lightSpot1->transform->SetWorldRotation({ 0, 0, 90 });
 	lightSpot2->transform->SetWorldRotation({ 0, 0, -90 });
+
+	goLightPointArround = CreateGameObject("Point Arround");
+	goLightPointArround->transform->SetWorldPosition({0, 10, 0});
+	lightPointArround = CreatePointLight();
+	goLightPointArround->AddComponent(lightPointArround);
+	lightPointArround->lightColor = glm::vec3{ 1, 0, 0 };
+	//lightPointArround->
 }
 
 void Game::SetEnviroment()
@@ -190,7 +202,10 @@ void Game::SetEnviroment()
 	floor->transform->SetLocalPosition({ 0, 0, 0 });
 	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	floor->transform->SetLocalRotation({ 90, 180, 0 });
-
+	floorSprite->material->shininess = 10000;
+	floorSprite->material->specular = {0, 0, 0};
+	floorSprite->material->diffuse = {0.5f, 0.5f, 0.5f };
+	
 	wallRight = CreateGameObject("Wall Right");
 	wallRight->transform->SetParent(worldContent);
 	wallRight->AddComponent(CreateSprite(new Texture("res/World/Right.png")));

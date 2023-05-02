@@ -41,9 +41,9 @@ void Renderer::CreateRenderer()
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera)
 {
-    const int maxDirLights = 4;
-    const int maxPointLights = 4;
-    const int maxSpotLights = 4;
+    const int maxDirLights = 10;
+    const int maxPointLights = 10;
+    const int maxSpotLights = 10;
 
 	material->shader->Use();
     int shaderID = material->shader->ID;
@@ -53,16 +53,11 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     material->shader->setMat4("projectionMatrix", projectionMatrix);
     material->shader->setMat4("viewMatrix", viewMatrix);
     material->shader->setMat4("modelMatrix", model);
+    material->shader->setVec3("viewPos", camera->transform->GetWorldPosition());
+
     material->shader->setVec3("colorTint", material->colorTint);
     material->shader->setFloat("alpha", alpha);
-	
     material->shader->setUnsignedInt("ourTexture", textureID);
-    
-    // Basic
-    //material->shader->setVec3("lightPos", { 0, 0, 0 });
-
-    // Both
-    material->shader->setVec3("viewPos", camera->transform->GetWorldPosition());
 
     // Material
     material->shader->setBool("material.hasTexture", material->hasTexture);
@@ -143,13 +138,6 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
                 break;
         }
     }
-        
-    //// bind diffuse map
-    //glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, diffuseMap);
-    //// bind specular map
-    //glActiveTexture(GL_TEXTURE1);
-    //glBindTexture(GL_TEXTURE_2D, specularMap);
 	
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndex, GL_UNSIGNED_INT, nullptr);

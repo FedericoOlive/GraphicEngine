@@ -8,7 +8,7 @@ class SAUCA_API Timer
 {
 private:
 	static double deltaTime;
-	double currentTime;
+	static double currentTime;
 	double prevTime;
 	double timeDiff;
 	unsigned int counterFrames;
@@ -16,9 +16,9 @@ private:
 public:
 	Timer();
 	void Update();
-	double static DeltaTime();
-	double ElapsedTime();
-	std::string GetTimeInfo() const;
+	static double DeltaTime() { return deltaTime; }
+	static	double ElapsedTime() { return currentTime; }
 	bool IsEndCounter() const { return (timeDiff > 1.0 / 30.0); }
+	std::string GetTimeInfo() const;
 };
 #endif

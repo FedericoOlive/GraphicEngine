@@ -49,6 +49,9 @@ private:
 	GameObject* goLightSpot02 = nullptr;
 	SpotLight* lightSpot1 = nullptr;
 	SpotLight* lightSpot2 = nullptr;
+	
+	GameObject* goLightPointArround	= nullptr;
+	PointLight* lightPointArround = nullptr;
 
 	GameObject* cameraMinimapGo = nullptr;
 	Camera* cameraMinimap;

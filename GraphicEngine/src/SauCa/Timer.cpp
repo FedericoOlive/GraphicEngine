@@ -2,7 +2,7 @@
 #include <glfw3.h>
 
 double Timer::deltaTime = 0;
-
+double Timer::currentTime;
 Timer::Timer()
 {
 	deltaTime = 0;
@@ -31,17 +31,6 @@ void Timer::Update()
 	{
 		resetNextFrame = true;
 	}
-}
-
-double Timer::DeltaTime()
-{
-	return deltaTime;
-}
-
-
-double Timer::ElapsedTime()
-{
-	return currentTime;
 }
 
 std::string Timer::GetTimeInfo() const
