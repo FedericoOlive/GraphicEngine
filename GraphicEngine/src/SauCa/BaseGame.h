@@ -14,7 +14,7 @@
 #include "Entity/Entity2D/Skybox.h"
 #include "Entity/Entity2D/TileMap.h"
 #include "Entity/Entity3D/Cube.h"
-#include "Light/DirectionlLight.h"
+#include "Light/DirectionalLight.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
 #include "Movement/CharacterController.h"
@@ -66,7 +66,7 @@ public:
 	
 
 	// Lights
-	DirectionlLight* CreateDirectionalLight();
+	DirectionalLight* CreateDirectionalLight();
 	PointLight* CreatePointLight();
 	SpotLight* CreateSpotLight();
 	

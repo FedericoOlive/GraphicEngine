@@ -185,9 +185,11 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Mesh.cpp" />
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Model.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D\Skybox.cpp" />
     <ClCompile Include="src\SauCa\Light\SpotLight.cpp" />
-    <ClCompile Include="src\SauCa\Light\DirectionlLight.cpp" />
+    <ClCompile Include="src\SauCa\Light\DirectionalLight.cpp" />
     <ClCompile Include="src\SauCa\Light\PointLight.cpp" />
     <ClCompile Include="src\SauCa\Light\BaseLight.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\Cube.cpp" />
@@ -222,9 +224,11 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Mesh.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Model.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D\Skybox.h" />
     <ClInclude Include="src\SauCa\Light\SpotLight.h" />
-    <ClInclude Include="src\SauCa\Light\DirectionlLight.h" />
+    <ClInclude Include="src\SauCa\Light\DirectionalLight.h" />
     <ClInclude Include="src\SauCa\Light\PointLight.h" />
     <ClInclude Include="src\SauCa\Light\BaseLight.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D\Cube.h" />

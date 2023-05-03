@@ -3,10 +3,10 @@
 
 #include "BaseLight.h"
 
-class SAUCA_API DirectionlLight : public BaseLight
+class SAUCA_API DirectionalLight : public BaseLight
 {
 public:
-	DirectionlLight(Renderer* renderer);
+	DirectionalLight(Renderer* renderer);
 };
 
 #endif

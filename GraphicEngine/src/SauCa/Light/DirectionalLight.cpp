@@ -1,6 +1,6 @@
-#include "DirectionlLight.h"
+#include "DirectionalLight.h"
 
-DirectionlLight::DirectionlLight(Renderer* renderer): BaseLight(renderer)
+DirectionalLight::DirectionalLight(Renderer* renderer): BaseLight(renderer)
 {
 	name = "Directionl Light";
 	ambient = {0.05f, 0.05f, 0.05f};

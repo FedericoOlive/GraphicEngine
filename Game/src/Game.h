@@ -33,8 +33,8 @@ private:
 	
 	GameObject* goLightDir01 = nullptr;
 	GameObject* goLightDir02 = nullptr;
-	DirectionlLight* lightDir1 = nullptr;
-	DirectionlLight* lightDir2 = nullptr;
+	DirectionalLight* lightDir1 = nullptr;
+	DirectionalLight* lightDir2 = nullptr;
 	
 	GameObject* goLightPoint01	= nullptr;
 	GameObject* goLightPoint02	= nullptr;

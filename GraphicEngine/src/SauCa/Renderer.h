@@ -7,7 +7,7 @@
 #include "Entity/Entity2D/Material.h"
 #include "GameObjects/Component.h"
 #include "glm/glm.hpp"
-#include "Light/DirectionlLight.h"
+#include "Light/DirectionalLight.h"
 #include "Light/PointLight.h"
 #include "Light/SpotLight.h"
 class Camera;
@@ -24,7 +24,7 @@ private:
 	
 public:
 	static std::list<Camera*> cameras;
-	std::list<DirectionlLight*> directionalLights;
+	std::list<DirectionalLight*> directionalLights;
 	std::list<PointLight*> pointLights;
 	std::list<SpotLight*> spotLights;
 	

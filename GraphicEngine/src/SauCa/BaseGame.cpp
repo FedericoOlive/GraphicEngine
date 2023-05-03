@@ -203,9 +203,9 @@ void BaseGame::ModifyWindow(const char* name, float width, float height)
     //glfwSetWindowTitle(window->GetWindow(), name);
 }
 
-DirectionlLight* BaseGame::CreateDirectionalLight()
+DirectionalLight* BaseGame::CreateDirectionalLight()
 {
-    DirectionlLight* dirLight = new DirectionlLight(renderer);
+    DirectionalLight* dirLight = new DirectionalLight(renderer);
     renderer->directionalLights.push_back(dirLight);
     return dirLight;
 }

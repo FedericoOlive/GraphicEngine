@@ -21,9 +21,8 @@ void Game::Initialize()
 	Texture* playerCubeTexture = new Texture("res/Layer9.png");
 
 	player = CreateGameObject("Player");
-	Cube* playerCube = CreateCube();
-	playerCube->SetTexture(playerCubeTexture);
-	player->AddComponent(CreateCube());
+	Cube* newCube = CreateCube();
+	player->AddComponent(newCube);
 	player->transform->SetLocalScale(glm::vec3(1, 1, 1));
 
 	cameraPivot = CreateGameObject("Camera Pivot");
@@ -65,6 +64,8 @@ void Game::Initialize()
 	float distance = 2;
 	cube1 = CreateGameObject("Cube 1");
 	cube1->transform->SetParent(cubeContent);
+	Cube* playerCube = CreateCube();
+	playerCube->SetTexture(playerCubeTexture);
 	cube1->AddComponent(playerCube);
 	cube1->transform->SetLocalPosition({ distance, 0, distance });
 

@@ -52,7 +52,13 @@ void Triangle::CreateVertexData()
 
 void Triangle::Draw(Camera* camera)
 {
+	if (!material->hasTexture)
+		glDisable(GL_CULL_FACE);
+	
 	renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha, camera);
+	
+	if (!material->hasTexture)
+		glEnable(GL_CULL_FACE);
 }
 
 void Triangle::GenBufferEntity()
