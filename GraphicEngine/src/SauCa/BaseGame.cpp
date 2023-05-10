@@ -79,7 +79,7 @@ int BaseGame::Init()
     renderer->CreateShader();
     input->InitInput(window);
 
-    glfwSwapInterval(1);
+    //glfwSwapInterval(0);
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
@@ -92,6 +92,7 @@ int BaseGame::Init()
 
         OnInputEvent.Invoke();
         Inputs();
+    	
         OnUpdateEvent.Invoke();
         Update();
 
@@ -163,26 +164,6 @@ Camera* BaseGame::CreateCamera(glm::vec2 viewportPosition, glm::vec2 viewportSiz
     renderer->AddCamera(camera);	
     return camera;
 }
-
-bool BaseGame::IsKeyReleased(KeyCode keyCode)
-{
-    return input->IsKeyUp(keyCode);
-}
-
-bool BaseGame::IsKeyDown(KeyCode keyCode)
-{
-    return input->IsKeyDown(keyCode);
-}
-
-bool BaseGame::IsKeyPressed(KeyCode keyCode)
-{
-    return input->IsKeyHolding(keyCode);
-}
-
-//int BaseGame::GetKey()
-//{
-//    return input->GetKey();
-//}
 
 double BaseGame::DeltaTime()
 {

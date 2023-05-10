@@ -77,13 +77,7 @@ public:
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
 	void ShowHierarchyInConsole() const;
-
-	// Inputs
-	bool IsKeyReleased(KeyCode keyCode);
-	bool IsKeyDown(KeyCode keyCode);
-	bool IsKeyPressed(KeyCode keyCode);
-	int GetKey();
-
+	
 	// Time
 	double DeltaTime();
 	double ElapsedTime();

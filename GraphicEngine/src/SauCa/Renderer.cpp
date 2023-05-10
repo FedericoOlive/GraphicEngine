@@ -45,9 +45,9 @@ void Renderer::CreateRenderer()
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera)
 {
-    const int maxDirLights = 10;
-    const int maxPointLights = 10;
-    const int maxSpotLights = 10;
+    const int maxDirLights      = 20;
+    const int maxPointLights    = 20;
+    const int maxSpotLights     = 20;
 
 	material->shader->Use();
     int shaderID = material->shader->ID;

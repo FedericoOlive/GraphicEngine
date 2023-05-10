@@ -10,6 +10,12 @@ class SAUCA_API  Camera : public Component
 {
 public:
 	enum CameraType { Perspective, Orthogonal };
+	
+private:
+	CameraType cameraType = Perspective;
+	float cameraZoom = 1;
+	
+public:
 	float aspect;
 	bool autoAddGameObjects = true;
 	bool isDrawSkybox = true;
@@ -28,6 +34,10 @@ public:
 	void OnAsigned() override;
 	void OnUpdatePosition();
 	void UpdateViewMatrix();
+
+	void SetZoom(float cameraZoom);
+	void SetCameraType(CameraType cameraType);
+	float GetZoom() const { return cameraZoom; }
 };
 
 #endif

@@ -55,10 +55,6 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 		Input::currentKeysDown.push_back((KeyCode)key);
 		break;
 		
-	case GLFW_REPEAT:
-		Input::currentKeysDown.remove((KeyCode)key);
-		break;
-		
 	default:
 		break;
 	}
@@ -90,7 +86,9 @@ bool Input::IsKeyDown(KeyCode keyCode)
 	int state = glfwGetKey(Window::window, (int)keyCode);
 	if (state == GLFW_PRESS)
 	{
-		return std::find(currentKeysDown.begin(), currentKeysDown.end(), keyCode) != currentKeysDown.end();
+		bool isPress = std::find(currentKeysDown.begin(), currentKeysDown.end(), keyCode) != currentKeysDown.end();
+		currentKeysDown.remove(keyCode);
+		return isPress;
 	}
 
 	return false;

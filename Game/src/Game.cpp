@@ -9,6 +9,7 @@ void OnMouseMove(double xPos, double yPos)
 
 void MouseScrollMovement(double xOffset, double yOffset)
 {
+	
 	//std::cout << "Mouse Scroll: {" << xOffset << ", " << yOffset << "}\n";
 }
 
@@ -31,15 +32,16 @@ void Game::Initialize()
 
 	camera = CreateGameObject("Camera Gameplay");
 	camera->transform->SetParent(cameraPivot);
-	camera->transform->SetLocalPosition({ 0, 0, 5 });
+	camera->transform->SetLocalPosition({ 0, 0, 0 });
 
 	Camera* cam = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
 	camera->AddComponent(cam);
 
-	cameraMinimapGo = CreateGameObject("Camera miniMap");
-	cameraMinimapGo->transform->SetWorldPosition({ -100, 10, 100 });
+	cameraMinimapGo = CreateGameObject("Camera miniMap");	
+	cameraMinimapGo->transform->SetWorldPosition({ -50, 10, 50 });
 	cameraMinimapGo->transform->SetWorldRotation({ -90, 0, 0 });
-	cameraMinimap = CreateCamera({ 0, 720- 200 }, { 200, 200 }, Camera::Orthogonal, true);
+	cameraMinimap = CreateCamera({ 0, 720 - 200 }, { 200, 200 }, Camera::Orthogonal, true);
+	cameraMinimap->SetZoom(2.0f);
 	cameraMinimapGo->AddComponent(cameraMinimap);
 	//cameraMinimap->renderList.push_back(floorSprite);
 
@@ -95,45 +97,59 @@ void Game::Initialize()
 
 void Game::Inputs()
 {
-	if (IsKeyDown(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
-	if (IsKeyDown(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply,0, 0)); }
-	if (IsKeyDown(KeyCode::Z)) { multiply += 1; }
-	if (IsKeyDown(KeyCode::X)) { multiply -= 1; }
-	if (IsKeyDown(KeyCode::Num0)) { target == camera->transform ? target = player->transform : target = camera->transform; }
-	if (IsKeyDown(KeyCode::Num1)) { LockCursor(true);  }
-	if (IsKeyDown(KeyCode::Num2)) { LockCursor(false); }
-	if (IsKeyDown(KeyCode::Num3)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0 , -1 * multiply, 0)); }
-	if (IsKeyDown(KeyCode::Num4)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(01 * multiply, 0, 0)); }
-	if (IsKeyDown(KeyCode::Num5)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(-1 * multiply, 0, 0)); }
-	if (IsKeyDown(KeyCode::Num6)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 01 * multiply, 0)); }
-	if (IsKeyDown(KeyCode::Num7)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, -1 * multiply, 0)); }
-	if (IsKeyDown(KeyCode::Num8)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, 01 * multiply)); }
-	if (IsKeyDown(KeyCode::Num9))
+	if (Input::IsKeyDown(KeyCode::Kp0)) { cout << "KP0\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp1)) { cout << "KP1\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp2)) { cout << "KP2\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp3)) { cout << "KP3\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp4)) { cout << "KP4\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp5)) { cout << "KP5\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp6)) { cout << "KP6\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp7)) { cout << "KP7\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp8)) { cout << "KP8\n"; }
+	if (Input::IsKeyDown(KeyCode::Kp9)) { cout << "KP9\n"; }
+
+	
+	if (Input::IsKeyHolding(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply,0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Z)) { multiply += 1; }
+	if (Input::IsKeyHolding(KeyCode::X)) { multiply -= 1; }
+	if (Input::IsKeyHolding(KeyCode::Num0)) { target == camera->transform ? target = player->transform : target = camera->transform; }
+	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
+	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
+	if (Input::IsKeyHolding(KeyCode::Num3)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0 , -1 * multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Num4)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(01 * multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Num5)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(-1 * multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Num6)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 01 * multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Num7)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, -1 * multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Num8)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, 01 * multiply)); }
+	if (Input::IsKeyHolding(KeyCode::Num9))
 	{
 		target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply));
 	}
-	if (IsKeyDown(KeyCode::H)) { ShowHierarchyInConsole(); }
+	if (Input::IsKeyDown(KeyCode::H)) { ShowHierarchyInConsole(); }
+
+	if (Input::IsKeyHolding(KeyCode::LeftControl)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::BackSpace)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
 
 	
-	//cout << "----------------------------- " << target->gameObject->name << " -----------------------------\n";
-	//cout << "Position: {" << target->GetLocalPosition().x << ", " << target->GetLocalPosition().y << ", " << target->GetLocalPosition().z << "}\n";
-	//cout << "Rotation: {" << target->GetLocalRotation().x << ", " << target->GetLocalRotation().y << ", " << target->GetLocalRotation().z << "}\n";
 }
 
 void Game::Update()
 {
 	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
+	float time = Timer::ElapsedTime();
 	
-	float sinTime = glm::sin(Timer::ElapsedTime());
-	float cosTime = glm::cos(Timer::ElapsedTime());
-	
-	goLightPointArround->transform->SetWorldPosition(glm::vec3{ sinTime * 50, 10, cosTime * 50 });
+	goLightPointArround01->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.2f) * 45, 10, glm::cos(time * 0.2f) * 45 });
+	goLightPointArround02->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.4f) * 45, 15, glm::cos(time * 0.4f) * 45 });
+	goLightPointArround03->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.8f) * 45, 20, glm::cos(time * 0.8f) * 45 });
+	goLightPointArround04->transform->SetWorldPosition(glm::vec3{ glm::sin(time*1.6f) * 45, 25, glm::cos(time * 1.6f) * 45 });
 }
 
 void Game::Draw()
 {
 
 }
+
 void Game::SetLights()
 {
 	//goLightDir01 = CreateGameObject("Dir Light 1");
@@ -179,12 +195,57 @@ void Game::SetLights()
 	lightSpot1->transform->SetWorldRotation({ 0, 0, 90 });
 	lightSpot2->transform->SetWorldRotation({ 0, 0, -90 });
 
-	goLightPointArround = CreateGameObject("Point Arround");
-	goLightPointArround->transform->SetWorldPosition({0, 10, 0});
+	goLightPointArround01 = CreateGameObject("Point Arround 01");
+	goLightPointArround01->transform->SetWorldPosition({0, 10, 0});
 	lightPointArround = CreatePointLight();
-	goLightPointArround->AddComponent(lightPointArround);
+	goLightPointArround01->AddComponent(lightPointArround);
 	lightPointArround->lightColor = glm::vec3{ 1, 0, 0 };
-	//lightPointArround->
+
+	goLightPointArround02 = CreateGameObject("Point Arround 02");
+	goLightPointArround02->transform->SetWorldPosition({0, 20, 0});
+	lightPointArround = CreatePointLight();
+	goLightPointArround02->AddComponent(lightPointArround);
+	lightPointArround->lightColor = glm::vec3{ 0, 1, 0 };
+
+	goLightPointArround03 = CreateGameObject("Point Arround 03");
+	goLightPointArround03->transform->SetWorldPosition({0, 30, 0});
+	lightPointArround = CreatePointLight();
+	goLightPointArround03->AddComponent(lightPointArround);
+	lightPointArround->lightColor = glm::vec3{ 0, 0, 1 };
+
+	goLightPointArround04 = CreateGameObject("Point Arround 04");
+	goLightPointArround04->transform->SetWorldPosition({0, 40, 0});
+	lightPointArround = CreatePointLight();
+	goLightPointArround04->AddComponent(lightPointArround);
+	lightPointArround->lightColor = glm::vec3{ 1, 0, 1 };
+
+	goLightPointStatic01 = CreateGameObject("Point Static 04");
+	goLightPointStatic02 = CreateGameObject("Point Static 04");
+	goLightPointStatic03 = CreateGameObject("Point Static 04");
+
+	goLightPointStatic01->transform->SetWorldPosition({  2,  2+5,  45 });
+	goLightPointStatic02->transform->SetWorldPosition({ -2,  2+5,  45 });
+	goLightPointStatic03->transform->SetWorldPosition({  0, -2+5,  45 });
+
+	
+	float linear = -0.39f;
+	lightPointArround = CreatePointLight();
+	lightPointArround->lightColor = glm::vec3{ 1, 0, 0 };
+	lightPointArround->linear = linear;
+	goLightPointStatic01->AddComponent(lightPointArround);
+	
+	lightPointArround = CreatePointLight();
+	lightPointArround->lightColor = glm::vec3{ 0, 1, 0 };
+	lightPointArround->linear = linear;
+	goLightPointStatic02->AddComponent(lightPointArround);
+	
+	lightPointArround = CreatePointLight();
+	lightPointArround->lightColor = glm::vec3{ 0, 0, 1 };
+	lightPointArround->linear = linear;
+	goLightPointStatic03->AddComponent(lightPointArround);
+
+
+	
 }
 
 void Game::SetEnviroment()
@@ -201,7 +262,7 @@ void Game::SetEnviroment()
 	floorSprite = CreateSprite(new Texture("res/Layer2.png"));
 	floor->AddComponent(floorSprite);
 	floor->transform->SetLocalPosition({ 0, 0, 0 });
-	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	floor->transform->SetLocalScale({ cubeDimensions * 4, cubeDimensions * 4, 1 });
 	floor->transform->SetLocalRotation({ 90, 180, 0 });
 	floorSprite->material->shininess = 10000;
 	floorSprite->material->specular = {0, 0, 0};

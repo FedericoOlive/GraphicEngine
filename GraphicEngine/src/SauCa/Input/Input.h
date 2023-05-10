@@ -12,27 +12,28 @@ void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods
 void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
 void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-class SAUCA_API Input
+class Input
 {
 public:
-	static Event<double, double> OnMouseMove;
-	static Event<double, double> OnMouseScrollMove;
-	
 	static std::list<KeyCode> currentKeysDown;
 	static std::list<MouseCode> currentMouseButtonsDown;
 	static glm::vec2 mousePos;
 
 	Input();
 	~Input();
-
 	void InitInput(Window* window);
-	static bool IsKeyUp(KeyCode keyCode);
-	static bool IsKeyDown(KeyCode keyCode);
-	static bool IsKeyHolding(KeyCode keyCode);
 	
-	static bool IsMouseButtonUp(MouseCode mouseCode);
-	static bool IsMouseButtonDown(MouseCode mouseCode);
-	static bool IsMouseButtonHolding(MouseCode mouseCode);
+	
+	SAUCA_API static Event<double, double> OnMouseMove;
+	SAUCA_API static Event<double, double> OnMouseScrollMove;
+	
+	SAUCA_API static bool IsKeyUp(KeyCode keyCode);
+	SAUCA_API static bool IsKeyDown(KeyCode keyCode);
+	SAUCA_API static bool IsKeyHolding(KeyCode keyCode);
+	
+	SAUCA_API static bool IsMouseButtonUp(MouseCode mouseCode);
+	SAUCA_API static bool IsMouseButtonDown(MouseCode mouseCode);
+	SAUCA_API static bool IsMouseButtonHolding(MouseCode mouseCode);
 };
 
 #endif

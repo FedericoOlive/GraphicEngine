@@ -8,8 +8,9 @@ Camera::Camera(glm::vec2 viewportPosition, glm::vec2 viewportSize, CameraType ca
 	aspect = viewportSize.x / viewportSize.y;
 	this->viewportPosition = viewportPosition;
 	this->viewportSize = viewportSize;
+	this->cameraType = cameraType;
 	glViewport((GLint)viewportPosition.x, (GLint)viewportPosition.y, (GLint)viewportSize.x, (GLint)viewportSize.y);
-	
+
 	switch (cameraType)
 	{
 	case Perspective:
@@ -35,8 +36,8 @@ void Camera::BeginDraw()
 }
 
 void Camera::SetCameraOrthogonal(float near, float far)
-{	
-	projectionMatrix = glm::ortho(0.0f, viewportSize.x, 0.0f, viewportSize.y, near, far);
+{
+	projectionMatrix = glm::ortho(0.0f, viewportSize.x / cameraZoom, 0.0f, viewportSize.y / cameraZoom, near, far);
 }
 
 void Camera::SetCameraPerspective(float fov, float near, float far)
@@ -62,4 +63,39 @@ void Camera::UpdateViewMatrix()
 	glm::vec3 targetPos = transform->GetWorldPosition() + transform->forward();
 	
 	viewMatrix = glm::lookAt(cameraPos, targetPos, transform->up());
+}
+
+void Camera::SetZoom(float cameraZoom)
+{
+	this->cameraZoom = cameraZoom;
+	switch (cameraType)
+	{
+	case Perspective:
+		SetCameraPerspective();
+		break;
+	case Orthogonal:
+		SetCameraOrthogonal();
+		break;
+	default:
+		SetCameraPerspective();
+		break;
+	}
+}
+
+void Camera::SetCameraType(CameraType cameraType)
+{
+	this->cameraType = cameraType;
+
+	switch (cameraType)
+	{
+	case Perspective:
+		SetCameraPerspective();
+		break;
+	case Orthogonal:
+		SetCameraOrthogonal();
+		break;
+	default:
+		SetCameraPerspective();
+		break;
+	}
 }

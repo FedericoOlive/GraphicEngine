@@ -50,9 +50,17 @@ private:
 	SpotLight* lightSpot1 = nullptr;
 	SpotLight* lightSpot2 = nullptr;
 	
-	GameObject* goLightPointArround	= nullptr;
+	GameObject* goLightPointArround01 = nullptr;
+	GameObject* goLightPointArround02 = nullptr;
+	GameObject* goLightPointArround03 = nullptr;
+	GameObject* goLightPointArround04 = nullptr;
 	PointLight* lightPointArround = nullptr;
 
+
+	GameObject* goLightPointStatic01 = nullptr;
+	GameObject* goLightPointStatic02 = nullptr;
+	GameObject* goLightPointStatic03 = nullptr;
+	
 	GameObject* cameraMinimapGo = nullptr;
 	Camera* cameraMinimap;
 
@@ -66,6 +74,8 @@ public:
 	void SetLights();
 	void SetEnviroment();
 	void AddListeners();
+
+	
 };
 
 #endif

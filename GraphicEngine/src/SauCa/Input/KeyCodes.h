@@ -11,6 +11,14 @@ enum class MouseCode
 enum class KeyCode
 {
 	None = -1,
+
+	Space = GLFW_KEY_SPACE,
+	Apostrophe = GLFW_KEY_APOSTROPHE,	// '
+	Comma = GLFW_KEY_COMMA,				// , 
+	Minus = GLFW_KEY_MINUS,				// - 
+	Period = GLFW_KEY_PERIOD,			// . 
+	Slash = GLFW_KEY_SLASH,				// / 
+
 	// Numbers
 	Num0 = GLFW_KEY_0,
 	Num1 = GLFW_KEY_1,
@@ -55,7 +63,7 @@ enum class KeyCode
 	Esc = GLFW_KEY_ESCAPE,
 	Enter = GLFW_KEY_ENTER,
 	Tab = GLFW_KEY_TAB,
-	BackSpace = GLFW_KEY_BACKSPACE,	
+	BackSpace = GLFW_KEY_BACKSPACE,
 	Insert = GLFW_KEY_INSERT,
 	Delete = GLFW_KEY_DELETE,
 
@@ -64,12 +72,12 @@ enum class KeyCode
 	Left = GLFW_KEY_LEFT,
 	Down = GLFW_KEY_DOWN,
 	Up = GLFW_KEY_UP,
-	
+
 	// Specials:
 	PageUp = GLFW_KEY_PAGE_UP,
 	PageDown = GLFW_KEY_PAGE_DOWN,
 	Home = GLFW_KEY_HOME,
-	End = GLFW_KEY_END,	
+	End = GLFW_KEY_END,
 	CapsLock = GLFW_KEY_CAPS_LOCK,
 	ScrollLock = GLFW_KEY_SCROLL_LOCK,
 	NumLock = GLFW_KEY_NUM_LOCK,
@@ -121,13 +129,13 @@ enum class KeyCode
 	KpAdd = GLFW_KEY_KP_ADD,
 	KpEnter = GLFW_KEY_KP_ENTER,
 	KpEqual = GLFW_KEY_KP_EQUAL,
-	
+
 	// Left Controls:
 	LeftShift = GLFW_KEY_LEFT_SHIFT,
 	LeftControl = GLFW_KEY_LEFT_CONTROL,
 	LeftAlt = GLFW_KEY_LEFT_ALT,
 	LeftSuper = GLFW_KEY_LEFT_SUPER,
-	
+
 	// Right Controls:
 	RightShift = GLFW_KEY_RIGHT_SHIFT,
 	RightControl = GLFW_KEY_RIGHT_CONTROL,
