@@ -205,6 +205,12 @@ SpotLight* BaseGame::CreateSpotLight()
     return spotLight;
 }
 
+Model* BaseGame::CreateModel(string path)
+{
+    Model* newModel = new Model(renderer, path);//FileSystem::getPath("resources/objects/backpack/backpack.obj"));
+    return newModel;
+}
+
 void BaseGame::AddCollision(Entity2D* entity, bool isStatic)
 {
     collisionManager->AddToCollisionList(entity, isStatic);

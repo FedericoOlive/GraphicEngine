@@ -1,18 +1,6 @@
 #include "Game.h"
 #include <time.h>
 
-Camera* camT;
-void OnMouseMove(double xPos, double yPos)
-{
-	//std::cout << "Mouse Pos: {" << xPos << ", " << yPos << "}\n";
-}
-
-void MouseScrollMovement(double xOffset, double yOffset)
-{
-	
-	//std::cout << "Mouse Scroll: {" << xOffset << ", " << yOffset << "}\n";
-}
-
 void Game::Initialize()
 {
 	SetEnviroment();
@@ -93,6 +81,12 @@ void Game::Initialize()
 	
 	target = cubeContent->transform;
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
+
+	GameObject* bp = CreateGameObject("bp");
+	bp->transform->SetWorldScale({ 5, 5, 5 });
+	bp->transform->SetWorldPosition({ 0, 5, 0 });
+	model = CreateModel("res/Backpack/backpack.obj");
+	bp->AddComponent(model);
 }
 
 void Game::Inputs()
@@ -301,8 +295,22 @@ void Game::SetEnviroment()
 
 void Game::AddListeners()
 {
-	Input::OnMouseMove.AddListener(OnMouseMove);
-	Input::OnMouseScrollMove.AddListener(MouseScrollMovement);
+	std::function<void(double, double)> onMouseMove = [this](double x, double y) { OnMouseMove(x, y); };
+	Input::OnMouseMove.AddListener(onMouseMove);
+	
+	std::function<void(double, double)> onMouseScrollMovement = [this](double x, double y) { OnMouseScrollMovement(x, y); };
+	Input::OnMouseScrollMove.AddListener(onMouseScrollMovement);
+}
+
+void Game::OnMouseMove(double xPos, double yPos)
+{
+	//std::cout << "Mouse Pos: {" << xPos << ", " << yPos << "}\n";
+}
+
+void Game::OnMouseScrollMovement(double xOffset, double yOffset)
+{
+
+	//std::cout << "Mouse Scroll: {" << xOffset << ", " << yOffset << "}\n";
 }
 
 void Game::DeInitialize()

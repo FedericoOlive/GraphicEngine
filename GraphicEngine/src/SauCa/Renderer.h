@@ -10,6 +10,8 @@
 #include "Light/DirectionalLight.h"
 #include "Light/PointLight.h"
 #include "Light/SpotLight.h"
+#include "Entity/Entity3D/Mesh.h"
+
 class Camera;
 
 static class SAUCA_API Renderer
@@ -39,10 +41,16 @@ public:
 	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
+	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes);
 	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras);
+	void SetMatrix(Material* material, Camera* camera, glm::mat4 model);
+	void SetMaterial(Material* material, float alpha, unsigned int textureID);
+	void SetLights(Material* material);
+
+
 	void BindGenBufferObject(unsigned int& buffer);
 	void UnBindGenBufferObject();
-	void GenBuffer(int amount, unsigned int& buffer);	
+	void GenBuffer(int amount, unsigned int& buffer);
 	void BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore);
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
 	

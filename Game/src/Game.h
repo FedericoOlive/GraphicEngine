@@ -64,6 +64,8 @@ private:
 	GameObject* cameraMinimapGo = nullptr;
 	Camera* cameraMinimap;
 
+	Model* model;
+
 public:
 	void Initialize()override;
 	void Inputs() override;
@@ -75,7 +77,8 @@ public:
 	void SetEnviroment();
 	void AddListeners();
 
-	
+	void OnMouseMove(double xPos, double yPos);
+	void OnMouseScrollMovement(double xOffset, double yOffset);
 };
 
 #endif

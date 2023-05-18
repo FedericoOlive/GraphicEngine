@@ -8,6 +8,7 @@
 #include "Shaders/Shader.h"
 
 #define MAX_BONE_INFLUENCE 4
+class Camera;
 
 struct Vertex
 {
@@ -36,10 +37,11 @@ public:
     unsigned int VAO;
 
     Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<MeshTexture> textures);
-    void Draw(Shader& shader);
-private:
+    void Draw(Shader* shader);
 	
-    unsigned int VBO, EBO;
+private:	
+    unsigned int VBO;
+    unsigned int EBO;
     void setupMesh();
 };
 

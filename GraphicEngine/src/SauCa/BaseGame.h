@@ -14,6 +14,7 @@
 #include "Entity/Entity2D/Skybox.h"
 #include "Entity/Entity2D/TileMap.h"
 #include "Entity/Entity3D/Cube.h"
+#include "Entity/Entity3D/Model.h"
 #include "Light/DirectionalLight.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
@@ -63,7 +64,7 @@ public:
 	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
 	GameObject* CreateGameObject(string name = "");
 	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective, bool autoAddGameObjects = true);
-	
+	Model* CreateModel(string path);
 
 	// Lights
 	DirectionalLight* CreateDirectionalLight();
@@ -84,9 +85,7 @@ public:
 
 	// Window
 	void ModifyWindow(const char* name, float width, float height);
-	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
-
-	
+	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }	
 };
 	
 #endif

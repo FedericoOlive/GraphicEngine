@@ -45,25 +45,73 @@ void Renderer::CreateRenderer()
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera)
 {
-    const int maxDirLights      = 20;
-    const int maxPointLights    = 20;
-    const int maxSpotLights     = 20;
-
 	material->shader->Use();
-    int shaderID = material->shader->ID;
+	
+    SetMatrix(material, camera, model);
+    SetMaterial(material, alpha, textureID);
+    SetLights(material);
+	
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, sizeIndex, GL_UNSIGNED_INT, nullptr);
+    glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void Renderer::DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes)
+{
+    material->shader->Use();
+	
+    SetMatrix(material, camera, model);
+    SetMaterial(material, alpha, textureID);
+    SetLights(material);
+	
+    for (unsigned int i = 0; i < meshes.size(); i++)
+        meshes[i].Draw(material->shader);
+}
+
+void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras)
+{
+    for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
+    {
+        if ((*iterCamera)->isEnable && (*iterCamera)->gameobject->IsActive() && (*iterCamera)->gameobject->IsActiveInHierarch())
+        {
+            if ((*iterCamera)->isDrawSkybox)
+            {
+                (*iterCamera)->BeginDraw();
+                glm::mat4 model = glm::mat4(1.0f);
+                glm::mat4 view = (*iterCamera)->viewMatrix;
+                glm::mat4 projection = (*iterCamera)->projectionMatrix;
+
+                // draw skybox as last
+                glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
+                material->shader->Use();
+                view = glm::mat4(glm::mat3((*iterCamera)->viewMatrix)); // remove translation from the view matrix
+                material->shader->setMat4("view", view);
+                material->shader->setMat4("projection", projection);
+                // skybox cube
+                glBindVertexArray(VAO);
+                glActiveTexture(GL_TEXTURE0);
+                glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+                glDrawArrays(GL_TRIANGLES, 0, 36);
+                glBindVertexArray(0);
+                glDepthFunc(GL_LESS); // set depth function back to default
+            }
+        }
+    }
+}
+
+void Renderer::SetMatrix(Material* material, Camera* camera, glm::mat4 model)
+{
     glm::mat4 viewMatrix = camera->viewMatrix;
     glm::mat4 projectionMatrix = camera->projectionMatrix;
-	
+
     material->shader->setMat4("projectionMatrix", projectionMatrix);
     material->shader->setMat4("viewMatrix", viewMatrix);
     material->shader->setMat4("modelMatrix", model);
     material->shader->setVec3("viewPos", camera->transform->GetWorldPosition());
+}
 
-    material->shader->setVec3("colorTint", material->colorTint);
-    material->shader->setFloat("alpha", alpha);
-    material->shader->setUnsignedInt("ourTexture", textureID);
-
-    // Material
+void Renderer::SetMaterial(Material* material, float alpha, unsigned int textureID)
+{
     material->shader->setBool("material.hasTexture", material->hasTexture);
     material->shader->setUnsignedInt("material.texture", textureID);
     material->shader->setVec3("material.ambient", material->ambient);
@@ -71,8 +119,18 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     material->shader->setVec3("material.specular", material->specular);
     material->shader->setVec3("material.colorTint", material->colorTint);
     material->shader->setFloat("material.shininess", material->shininess);
+	
+    material->shader->setVec3("colorTint", material->colorTint);
+    material->shader->setFloat("alpha", alpha);
+    material->shader->setUnsignedInt("ourTexture", textureID);
+}
 
-    // Lights
+void Renderer::SetLights(Material* material)
+{
+    const int maxDirLights      = 20;
+    const int maxPointLights    = 20;
+    const int maxSpotLights     = 20;
+
     material->shader->setInt("dirLightAmount", directionalLights.size());
     material->shader->setInt("pointLightAmount", pointLights.size());
     material->shader->setInt("spotLightAmount", spotLights.size());
@@ -140,41 +198,6 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
             i++;
             if (i > maxSpotLights)
                 break;
-        }
-    }
-	
-    glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, sizeIndex, GL_UNSIGNED_INT, nullptr);
-    glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras)
-{
-    for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
-    {
-        if ((*iterCamera)->isEnable && (*iterCamera)->gameobject->IsActive() && (*iterCamera)->gameobject->IsActiveInHierarch())
-        {
-            if ((*iterCamera)->isDrawSkybox)
-            {
-                (*iterCamera)->BeginDraw();
-                glm::mat4 model = glm::mat4(1.0f);
-                glm::mat4 view = (*iterCamera)->viewMatrix;
-                glm::mat4 projection = (*iterCamera)->projectionMatrix;
-
-                // draw skybox as last
-                glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-                material->shader->Use();
-                view = glm::mat4(glm::mat3((*iterCamera)->viewMatrix)); // remove translation from the view matrix
-                material->shader->setMat4("view", view);
-                material->shader->setMat4("projection", projection);
-                // skybox cube
-                glBindVertexArray(VAO);
-                glActiveTexture(GL_TEXTURE0);
-                glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-                glDrawArrays(GL_TRIANGLES, 0, 36);
-                glBindVertexArray(0);
-                glDepthFunc(GL_LESS); // set depth function back to default
-            }
         }
     }
 }
