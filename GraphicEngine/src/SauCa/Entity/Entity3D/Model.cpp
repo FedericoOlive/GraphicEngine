@@ -4,14 +4,15 @@
 #include <assimp/postprocess.h>
 #include <iostream>
 
-Model::Model(Renderer* renderer, std::string const& path)
+Model::Model(Renderer* renderer, std::string const& path, bool isInvertIndexesOrder, bool IsInvertTextures)
 {
+	this->isInvertIndexesOrder = isInvertIndexesOrder;
+	this->IsInvertTextures = IsInvertTextures;
 	name = "Model";
 	SetRenderer(renderer);
-	material = new Material(renderer->GetDefaultShader(), true);
+	material = new Material(renderer->GetDefaultShaderModel(), true);
 
-	
-    loadModel(path);
+	loadModel(path);
 }
 
 Model::~Model() {}
@@ -19,7 +20,11 @@ void Model::CreateVertexData() {}
 
 void Model::Draw(Camera* camera)
 {
+	if (isInvertIndexesOrder) 
+		glFrontFace(GL_CW);
 	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes);
+	if (isInvertIndexesOrder) 
+		glFrontFace(GL_CCW);
 }
 
 void Model::GenBufferEntity() {}
@@ -165,7 +170,7 @@ std::vector<MeshTexture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureT
 		if (!skip)
 		{   // if texture hasn't been loaded already, load it
 			MeshTexture texture;
-			texture.id = TextureFromFile(str.C_Str(), this->directory);
+			texture.id = TextureFromFile(str.C_Str(), this->directory, IsInvertTextures);
 			texture.type = typeName;
 			texture.path = str.C_Str();
 			textures.push_back(texture);
@@ -176,7 +181,7 @@ std::vector<MeshTexture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureT
 	return textures;
 }
 
-unsigned int TextureFromFile(const char* path, const std::string& directory, bool gamma)
+unsigned int TextureFromFile(const char* path, const std::string& directory, bool IsInvertTextures, bool gamma)
 {
 	std::string filename = std::string(path);
 	filename = directory + '/' + filename;
@@ -185,6 +190,7 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	glGenTextures(1, &textureID);
 
 	int width, height, nrComponents;
+	stbi_set_flip_vertically_on_load(IsInvertTextures); // tell stb_image.h to flip loaded texture's on the y-axis.
 	unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
 	if (data)
 	{

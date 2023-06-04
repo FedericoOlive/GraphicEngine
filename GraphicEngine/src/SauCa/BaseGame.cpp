@@ -205,9 +205,9 @@ SpotLight* BaseGame::CreateSpotLight()
     return spotLight;
 }
 
-Model* BaseGame::CreateModel(string path)
+Model* BaseGame::CreateModel(string path, bool isInvertIndexesOrder, bool IsInvertTextures)
 {
-    Model* newModel = new Model(renderer, path);//FileSystem::getPath("resources/objects/backpack/backpack.obj"));
+    Model* newModel = new Model(renderer, path, isInvertIndexesOrder, IsInvertTextures);//FileSystem::getPath("resources/objects/backpack/backpack.obj"));
     return newModel;
 }
 

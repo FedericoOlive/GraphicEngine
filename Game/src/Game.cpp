@@ -11,6 +11,7 @@ void Game::Initialize()
 
 	player = CreateGameObject("Player");
 	Cube* newCube = CreateCube();
+	newCube->isEnable = false;
 	player->AddComponent(newCube);
 	player->transform->SetLocalScale(glm::vec3(1, 1, 1));
 
@@ -25,7 +26,7 @@ void Game::Initialize()
 	Camera* cam = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
 	camera->AddComponent(cam);
 
-	cameraMinimapGo = CreateGameObject("Camera miniMap");	
+	cameraMinimapGo = CreateGameObject("Camera miniMap");
 	cameraMinimapGo->transform->SetWorldPosition({ -50, 10, 50 });
 	cameraMinimapGo->transform->SetWorldRotation({ -90, 0, 0 });
 	cameraMinimap = CreateCamera({ 0, 720 - 200 }, { 200, 200 }, Camera::Orthogonal, true);
@@ -82,11 +83,17 @@ void Game::Initialize()
 	target = cubeContent->transform;
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 
-	GameObject* bp = CreateGameObject("bp");
+	GameObject* bp = CreateGameObject("BackPack");
 	bp->transform->SetWorldScale({ 5, 5, 5 });
 	bp->transform->SetWorldPosition({ 0, 5, 0 });
-	model = CreateModel("res/Backpack/backpack.obj");
-	bp->AddComponent(model);
+	modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
+	bp->AddComponent(modelBackPack);
+
+	GameObject* modelGokuObject = CreateGameObject("Goku Model");
+	modelGokuObject->transform->SetWorldScale({ 20, 20, 20 });
+	modelGokuObject->transform->SetWorldPosition({ -10, 5, 0 });
+	modelGoku = CreateModel("res/Goku/A.obj", true, false);
+	modelGokuObject->AddComponent(modelGoku);
 }
 
 void Game::Inputs()
@@ -146,7 +153,7 @@ void Game::Draw()
 
 void Game::SetLights()
 {
-	//goLightDir01 = CreateGameObject("Dir Light 1");
+	goLightDir01 = CreateGameObject("Dir Light 1");
 	//goLightDir02 = CreateGameObject("Dir Light 2");
 	goLightPoint01 = CreateGameObject("Point Light 1");
 	goLightPoint02 = CreateGameObject("Point Light 2");
@@ -155,7 +162,7 @@ void Game::SetLights()
 	goLightSpot01 = CreateGameObject("Spot Light 1");
 	goLightSpot02 = CreateGameObject("Spot Light 2");
 
-	//lightDir1 = CreateDirectionalLight();
+	lightDir1 = CreateDirectionalLight();
 	//lightDir2 = CreateDirectionalLight();
 	lightPoint1 = CreatePointLight();
 	lightPoint2 = CreatePointLight();
@@ -164,7 +171,7 @@ void Game::SetLights()
 	lightSpot1 = CreateSpotLight();
 	lightSpot2 = CreateSpotLight();
 
-	//goLightDir01->AddComponent(lightDir1);
+	goLightDir01->AddComponent(lightDir1);
 	//goLightDir02->AddComponent(lightDir2);
 	goLightPoint01->AddComponent(lightPoint1);
 	goLightPoint02->AddComponent(lightPoint2);
@@ -174,7 +181,7 @@ void Game::SetLights()
 	goLightSpot02->AddComponent(lightSpot2);
 
 	float distance = 40;	
-	//goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
+	goLightDir01->transform->SetWorldPosition({ 0, 10, 0 });
 	//goLightDir02->transform->SetWorldPosition({ 0, 10, 0 });
 	//goLightDir02->transform->SetWorldRotation({ 0, 180, 0 });
 	goLightPoint01->transform->SetWorldPosition({ distance, 1, distance });

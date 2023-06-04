@@ -21,6 +21,7 @@ private:
 	Shader* defaultShaderSolid;
 	Shader* defaultShaderTexture;
 	Shader* defaultShader;
+	Shader* defaultShaderModel;
 	
 	static std::list<Component*> renderList;
 	
@@ -60,6 +61,7 @@ public:
 	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }
 	Shader* GetDefaultShaderTexture() const { return defaultShaderTexture; }
 	Shader* GetDefaultShader() const { return defaultShader; }
+	Shader* GetDefaultShaderModel() const { return defaultShaderModel; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);

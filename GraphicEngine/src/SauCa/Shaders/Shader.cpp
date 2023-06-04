@@ -68,6 +68,12 @@ void Shader::CreateDefaultShader()
     CreateShaderBySource(ShaderSource::vertexShaderSource, ShaderSource::fragmentShaderSource);
 }
 
+void Shader::CreateDefaultShaderModel()
+{
+    std::cout << "Loading default Shader Model.\n";
+    CreateShaderBySource(ShaderSource::vertexShaderModel, ShaderSource::fragmentShaderModel);
+}
+
 void Shader::CreateShaderBySource(std::string vertexShaderSource, std::string fragmentShaderSource)
 {
     const char* vShaderCode = vertexShaderSource.c_str();
