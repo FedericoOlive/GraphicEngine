@@ -13,14 +13,13 @@ CharacterController::CharacterController(GameObject* player, GameObject* visualP
 	root->transform->SetLocalScale(glm::vec3(1, 1, 1));
 
 	pivot->name = "Camera Pivot";
-	pivot->transform->SetLocalPosition({ 0, 1, 0 });
+	pivot->transform->SetLocalPosition({ 0, 0, 0 });
 	pivot->transform->SetParent(root);
 
 	camera->name = "Camera Gameplay";
 	camera->transform->SetParent(pivot);
-	camera->transform->SetLocalPosition({ 0, 1, 3 });
-	
 	camera->AddComponent(cameraComponent);
+	SetFirstPerson();
 	
 	movement = new EntityController();
 	movement->RemoveRotation(false, true);
@@ -48,10 +47,10 @@ CharacterController::~CharacterController()
 
 void CharacterController::SetFirstPerson()
 {
-	
+	camera->transform->SetLocalPosition({ 0, 0, 0 });
 }
 
 void CharacterController::SetThirdPerson()
 {
-	
+	camera->transform->SetLocalPosition({ 0, 1, 3 });
 }

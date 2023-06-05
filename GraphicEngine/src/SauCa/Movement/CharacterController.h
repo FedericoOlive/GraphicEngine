@@ -3,7 +3,7 @@
 #include "EntityController.h"
 #include "GameObjects/GameObject.h"
 
-class CharacterController : public Component
+class SAUCA_API CharacterController : public Component
 {
 private:
 	Camera* cameraComponent = nullptr;

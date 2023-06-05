@@ -258,6 +258,7 @@ void Game::AddListeners()
 void Game::AddPlayer()
 {
 	player = CreateCharacterController(camera);
+	player->SetThirdPerson();
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 
 	player->visualPlayer->AddComponent(CreateCube());
