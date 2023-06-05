@@ -16,9 +16,9 @@
 #include "Entity/Entity3D/Cube.h"
 #include "Entity/Entity3D/Model.h"
 #include "Light/DirectionalLight.h"
+#include "Movement/CharacterController.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
-#include "Movement/EntityController.h"
 
 using namespace std;
 
@@ -61,10 +61,12 @@ public:
 	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
 	Cube* CreateCube();
+	Texture* CreateTexture(string path);
 	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
 	GameObject* CreateGameObject(string name = "");
 	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective, bool autoAddGameObjects = true);
 	Model* CreateModel(string path, bool isInvertIndexesOrder = false, bool IsInvertTextures = false);
+	CharacterController* CreateCharacterController(Camera* camera);
 
 	// Lights
 	DirectionalLight* CreateDirectionalLight();

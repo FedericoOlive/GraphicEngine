@@ -1,5 +1,5 @@
-#ifndef FIRSTPERSON_H
-#define FIRSTPERSON_H
+#ifndef ENTITYCONTROLLER_H
+#define ENTITYCONTROLLER_H
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 

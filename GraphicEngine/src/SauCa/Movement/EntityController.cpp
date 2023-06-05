@@ -36,20 +36,20 @@ void EntityController::OnMouseMove(double x, double y)
 		}
 	}
 	
-	glm::vec3 newRot = transform->GetLocalRotation();
+	glm::vec3 rotation = transform->GetLocalRotation();
 
 	if (rotateX)
-		newRot.x -= y * static_cast<double>(mouseSensitive.y);
+		rotation.x -= y * static_cast<double>(mouseSensitive.y);
 	if (rotateY)
-		newRot.y -= x * static_cast<double>(mouseSensitive.x);
+		rotation.y -= x * static_cast<double>(mouseSensitive.x);
 
 	if (rotateX || rotateY)
 	{
-		if (newRot.x > maxVerticalAngle)
-			newRot.x = maxVerticalAngle;
-		else if (newRot.x < minVerticalAngle)
-			newRot.x = minVerticalAngle;
-		transform->SetLocalRotation(newRot);
+		if (rotation.x > maxVerticalAngle)
+			rotation.x = maxVerticalAngle;
+		else if (rotation.x < minVerticalAngle)
+			rotation.x = minVerticalAngle;
+		transform->SetLocalRotation(rotation);
 	}
 }
 

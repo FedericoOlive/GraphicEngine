@@ -140,6 +140,12 @@ Cube* BaseGame::CreateCube()
     return sprite;
 }
 
+Texture* BaseGame::CreateTexture(string path)
+{
+    Texture* texture = new Texture(path);
+    return texture;
+}
+
 void BaseGame::CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back)
 {
     std::vector<std::string> faces
@@ -165,7 +171,7 @@ Camera* BaseGame::CreateCamera(glm::vec2 viewportPosition, glm::vec2 viewportSiz
 {
     Camera* camera = new Camera(viewportPosition, viewportSize, cameraType);
     camera->autoAddGameObjects = autoAddGameObjects;
-    renderer->AddCamera(camera);	
+    renderer->AddCamera(camera);
     return camera;
 }
 
@@ -218,6 +224,16 @@ Model* BaseGame::CreateModel(string path, bool isInvertIndexesOrder, bool IsInve
 void BaseGame::AddCollision(Entity2D* entity, bool isStatic)
 {
     collisionManager->AddToCollisionList(entity, isStatic);
+}
+
+CharacterController* BaseGame::CreateCharacterController(Camera* camera)
+{
+    GameObject* root = CreateGameObject();
+    GameObject* cameraPivot = CreateGameObject();
+    GameObject* cameraGameObject = CreateGameObject();
+    GameObject* visualPlayer = CreateGameObject();
+    CharacterController* characterController = new CharacterController(root, visualPlayer, cameraPivot , cameraGameObject, camera);
+    return characterController;
 }
 
 TileMap* BaseGame::CreateTileMap(string filePath, string resPath)
