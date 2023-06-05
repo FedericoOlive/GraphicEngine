@@ -24,5 +24,6 @@ public:
     static std::string AsString(glm::vec3 vec);
     static void PrintComponentsInConsole(GameObject* gameobject, std::string preText);
     static void SetColorColsoleByType();
+    static void  SetConsolePosition(short width, short height);
 };
 #endif

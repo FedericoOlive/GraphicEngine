@@ -63,6 +63,11 @@ BaseGame::~BaseGame()
 
 int BaseGame::Init()
 {
+#ifdef _DEBUG
+    PrintInConsole::SetConsolePosition(300, 25);
+#endif
+	
+	
     window = new Window();
     renderer = new Renderer();
     input = new Input();
@@ -79,7 +84,7 @@ int BaseGame::Init()
     renderer->CreateShader();
     input->InitInput(window);
 
-    //glfwSwapInterval(0);
+    // glfwSwapInterval(0);
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {

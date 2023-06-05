@@ -34,7 +34,7 @@ private:
 	Timer* timer;
 	list<GameObject*> gameobjects;
 	Skybox* skybox;
-	
+
 	void BeforeDraw();
 	void Draw();
 	void AfterDraw();

@@ -64,7 +64,25 @@ void PrintInConsole::PrintComponentsInConsole(GameObject* gameobject, std::strin
     }
 }
 
-void PrintInConsole::SetColorColsoleByType()
+void PrintInConsole::SetConsolePosition(short width, short height)
 {
-    
+    SetWindowPos(GetConsoleWindow(), 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+
+    CONSOLE_SCREEN_BUFFER_INFOEX consolesize;
+
+    consolesize.cbSize = sizeof(consolesize);
+
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    GetConsoleScreenBufferInfoEx(hConsole, &consolesize);
+
+    short heightSize = height * 10;
+    consolesize.dwSize = {width, heightSize };
+
+    consolesize.srWindow.Left = 0;
+    consolesize.srWindow.Right = width;
+    consolesize.srWindow.Top = 0;
+    consolesize.srWindow.Bottom = height;
+
+    SetConsoleScreenBufferInfoEx(hConsole, &consolesize);
 }
