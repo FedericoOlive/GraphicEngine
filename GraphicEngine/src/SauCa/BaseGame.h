@@ -18,7 +18,7 @@
 #include "Light/DirectionalLight.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
-#include "Movement/CharacterController.h"
+#include "Movement/EntityController.h"
 
 using namespace std;
 

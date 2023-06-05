@@ -93,7 +93,7 @@
     <ClCompile Include="src\SauCa\Utility\Event.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Movement\CharacterController.cpp">
+    <ClCompile Include="src\SauCa\Movement\EntityController.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\SauCa\Entity\Entity3D\Cube.cpp">
@@ -218,7 +218,7 @@
     <ClInclude Include="src\SauCa\Utility\Event.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Movement\CharacterController.h">
+    <ClInclude Include="src\SauCa\Movement\EntityController.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Entity\Entity3D\Cube.h">

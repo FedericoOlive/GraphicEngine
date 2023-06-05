@@ -17,5 +17,7 @@ BaseLight::BaseLight(Renderer* renderer) : Component()
 void BaseLight::OnAsigned()
 {
 	isEnable = true;
+#ifdef _DEBUG
 	gameobject->AddComponent(new Triangle(renderer, true));
+#endif
 }

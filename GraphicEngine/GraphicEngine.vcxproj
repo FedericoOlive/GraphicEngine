@@ -195,7 +195,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Light\PointLight.cpp" />
     <ClCompile Include="src\SauCa\Light\BaseLight.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\Cube.cpp" />
-    <ClCompile Include="src\SauCa\Movement\CharacterController.cpp" />
+    <ClCompile Include="src\SauCa\Movement\EntityController.cpp" />
     <ClCompile Include="src\SauCa\Utility\Event.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D.cpp" />
     <ClCompile Include="src\SauCa\GameObjects\Component.cpp" />
@@ -234,7 +234,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Light\PointLight.h" />
     <ClInclude Include="src\SauCa\Light\BaseLight.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D\Cube.h" />
-    <ClInclude Include="src\SauCa\Movement\CharacterController.h" />
+    <ClInclude Include="src\SauCa\Movement\EntityController.h" />
     <ClInclude Include="src\SauCa\Utility\Event.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D.h" />
     <ClInclude Include="src\SauCa\GameObjects\Component.h" />

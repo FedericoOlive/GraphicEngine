@@ -1,23 +1,23 @@
-#include "CharacterController.h"
+#include "EntityController.h"
 
 #include <iostream>
 
 #include "GameObjects/Transform.h"
 #include <Input/Input.h>
 
-CharacterController::CharacterController()
+EntityController::EntityController()
 {
-	name = "CharacterController";
+	name = "EntityController";
 	std::function<void(double, double)> onMouseMove = [this](double x, double y) { OnMouseMove(x, y); };
 	Input::OnMouseMove.AddListener(onMouseMove);
 }
 
-CharacterController::~CharacterController()
+EntityController::~EntityController()
 {
 	
 }
 
-void CharacterController::OnMouseMove(double x, double y)
+void EntityController::OnMouseMove(double x, double y)
 {
 	if (lockDirectionByLockCursor)
 	{
@@ -53,7 +53,7 @@ void CharacterController::OnMouseMove(double x, double y)
 	}
 }
 
-void CharacterController::RemoveMovement(bool foward, bool left, bool back, bool right)
+void EntityController::RemoveMovement(bool foward, bool left, bool back, bool right)
 {
 	if (foward) this->forward = KeyCode::None;
 	if (left) this->left = KeyCode::None;
@@ -61,7 +61,7 @@ void CharacterController::RemoveMovement(bool foward, bool left, bool back, bool
 	if (right) this->right = KeyCode::None;
 }
 
-void CharacterController::RemoveRotation(bool xAxis, bool yAxis)
+void EntityController::RemoveRotation(bool xAxis, bool yAxis)
 {
 	rotateX = xAxis;
 	rotateY = yAxis;
@@ -69,7 +69,7 @@ void CharacterController::RemoveRotation(bool xAxis, bool yAxis)
 
 
 
-void CharacterController::BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed)
+void EntityController::BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed)
 {
 	this->forward = forward;
 	this->left = left;
@@ -79,7 +79,7 @@ void CharacterController::BindMovements(KeyCode forward, KeyCode left, KeyCode b
 	SetSpeedMovements(speed);
 }
 
-void CharacterController::SetSpeedMovements(float speed)
+void EntityController::SetSpeedMovements(float speed)
 {
 	speedForward = speed;
 	speedLeft = speed;
@@ -87,7 +87,7 @@ void CharacterController::SetSpeedMovements(float speed)
 	speedRight = speed;
 }
 
-void CharacterController::SetSpeedMovements(float speedForward, float speedLeft, float speedBack, float speedRight)
+void EntityController::SetSpeedMovements(float speedForward, float speedLeft, float speedBack, float speedRight)
 {
 	this->speedForward = speedForward;
 	this->speedLeft = speedLeft;
@@ -95,17 +95,17 @@ void CharacterController::SetSpeedMovements(float speedForward, float speedLeft,
 	this->speedRight = speedRight;
 }
 
-void CharacterController::SetCameraSensitive(float sensitiveX, float sensitiveY)
+void EntityController::SetCameraSensitive(float sensitiveX, float sensitiveY)
 {
 	mouseSensitive = { sensitiveX, sensitiveY };
 }
 
-void CharacterController::Update()
+void EntityController::Update()
 {
 	
 }
 
-void CharacterController::Input()
+void EntityController::Input()
 {
 	if (transform == nullptr)
 		return;
@@ -145,7 +145,7 @@ void CharacterController::Input()
 		transform->SetLocalPosition(transform->GetLocalPosition() + direction);
 }
 
-void CharacterController::OnAsigned()
+void EntityController::OnAsigned()
 {
 	
 }

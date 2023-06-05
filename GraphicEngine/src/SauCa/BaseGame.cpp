@@ -67,7 +67,6 @@ int BaseGame::Init()
     PrintInConsole::SetConsolePosition(300, 25);
 #endif
 	
-	
     window = new Window();
     renderer = new Renderer();
     input = new Input();

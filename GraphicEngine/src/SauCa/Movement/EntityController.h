@@ -7,7 +7,7 @@
 #include "Input/KeyCodes.h"
 #include "Render/Camera.h"
 
-class SAUCA_API CharacterController : public Component
+class SAUCA_API EntityController : public Component
 {
 protected:
 	KeyCode forward = KeyCode::W;
@@ -32,8 +32,8 @@ public:
 	float minVerticalAngle = -45;
 	bool lockDirectionByLockCursor = true;
 	
-	CharacterController();
-	~CharacterController() override;
+	EntityController();
+	~EntityController() override;
 	void BindMovements(KeyCode forward, KeyCode left, KeyCode back, KeyCode right, float speed);
 	void SetSpeedMovements(float speed);
 	void SetSpeedMovements(float speedForward, float speedLeft, float speedBack, float speedRight);
@@ -43,8 +43,7 @@ public:
 	void OnAsigned() override;
 	void OnMouseMove(double x, double y);
 	void RemoveMovement(bool foward = true, bool left = true, bool back = true, bool right = true);
-	void RemoveRotation(bool xAxis = true, bool yAxis = true);
-	
+	void RemoveRotation(bool xAxis = true, bool yAxis = true);	
 };
 
 #endif

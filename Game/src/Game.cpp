@@ -34,9 +34,9 @@ void Game::Initialize()
 	cameraMinimapGo->AddComponent(cameraMinimap);
 	//cameraMinimap->renderList.push_back(floorSprite);
 
-	CharacterController* movementPlayer = new CharacterController();
+	EntityController* movementPlayer = new EntityController();
 	movementPlayer->RemoveRotation(false, true);
-	CharacterController* movementCamPivot = new CharacterController();
+	EntityController* movementCamPivot = new EntityController();
 	movementCamPivot->RemoveMovement();
 	movementCamPivot->RemoveRotation(true, false);
 
