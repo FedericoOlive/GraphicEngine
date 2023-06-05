@@ -64,9 +64,6 @@ private:
 	GameObject* cameraMinimapGo = nullptr;
 	Camera* cameraMinimap;
 
-	Model* modelBackPack;
-	Model* modelGoku;
-
 public:
 	void Initialize()override;
 	void Inputs() override;

@@ -83,16 +83,22 @@ void Game::Initialize()
 	target = cubeContent->transform;
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 
-	GameObject* bp = CreateGameObject("BackPack");
-	bp->transform->SetWorldScale({ 5, 5, 5 });
-	bp->transform->SetWorldPosition({ 0, 5, 0 });
-	modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
-	bp->AddComponent(modelBackPack);
+	GameObject* backpackObject = CreateGameObject("BackPack");
+	backpackObject->transform->SetWorldScale({ 2, 2, 2 });
+	backpackObject->transform->SetWorldPosition({ 0, 5, 0 });
+	Model* modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
+	backpackObject->AddComponent(modelBackPack);
+
+	GameObject* modelJakeObject = CreateGameObject("Jake Model");
+	modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
+	modelJakeObject->transform->SetWorldPosition({ -10, 5, 0 });
+	Model* modelJake = CreateModel("res/Jake/Jake_Test1.obj", true, false);
+	modelJakeObject->AddComponent(modelJake);
 
 	GameObject* modelGokuObject = CreateGameObject("Goku Model");
-	modelGokuObject->transform->SetWorldScale({ 20, 20, 20 });
-	modelGokuObject->transform->SetWorldPosition({ -10, 5, 0 });
-	modelGoku = CreateModel("res/Goku/A.obj", true, false);
+	modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });
+	modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });
+	Model* modelGoku = CreateModel("res/Goku/A.obj", true, false);
 	modelGokuObject->AddComponent(modelGoku);
 }
 
@@ -113,7 +119,7 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
 	if (Input::IsKeyHolding(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply,0, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Z)) { multiply += 1; }
-	if (Input::IsKeyHolding(KeyCode::X)) { multiply -= 1; }
+	if (Input::IsKeyHolding(KeyCode::X)) { multiply -= 1; if (multiply < 0)multiply = 0.01f; }
 	if (Input::IsKeyHolding(KeyCode::Num0)) { target == camera->transform ? target = player->transform : target = camera->transform; }
 	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
 	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
@@ -123,16 +129,11 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::Num6)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 01 * multiply, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Num7)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, -1 * multiply, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Num8)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, 01 * multiply)); }
-	if (Input::IsKeyHolding(KeyCode::Num9))
-	{
-		target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply));
-	}
+	if (Input::IsKeyHolding(KeyCode::Num9)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply)); }
 	if (Input::IsKeyDown(KeyCode::H)) { ShowHierarchyInConsole(); }
-
+	if (Input::IsKeyHolding(KeyCode::Space)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, 1 * multiply, 0)); }
 	if (Input::IsKeyHolding(KeyCode::LeftControl)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
 	if (Input::IsKeyHolding(KeyCode::BackSpace)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
-
-	
 }
 
 void Game::Update()

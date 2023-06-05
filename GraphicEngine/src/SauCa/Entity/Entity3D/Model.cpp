@@ -10,7 +10,7 @@ Model::Model(Renderer* renderer, std::string const& path, bool isInvertIndexesOr
 	this->IsInvertTextures = IsInvertTextures;
 	name = "Model";
 	SetRenderer(renderer);
-	material = new Material(renderer->GetDefaultShaderModel(), true);
+	material = new Material(renderer->GetDefaultShader(), true);
 
 	loadModel(path);
 }
@@ -23,7 +23,7 @@ void Model::Draw(Camera* camera)
 	if (isInvertIndexesOrder) 
 		glFrontFace(GL_CW);
 	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes);
-	if (isInvertIndexesOrder) 
+	if (isInvertIndexesOrder)
 		glFrontFace(GL_CCW);
 }
 

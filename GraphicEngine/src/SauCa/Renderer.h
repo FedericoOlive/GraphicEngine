@@ -21,7 +21,6 @@ private:
 	Shader* defaultShaderSolid;
 	Shader* defaultShaderTexture;
 	Shader* defaultShader;
-	Shader* defaultShaderModel;
 	
 	static std::list<Component*> renderList;
 	
@@ -47,8 +46,7 @@ public:
 	void SetMatrix(Material* material, Camera* camera, glm::mat4 model);
 	void SetMaterial(Material* material, float alpha, unsigned int textureID);
 	void SetLights(Material* material);
-
-
+	
 	void BindGenBufferObject(unsigned int& buffer);
 	void UnBindGenBufferObject();
 	void GenBuffer(int amount, unsigned int& buffer);
@@ -61,7 +59,6 @@ public:
 	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }
 	Shader* GetDefaultShaderTexture() const { return defaultShaderTexture; }
 	Shader* GetDefaultShader() const { return defaultShader; }
-	Shader* GetDefaultShaderModel() const { return defaultShaderModel; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);

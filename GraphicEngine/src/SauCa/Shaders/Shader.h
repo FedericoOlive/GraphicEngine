@@ -28,7 +28,6 @@ public:
 	void CreateDefaultSolidShader();
     void CreateDefaultTextureShader();
     void CreateDefaultShader();
-    void CreateDefaultShaderModel();
 
     void Use();
 	

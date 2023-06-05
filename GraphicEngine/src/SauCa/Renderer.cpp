@@ -27,8 +27,6 @@ void Renderer::CreateShader()
     defaultShaderTexture->CreateDefaultTextureShader();
     defaultShader = new Shader();
     defaultShader->CreateDefaultShader();
-	defaultShaderModel = new Shader();
-    defaultShaderModel->CreateDefaultShaderModel();
     std::cout << "\n";
 }
 

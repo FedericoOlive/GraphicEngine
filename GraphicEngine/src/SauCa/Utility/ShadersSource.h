@@ -16,10 +16,6 @@ public:
 	
 	static std::string vertexShaderSource;
 	static std::string fragmentShaderSource;
-
-
-	static std::string vertexShaderModel;
-	static std::string fragmentShaderModel;
 };
 
 std::string ShaderSource::vertexShaderSkybox =
@@ -122,7 +118,7 @@ std::string ShaderSource::fragmentShaderSource =
 	"out vec4 FragColor;\n"
 	"struct Material {\n"
 	"    bool hasTexture;\n"
-	"	 sampler2D albedoTexture;\n"
+	"	 sampler2D ourTexture;\n"
 	"    vec3 ambient;\n"
 	"    vec3 diffuse;\n"
 	"    vec3 specular;\n"
@@ -182,7 +178,7 @@ std::string ShaderSource::fragmentShaderSource =
 	"	vec3 ambientColor = material.ambient * material.colorTint;\n"
 	"	vec3 diffuseColor = material.diffuse * material.colorTint;\n"
 	"	vec3 specularColor = material.specular * material.colorTint;\n"
-	"	vec4 colorTexture = texture(material.albedoTexture, TexCoords);\n"
+	"	vec4 colorTexture = texture(material.ourTexture, TexCoords);\n"
 	"	if (colorTexture.a < 0.1) { discard; }\n"
 	"	if (material.hasTexture) {\n"
 	"	ambientColor = ambientColor * vec3(colorTexture);\n"
@@ -250,29 +246,4 @@ std::string ShaderSource::fragmentShaderSource =
 	"    specular *= attenuation * intensity;\n"
 	"    return (ambient + diffuse + specular);\n"
 	"}";
-
-std::string ShaderSource::vertexShaderModel =
-	"#version 330 core\n"
-	"layout(location = 0) in vec3 aPos;\n"
-	"layout(location = 1) in vec3 aNormal;\n"
-	"layout(location = 2) in vec2 aTexCoords;\n"
-	"out vec2 TexCoords;\n"
-	"uniform mat4 modelMatrix;\n"
-	"uniform mat4 viewMatrix;\n"
-	"uniform mat4 projectionMatrix;\n"
-	"void main()\n"
-	"{\n"
-	"	TexCoords = aTexCoords;\n"
-	"	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(aPos, 1.0);\n"
-	"}\n";
-std::string ShaderSource::fragmentShaderModel =
-	"#version 330 core\n"
-	"out vec4 FragColor; \n"
-	"in vec2 TexCoords; \n"
-	"uniform sampler2D texture_diffuse1; \n"
-	"void main()\n"
-	"{\n"
-	"	FragColor = texture(texture_diffuse1, TexCoords); \n"
-	"}\n";
-
 #endif
