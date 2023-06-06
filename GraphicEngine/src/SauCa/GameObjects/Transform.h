@@ -57,6 +57,7 @@ public:
 	void SetParent(GameObject* gameObject);
 	Transform* GetParent() const { return parent; }
 	std::list<Transform*> GetChildrens() const { return childrens; }
+	void GetRecursivelyChildrens(std::list<Transform*>& allChildrens, bool excludeThis = true);
 		
 	void SetWorldPosition(glm::vec3 position);
 	void SetLocalPosition(glm::vec3 position);

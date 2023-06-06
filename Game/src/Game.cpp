@@ -9,10 +9,10 @@ void Game::Initialize()
 	SetLights();
 	AddListeners();
 	AddPlayer();
-	AddMinimap();	
+	AddMinimap();
 	AddModels3D();
 	
-	target = cubeContent->transform;	
+	target = cubeContent->transform;
 }
 
 void Game::Inputs()
@@ -280,11 +280,11 @@ void Game::AddMinimap()
 
 void Game::AddModels3D()
 {
-	GameObject* backpackObject = CreateGameObject("BackPack");
-	backpackObject->transform->SetWorldScale({ 2, 2, 2 });
-	backpackObject->transform->SetWorldPosition({ 0, 5, 0 });
-	Model* modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
-	backpackObject->AddComponent(modelBackPack);
+	//GameObject* backpackObject = CreateGameObject("BackPack");
+	//backpackObject->transform->SetWorldScale({ 2, 2, 2 });
+	//backpackObject->transform->SetWorldPosition({ 0, 5, 0 });
+	//Model* modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
+	//backpackObject->AddComponent(modelBackPack);
 
 	GameObject* modelJakeObject = CreateGameObject("Jake Model");
 	modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });

@@ -19,7 +19,7 @@ Transform::Transform(GameObject* go)
 
 Transform::~Transform()
 {
-	// Todo: Destruir los Gameobjects hijos tambien
+	
 }
 
 void Transform::RemoveChildren(Transform* transformParent)
@@ -62,6 +62,15 @@ void Transform::SetParent(Transform* parentTransform)
 void Transform::SetParent(GameObject* gameObject)
 {
 	SetParent(gameObject->transform);
+}
+
+void Transform::GetRecursivelyChildrens(std::list<Transform*>& allChildrens, bool excludeThis)
+{
+	for (auto iter = childrens.begin(); iter != childrens.end(); ++iter)
+		(*iter)->GetRecursivelyChildrens(allChildrens, false);
+
+	if (!excludeThis)
+		allChildrens.push_back(this);
 }
 
 // ============================================ POSITION ============================================

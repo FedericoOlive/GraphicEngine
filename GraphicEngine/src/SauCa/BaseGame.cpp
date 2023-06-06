@@ -34,31 +34,7 @@ BaseGame::BaseGame()
 
 BaseGame::~BaseGame()
 {
-    if (input != nullptr)
-    {
-        delete input;
-        input = nullptr;
-    }
-    if (window != nullptr)
-    {
-        delete window;
-        window = nullptr;
-    }
-    if (renderer != nullptr)
-    {
-        delete renderer;
-        renderer = nullptr;
-    }
-    if (collisionManager != nullptr)
-    {
-        delete collisionManager;
-        collisionManager = nullptr;
-    }
-    if (timer != nullptr)
-    {
-        delete timer;
-        timer = nullptr;
-    }
+    
 }
 
 int BaseGame::Init()
@@ -104,10 +80,69 @@ int BaseGame::Init()
         Draw();
         AfterDraw();
     }
+	
+    DeInitializeEngine();
     DeInitialize();
 
     window->TerminateLibrary();
     return 0;
+}
+
+void BaseGame::DeInitializeEngine()
+{
+    if (input != nullptr)
+    {
+        delete input;
+        input = nullptr;
+    }
+    if (window != nullptr)
+    {
+        delete window;
+        window = nullptr;
+    }
+    if (renderer != nullptr)
+    {
+        delete renderer;
+        renderer = nullptr;
+    }
+    if (collisionManager != nullptr)
+    {
+        delete collisionManager;
+        collisionManager = nullptr;
+    }
+    if (timer != nullptr)
+    {
+        delete timer;
+        timer = nullptr;
+    }
+
+    while (!gameobjects.empty())
+    {
+        auto gameObject = gameobjects.begin();
+
+        if ((*gameObject)->transform->parent == nullptr)
+        {
+            std::list<Transform*> allChildrens;
+            (*gameObject)->transform->GetRecursivelyChildrens(allChildrens);
+            while (!allChildrens.empty())
+            {
+                auto childtransform = allChildrens.begin();
+                gameobjects.remove((*childtransform)->gameObject);
+                allChildrens.pop_front();
+            }
+
+            delete (*gameObject);
+            (*gameObject) = nullptr;
+        }
+
+        gameobjects.pop_front();
+    }
+
+    if (skybox != nullptr)
+    {
+        delete skybox;
+        skybox = nullptr;
+    }
 }
 
 Triangle* BaseGame::CreateTriangle()
@@ -233,7 +268,7 @@ CharacterController* BaseGame::CreateCharacterController(Camera* camera)
     GameObject* cameraGameObject = CreateGameObject();
     GameObject* visualPlayer = CreateGameObject();
     CharacterController* characterController = new CharacterController(root, visualPlayer, cameraPivot , cameraGameObject, camera);
-    return characterController;
+	return characterController;
 }
 
 TileMap* BaseGame::CreateTileMap(string filePath, string resPath)

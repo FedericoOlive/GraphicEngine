@@ -54,6 +54,7 @@ public:
 	virtual void Inputs() = 0;
 	virtual void Update() = 0;
 	virtual void DeInitialize() = 0;
+	void DeInitializeEngine();
 
 	// World Objects
 	Triangle* CreateTriangle();

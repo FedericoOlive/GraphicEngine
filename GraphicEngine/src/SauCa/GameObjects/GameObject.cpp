@@ -14,13 +14,27 @@ GameObject::GameObject(std::string name)
 
 GameObject::~GameObject()
 {
-	for (auto iter = components.begin(); iter != components.end(); ++iter)
+	while (!components.empty())
 	{
+		auto iter = components.begin();
 		if ((*iter) != nullptr)
 		{
-			delete* iter;
+			delete (*iter);
 			(*iter) = nullptr;
 		}
+		components.pop_front();
+	}
+	std::cout << "\n";
+
+	while (!transform->childrens.empty())
+	{
+		auto iter = transform->childrens.begin();
+		if ((*iter)->gameObject != nullptr)
+		{
+			delete (*iter)->gameObject;
+			(*iter)->gameObject = nullptr;
+		}
+		transform->childrens.pop_front();
 	}
 
 	if (transform != nullptr)
@@ -28,8 +42,6 @@ GameObject::~GameObject()
 		delete transform;
 		transform = nullptr;
 	}
-	
-	components.clear();
 }
 
 bool GameObject::IsActive()

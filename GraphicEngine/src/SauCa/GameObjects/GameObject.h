@@ -18,7 +18,7 @@ public:
     ~GameObject();
 	
     Transform* transform;
-    std::vector<Component*> components;
+    std::list<Component*> components;
     bool IsActive();
     bool IsActiveInHierarch();
     void SetActive(bool isActive);
