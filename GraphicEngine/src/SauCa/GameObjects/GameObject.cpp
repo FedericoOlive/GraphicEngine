@@ -24,7 +24,6 @@ GameObject::~GameObject()
 		}
 		components.pop_front();
 	}
-	std::cout << "\n";
 
 	while (!transform->childrens.empty())
 	{

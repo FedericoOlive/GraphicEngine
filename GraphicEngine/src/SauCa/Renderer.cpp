@@ -14,7 +14,26 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-
+    if (defaultShaderSkybox != nullptr)
+    {
+        delete defaultShaderSkybox;
+        defaultShaderSkybox = nullptr;
+    }
+    if (defaultShaderSolid != nullptr)
+    {
+        delete defaultShaderSolid;
+        defaultShaderSolid = nullptr;
+    }
+    if (defaultShaderTexture != nullptr)
+    {
+        delete defaultShaderTexture;
+        defaultShaderTexture = nullptr;
+    }
+    if (defaultShader != nullptr)
+    {
+        delete defaultShader;
+        defaultShader = nullptr;
+    }
 }
 
 void Renderer::CreateShader()

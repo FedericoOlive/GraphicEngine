@@ -9,5 +9,5 @@ Material::Material(Shader* newShader, bool hasTexture)
 
 Material::~Material()
 {
-	
+
 }

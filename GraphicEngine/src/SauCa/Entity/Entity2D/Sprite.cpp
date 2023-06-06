@@ -24,14 +24,20 @@ Sprite::Sprite(Texture* texture, Renderer* renderer, bool deleteExistingMaterial
     Sprite::BindBufferEntity();
 }
 
-Sprite::~Sprite() 
-{ 
-    while (!animations.empty()) 
+Sprite::~Sprite()
+{
+    while (!animations.empty())
     {
         delete animations.back();
         animations.pop_back();
     }
     renderer->UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->CBO, vertexData->NBO, vertexData->UVB, vertexData->EBO);
+
+	if (texture != nullptr)
+    {
+        delete texture;
+        texture = nullptr;
+    }
 }
 
 void Sprite::CreateVertexData()

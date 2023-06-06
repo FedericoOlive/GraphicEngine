@@ -11,7 +11,16 @@ Entity::Entity() : Component()
 
 Entity::~Entity()
 {
-	delete vertexData;
+	if (vertexData != nullptr)
+	{
+		delete vertexData;
+		vertexData = nullptr;
+	}
+	if (material != nullptr)
+	{
+		delete material;
+		material = nullptr;
+	}
 }
 
 void Entity::SetRenderer(Renderer* renderer)

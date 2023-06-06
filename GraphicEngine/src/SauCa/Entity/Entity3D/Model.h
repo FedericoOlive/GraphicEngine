@@ -16,7 +16,7 @@ class SAUCA_API Model : public Entity3D
 {
 public:
 	std::vector<MeshTexture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
-	std::vector<Mesh>    meshes;
+	std::vector<Mesh> meshes;
     std::string directory;
     bool gammaCorrection;
 
@@ -36,6 +36,5 @@ private:
 	Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 	std::vector<MeshTexture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 };
-
 
 #endif
