@@ -12,6 +12,10 @@ BaseLight::BaseLight(Renderer* renderer) : Component()
 	ambient = { 0, 0, 0 };
 	diffuse = { 0, 0, 0 };
 	specular = { 0, 0, 0 };
+	
+	powerAmbient = 1;
+	powerDiffuse = 1;
+	powerSpecular = 1;
 }
 
 void BaseLight::OnAsigned()

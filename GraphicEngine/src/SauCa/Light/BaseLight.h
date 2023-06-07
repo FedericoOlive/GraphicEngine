@@ -14,6 +14,10 @@ public:
 	glm::vec3 diffuse;
 	glm::vec3 specular;
 	glm::vec3 lightColor;
+
+	float powerAmbient;
+	float powerDiffuse;
+	float powerSpecular;
 	
 	BaseLight(Renderer* renderer);
 	void OnAsigned() override;

@@ -19,6 +19,11 @@ private:
 	GameObject* goLightPointArround03 = nullptr;
 	GameObject* goLightPointArround04 = nullptr;
 
+	float* targetFloatModify = nullptr;
+	string targetString = "";
+	SpotLight* spotlightPlayer = nullptr;
+	int currentColor = 0;
+
 public:
 	void Initialize()override;
 	void Inputs() override;
@@ -33,6 +38,7 @@ public:
 	void AddMinimap();
 	void AddModels3D();
 
+	void ChangeColorSpotLight();
 	void OnMouseMove(double xPos, double yPos);
 	void OnMouseScrollMovement(double xOffset, double yOffset);
 

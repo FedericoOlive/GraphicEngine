@@ -164,9 +164,9 @@ void Renderer::SetLights(Material* material)
 
             material->shader->setVec3(dirLightString + "direction", (*dirLight)->transform->forward());
             material->shader->setVec3(dirLightString + "lightColor", (*dirLight)->lightColor);
-            material->shader->setVec3(dirLightString + "ambient", (*dirLight)->ambient);
-            material->shader->setVec3(dirLightString + "diffuse", (*dirLight)->diffuse);
-            material->shader->setVec3(dirLightString + "specular", (*dirLight)->specular);
+            material->shader->setVec3(dirLightString + "ambient", (*dirLight)->ambient * (*dirLight)->powerAmbient);
+            material->shader->setVec3(dirLightString + "diffuse", (*dirLight)->diffuse * (*dirLight)->powerDiffuse);
+            material->shader->setVec3(dirLightString + "specular", (*dirLight)->specular * (*dirLight)->powerSpecular);
 
             i++;
             if (i > maxDirLights)
@@ -183,9 +183,9 @@ void Renderer::SetLights(Material* material)
 
             material->shader->setVec3(pointLightString + "position", (*pointLight)->transform->GetWorldPosition());
             material->shader->setVec3(pointLightString + "lightColor", (*pointLight)->lightColor);
-            material->shader->setVec3(pointLightString + "ambient", (*pointLight)->ambient);
-            material->shader->setVec3(pointLightString + "diffuse", (*pointLight)->diffuse);
-            material->shader->setVec3(pointLightString + "specular", (*pointLight)->specular);
+            material->shader->setVec3(pointLightString + "ambient", (*pointLight)->ambient * (*pointLight)->powerAmbient);
+            material->shader->setVec3(pointLightString + "diffuse", (*pointLight)->diffuse * (*pointLight)->powerDiffuse);
+            material->shader->setVec3(pointLightString + "specular", (*pointLight)->specular * (*pointLight)->powerSpecular);
             material->shader->setFloat(pointLightString + "constant", (*pointLight)->constant);
             material->shader->setFloat(pointLightString + "linear", (*pointLight)->linear);
             material->shader->setFloat(pointLightString + "quadratic", (*pointLight)->quadratic);
@@ -206,9 +206,9 @@ void Renderer::SetLights(Material* material)
             material->shader->setVec3(spotLightString + "position", (*spotLight)->transform->GetWorldPosition());
             material->shader->setVec3(spotLightString + "direction", (*spotLight)->transform->forward());
             material->shader->setVec3(spotLightString + "lightColor", (*spotLight)->lightColor);
-            material->shader->setVec3(spotLightString + "ambient", (*spotLight)->ambient);
-            material->shader->setVec3(spotLightString + "diffuse", (*spotLight)->diffuse);
-            material->shader->setVec3(spotLightString + "specular", (*spotLight)->specular);
+            material->shader->setVec3(spotLightString + "ambient", (*spotLight)->ambient * (*spotLight)->powerAmbient);
+            material->shader->setVec3(spotLightString + "diffuse", (*spotLight)->diffuse * (*spotLight)->powerDiffuse);
+            material->shader->setVec3(spotLightString + "specular", (*spotLight)->specular * (*spotLight)->powerSpecular);
             material->shader->setFloat(spotLightString + "constant", (*spotLight)->constant);
             material->shader->setFloat(spotLightString + "linear", (*spotLight)->linear);
             material->shader->setFloat(spotLightString + "quadratic", (*spotLight)->quadratic);

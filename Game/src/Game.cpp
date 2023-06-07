@@ -4,7 +4,7 @@
 void Game::Initialize()
 {
 	camera = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
-	
+	targetFloatModify = &multiply;
 	SetEnviroment();
 	SetLights();
 	AddListeners();
@@ -17,21 +17,21 @@ void Game::Initialize()
 
 void Game::Inputs()
 {
-	if (Input::IsKeyDown(KeyCode::Kp0)) { cout << "KP0\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp1)) { cout << "KP1\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp2)) { cout << "KP2\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp3)) { cout << "KP3\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp4)) { cout << "KP4\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp5)) { cout << "KP5\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp6)) { cout << "KP6\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp7)) { cout << "KP7\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp8)) { cout << "KP8\n"; }
-	if (Input::IsKeyDown(KeyCode::Kp9)) { cout << "KP9\n"; }	
+	if (Input::IsKeyDown(KeyCode::Kp0)) { targetFloatModify = &multiply;							targetString = "multiply: ";		cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp1)) { targetFloatModify = &(spotlightPlayer->constant);			targetString = "constant: ";		cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp2)) { targetFloatModify = &(spotlightPlayer->linear);			targetString = "linear: ";			cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp3)) { targetFloatModify = &(spotlightPlayer->quadratic);		targetString = "quadratic: ";		cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp4)) { targetFloatModify = &(spotlightPlayer->cutOff);			targetString = "cutOff: ";			cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp5)) { targetFloatModify = &(spotlightPlayer->outerCutOff);		targetString = "outerCutOff: ";		cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp6)) { targetFloatModify = &(spotlightPlayer->powerAmbient);		targetString = "powerAmbient: ";	cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp7)) { targetFloatModify = &(spotlightPlayer->powerDiffuse);		targetString = "powerDiffuse: ";	cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp8)) { targetFloatModify = &(spotlightPlayer->powerSpecular);	targetString = "powerSpecular: ";	cout << "Get: " << targetString << "\n";	}
+	if (Input::IsKeyDown(KeyCode::Kp9)) { ChangeColorSpotLight(); }
 	
-	if (Input::IsKeyHolding(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
-	if (Input::IsKeyHolding(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply,0, 0)); }
-	if (Input::IsKeyHolding(KeyCode::Z)) { multiply += 1; }
-	if (Input::IsKeyHolding(KeyCode::X)) { multiply -= 1; if (multiply < 0)multiply = 0.01f; }
+	if (Input::IsKeyHolding(KeyCode::Q)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3( 1 * multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Z)) { *targetFloatModify -= 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
+	if (Input::IsKeyHolding(KeyCode::X)) { *targetFloatModify += 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
 	if (Input::IsKeyHolding(KeyCode::Num0)) {  }
 	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
 	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
@@ -108,30 +108,38 @@ void Game::SetLights()
 	
 	lightSpot1->transform->SetWorldRotation({ 0, 0, 90 });
 	lightSpot2->transform->SetWorldRotation({ 0, 0, -90 });
-
+	float powerLight = 4;
 	goLightPointArround01 = CreateGameObject("Point Arround 01");
 	goLightPointArround01->transform->SetWorldPosition({0, 10, 0});
 	PointLight* lightPointArround = CreatePointLight();
 	goLightPointArround01->AddComponent(lightPointArround);
 	lightPointArround->lightColor = glm::vec3{ 1, 0, 0 };
+	lightPointArround->powerAmbient = powerLight;
+	lightPointArround->powerDiffuse = powerLight;
 
 	goLightPointArround02 = CreateGameObject("Point Arround 02");
 	goLightPointArround02->transform->SetWorldPosition({0, 20, 0});
 	lightPointArround = CreatePointLight();
 	goLightPointArround02->AddComponent(lightPointArround);
 	lightPointArround->lightColor = glm::vec3{ 0, 1, 0 };
+	lightPointArround->powerAmbient = powerLight;
+	lightPointArround->powerDiffuse = powerLight;
 
 	goLightPointArround03 = CreateGameObject("Point Arround 03");
 	goLightPointArround03->transform->SetWorldPosition({0, 30, 0});
 	lightPointArround = CreatePointLight();
 	goLightPointArround03->AddComponent(lightPointArround);
 	lightPointArround->lightColor = glm::vec3{ 0, 0, 1 };
+	lightPointArround->powerAmbient = powerLight;
+	lightPointArround->powerDiffuse = powerLight;
 
 	goLightPointArround04 = CreateGameObject("Point Arround 04");
 	goLightPointArround04->transform->SetWorldPosition({0, 40, 0});
 	lightPointArround = CreatePointLight();
 	goLightPointArround04->AddComponent(lightPointArround);
 	lightPointArround->lightColor = glm::vec3{ 1, 0, 1 };
+	lightPointArround->powerAmbient = powerLight;
+	lightPointArround->powerDiffuse = powerLight;
 
 	GameObject* goLightPointStatic01 = CreateGameObject("Point Static 04");
 	GameObject* goLightPointStatic02 = CreateGameObject("Point Static 04");
@@ -260,11 +268,12 @@ void Game::AddPlayer()
 	player = CreateCharacterController(camera);
 	player->SetThirdPerson();
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
-
+	
 	player->visualPlayer->AddComponent(CreateCube());
 	
 	GameObject* spotGo = CreateGameObject("SpotLight Player");
-	spotGo->AddComponent(CreateSpotLight());
+	spotlightPlayer = CreateSpotLight();
+	spotGo->AddComponent(spotlightPlayer);
 	spotGo->transform->SetParent(player->pivot);
 }
 
@@ -297,6 +306,31 @@ void Game::AddModels3D()
 	modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });
 	Model* modelGoku = CreateModel("res/Goku/A.obj", true, false);
 	modelGokuObject->AddComponent(modelGoku);
+}
+
+void Game::ChangeColorSpotLight()
+{
+	currentColor++;
+	if (currentColor > 3) 
+		currentColor = 0;
+	
+	switch (currentColor)
+	{
+	case 0:
+		spotlightPlayer->diffuse = { 1, 1, 1 };
+		break;
+	case 1:
+		spotlightPlayer->diffuse = { 1, 0, 0 };
+		break;
+	case 2:
+		spotlightPlayer->diffuse = { 0, 1, 0 };
+		break;
+	case 3:
+		spotlightPlayer->diffuse = { 0, 0, 1 };
+		break;
+	default:
+		break;
+	}
 }
 
 void Game::OnMouseMove(double xPos, double yPos)
