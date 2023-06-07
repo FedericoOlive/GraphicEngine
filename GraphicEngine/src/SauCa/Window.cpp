@@ -25,7 +25,7 @@ int Window::InitLibrary()
 
 void Window::CreateWindow()
 {
-    windowBaseName = "Hello World";
+    windowBaseName = "SAUCA Engine";
     window = glfwCreateWindow(Screen_Width, Screen_Height, windowBaseName.c_str(), NULL, NULL);
 }
 

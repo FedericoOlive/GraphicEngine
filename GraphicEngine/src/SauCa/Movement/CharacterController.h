@@ -19,6 +19,6 @@ public:
 	CharacterController(GameObject* player, GameObject* visualPlayer, GameObject* cameraPivot, GameObject* cameraGameObject, Camera* cameraComponent);
 	~CharacterController() override;
 	void SetFirstPerson();
-	void SetThirdPerson();
+	void SetThirdPerson(glm::vec3 offset = { 0, 1, 3 });
 };
 #endif

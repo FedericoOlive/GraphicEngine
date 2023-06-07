@@ -23,6 +23,7 @@ private:
 	string targetString = "";
 	SpotLight* spotlightPlayer = nullptr;
 	int currentColor = 0;
+	glm::vec3 playerZoom = {0, 1, 3};
 
 public:
 	void Initialize()override;

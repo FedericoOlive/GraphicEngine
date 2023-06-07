@@ -42,7 +42,7 @@ void Camera::SetCameraOrthogonal(float near, float far)
 
 void Camera::SetCameraPerspective(float fov, float near, float far)
 {
-	projectionMatrix = glm::perspective(glm::radians(fov), aspect, near, far);
+	projectionMatrix = glm::perspective(glm::radians(fov * cameraZoom), aspect, near, far);
 }
 
 void Camera::OnAsigned()
@@ -65,7 +65,12 @@ void Camera::UpdateViewMatrix()
 	viewMatrix = glm::lookAt(cameraPos, targetPos, transform->up());
 }
 
-void Camera::SetZoom(float cameraZoom)
+void Camera::SetFov(float fov)
+{
+	SetZoom(cameraZoom, fov);
+}
+
+void Camera::SetZoom(float cameraZoom, float fov)
 {
 	this->cameraZoom = cameraZoom;
 	switch (cameraType)
@@ -77,7 +82,7 @@ void Camera::SetZoom(float cameraZoom)
 		SetCameraOrthogonal();
 		break;
 	default:
-		SetCameraPerspective();
+		SetCameraPerspective(fov);
 		break;
 	}
 }

@@ -63,8 +63,8 @@ int BaseGame::Init()
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
-        if (timer->IsEndCounter())
-            window->AddStringToNameWindow(timer->GetTimeInfo());
+        //if (timer->IsEndCounter())
+        //    window->AddStringToNameWindow(timer->GetTimeInfo());
         
         window->PollEvents();
     	

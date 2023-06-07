@@ -34,8 +34,8 @@ public:
 	void OnAsigned() override;
 	void OnUpdatePosition();
 	void UpdateViewMatrix();
-
-	void SetZoom(float cameraZoom);
+	void SetFov(float fov);
+	void SetZoom(float cameraZoom, float fov = 45.0f);
 	void SetCameraType(CameraType cameraType);
 	float GetZoom() const { return cameraZoom; }
 };

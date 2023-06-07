@@ -297,9 +297,27 @@ void Game::AddModels3D()
 
 	GameObject* modelJakeObject = CreateGameObject("Jake Model");
 	modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
-	modelJakeObject->transform->SetWorldPosition({ -10, 5, 0 });
+	modelJakeObject->transform->SetWorldPosition({ -10, 5, 5 });
+	modelJakeObject->transform->SetWorldRotation({ 0, 180, 0 });
 	Model* modelJake = CreateModel("res/Jake/Jake_Test1.obj", true, false);
 	modelJakeObject->AddComponent(modelJake);
+	// Set as Gold
+	modelJake->material->ambient = { 0.24725f, 0.1995f, 0.0745f };
+	modelJake->material->diffuse = { 0.75164f, 0.60648f, 0.22648f };
+	modelJake->material->specular = { 0.628281f, 0.555802f, 0.366065f };
+	modelJake->material->shininess = 0.4f * 128.0f;
+
+	GameObject* modelJakeObject2 = CreateGameObject("Jake Model");
+	modelJakeObject2->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
+	modelJakeObject2->transform->SetWorldPosition({ -10, 5, -5 });
+	Model* modelJake2 = CreateModel("res/Jake/Jake_Test1.obj", true, false);
+	modelJakeObject2->AddComponent(modelJake2);
+	// Set as Gold
+	modelJake2->material->ambient = { 1, 1, 1 };
+	modelJake2->material->diffuse = { 1, 1, 1 };
+	modelJake2->material->specular ={ 1, 1, 1 };
+	modelJake2->material->shininess = 128.0f;
+	
 
 	GameObject* modelGokuObject = CreateGameObject("Goku Model");
 	modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });
@@ -340,8 +358,25 @@ void Game::OnMouseMove(double xPos, double yPos)
 
 void Game::OnMouseScrollMovement(double xOffset, double yOffset)
 {
+	glm::vec3 minPlayerZoom = { 0, -5, -15 };
+	glm::vec3 maxPlayerZoom = { 0, 5, 15 };
 
-	//std::cout << "Mouse Scroll: {" << xOffset << ", " << yOffset << "}\n";
+	playerZoom.y += 1.0f * multiply * static_cast<float>(-yOffset);
+	playerZoom.z += 3.0f * multiply * static_cast<float>(-yOffset);
+
+	if (playerZoom.y > maxPlayerZoom.y) playerZoom = maxPlayerZoom;
+	if (playerZoom.y < minPlayerZoom.y) playerZoom = minPlayerZoom;
+
+	if (playerZoom.y > 0)
+	{
+		player->SetThirdPerson(playerZoom);
+		camera->SetZoom(1);
+	}
+	else
+	{
+		player->SetFirstPerson();
+		camera->SetZoom(1 - (-playerZoom.y / 10.0f));
+	}
 }
 
 void Game::DeInitialize()

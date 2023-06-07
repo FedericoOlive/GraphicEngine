@@ -50,7 +50,7 @@ void CharacterController::SetFirstPerson()
 	camera->transform->SetLocalPosition({ 0, 0, 0 });
 }
 
-void CharacterController::SetThirdPerson()
+void CharacterController::SetThirdPerson(glm::vec3 offset)
 {
-	camera->transform->SetLocalPosition({ 0, 1, 3 });
+	camera->transform->SetLocalPosition(offset);
 }
