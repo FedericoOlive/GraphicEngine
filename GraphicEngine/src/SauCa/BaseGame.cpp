@@ -1,7 +1,7 @@
 #include "BaseGame.h"
 #include "Utility/PrintInConsole.h"
 
-string BaseGame::version = "1.7.0";
+string BaseGame::version = "2.0.0";
 Event<> BaseGame::OnUpdateEvent;
 Event<> BaseGame::OnInputEvent;
 
