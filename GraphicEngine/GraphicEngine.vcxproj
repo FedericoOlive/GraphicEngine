@@ -187,6 +187,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\ModelImporter.cpp" />
     <ClCompile Include="src\SauCa\Movement\CharacterController.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\Mesh.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\Model.cpp" />
@@ -227,6 +228,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\ModelImporter.h" />
     <ClInclude Include="src\SauCa\Movement\CharacterController.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D\Mesh.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D\Model.h" />

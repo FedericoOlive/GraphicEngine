@@ -4,6 +4,7 @@
 void Game::Initialize()
 {
 	camera = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
+	
 	targetFloatModify = &multiply;
 	SetEnviroment();
 	SetLights();
@@ -294,7 +295,7 @@ void Game::AddModels3D()
 	//backpackObject->transform->SetWorldPosition({ 0, 5, 0 });
 	//Model* modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
 	//backpackObject->AddComponent(modelBackPack);
-
+	//
 	GameObject* modelJakeObject = CreateGameObject("Jake Model");
 	modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
 	modelJakeObject->transform->SetWorldPosition({ -10, 5, 5 });
@@ -306,7 +307,7 @@ void Game::AddModels3D()
 	modelJake->material->diffuse = { 0.75164f, 0.60648f, 0.22648f };
 	modelJake->material->specular = { 0.628281f, 0.555802f, 0.366065f };
 	modelJake->material->shininess = 0.4f * 128.0f;
-
+	
 	GameObject* modelJakeObject2 = CreateGameObject("Jake Model");
 	modelJakeObject2->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
 	modelJakeObject2->transform->SetWorldPosition({ -10, 5, -5 });
@@ -318,7 +319,6 @@ void Game::AddModels3D()
 	modelJake2->material->specular ={ 1, 1, 1 };
 	modelJake2->material->shininess = 128.0f;
 	
-
 	GameObject* modelGokuObject = CreateGameObject("Goku Model");
 	modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });
 	modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });

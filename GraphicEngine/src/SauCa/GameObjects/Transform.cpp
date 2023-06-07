@@ -51,11 +51,6 @@ void Transform::SetParent(Transform* parentTransform)
 	if (parent)
 	{	
 		parent->SetChildren(this);
-
-		// Todo: Pendiente recalcular Locales
-		//localPosition = parent->worldPosition - worldPosition;
-		//localRotation = parent->worldRotation - worldRotation;
-		//localScale = parent->worldScale - worldScale;
 	}
 }
 
