@@ -109,8 +109,8 @@ void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Materi
                 glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
                 material->shader->Use();
                 view = glm::mat4(glm::mat3((*iterCamera)->viewMatrix)); // remove translation from the view matrix
-                material->shader->setMat4("view", view);
-                material->shader->setMat4("projection", projection);
+                material->shader->SetMat4("view", view);
+                material->shader->SetMat4("projection", projection);
                 // skybox cube
                 glBindVertexArray(VAO);
                 glActiveTexture(GL_TEXTURE0);
@@ -129,25 +129,25 @@ void Renderer::SetMatrix(Shader* shader, Camera* camera, glm::mat4 model)
     glm::mat4 viewMatrix = camera->viewMatrix;
     glm::mat4 projectionMatrix = camera->projectionMatrix;
 
-    shader->setMat4("projectionMatrix", projectionMatrix);
-    shader->setMat4("viewMatrix", viewMatrix);
-    shader->setMat4("modelMatrix", model);
-    shader->setVec3("viewPos", camera->transform->GetWorldPosition());
+    shader->SetMat4("projectionMatrix", projectionMatrix);
+    shader->SetMat4("viewMatrix", viewMatrix);
+    shader->SetMat4("modelMatrix", model);
+    shader->SetVec3("viewPos", camera->transform->GetWorldPosition());
 }
 
 void Renderer::SetMaterial(Material* material, float alpha, unsigned int textureID)
 {
-    material->shader->setBool("material.hasTexture", material->hasTexture);
-    material->shader->setUnsignedInt("material.texture", textureID);
-    material->shader->setVec3("material.ambient", material->ambient);
-    material->shader->setVec3("material.diffuse", material->diffuse);
-    material->shader->setVec3("material.specular", material->specular);
-    material->shader->setVec3("material.colorTint", material->colorTint);
-    material->shader->setFloat("material.shininess", material->shininess);
+    material->shader->SetBool("material.hasTexture", material->hasTexture);
+    material->shader->SetUnsignedInt("material.texture", textureID);
+    material->shader->SetVec3("material.ambient", material->ambient);
+    material->shader->SetVec3("material.diffuse", material->diffuse);
+    material->shader->SetVec3("material.specular", material->specular);
+    material->shader->SetVec3("material.colorTint", material->colorTint);
+    material->shader->SetFloat("material.shininess", material->shininess);
 	
-    material->shader->setVec3("colorTint", material->colorTint);
-    material->shader->setFloat("alpha", alpha);
-    material->shader->setUnsignedInt("ourTexture", textureID);
+    material->shader->SetVec3("colorTint", material->colorTint);
+    material->shader->SetFloat("alpha", alpha);
+    material->shader->SetUnsignedInt("ourTexture", textureID);
 }
 
 void Renderer::SetLights(Material* material)
@@ -156,9 +156,9 @@ void Renderer::SetLights(Material* material)
     const int maxPointLights    = 20;
     const int maxSpotLights     = 20;
 
-    material->shader->setInt("dirLightAmount", directionalLights.size());
-    material->shader->setInt("pointLightAmount", pointLights.size());
-    material->shader->setInt("spotLightAmount", spotLights.size());
+    material->shader->SetInt("dirLightAmount", directionalLights.size());
+    material->shader->SetInt("pointLightAmount", pointLights.size());
+    material->shader->SetInt("spotLightAmount", spotLights.size());
 
     int i = 0;
     for (auto dirLight = directionalLights.begin(); dirLight != directionalLights.end(); ++dirLight)
@@ -167,11 +167,11 @@ void Renderer::SetLights(Material* material)
         {
             string dirLightString = "dirLights[" + to_string(i) + "].";
 
-            material->shader->setVec3(dirLightString + "direction", (*dirLight)->transform->forward());
-            material->shader->setVec3(dirLightString + "lightColor", (*dirLight)->lightColor);
-            material->shader->setVec3(dirLightString + "ambient", (*dirLight)->ambient * (*dirLight)->powerAmbient);
-            material->shader->setVec3(dirLightString + "diffuse", (*dirLight)->diffuse * (*dirLight)->powerDiffuse);
-            material->shader->setVec3(dirLightString + "specular", (*dirLight)->specular * (*dirLight)->powerSpecular);
+            material->shader->SetVec3(dirLightString + "direction", (*dirLight)->transform->forward());
+            material->shader->SetVec3(dirLightString + "lightColor", (*dirLight)->lightColor);
+            material->shader->SetVec3(dirLightString + "ambient", (*dirLight)->ambient * (*dirLight)->powerAmbient);
+            material->shader->SetVec3(dirLightString + "diffuse", (*dirLight)->diffuse * (*dirLight)->powerDiffuse);
+            material->shader->SetVec3(dirLightString + "specular", (*dirLight)->specular * (*dirLight)->powerSpecular);
 
             i++;
             if (i > maxDirLights)
@@ -186,14 +186,14 @@ void Renderer::SetLights(Material* material)
         {
             string pointLightString = "pointLights[" + to_string(i) + "].";
 
-            material->shader->setVec3(pointLightString + "position", (*pointLight)->transform->GetWorldPosition());
-            material->shader->setVec3(pointLightString + "lightColor", (*pointLight)->lightColor);
-            material->shader->setVec3(pointLightString + "ambient", (*pointLight)->ambient * (*pointLight)->powerAmbient);
-            material->shader->setVec3(pointLightString + "diffuse", (*pointLight)->diffuse * (*pointLight)->powerDiffuse);
-            material->shader->setVec3(pointLightString + "specular", (*pointLight)->specular * (*pointLight)->powerSpecular);
-            material->shader->setFloat(pointLightString + "constant", (*pointLight)->constant);
-            material->shader->setFloat(pointLightString + "linear", (*pointLight)->linear);
-            material->shader->setFloat(pointLightString + "quadratic", (*pointLight)->quadratic);
+            material->shader->SetVec3(pointLightString + "position", (*pointLight)->transform->GetWorldPosition());
+            material->shader->SetVec3(pointLightString + "lightColor", (*pointLight)->lightColor);
+            material->shader->SetVec3(pointLightString + "ambient", (*pointLight)->ambient * (*pointLight)->powerAmbient);
+            material->shader->SetVec3(pointLightString + "diffuse", (*pointLight)->diffuse * (*pointLight)->powerDiffuse);
+            material->shader->SetVec3(pointLightString + "specular", (*pointLight)->specular * (*pointLight)->powerSpecular);
+            material->shader->SetFloat(pointLightString + "constant", (*pointLight)->constant);
+            material->shader->SetFloat(pointLightString + "linear", (*pointLight)->linear);
+            material->shader->SetFloat(pointLightString + "quadratic", (*pointLight)->quadratic);
 
             i++;
             if (i > maxPointLights)
@@ -208,17 +208,17 @@ void Renderer::SetLights(Material* material)
         {
             string spotLightString = "spotLights[" + to_string(i) + "].";
 
-            material->shader->setVec3(spotLightString + "position", (*spotLight)->transform->GetWorldPosition());
-            material->shader->setVec3(spotLightString + "direction", (*spotLight)->transform->forward());
-            material->shader->setVec3(spotLightString + "lightColor", (*spotLight)->lightColor);
-            material->shader->setVec3(spotLightString + "ambient", (*spotLight)->ambient * (*spotLight)->powerAmbient);
-            material->shader->setVec3(spotLightString + "diffuse", (*spotLight)->diffuse * (*spotLight)->powerDiffuse);
-            material->shader->setVec3(spotLightString + "specular", (*spotLight)->specular * (*spotLight)->powerSpecular);
-            material->shader->setFloat(spotLightString + "constant", (*spotLight)->constant);
-            material->shader->setFloat(spotLightString + "linear", (*spotLight)->linear);
-            material->shader->setFloat(spotLightString + "quadratic", (*spotLight)->quadratic);
-            material->shader->setFloat(spotLightString + "cutOff", glm::cos(glm::radians((*spotLight)->cutOff)));
-            material->shader->setFloat(spotLightString + "outerCutOff", glm::cos(glm::radians((*spotLight)->outerCutOff)));
+            material->shader->SetVec3(spotLightString + "position", (*spotLight)->transform->GetWorldPosition());
+            material->shader->SetVec3(spotLightString + "direction", (*spotLight)->transform->forward());
+            material->shader->SetVec3(spotLightString + "lightColor", (*spotLight)->lightColor);
+            material->shader->SetVec3(spotLightString + "ambient", (*spotLight)->ambient * (*spotLight)->powerAmbient);
+            material->shader->SetVec3(spotLightString + "diffuse", (*spotLight)->diffuse * (*spotLight)->powerDiffuse);
+            material->shader->SetVec3(spotLightString + "specular", (*spotLight)->specular * (*spotLight)->powerSpecular);
+            material->shader->SetFloat(spotLightString + "constant", (*spotLight)->constant);
+            material->shader->SetFloat(spotLightString + "linear", (*spotLight)->linear);
+            material->shader->SetFloat(spotLightString + "quadratic", (*spotLight)->quadratic);
+            material->shader->SetFloat(spotLightString + "cutOff", glm::cos(glm::radians((*spotLight)->cutOff)));
+            material->shader->SetFloat(spotLightString + "outerCutOff", glm::cos(glm::radians((*spotLight)->outerCutOff)));
 
             i++;
             if (i > maxSpotLights)
@@ -355,10 +355,10 @@ void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, 
     Shader* shader = GetDefaultShaderSolid();
     shader->Use();
 
-    shader->setMat4("modelMatrix", glm::mat4(1.0f));
-    shader->setMat4("viewMatrix", camera->viewMatrix);
-    shader->setMat4("projectionMatrix", camera->projectionMatrix);
-    shader->setVec3("colorTint", color);
+    shader->SetMat4("modelMatrix", glm::mat4(1.0f));
+    shader->SetMat4("viewMatrix", camera->viewMatrix);
+    shader->SetMat4("projectionMatrix", camera->projectionMatrix);
+    shader->SetVec3("colorTint", color);
 
     glLineWidth(lineWidth);
     glEnable(GL_LINE_SMOOTH);
