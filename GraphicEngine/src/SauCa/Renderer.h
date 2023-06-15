@@ -18,10 +18,10 @@ class Camera;
 static class SAUCA_API Renderer
 {
 private:
-	Shader* defaultShaderSkybox;
-	Shader* defaultShaderSolid;
-	Shader* defaultShaderTexture;
-	Shader* defaultShader;
+	static Shader* defaultShaderSkybox;
+	static Shader* defaultShaderSolid;
+	static Shader* defaultShaderTexture;
+	static Shader* defaultShader;
 	
 	static std::list<Component*> allRenderList;
 	
@@ -56,16 +56,16 @@ public:
 	void UnBindObject(VertexData* vertexData);
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& CBO, unsigned int& NBO, unsigned int& UVB, unsigned int& EBO);
 
-	Shader* GetDefaultShaderSkybox() const { return defaultShaderSkybox; }
-	Shader* GetDefaultShaderSolid() const { return defaultShaderSolid; }
-	Shader* GetDefaultShaderTexture() const { return defaultShaderTexture; }
-	Shader* GetDefaultShader() const { return defaultShader; }
+	static Shader* GetDefaultShaderSkybox() { return defaultShaderSkybox; }
+	static Shader* GetDefaultShaderSolid() { return defaultShaderSolid; }
+	static Shader* GetDefaultShaderTexture() { return defaultShaderTexture; }
+	static Shader* GetDefaultShader() { return defaultShader; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);
 	static void AddCamera(Camera* cam);
 
-	void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2, glm::vec3 color = { 1, 0, 0 }, Camera* camera);
+	static void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2.0f, glm::vec3 color = { 1, 0, 0 }, Camera* camera = nullptr);
 };
 
 #endif

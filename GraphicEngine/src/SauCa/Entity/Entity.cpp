@@ -42,7 +42,8 @@ void Entity::OnAsigned()
 
 void Entity::RecalculateAABB()
 {
-	
+	int asd = 0;
+	asd = 1;
 }
 
 void Entity::CalculateAABB()

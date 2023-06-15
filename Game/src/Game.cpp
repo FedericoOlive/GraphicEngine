@@ -68,10 +68,9 @@ void Game::Update()
 
 void Game::Draw()
 {
-	line->lineWidth = 10;
-	DrawLine(camera, { 0, 0, 0 }, cube1->transform->GetWorldPosition());
-	DrawLine(camera, { 0, 0, 0 }, cube2->transform->GetWorldPosition());
-	DrawLine(camera, { 0, 0, 0 }, cube3->transform->GetWorldPosition());
+	//DrawLine({ 0, 0, 0 }, cube2->transform->GetWorldPosition());
+	DrawCubeLines(cube2->transform->aabb, 2, {1, 0, 0}, camera);
+	DrawCubeLines(cube1->transform->aabb, 2, {0, 1, 0}, camera);
 }
 
 void Game::SetLights()
@@ -205,34 +204,34 @@ void Game::SetEnviroment()
 	floorSprite->material->specular = {0, 0, 0};
 	floorSprite->material->diffuse = {0.5f, 0.5f, 0.5f };
 	
-	GameObject* wallRight = CreateGameObject("Wall Right");
-	wallRight->transform->SetParent(worldContent);
-	wallRight->AddComponent(CreateSprite(CreateTexture("res/World/Right.png")));
-	wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0.01f });
-	wallRight->transform->SetLocalPosition({ cubeDimensions, cubeDimensions / 2, 0 });
-	wallRight->transform->SetLocalRotation({ 0, -90, 0 });
-
-	GameObject* wallLeft = CreateGameObject("Wall Left");
-	wallLeft->transform->SetParent(worldContent);
-	wallLeft->AddComponent(CreateSprite(CreateTexture("res/World/Left.png")));
-	wallLeft->transform->SetLocalPosition({ -cubeDimensions, cubeDimensions / 2, 0 });
-	wallLeft->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
-	wallLeft->transform->SetLocalRotation({ 0, 90, 0 });
-
-	GameObject* wallBack = CreateGameObject("Wall Back");
-	wallBack->transform->SetParent(worldContent);
-	wallBack->AddComponent(CreateSprite(CreateTexture("res/World/Back.png")));
-	wallBack->transform->SetLocalPosition({ 0, cubeDimensions / 2, cubeDimensions });
-	wallBack->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
-	wallBack->transform->SetLocalRotation({ 0, 180, 0 });
-
-	Texture* front = CreateTexture("res/World/Front.png");
-	Sprite* spriteFront = CreateSprite(front);
-	GameObject* wallFront = CreateGameObject("Wall Front");
-	wallFront->transform->SetParent(worldContent);
-	wallFront->AddComponent(spriteFront);
-	wallFront->transform->SetLocalPosition({ 0, cubeDimensions / 2, -cubeDimensions });
-	wallFront->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	//GameObject* wallRight = CreateGameObject("Wall Right");
+	//wallRight->transform->SetParent(worldContent);
+	//wallRight->AddComponent(CreateSprite(CreateTexture("res/World/Right.png")));
+	//wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0.01f });
+	//wallRight->transform->SetLocalPosition({ cubeDimensions, cubeDimensions / 2, 0 });
+	//wallRight->transform->SetLocalRotation({ 0, -90, 0 });
+	//
+	//GameObject* wallLeft = CreateGameObject("Wall Left");
+	//wallLeft->transform->SetParent(worldContent);
+	//wallLeft->AddComponent(CreateSprite(CreateTexture("res/World/Left.png")));
+	//wallLeft->transform->SetLocalPosition({ -cubeDimensions, cubeDimensions / 2, 0 });
+	//wallLeft->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	//wallLeft->transform->SetLocalRotation({ 0, 90, 0 });
+	//
+	//GameObject* wallBack = CreateGameObject("Wall Back");
+	//wallBack->transform->SetParent(worldContent);
+	//wallBack->AddComponent(CreateSprite(CreateTexture("res/World/Back.png")));
+	//wallBack->transform->SetLocalPosition({ 0, cubeDimensions / 2, cubeDimensions });
+	//wallBack->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	//wallBack->transform->SetLocalRotation({ 0, 180, 0 });
+	//
+	//Texture* front = CreateTexture("res/World/Front.png");
+	//Sprite* spriteFront = CreateSprite(front);
+	//GameObject* wallFront = CreateGameObject("Wall Front");
+	//wallFront->transform->SetParent(worldContent);
+	//wallFront->AddComponent(spriteFront);
+	//wallFront->transform->SetLocalPosition({ 0, cubeDimensions / 2, -cubeDimensions });
+	//wallFront->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 
 	// 4 Cubes
 	cubeContent = CreateGameObject("Cube Content");

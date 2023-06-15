@@ -8,6 +8,11 @@ using namespace std;
 std::list<Component*> Renderer::allRenderList;
 std::list<Camera*> Renderer::cameras;
 
+Shader* Renderer::defaultShaderSkybox;
+Shader* Renderer::defaultShaderSolid;
+Shader* Renderer::defaultShaderTexture;
+Shader* Renderer::defaultShader;
+
 Renderer::Renderer()
 {
 

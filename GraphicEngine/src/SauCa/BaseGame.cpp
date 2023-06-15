@@ -60,7 +60,6 @@ int BaseGame::Init()
     input->InitInput(window);
 
     // glfwSwapInterval(0);
-    line = new Line(renderer);
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
@@ -292,10 +291,9 @@ void BaseGame::ShowHierarchyInConsole() const
     PrintInConsole::PrintHierarchyInConsole(gameobjects);
 }
 
-void BaseGame::DrawLine(Camera* camera, glm::vec3 startPos, glm::vec3 endPos)
+void BaseGame::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth, glm::vec3 color, Camera* camera)
 {
-    renderer->drawLine(startPos, endPos, camera);
-    //line->Draw(camera, startPos, endPos);
+    renderer->DrawLine(startPoint, endPoint, lineWidth, color, camera);
 }
 
 void BaseGame::LoadInfo()
@@ -323,4 +321,34 @@ void BaseGame::LoadInfo()
 void BaseGame::UpdateCollisions(TileMap* tileMap)
 {
     collisionManager->UpdateCollisionsInTileMap(tileMap);
+}
+
+void BaseGame::DrawCubeLines(AABB* aabb, float lineWidth, glm::vec3 color, Camera* camera)
+{
+    glm::vec3 minPoint = aabb->min;
+    glm::vec3 maxPoint = aabb->max;
+
+    // Obtener los 8 vértices del cubo
+    glm::vec3 p1 = { minPoint.x, minPoint.y, minPoint.z };
+    glm::vec3 p2 = { maxPoint.x, minPoint.y, minPoint.z };
+    glm::vec3 p3 = { maxPoint.x, minPoint.y, maxPoint.z };
+    glm::vec3 p4 = { minPoint.x, minPoint.y, maxPoint.z };
+    glm::vec3 p5 = { minPoint.x, maxPoint.y, minPoint.z };
+    glm::vec3 p6 = { maxPoint.x, maxPoint.y, minPoint.z };
+    glm::vec3 p7 = { maxPoint.x, maxPoint.y, maxPoint.z };
+    glm::vec3 p8 = { minPoint.x, maxPoint.y, maxPoint.z };
+
+    // Dibujar las 12 aristas del cubo
+    Renderer::DrawLine(p1, p2, lineWidth, color, camera);
+    Renderer::DrawLine(p2, p3, lineWidth, color, camera);
+    Renderer::DrawLine(p3, p4, lineWidth, color, camera);
+    Renderer::DrawLine(p4, p1, lineWidth, color, camera);
+    Renderer::DrawLine(p5, p6, lineWidth, color, camera);
+    Renderer::DrawLine(p6, p7, lineWidth, color, camera);
+    Renderer::DrawLine(p7, p8, lineWidth, color, camera);
+    Renderer::DrawLine(p8, p5, lineWidth, color, camera);
+    Renderer::DrawLine(p1, p5, lineWidth, color, camera);
+    Renderer::DrawLine(p2, p6, lineWidth, color, camera);
+    Renderer::DrawLine(p3, p7, lineWidth, color, camera);
+    Renderer::DrawLine(p4, p8, lineWidth, color, camera);
 }

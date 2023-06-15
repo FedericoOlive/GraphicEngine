@@ -20,7 +20,7 @@
 #include "Render/Camera.h"
 #include "Utility/Event.h"
 #include "Collision/CollisionManager3D.h"
-#include "Collision/line.h"
+
 using namespace std;
 
 class SAUCA_API BaseGame
@@ -46,7 +46,6 @@ private:
 public:
 	static Event<> OnUpdateEvent;
 	static Event<> OnInputEvent;
-	Line* line;
 	
 	BaseGame();
 	~BaseGame();
@@ -81,11 +80,11 @@ public:
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);
 	void UpdateCollisions(TileMap* tileMap);
-	
+	void DrawCubeLines(AABB* aabb, float lineWidth = 2, glm::vec3 color = { 0, 0, 0 }, Camera* camera = nullptr);
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
 	void ShowHierarchyInConsole() const;
-	void DrawLine(Camera* camera, glm::vec3 startPos, glm::vec3 endPos);
+	void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2.0f, glm::vec3 color = { 1, 0, 0 }, Camera* camera = nullptr);
 	
 	// Time
 	double DeltaTime();

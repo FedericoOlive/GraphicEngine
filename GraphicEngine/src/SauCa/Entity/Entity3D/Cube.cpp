@@ -260,11 +260,17 @@ void Cube::BindBufferEntity()
 	UnBind();
 }
 
+void Cube::OnAsigned()
+{
+	std::function<void()> recalculateAABB = [this] { RecalculateAABB(); };
+	transform->OnUpdateModelMatrix.AddListener(recalculateAABB);
+}
+
 void Cube::RecalculateAABB()
 {
 	std::cout << "Actualizo al cubito: " << transform->gameObject->name << "\n";
 	transform->aabb->min = glm::vec3(std::numeric_limits<float>::max());
-	transform->aabb->max = glm::vec3(std::numeric_limits<float>::min());
+	transform->aabb->max = -glm::vec3(std::numeric_limits<float>::max());
 	
 	int i = 0;
 	while (i < vertexData->sizeVertices)

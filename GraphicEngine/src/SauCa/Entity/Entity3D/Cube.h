@@ -19,5 +19,6 @@ protected:
 	void BindBufferEntity() override;
 public:
 	void RecalculateAABB() override;
+	void OnAsigned() override;
 };
 #endif
