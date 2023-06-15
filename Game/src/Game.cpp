@@ -1,17 +1,18 @@
 #include "Game.h"
 #include <time.h>
 
+
 void Game::Initialize()
 {
 	camera = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
 	
 	targetFloatModify = &multiply;
-	SetEnviroment();
+	AddModels3D();
 	SetLights();
 	AddListeners();
 	AddPlayer();
 	AddMinimap();
-	AddModels3D();
+	SetEnviroment();
 	
 	target = cubeContent->transform;
 }
@@ -51,6 +52,11 @@ void Game::Inputs()
 
 void Game::Update()
 {
+	if (CollisionManager3D::IsCollision(cube2->transform, cube1->transform))
+	{
+		cout << "Collision: " << cube2->transform->gameObject->name << " con " << cube1->transform->gameObject->name << "\n";
+	}
+	
 	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
 	float time = Timer::ElapsedTime();
 	
@@ -62,7 +68,10 @@ void Game::Update()
 
 void Game::Draw()
 {
-
+	line->lineWidth = 10;
+	DrawLine(camera, { 0, 0, 0 }, cube1->transform->GetWorldPosition());
+	DrawLine(camera, { 0, 0, 0 }, cube2->transform->GetWorldPosition());
+	DrawLine(camera, { 0, 0, 0 }, cube3->transform->GetWorldPosition());
 }
 
 void Game::SetLights()
@@ -173,6 +182,14 @@ void Game::SetEnviroment()
 	CreateSkybox("res/Skybox/Skybox_Right.jpg", "res/Skybox/Skybox_Left.jpg", "res/Skybox/Skybox_Top.jpg", "res/Skybox/Skybox_Bottom.jpg", "res/Skybox/Skybox_Front.jpg", "res/Skybox/Skybox_Back.jpg");
 	float cubeDimensions = 50.0f;
 
+	// Sprite Goku
+	Texture* miniGokuTexture = CreateTexture("res/Goku.png");
+	objectFoward = CreateGameObject("miniGoku3");
+	Sprite* miniGokuSprite = CreateSprite(miniGokuTexture);
+	objectFoward->AddComponent(miniGokuSprite);
+	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
+	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
+	
 	GameObject* worldContent = CreateGameObject("World Content");
 	worldContent->transform->SetLocalPosition({ 0, 0, 0 });
 	worldContent->transform->SetLocalScale({ 1, 1, 1 });
@@ -219,40 +236,40 @@ void Game::SetEnviroment()
 
 	// 4 Cubes
 	cubeContent = CreateGameObject("Cube Content");
-	cubeContent->transform->SetWorldScale({ 10, 10, 10 });
-	cubeContent->transform->SetWorldPosition({ 0, 5, 0 });
+	float distance = 20;
 
-	GameObject* cube1 = CreateGameObject("Cube 1");
-	cube1->transform->SetParent(cubeContent);
+	cube1 = CreateGameObject("Cube 1");
+	//cube1->transform->SetParent(cubeContent);
 	Cube* cubeWithTexture = CreateCube();
 	cubeWithTexture->SetTexture(CreateTexture("res/Layer9.png"));
 	cube1->AddComponent(cubeWithTexture);
+	cube1->transform->SetLocalPosition({ distance, 0, distance });
 
-	GameObject* cube2 = CreateGameObject("Cube 2");
-	cube2->transform->SetParent(cubeContent);
+	cube2 = CreateGameObject("Cube 2");
+	//cube2->transform->SetParent(cubeContent);
 	cube2->AddComponent(CreateCube());
+	cube2->transform->SetLocalPosition({ distance, 0, -distance });
 
-	GameObject* cube3 = CreateGameObject("Cube 3");
+	cube3 = CreateGameObject("Cube 3");
 	cube3->transform->SetParent(cubeContent);
 	cube3->AddComponent(CreateCube());
+	cube3->transform->SetLocalPosition({ -distance, 0, distance });
 
 	GameObject* cube4 = CreateGameObject("Cube 4");
 	cube4->transform->SetParent(cubeContent);
-	cube4->AddComponent(CreateCube());
-	
-	float distance = 2;
-	cube1->transform->SetLocalPosition({ distance, 0, distance });
-	cube2->transform->SetLocalPosition({ distance, 0, -distance });
-	cube3->transform->SetLocalPosition({ -distance, 0, distance });
+	Cube* cube4CubeComponent = CreateCube();
 	cube4->transform->SetLocalPosition({ -distance, 0, -distance });
-	//cube4->SetActive(false);
+	cube4->AddComponent(cube4CubeComponent);
+	cube4CubeComponent->SetColorTint(81/255.0f, 209 / 255.0f, 246 / 255.0f, 0.5f);
 	
-	// Sprite Goku
-	Texture* miniGokuTexture = CreateTexture("res/Goku.png");
-	objectFoward = CreateGameObject("miniGoku3");
-	objectFoward->AddComponent(CreateSprite(miniGokuTexture));
-	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
-	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
+	cube4->SetActive(false);
+
+	EntityController* cubeMovement = new EntityController();
+	cubeMovement->RemoveRotation();
+	cube2->AddComponent(cubeMovement);
+
+	cubeContent->transform->SetWorldScale({ 10, 10, 10 });
+	cubeContent->transform->SetWorldPosition({ 0, 5, 0 });
 }
 
 void Game::AddListeners()
@@ -267,6 +284,7 @@ void Game::AddListeners()
 void Game::AddPlayer()
 {
 	player = CreateCharacterController(camera);
+	player->movement->RemoveMovement();
 	player->SetThirdPerson();
 	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
 	
@@ -275,7 +293,7 @@ void Game::AddPlayer()
 	GameObject* spotGo = CreateGameObject("SpotLight Player");
 	spotlightPlayer = CreateSpotLight();
 	spotGo->AddComponent(spotlightPlayer);
-	spotGo->transform->SetParent(player->pivot);
+	spotGo->transform->SetParent(player->pivot);	
 }
 
 void Game::AddMinimap()
@@ -309,11 +327,11 @@ void Game::AddModels3D()
 	modelJake->material->shininess = 0.4f * 128.0f;
 	
 	GameObject* modelJakeObject2 = CreateGameObject("Jake Model");
-	modelJakeObject2->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
-	modelJakeObject2->transform->SetWorldPosition({ -10, 5, -5 });
+	modelJakeObject2->transform->SetWorldScale({ 1, 1, 1 });
+	modelJakeObject2->transform->SetWorldPosition({ -20, 0, -20 });
 	Model* modelJake2 = CreateModel("res/Jake/Jake_Test1.obj", true, false);
 	modelJakeObject2->AddComponent(modelJake2);
-	// Set as Gold
+	// Set as Normal
 	modelJake2->material->ambient = { 1, 1, 1 };
 	modelJake2->material->diffuse = { 1, 1, 1 };
 	modelJake2->material->specular ={ 1, 1, 1 };

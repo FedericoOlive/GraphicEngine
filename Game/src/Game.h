@@ -9,7 +9,9 @@ private:
 	Transform* target = nullptr;
 	Camera* camera = nullptr;
 	CharacterController* player = nullptr;
-	
+	GameObject* cube1 = nullptr;
+	GameObject* cube2 = nullptr;
+	GameObject* cube3 = nullptr;
 	GameObject* objectFoward = nullptr;
 
 	GameObject* cubeContent = nullptr;
@@ -30,7 +32,7 @@ public:
 	void Inputs() override;
 	void Update()override;
 	void DeInitialize() override;
-	void Draw();
+	void Draw() override;
 
 	void SetLights();
 	void SetEnviroment();

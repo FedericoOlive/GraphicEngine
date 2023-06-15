@@ -1,10 +1,11 @@
 #include "Renderer.h"
+
 #include "GameObjects/GameObject.h"
 #include "Render/Camera.h"
 
 using namespace std;
 
-std::list<Component*> Renderer::renderList;
+std::list<Component*> Renderer::allRenderList;
 std::list<Camera*> Renderer::cameras;
 
 Renderer::Renderer()
@@ -67,25 +68,28 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
 {
 	material->shader->Use();
 	
-    SetMatrix(material, camera, model);
+    SetMatrix(material->shader, camera, model);
     SetMaterial(material, alpha, textureID);
     SetLights(material);
 	
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, sizeIndex, GL_UNSIGNED_INT, nullptr);
     glBindTexture(GL_TEXTURE_2D, 0);
+    glUseProgram(0);
 }
 
 void Renderer::DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes)
 {
     material->shader->Use();
 	
-    SetMatrix(material, camera, model);
+    SetMatrix(material->shader, camera, model);
     SetMaterial(material, alpha, textureID);
     SetLights(material);
 	
     for (unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Draw(material->shader);
+	
+    glUseProgram(0);
 }
 
 void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras)
@@ -114,20 +118,21 @@ void Renderer::DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Materi
                 glDrawArrays(GL_TRIANGLES, 0, 36);
                 glBindVertexArray(0);
                 glDepthFunc(GL_LESS); // set depth function back to default
+                glUseProgram(0);
             }
         }
     }
 }
 
-void Renderer::SetMatrix(Material* material, Camera* camera, glm::mat4 model)
+void Renderer::SetMatrix(Shader* shader, Camera* camera, glm::mat4 model)
 {
     glm::mat4 viewMatrix = camera->viewMatrix;
     glm::mat4 projectionMatrix = camera->projectionMatrix;
 
-    material->shader->setMat4("projectionMatrix", projectionMatrix);
-    material->shader->setMat4("viewMatrix", viewMatrix);
-    material->shader->setMat4("modelMatrix", model);
-    material->shader->setVec3("viewPos", camera->transform->GetWorldPosition());
+    shader->setMat4("projectionMatrix", projectionMatrix);
+    shader->setMat4("viewMatrix", viewMatrix);
+    shader->setMat4("modelMatrix", model);
+    shader->setVec3("viewPos", camera->transform->GetWorldPosition());
 }
 
 void Renderer::SetMaterial(Material* material, float alpha, unsigned int textureID)
@@ -230,10 +235,12 @@ void Renderer::Clear(GLbitfield field)
 
 void Renderer::Draw()
 {
+    int count = 0;
     for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
     {
+        count++;
         (*iterCamera)->BeginDraw();
-        for (auto iterComponent = (*iterCamera)->renderList.begin(); iterComponent != (*iterCamera)->renderList.end(); ++iterComponent)
+        for (auto iterComponent = (*iterCamera)->cameraRenderList.begin(); iterComponent != (*iterCamera)->cameraRenderList.end(); ++iterComponent)
         {
             bool isRenderizable = (*iterComponent)->IsRenderizable();
             bool isEnable = (*iterComponent)->isEnable;
@@ -282,6 +289,11 @@ void Renderer::BindIndex(unsigned int buffer, int size, int* arrayData)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(int), arrayData, GL_STATIC_DRAW);
 }
 
+void Renderer::UnBindObject(VertexData* vertexData)
+{
+    UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->CBO, vertexData->NBO, vertexData->UVB, vertexData->EBO);
+}
+
 void Renderer::UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& CBO, unsigned int& NBO, unsigned int& UVB, unsigned int& EBO)
 {
     glDeleteVertexArrays(1, &VAO);
@@ -304,20 +316,20 @@ void Renderer::AddCamera(Camera* cam)
 
     if (cam->autoAddGameObjects)
     {
-        for (auto iter = renderList.begin(); iter != renderList.end(); ++iter)
+        for (auto iter = allRenderList.begin(); iter != allRenderList.end(); ++iter)
         {
-            cam->renderList.push_back((*iter));
+            cam->cameraRenderList.push_back((*iter));
         }
     }
 }
 
 void Renderer::AddToRenderList(Component* component)
 {
-    renderList.push_back(component);
+    allRenderList.push_back(component);
 
     for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
         if ((*iter)->autoAddGameObjects)
-            (*iter)->renderList.push_back(component);
+            (*iter)->cameraRenderList.push_back(component);
 }
 
 void Renderer::RemoveCamera(Camera* cam)
@@ -330,4 +342,29 @@ void Renderer::RemoveCamera(Camera* cam)
             break;
         }
     }
+}
+
+void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth, glm::vec3 color, Camera* camera)
+{
+    if (camera == nullptr)
+        camera = *cameras.begin();
+    if (camera == nullptr)
+        return;
+
+    camera->BeginDraw();
+    Shader* shader = GetDefaultShaderSolid();
+    shader->Use();
+
+    shader->setMat4("modelMatrix", glm::mat4(1.0f));
+    shader->setMat4("viewMatrix", camera->viewMatrix);
+    shader->setMat4("projectionMatrix", camera->projectionMatrix);
+    shader->setVec3("colorTint", color);
+
+    glLineWidth(lineWidth);
+    glEnable(GL_LINE_SMOOTH);
+
+    glBegin(GL_LINES);
+    glVertex3f(startPoint.x, startPoint.y, startPoint.z);
+    glVertex3f(endPoint.x, endPoint.y, endPoint.z);
+    glEnd();
 }

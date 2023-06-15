@@ -22,10 +22,10 @@ CharacterController::CharacterController(GameObject* player, GameObject* visualP
 	SetFirstPerson();
 	
 	movement = new EntityController();
-	movement->RemoveRotation(false, true);
+	movement->RemoveRotation(true, false);
 	rotation = new EntityController();
 	rotation->RemoveMovement();
-	rotation->RemoveRotation(true, false);
+	rotation->RemoveRotation(false, true);
 
 	root->AddComponent(movement);
 	pivot->AddComponent(rotation);

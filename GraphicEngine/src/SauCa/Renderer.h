@@ -11,6 +11,7 @@
 #include "Light/PointLight.h"
 #include "Light/SpotLight.h"
 #include "Entity/Entity3D/Mesh.h"
+#include "Entity/VertexData.h"
 
 class Camera;
 
@@ -22,7 +23,7 @@ private:
 	Shader* defaultShaderTexture;
 	Shader* defaultShader;
 	
-	static std::list<Component*> renderList;
+	static std::list<Component*> allRenderList;
 	
 public:
 	static std::list<Camera*> cameras;
@@ -43,7 +44,7 @@ public:
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
 	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes);
 	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras);
-	void SetMatrix(Material* material, Camera* camera, glm::mat4 model);
+	static void SetMatrix(Shader* shader, Camera* camera, glm::mat4 model);
 	void SetMaterial(Material* material, float alpha, unsigned int textureID);
 	void SetLights(Material* material);
 	
@@ -52,7 +53,7 @@ public:
 	void GenBuffer(int amount, unsigned int& buffer);
 	void BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore);
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
-	
+	void UnBindObject(VertexData* vertexData);
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& CBO, unsigned int& NBO, unsigned int& UVB, unsigned int& EBO);
 
 	Shader* GetDefaultShaderSkybox() const { return defaultShaderSkybox; }
@@ -62,7 +63,9 @@ public:
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);
-	static void AddCamera(Camera* cam);	
+	static void AddCamera(Camera* cam);
+
+	void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2, glm::vec3 color = { 1, 0, 0 }, Camera* camera);
 };
 
 #endif

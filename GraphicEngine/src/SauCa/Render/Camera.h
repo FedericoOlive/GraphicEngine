@@ -19,7 +19,7 @@ public:
 	float aspect;
 	bool autoAddGameObjects = true;
 	bool isDrawSkybox = true;
-	std::list<Component*> renderList;
+	std::list<Component*> cameraRenderList;
 	
 	glm::vec2 viewportPosition;
 	glm::vec2 viewportSize;

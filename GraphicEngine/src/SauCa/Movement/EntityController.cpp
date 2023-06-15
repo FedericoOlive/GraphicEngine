@@ -63,8 +63,8 @@ void EntityController::RemoveMovement(bool foward, bool left, bool back, bool ri
 
 void EntityController::RemoveRotation(bool xAxis, bool yAxis)
 {
-	rotateX = xAxis;
-	rotateY = yAxis;
+	rotateX = !xAxis;
+	rotateY = !yAxis;
 }
 
 

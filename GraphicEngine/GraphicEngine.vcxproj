@@ -187,6 +187,10 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Collision\AABB.cpp" />
+    <ClCompile Include="src\SauCa\Collision\CollisionManager3D.cpp" />
+    <ClCompile Include="src\SauCa\Collision\BoxCollider.cpp" />
+    <ClCompile Include="src\SauCa\Collision\Collider.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\ModelImporter.cpp" />
     <ClCompile Include="src\SauCa\Movement\CharacterController.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\Mesh.cpp" />
@@ -228,6 +232,10 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Collision\AABB.h" />
+    <ClInclude Include="src\SauCa\Collision\CollisionManager3D.h" />
+    <ClInclude Include="src\SauCa\Collision\BoxCollider.h" />
+    <ClInclude Include="src\SauCa\Collision\Collider.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D\ModelImporter.h" />
     <ClInclude Include="src\SauCa\Movement\CharacterController.h" />
     <ClInclude Include="src\SauCa\Entity\Entity3D\Mesh.h" />
