@@ -271,21 +271,18 @@ void Cube::RecalculateAABB()
 	std::cout << "Actualizo al cubito: " << transform->gameObject->name << "\n";
 	transform->aabb->min = glm::vec3(std::numeric_limits<float>::max());
 	transform->aabb->max = -glm::vec3(std::numeric_limits<float>::max());
-	
+
 	int i = 0;
 	while (i < vertexData->sizeVertices)
 	{
-		glm::vec3 modelVertex = (transform->GetModelMatrix() * glm::vec4(vertexData->vertices[i], vertexData->vertices[i + 1], vertexData->vertices[i + 2], 1.f));
+		glm::vec3 modelVertex = (transform->GetModelMatrix() * glm::vec4(vertexData->vertices[i++], vertexData->vertices[i++], vertexData->vertices[i++], 1.f));
 
-		transform->aabb->min.x = glm::min((transform->GetModelMatrix() * glm::vec4(transform->aabb->min, 1.f)).x, modelVertex.x);
-		transform->aabb->max.x = glm::max((transform->GetModelMatrix() * glm::vec4(transform->aabb->min, 1.f)).x, modelVertex.x);
-		i++;
-		transform->aabb->min.y = glm::min((transform->GetModelMatrix() * glm::vec4(transform->aabb->min, 1.f)).y, modelVertex.y);
-		transform->aabb->max.y = glm::max((transform->GetModelMatrix() * glm::vec4(transform->aabb->min, 1.f)).y, modelVertex.y);
-		i++;
-		transform->aabb->min.z = glm::min((transform->GetModelMatrix() * glm::vec4(transform->aabb->min, 1.f)).z, modelVertex.z);
-		transform->aabb->max.z = glm::max((transform->GetModelMatrix() * glm::vec4(transform->aabb->min, 1.f)).z, modelVertex.z);
-		i++;
+		transform->aabb->min.x = glm::min(transform->aabb->min.x, modelVertex.x);
+		transform->aabb->max.x = glm::max(transform->aabb->max.x, modelVertex.x);
+		transform->aabb->min.y = glm::min(transform->aabb->min.y, modelVertex.y);
+		transform->aabb->max.y = glm::max(transform->aabb->max.y, modelVertex.y);
+		transform->aabb->min.z = glm::min(transform->aabb->min.z, modelVertex.z);
+		transform->aabb->max.z = glm::max(transform->aabb->max.z, modelVertex.z);
 	}
 
 	CalculateAABB();

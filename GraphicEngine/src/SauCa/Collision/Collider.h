@@ -1,8 +1,8 @@
 #ifndef COLLIDER_H
 #define COLLIDER_H
 
+#include <glm/vec3.hpp>
 #include "GameObjects/Component.h"
-
 
 class SAUCA_API Collider : public Component
 {
@@ -13,6 +13,9 @@ public:
 		Shere
 	};
 
+	float lineWidth = 2.0f;
+	glm::vec3 color = { 1, 0, 0 };
+	
 	Collider();
 	~Collider() override;
 	void Draw(Camera* camera) override;

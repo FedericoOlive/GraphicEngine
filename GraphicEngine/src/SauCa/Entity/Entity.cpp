@@ -1,7 +1,5 @@
 #include "Entity.h"
 
-#include "CollisionManager.h"
-
 Entity::Entity() : Component()
 {
 	vertexData = nullptr;
@@ -35,15 +33,14 @@ void Entity::SetColorTint(float r, float g, float b, float a)
 }
 
 void Entity::OnAsigned()
-{	
+{
 	std::function<void()> recalculateAABB = [this] { RecalculateAABB(); };
 	transform->OnUpdateModelMatrix.AddListener(recalculateAABB);
 }
 
 void Entity::RecalculateAABB()
 {
-	int asd = 0;
-	asd = 1;
+	
 }
 
 void Entity::CalculateAABB()

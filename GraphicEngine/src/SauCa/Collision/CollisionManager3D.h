@@ -16,7 +16,6 @@ public:
 	void RemoveFromCollisionList(Collider* colliderToRemove);
 	bool IsInCollisionList(Collider* colliderToCheck);
 	void UpdateCollisions();
-	
 };
 
 #endif

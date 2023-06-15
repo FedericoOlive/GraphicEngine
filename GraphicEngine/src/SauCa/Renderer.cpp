@@ -364,6 +364,7 @@ void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, 
     shader->SetMat4("viewMatrix", camera->viewMatrix);
     shader->SetMat4("projectionMatrix", camera->projectionMatrix);
     shader->SetVec3("colorTint", color);
+    shader->SetFloat("alpha", 1);
 
     glLineWidth(lineWidth);
     glEnable(GL_LINE_SMOOTH);
