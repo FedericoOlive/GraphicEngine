@@ -17,5 +17,7 @@ protected:
 	Texture* texture;
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
+public:
+	void RecalculateAABB() override;
 };
 #endif

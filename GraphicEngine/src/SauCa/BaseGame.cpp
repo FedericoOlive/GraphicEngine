@@ -10,12 +10,12 @@ void BaseGame::BeforeDraw()
     renderer->Clear(GL_COLOR_BUFFER_BIT);
 }
 
-void BaseGame::Draw()
+void BaseGame::AutoDraw()
 {
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    renderer->Draw();
     if (skybox != nullptr)
         skybox->Draw(Renderer::cameras);
+    renderer->Draw();
 }
 
 void BaseGame::AfterDraw()
@@ -47,7 +47,7 @@ int BaseGame::Init()
     renderer = new Renderer();
     input = new Input();
     timer = new Timer();
-
+	
     window->InitLibrary();
     window->CreateWindow();
     window->CheckWindow(window->GetWindow());
@@ -60,6 +60,7 @@ int BaseGame::Init()
     input->InitInput(window);
 
     // glfwSwapInterval(0);
+    line = new Line(renderer);
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
     {
@@ -77,6 +78,7 @@ int BaseGame::Init()
         Update();
 
         BeforeDraw();
+        AutoDraw();
         Draw();
         AfterDraw();
     }
@@ -288,6 +290,12 @@ TileMap* BaseGame::CreateTileMap(string filePath, string resPath)
 void BaseGame::ShowHierarchyInConsole() const
 {	
     PrintInConsole::PrintHierarchyInConsole(gameobjects);
+}
+
+void BaseGame::DrawLine(Camera* camera, glm::vec3 startPos, glm::vec3 endPos)
+{
+    renderer->drawLine(startPos, endPos, camera);
+    //line->Draw(camera, startPos, endPos);
 }
 
 void BaseGame::LoadInfo()

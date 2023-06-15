@@ -23,7 +23,7 @@ public:
 	void Draw(Camera* camera) override;
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
-
+	void RecalculateAABB() override;
 private:
 	bool isInvertIndexesOrder = false;
 };

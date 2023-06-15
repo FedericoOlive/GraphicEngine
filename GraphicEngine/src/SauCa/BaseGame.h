@@ -19,7 +19,8 @@
 #include "Movement/CharacterController.h"
 #include "Render/Camera.h"
 #include "Utility/Event.h"
-
+#include "Collision/CollisionManager3D.h"
+#include "Collision/line.h"
 using namespace std;
 
 class SAUCA_API BaseGame
@@ -36,7 +37,7 @@ private:
 	Skybox* skybox;
 
 	void BeforeDraw();
-	void Draw();
+	void AutoDraw();
 	void AfterDraw();
 
 	void LoadInfo();
@@ -45,6 +46,8 @@ private:
 public:
 	static Event<> OnUpdateEvent;
 	static Event<> OnInputEvent;
+	Line* line;
+	
 	BaseGame();
 	~BaseGame();
 	int Init();
@@ -54,6 +57,7 @@ public:
 	virtual void Inputs() = 0;
 	virtual void Update() = 0;
 	virtual void DeInitialize() = 0;
+	virtual void Draw() = 0;
 	void DeInitializeEngine();
 
 	// World Objects
@@ -81,6 +85,7 @@ public:
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
 	void ShowHierarchyInConsole() const;
+	void DrawLine(Camera* camera, glm::vec3 startPos, glm::vec3 endPos);
 	
 	// Time
 	double DeltaTime();

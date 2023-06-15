@@ -14,11 +14,14 @@ public:
 	float alpha;
 	Material* material;
 	int layerRender = 0;
-
+	
 	Entity();
 	~Entity();
 	virtual void CreateVertexData() {}
 	void SetRenderer(Renderer* renderer);
+	void OnAsigned() override;
+	virtual void RecalculateAABB();
+	void CalculateAABB();
 
 	void SetColorTint(float r, float g, float b, float a);
 	void SetColorTint(glm::vec4 tint) { SetColorTint(tint.r, tint.g, tint.b, tint.a); }
@@ -44,6 +47,7 @@ protected:
 	void BindBufferNormals(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->NBO, vertexData->atribNormal, vertexData->atribNormalSize, vertexData->sizeNormals, vertexData->normals, modeDataStore); }
 	void BindBufferTextures(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->UVB, vertexData->atribUvs, vertexData->atribUvsSize, vertexData->sizeUvs, vertexData->uvs, modeDataStore); }
 	void BindBufferIndex()							const { renderer->BindIndex(vertexData->EBO, vertexData->sizeIndex, vertexData->indexes); }
+public:
 };
 
 #endif

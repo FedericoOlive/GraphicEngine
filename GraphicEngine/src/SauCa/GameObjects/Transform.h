@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Exports.h"
+#include "Collision/AABB.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Utility/Event.h"
 
@@ -41,6 +42,7 @@ public:
 	std::list<Transform*> childrens;
 	Transform* parent;
 	GameObject* gameObject;
+	AABB* aabb = nullptr;
 
 	const float deg2rad = (glm::pi<float>() * 2.0f) / 360.0f;
 	const float rad2deg = 360.0f / (glm::pi<float>() * 2.0f);
