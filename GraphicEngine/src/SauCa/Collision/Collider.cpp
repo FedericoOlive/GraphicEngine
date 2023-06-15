@@ -2,7 +2,7 @@
 
 Collider::Collider()
 {
-	
+	name = "Collider";
 }
 
 Collider::~Collider()

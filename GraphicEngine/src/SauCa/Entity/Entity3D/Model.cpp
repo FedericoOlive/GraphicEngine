@@ -49,5 +49,5 @@ void Model::RecalculateAABB()
 		}
 	}
 	
-	CalculateAABB();
+	CalculateParentAABB();
 }

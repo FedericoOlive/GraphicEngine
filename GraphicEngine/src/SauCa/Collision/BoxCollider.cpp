@@ -1,5 +1,10 @@
 #include "BoxCollider.h"
 
+BoxCollider::~BoxCollider()
+{
+
+}
+
 void BoxCollider::Draw(Camera* camera)
 {
 	
@@ -16,11 +21,6 @@ void BoxCollider::Input()
 }
 
 void BoxCollider::OnAsigned()
-{
-	
-}
-
-BoxCollider::~BoxCollider()
 {
 	
 }

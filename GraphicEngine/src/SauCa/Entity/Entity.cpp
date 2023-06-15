@@ -43,18 +43,18 @@ void Entity::RecalculateAABB()
 	
 }
 
-void Entity::CalculateAABB()
+void Entity::CalculateParentAABB()
 {
 	Transform* parent = transform->parent;
 	
-	//while (parent != nullptr)
-	//{
-	//	parent->aabb->min.x = glm::min(transform->aabb->min.x, parent->aabb->min.x);
-	//	parent->aabb->min.y = glm::min(transform->aabb->min.y, parent->aabb->min.y);
-	//	parent->aabb->min.z = glm::min(transform->aabb->min.z, parent->aabb->min.z);
-	//	parent->aabb->max.x = glm::max(transform->aabb->max.x, parent->aabb->max.x);
-	//	parent->aabb->max.y = glm::max(transform->aabb->max.y, parent->aabb->max.y);
-	//	parent->aabb->max.z = glm::max(transform->aabb->max.z, parent->aabb->max.z);
-	//	parent = parent->parent;
-	//}
+	while (parent != nullptr)
+	{
+		parent->aabb->min.x = glm::min(transform->aabb->min.x, parent->aabb->min.x);
+		parent->aabb->min.y = glm::min(transform->aabb->min.y, parent->aabb->min.y);
+		parent->aabb->min.z = glm::min(transform->aabb->min.z, parent->aabb->min.z);
+		parent->aabb->max.x = glm::max(transform->aabb->max.x, parent->aabb->max.x);
+		parent->aabb->max.y = glm::max(transform->aabb->max.y, parent->aabb->max.y);
+		parent->aabb->max.z = glm::max(transform->aabb->max.z, parent->aabb->max.z);
+		parent = parent->parent;
+	}
 }

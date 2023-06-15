@@ -1,6 +1,7 @@
 #include "CollisionManager3D.h"
 
 #include "AABB.h"
+#include "Renderer.h"
 #include "GameObjects/Transform.h"
 
 bool CollisionManager3D::IsCollision(Transform* collider1, Transform* collider2)
@@ -88,5 +89,18 @@ void CollisionManager3D::UpdateCollisions()
 			//	d->ApplyCollisionRestrictions(currentCollision, overlapX, overlapY, false);
 			//}
 		}
+	}
+}
+
+void CollisionManager3D::Draw()
+{
+	for (Collider*& d : dynamicCollisionList)
+	{
+		//Renderer::DrawLine()
+	}
+
+	for (Collider*& s : staticCollisionList)
+	{
+
 	}
 }

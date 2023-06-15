@@ -1,8 +1,8 @@
 #ifndef COLLISIONMANAGER3D_H
 #define COLLISIONMANAGER3D_H
 
-#include "Collider.h"
 #include <list>
+#include "Collider.h"
 
 class SAUCA_API CollisionManager3D
 {
@@ -16,6 +16,7 @@ public:
 	void RemoveFromCollisionList(Collider* colliderToRemove);
 	bool IsInCollisionList(Collider* colliderToCheck);
 	void UpdateCollisions();
+	void Draw();
 };
 
 #endif

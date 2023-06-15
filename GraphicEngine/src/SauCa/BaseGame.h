@@ -32,6 +32,7 @@ private:
 	Window* window;
 	Renderer* renderer;
 	CollisionManager* collisionManager;
+	CollisionManager3D* collisionManager3D;
 	Timer* timer;
 	list<GameObject*> gameobjects;
 	Skybox* skybox;
@@ -80,7 +81,10 @@ public:
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);
 	void UpdateCollisions(TileMap* tileMap);
+	void DrawCollision();
 	void DrawCubeLines(AABB* aabb, float lineWidth = 2, glm::vec3 color = { 0, 0, 0 }, Camera* camera = nullptr);
+	Collider* CreateCollider(bool isStatic = true);
+	
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
 	void ShowHierarchyInConsole() const;

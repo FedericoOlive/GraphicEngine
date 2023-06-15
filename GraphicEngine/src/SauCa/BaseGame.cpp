@@ -1,4 +1,5 @@
 #include "BaseGame.h"
+
 #include "Utility/PrintInConsole.h"
 
 string BaseGame::version = "2.0.0";
@@ -16,6 +17,7 @@ void BaseGame::AutoDraw()
     if (skybox != nullptr)
         skybox->Draw(Renderer::cameras);
     renderer->Draw();
+    DrawCollision();
 }
 
 void BaseGame::AfterDraw()
@@ -29,6 +31,7 @@ BaseGame::BaseGame()
     window = nullptr;
     renderer = nullptr;
     collisionManager = new CollisionManager();
+    collisionManager3D = new CollisionManager3D();
     timer = nullptr;
 }
 
@@ -58,7 +61,7 @@ int BaseGame::Init()
 
     renderer->CreateShader();
     input->InitInput(window);
-
+    
     // glfwSwapInterval(0);
     Initialize();
     while (!window->WindowShouldClose(window->GetWindow()))
@@ -264,10 +267,10 @@ void BaseGame::AddCollision(Entity2D* entity, bool isStatic)
 
 CharacterController* BaseGame::CreateCharacterController(Camera* camera)
 {
-    GameObject* root = CreateGameObject();
-    GameObject* cameraPivot = CreateGameObject();
-    GameObject* cameraGameObject = CreateGameObject();
-    GameObject* visualPlayer = CreateGameObject();
+    GameObject* root = CreateGameObject("Player");
+    GameObject* cameraPivot = CreateGameObject("Camera Pivot");
+    GameObject* cameraGameObject = CreateGameObject("Camera GameObject");
+    GameObject* visualPlayer = CreateGameObject("Visual");
     CharacterController* characterController = new CharacterController(root, visualPlayer, cameraPivot , cameraGameObject, camera);
 	return characterController;
 }
@@ -323,6 +326,19 @@ void BaseGame::UpdateCollisions(TileMap* tileMap)
     collisionManager->UpdateCollisionsInTileMap(tileMap);
 }
 
+void BaseGame::DrawCollision()
+{
+    for (Collider*& collider : collisionManager3D->dynamicCollisionList)
+    {
+        DrawCubeLines(collider->transform->aabb, collider->lineWidth, collider->color);
+    }
+
+    for (Collider*& collider : collisionManager3D->staticCollisionList)
+    {
+        DrawCubeLines(collider->transform->aabb, collider->lineWidth, collider->color);
+    }
+}
+
 void BaseGame::DrawCubeLines(AABB* aabb, float lineWidth, glm::vec3 color, Camera* camera)
 {
     glm::vec3 minPoint = aabb->min;
@@ -351,4 +367,11 @@ void BaseGame::DrawCubeLines(AABB* aabb, float lineWidth, glm::vec3 color, Camer
     Renderer::DrawLine(p2, p6, lineWidth, color, camera);
     Renderer::DrawLine(p3, p7, lineWidth, color, camera);
     Renderer::DrawLine(p4, p8, lineWidth, color, camera);
+}
+
+Collider* BaseGame::CreateCollider(bool isStatic)
+{
+    Collider* collider = new Collider();
+    collisionManager3D->AddToCollisionList(collider, isStatic);
+    return collider;
 }

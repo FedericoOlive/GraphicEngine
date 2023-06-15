@@ -21,7 +21,7 @@ public:
 	void SetRenderer(Renderer* renderer);
 	void OnAsigned() override;
 	virtual void RecalculateAABB();
-	void CalculateAABB();
+	void CalculateParentAABB();
 
 	void SetColorTint(float r, float g, float b, float a);
 	void SetColorTint(glm::vec4 tint) { SetColorTint(tint.r, tint.g, tint.b, tint.a); }

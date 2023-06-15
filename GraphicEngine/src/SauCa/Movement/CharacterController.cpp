@@ -2,6 +2,7 @@
 
 CharacterController::CharacterController(GameObject* player, GameObject* visualPlayer, GameObject* cameraPivot, GameObject* cameraGameObject, Camera* cameraComponent)
 {
+	name = "Character Controller";
 	root = player;
 	this->visualPlayer = visualPlayer;
 	pivot = cameraPivot;

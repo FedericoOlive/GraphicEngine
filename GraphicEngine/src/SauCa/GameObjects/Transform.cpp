@@ -6,6 +6,7 @@ Transform::Transform(GameObject* go)
 {
 	parent = nullptr;
 	gameObject = go;
+	aabb = new AABB();
 	
 	localPosition = glm::vec3(0.0f);
 	localRotation= glm::vec3(0.0f);
@@ -14,9 +15,7 @@ Transform::Transform(GameObject* go)
 	UpdateTranslateMatrix();
 	UpdateRotationMatrix();
 	UpdateScaleMatrix();
-	UpdateModelMatrix();
-	
-	aabb = new AABB();
+	UpdateModelMatrix();	
 }
 
 Transform::~Transform()
@@ -211,6 +210,7 @@ void Transform::UpdateModelMatrix()
 	worldRotation = QuatToEuler(glm::quat_cast(modelMatrix));
 	worldScale = { glm::length(glm::vec3(modelMatrix[0])),	glm::length(glm::vec3(modelMatrix[1])),	glm::length(glm::vec3(modelMatrix[2])) };
 			
+	aabb->Update();
 	OnUpdateModelMatrix.Invoke();
 }
 

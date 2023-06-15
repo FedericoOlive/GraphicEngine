@@ -12,6 +12,7 @@ private:
 	GameObject* cube1 = nullptr;
 	GameObject* cube2 = nullptr;
 	GameObject* cube3 = nullptr;
+	GameObject* cube4 = nullptr;
 	GameObject* objectFoward = nullptr;
 
 	GameObject* cubeContent = nullptr;
@@ -26,6 +27,8 @@ private:
 	SpotLight* spotlightPlayer = nullptr;
 	int currentColor = 0;
 	glm::vec3 playerZoom = {0, 1, 3};
+
+	EntityController* cubeMovement;
 
 public:
 	void Initialize()override;

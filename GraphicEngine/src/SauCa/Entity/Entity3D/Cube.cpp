@@ -268,14 +268,13 @@ void Cube::OnAsigned()
 
 void Cube::RecalculateAABB()
 {
-	std::cout << "Actualizo al cubito: " << transform->gameObject->name << "\n";
 	transform->aabb->min = glm::vec3(std::numeric_limits<float>::max());
 	transform->aabb->max = -glm::vec3(std::numeric_limits<float>::max());
 
 	int i = 0;
 	while (i < vertexData->sizeVertices)
 	{
-		glm::vec3 modelVertex = (transform->GetModelMatrix() * glm::vec4(vertexData->vertices[i++], vertexData->vertices[i++], vertexData->vertices[i++], 1.f));
+		glm::vec3 modelVertex = (transform->GetModelMatrix() * glm::vec4(vertexData->vertices[i++], vertexData->vertices[i++], vertexData->vertices[i++], 1.0f));
 
 		transform->aabb->min.x = glm::min(transform->aabb->min.x, modelVertex.x);
 		transform->aabb->max.x = glm::max(transform->aabb->max.x, modelVertex.x);
@@ -284,6 +283,7 @@ void Cube::RecalculateAABB()
 		transform->aabb->min.z = glm::min(transform->aabb->min.z, modelVertex.z);
 		transform->aabb->max.z = glm::max(transform->aabb->max.z, modelVertex.z);
 	}
+	
 
-	CalculateAABB();
+	CalculateParentAABB();
 }
