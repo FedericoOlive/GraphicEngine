@@ -3,7 +3,7 @@
 #include <list>
 
 #include "Exports.h"
-#include "Collision/AABBOld.h"
+#include "Collision/AABB.h"
 #include "GameObjects/Component.h"
 #include "glm/gtc/type_ptr.hpp"
 

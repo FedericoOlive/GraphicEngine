@@ -141,7 +141,7 @@
     <ClCompile Include="src\SauCa\Collision\CollisionManager3D.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Collision\AABBOld.cpp">
+    <ClCompile Include="src\SauCa\Collision\AABB.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\SauCa\Collision\Frustum.cpp">
@@ -290,7 +290,7 @@
     <ClInclude Include="src\SauCa\Collision\CollisionManager3D.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Collision\AABBOld.h">
+    <ClInclude Include="src\SauCa\Collision\AABB.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Collision\Frustum.h">
