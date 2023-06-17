@@ -187,7 +187,8 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\SauCa\Collision\AABB.cpp" />
+    <ClCompile Include="src\SauCa\Collision\Frustum.cpp" />
+    <ClCompile Include="src\SauCa\Collision\AABBOld.cpp" />
     <ClCompile Include="src\SauCa\Collision\CollisionManager3D.cpp" />
     <ClCompile Include="src\SauCa\Collision\BoxCollider.cpp" />
     <ClCompile Include="src\SauCa\Collision\Collider.cpp" />
@@ -232,7 +233,8 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SauCa\Collision\AABB.h" />
+    <ClInclude Include="src\SauCa\Collision\Frustum.h" />
+    <ClInclude Include="src\SauCa\Collision\AABBOld.h" />
     <ClInclude Include="src\SauCa\Collision\CollisionManager3D.h" />
     <ClInclude Include="src\SauCa\Collision\BoxCollider.h" />
     <ClInclude Include="src\SauCa\Collision\Collider.h" />

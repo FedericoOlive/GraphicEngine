@@ -210,8 +210,9 @@ void Transform::UpdateModelMatrix()
 	worldRotation = QuatToEuler(glm::quat_cast(modelMatrix));
 	worldScale = { glm::length(glm::vec3(modelMatrix[0])),	glm::length(glm::vec3(modelMatrix[1])),	glm::length(glm::vec3(modelMatrix[2])) };
 			
-	aabb->Update();
+	aabb->BeforeUpdate();
 	OnUpdateModelMatrix.Invoke();
+	aabb->AfterUpdate();
 }
 
 // ============================================ TOOLS ============================================

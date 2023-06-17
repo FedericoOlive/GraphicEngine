@@ -268,8 +268,7 @@ void Cube::OnAsigned()
 
 void Cube::RecalculateAABB()
 {
-	transform->aabb->min = glm::vec3(std::numeric_limits<float>::max());
-	transform->aabb->max = -glm::vec3(std::numeric_limits<float>::max());
+	transform->aabb->BeforeUpdate();
 
 	int i = 0;
 	while (i < vertexData->sizeVertices)
@@ -284,6 +283,6 @@ void Cube::RecalculateAABB()
 		transform->aabb->max.z = glm::max(transform->aabb->max.z, modelVertex.z);
 	}
 	
-
+	transform->aabb->AfterUpdate();
 	CalculateParentAABB();
 }

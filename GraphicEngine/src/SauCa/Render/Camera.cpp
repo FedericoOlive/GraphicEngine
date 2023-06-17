@@ -6,11 +6,15 @@ Camera::Camera(glm::vec2 viewportPosition, glm::vec2 viewportSize, CameraType ca
 {
 	name = "Camera";
 	aspect = viewportSize.x / viewportSize.y;
+	this->fov = 45.0f;
+	this->near = 0.1f;
+	this->far = 1000.0f;
 	this->viewportPosition = viewportPosition;
 	this->viewportSize = viewportSize;
 	this->cameraType = cameraType;
+	
 	glViewport((GLint)viewportPosition.x, (GLint)viewportPosition.y, (GLint)viewportSize.x, (GLint)viewportSize.y);
-
+	
 	switch (cameraType)
 	{
 	case Perspective:
@@ -23,6 +27,8 @@ Camera::Camera(glm::vec2 viewportPosition, glm::vec2 viewportSize, CameraType ca
 		SetCameraPerspective();
 		break;
 	}
+	
+	frustum = new Frustum();
 }
 
 Camera::~Camera()
@@ -37,11 +43,16 @@ void Camera::BeginDraw()
 
 void Camera::SetCameraOrthogonal(float near, float far)
 {
+	this->near = near;
+	this->far = far;
 	projectionMatrix = glm::ortho(0.0f, viewportSize.x / cameraZoom, 0.0f, viewportSize.y / cameraZoom, near, far);
 }
 
 void Camera::SetCameraPerspective(float fov, float near, float far)
 {
+	this->fov = fov;
+	this->near = near;
+	this->far = far;
 	projectionMatrix = glm::perspective(glm::radians(fov * cameraZoom), aspect, near, far);
 }
 
@@ -67,12 +78,14 @@ void Camera::UpdateViewMatrix()
 
 void Camera::SetFov(float fov)
 {
+	this->fov = fov;
 	SetZoom(cameraZoom, fov);
 }
 
 void Camera::SetZoom(float cameraZoom, float fov)
 {
 	this->cameraZoom = cameraZoom;
+	this->fov = fov;
 	switch (cameraType)
 	{
 	case Perspective:

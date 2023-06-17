@@ -21,9 +21,9 @@ Entity::~Entity()
 	}
 }
 
-void Entity::SetRenderer(Renderer* renderer)
+void Entity::SetRenderer(Renderer* render)
 {
-	this->renderer = renderer;
+	this->renderer = render;
 }
 
 void Entity::SetColorTint(float r, float g, float b, float a)
@@ -55,6 +55,7 @@ void Entity::CalculateParentAABB()
 		parent->aabb->max.x = glm::max(transform->aabb->max.x, parent->aabb->max.x);
 		parent->aabb->max.y = glm::max(transform->aabb->max.y, parent->aabb->max.y);
 		parent->aabb->max.z = glm::max(transform->aabb->max.z, parent->aabb->max.z);
+		parent->aabb->AfterUpdate();
 		parent = parent->parent;
 	}
 }

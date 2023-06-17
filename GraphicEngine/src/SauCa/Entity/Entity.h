@@ -18,7 +18,7 @@ public:
 	Entity();
 	~Entity();
 	virtual void CreateVertexData() {}
-	void SetRenderer(Renderer* renderer);
+	void SetRenderer(Renderer* render);
 	void OnAsigned() override;
 	virtual void RecalculateAABB();
 	void CalculateParentAABB();

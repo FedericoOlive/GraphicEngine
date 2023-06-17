@@ -241,19 +241,31 @@ void Renderer::Clear(GLbitfield field)
 void Renderer::Draw()
 {
     int count = 0;
+    Camera* cam = (*cameras.begin());
+    Frustum* frustum = cam->frustum;
+    frustum->Update(cam->fov, cam->aspect, cam->far, cam->near, cam->transform->GetWorldPosition(), cam->transform->forward(), cam->transform->right(), cam->transform->up());
+
     for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
     {
         count++;
         (*iterCamera)->BeginDraw();
         for (auto iterComponent = (*iterCamera)->cameraRenderList.begin(); iterComponent != (*iterCamera)->cameraRenderList.end(); ++iterComponent)
         {
-            bool isRenderizable = (*iterComponent)->IsRenderizable();
-            bool isEnable = (*iterComponent)->isEnable;
-            bool isActive = (*iterComponent)->gameobject->IsActive();
-            bool isActiveInHierarch = (*iterComponent)->gameobject->IsActiveInHierarch();
+            glm::mat4 model = (*iterComponent)->transform->GetModelMatrix();
+            glm::vec3 right = (*iterComponent)->transform->right();
+            glm::vec3 up = (*iterComponent)->transform->up();
+            glm::vec3 forward = (*iterComponent)->transform->forward();
 
-            if (isRenderizable && isEnable && isActive && isActiveInHierarch)
-                (*iterComponent)->Draw((*iterCamera));
+            if ((*iterComponent)->transform->aabb->isOnFrustum((*frustum), model, right, up, forward))
+            {
+                bool isRenderizable = (*iterComponent)->IsRenderizable();
+                bool isEnable = (*iterComponent)->isEnable;
+                bool isActive = (*iterComponent)->gameobject->IsActive();
+                bool isActiveInHierarch = (*iterComponent)->gameobject->IsActiveInHierarch();
+
+                if (isRenderizable && isEnable && isActive && isActiveInHierarch)
+                    (*iterComponent)->Draw((*iterCamera));
+            }
         }
     }
 }
