@@ -440,7 +440,9 @@ void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, 
 
     glLineWidth(lineWidth);
     glEnable(GL_LINE_SMOOTH);
-
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(1, 0x00FF);
+    
     glBegin(GL_LINES);
     glVertex3f(startPoint.x, startPoint.y, startPoint.z);
     glVertex3f(endPoint.x, endPoint.y, endPoint.z);
