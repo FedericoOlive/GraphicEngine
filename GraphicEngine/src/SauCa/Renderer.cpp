@@ -238,13 +238,69 @@ void Renderer::Clear(GLbitfield field)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
+void DrawLinesFrustum(Camera* camera)
+{
+    Plane left      = camera->frustum->leftFace;
+    Plane right     = camera->frustum->rightFace;
+    Plane top       = camera->frustum->topFace;
+    Plane bottom    = camera->frustum->bottomFace;
+    Plane far       = camera->frustum->farFace;
+    Plane near      = camera->frustum->nearFace;
+	
+    glm::vec3 nearLeftTop =     Plane::FindIntersectionPoint(near, left,  top);
+    glm::vec3 nearLeftBottom =  Plane::FindIntersectionPoint(near, left,  bottom);
+    glm::vec3 nearRightTop =    Plane::FindIntersectionPoint(near, right, top);
+    glm::vec3 nearRightBottom = Plane::FindIntersectionPoint(near, right, bottom);
+    glm::vec3 farLeftTop =      Plane::FindIntersectionPoint(far,  left,  top);
+    glm::vec3 farLeftBottom =   Plane::FindIntersectionPoint(far,  left,  bottom);
+    glm::vec3 farRightTop =     Plane::FindIntersectionPoint(far,  right, top);
+    glm::vec3 farRightBottom =  Plane::FindIntersectionPoint(far,  right, bottom);
+    enum DrawMode { Both, PlaneNear, PlaneFar };
+    DrawMode drawMode = Both;
+    switch (drawMode)
+	{
+    case Both:
+        Renderer::DrawLine(nearLeftTop, nearLeftBottom);
+        Renderer::DrawLine(nearLeftTop, nearRightTop);
+        Renderer::DrawLine(nearLeftTop, farLeftBottom);
+
+        Renderer::DrawLine(nearRightBottom, nearLeftBottom);
+        Renderer::DrawLine(nearRightBottom, nearRightTop);
+        Renderer::DrawLine(nearRightBottom, farRightBottom);
+
+        Renderer::DrawLine(farRightTop, farRightBottom);
+        Renderer::DrawLine(farRightTop, nearRightTop);
+        Renderer::DrawLine(farRightTop, farLeftTop);
+
+        Renderer::DrawLine(farLeftBottom, farLeftTop);
+        Renderer::DrawLine(farLeftBottom, nearLeftBottom);
+        Renderer::DrawLine(farLeftBottom, farRightBottom);
+	    break;
+    case PlaneNear:
+        Renderer::DrawLine(nearRightBottom, nearRightTop);
+        Renderer::DrawLine(nearRightBottom, nearLeftBottom);
+        Renderer::DrawLine(nearLeftTop, nearRightTop);
+        Renderer::DrawLine(nearLeftTop, nearLeftBottom);
+	    break;
+    case PlaneFar:
+        Renderer::DrawLine(farRightBottom, farRightTop);
+        Renderer::DrawLine(farRightBottom, farLeftBottom);
+        Renderer::DrawLine(farLeftTop, farRightTop);
+        Renderer::DrawLine(farLeftTop, farLeftBottom);
+	    break;
+    default: ;
+    }
+	
+   
+}
+
 void Renderer::Draw()
 {
     int count = 0;
     Camera* cam = (*cameras.begin());
     Frustum* frustum = cam->frustum;
     cam->frustum->Update(cam->fov, cam->aspect, cam->far, cam->near, cam->transform->GetWorldPosition(), cam->transform->forward(), cam->transform->right(), cam->transform->up());
-
+	DrawLinesFrustum(cam);
     for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
     {
         count++;
@@ -380,6 +436,7 @@ void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, 
     shader->SetMat4("projectionMatrix", camera->projectionMatrix);
     shader->SetVec3("colorTint", color);
     shader->SetFloat("alpha", 1);
+    shader->SetBool("useBaseColor", false);
 
     glLineWidth(lineWidth);
     glEnable(GL_LINE_SMOOTH);
@@ -388,4 +445,5 @@ void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, 
     glVertex3f(startPoint.x, startPoint.y, startPoint.z);
     glVertex3f(endPoint.x, endPoint.y, endPoint.z);
     glEnd();
+    shader->SetBool("useBaseColor", true);
 }

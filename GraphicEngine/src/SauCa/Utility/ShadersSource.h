@@ -58,10 +58,15 @@ std::string ShaderSource::fragmentShaderSolidSource =
 	"out vec4 FragColor;\n"
 	"in vec3 ourColor;\n"
 	"uniform vec3 colorTint;\n"
+	"uniform bool useBaseColor;\n"
 	"uniform float alpha;\n"
 	"void main()\n"
 	"{\n"
-	"	FragColor = vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+	"	if(useBaseColor) {\n"
+	"		FragColor = vec4(ourColor.x * colorTint.x, ourColor.y * colorTint.y, ourColor.z * colorTint.z, alpha);\n"
+	"	}else {"
+	"		FragColor = vec4(colorTint.x, colorTint.y, colorTint.z, alpha);\n"
+	"	}\n"
 	"}";
 std::string ShaderSource::vertexShaderTextureSource =
 	"#version 330 core\n"
