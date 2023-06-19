@@ -264,6 +264,7 @@ void Cube::OnAsigned()
 {
 	std::function<void()> recalculateAABB = [this] { RecalculateAABB(); };
 	transform->OnUpdateModelMatrix.AddListener(recalculateAABB);
+	RecalculateAABB();
 }
 
 void Cube::RecalculateAABB()
@@ -273,8 +274,8 @@ void Cube::RecalculateAABB()
 	int i = 0;
 	while (i < vertexData->sizeVertices)
 	{
-		glm::vec3 modelVertex = (transform->GetModelMatrix() * glm::vec4(vertexData->vertices[i++], vertexData->vertices[i++], vertexData->vertices[i++], 1.0f));
-
+		glm::vec3 modelVertex = (transform->GetModelMatrix() * glm::vec4(vertexData->vertices[i], vertexData->vertices[i + 1], vertexData->vertices[i + 2], 1.0f));
+		i += 3;
 		transform->aabb->min.x = glm::min(transform->aabb->min.x, modelVertex.x);
 		transform->aabb->max.x = glm::max(transform->aabb->max.x, modelVertex.x);
 		transform->aabb->min.y = glm::min(transform->aabb->min.y, modelVertex.y);
@@ -283,6 +284,6 @@ void Cube::RecalculateAABB()
 		transform->aabb->max.z = glm::max(transform->aabb->max.z, modelVertex.z);
 	}
 	
-	transform->aabb->AfterUpdate();
+	transform->aabb->AfterUpdate(gameobject->name);
 	CalculateParentAABB();
 }

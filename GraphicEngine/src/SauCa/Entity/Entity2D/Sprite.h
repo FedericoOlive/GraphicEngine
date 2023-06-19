@@ -32,5 +32,8 @@ public:
 	void SetTextureCoordinates(glm::vec2 topRight, glm::vec2 bottomRight, glm::vec2 bottomLeft, glm::vec2 topLeft);
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
+	
+	void OnAsigned() override;
+	void RecalculateAABB() override;
 };
 #endif

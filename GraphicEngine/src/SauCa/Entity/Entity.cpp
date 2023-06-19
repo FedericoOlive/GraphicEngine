@@ -32,16 +32,16 @@ void Entity::SetColorTint(float r, float g, float b, float a)
 	alpha = a;
 }
 
-void Entity::OnAsigned()
-{
-	std::function<void()> recalculateAABB = [this] { RecalculateAABB(); };
-	transform->OnUpdateModelMatrix.AddListener(recalculateAABB);
-}
-
-void Entity::RecalculateAABB()
-{
-	
-}
+//void Entity::OnAsigned()
+//{
+//	std::function<void()> recalculateAABB = [this] { RecalculateAABB(); };
+//	transform->OnUpdateModelMatrix.AddListener(recalculateAABB);
+//}
+//
+//void Entity::RecalculateAABB()
+//{
+//	
+//}
 
 void Entity::CalculateParentAABB()
 {
@@ -55,7 +55,7 @@ void Entity::CalculateParentAABB()
 		parent->aabb->max.x = glm::max(transform->aabb->max.x, parent->aabb->max.x);
 		parent->aabb->max.y = glm::max(transform->aabb->max.y, parent->aabb->max.y);
 		parent->aabb->max.z = glm::max(transform->aabb->max.z, parent->aabb->max.z);
-		parent->aabb->AfterUpdate();
+		parent->aabb->AfterUpdate(parent->gameObject->name);
 		parent = parent->parent;
 	}
 }

@@ -4,19 +4,8 @@
 #include "Exports.h"
 #include <glm/glm.hpp>
 #include <array>
+#include <iostream>
 #include <glm/ext/scalar_constants.hpp>
-
-//class SAUCA_API AABBOld
-//{
-//public:
-//	glm::vec3 min;
-//	glm::vec3 max;
-//
-//	AABBOld();
-//	//AABB(glm::vec3 inCenter, float inExtent) : BoundingVolume{}, center{ inCenter }, extent{ inExtent } {}
-//	void BeforeUpdate();
-//	void AfterUpdate();
-//};
 
 struct Plane
 {
@@ -40,7 +29,24 @@ struct Plane
 	}
 
 	// Todo: Pendiente quiero dibujar el frustum con DrawLine para ver y tratar de debugear el error de que se dejan de dibujar 
-	glm::vec3 FindIntersectionPoint(const Plane& plane1, const Plane& plane2, const Plane& plane3)
+	static glm::vec3 FindIntersectionPoint2(const Plane& plane1, const Plane& plane2, const Plane& plane3)
+	{
+		// Construir la matriz de coeficientes
+		glm::mat3 coefficients(plane1.normal, plane2.normal, plane3.normal);
+
+		// Construir el vector de constantes
+		glm::vec3 constants(-plane1.distance, -plane2.distance, -plane3.distance);
+
+		// Calcular la matriz inversa de los coeficientes
+		glm::mat3 inverse = glm::inverse(coefficients);
+
+		// Calcular el punto de intersección
+		glm::vec3 solution = inverse * constants;
+
+		return solution;
+	}
+
+	static glm::vec3 FindIntersectionPoint(const Plane& plane1, const Plane& plane2, const Plane& plane3)
 	{
 		// Calcular los coeficientes de la ecuación de los tres planos
 		float a1 = plane1.normal.x;
@@ -64,6 +70,7 @@ struct Plane
 		if (std::abs(determinant) < 1e-6)
 		{
 			// Los planos no se intersectan en un solo punto
+			std::cout << "Los planos no se intersectan en un solo punto\n";
 			return glm::vec3(NAN, NAN, NAN); // Punto inválido
 		}
 
@@ -122,7 +129,7 @@ struct AABB : public BoundingVolume
 	glm::vec3 min;
 	glm::vec3 max;
 	glm::vec3 center{ 0.f, 0.f, 0.f };
-	glm::vec3 extents{ 0.f, 0.f, 0.f };
+	glm::vec3 extents{ 0.01f, 0.01f, 0.01f };
 
 	AABB(){}
 	AABB(const glm::vec3& min, const glm::vec3& max)
@@ -139,10 +146,25 @@ struct AABB : public BoundingVolume
 		max = -glm::vec3(std::numeric_limits<float>::max());
 	}
 	
-	void AfterUpdate()
+	void AfterUpdate(std::string nameGameObject)
 	{
+		bool check = false;
+		if (nameGameObject == "miniGoku3")
+		{
+			check = true;
+		}
+		
 		center = { (max + min) * 0.5f };
 		extents = { max.x - center.x, max.y - center.y, max.z - center.z };
+
+		float minToCheck = 0.01f;
+		if (extents.x < minToCheck) extents.x = minToCheck;
+		if (extents.y < minToCheck) extents.y = minToCheck;
+		if (extents.z < minToCheck) extents.z = minToCheck;
+		if (check)
+		{
+			std::cout << nameGameObject << ": Extents: " << extents.x << ", " << extents.y << ", " << extents.z << "\n";
+		}
 	}
 
 	std::array<glm::vec3, 8> getVertice() const
@@ -199,6 +221,48 @@ struct AABB : public BoundingVolume
 			globalAABB.isOnOrForwardPlane(camFrustum.bottomFace) &&
 			globalAABB.isOnOrForwardPlane(camFrustum.nearFace) &&
 			globalAABB.isOnOrForwardPlane(camFrustum.farFace));
+	}
+
+	bool isOnFrustum(const Frustum& camFrustum, AABB* aabb) const
+	{
+		const int maxPoints = 8;
+		const int maxPlanes = 6;
+		
+		glm::vec3 points[maxPoints];
+		points[0] = center + glm::vec3(extents.x, extents.y, extents.z);
+		points[1] = center + glm::vec3(extents.x, extents.y, -extents.z);
+		points[2] = center + glm::vec3(extents.x, -extents.y, extents.z);
+		points[3] = center + glm::vec3(extents.x, -extents.y, -extents.z);
+		points[4] = center + glm::vec3(-extents.x, extents.y, extents.z);
+		points[5] = center + glm::vec3(-extents.x, extents.y, -extents.z);
+		points[6] = center + glm::vec3(-extents.x, -extents.y, extents.z);
+		points[7] = center + glm::vec3(-extents.x, -extents.y, -extents.z);
+
+		Plane planes[maxPlanes];
+		planes[0] = camFrustum.topFace;
+		planes[1] = camFrustum.bottomFace;
+		planes[2] = camFrustum.leftFace;
+		planes[3] = camFrustum.rightFace;
+		planes[4] = camFrustum.farFace;
+		planes[5] = camFrustum.nearFace;
+
+		for (int i = 0; i < maxPlanes; ++i)
+		{
+			int counterPointFarPlanes = 0;
+			for (int j = 0; j < maxPoints; ++j)
+			{
+				float signedDistance = planes[i].getSignedDistanceToPlane(points[j]);
+				if (signedDistance < 0)
+				{
+					counterPointFarPlanes++;
+				}
+			}
+			
+			if (counterPointFarPlanes >= maxPoints)
+				return false;
+		}
+		
+		return true;
 	}
 };
 

@@ -12,6 +12,9 @@ public:
 	void Draw(Camera* camera) override;
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
+
+	void OnAsigned() override;
+	void RecalculateAABB() override;
 };
 
 #endif

@@ -309,13 +309,26 @@ void Renderer::Draw()
         (*iterCamera)->BeginDraw();
         for (auto iterComponent = (*iterCamera)->cameraRenderList.begin(); iterComponent != (*iterCamera)->cameraRenderList.end(); ++iterComponent)
         {
-
             glm::mat4 model = (*iterComponent)->transform->GetModelMatrix();
             glm::vec3 right = (*iterComponent)->transform->right();
             glm::vec3 up = (*iterComponent)->transform->up();
             glm::vec3 forward = (*iterComponent)->transform->forward();
 
-            if ((*iterComponent)->transform->aabb->isOnFrustum((*frustum), model, right, up, forward))
+            bool isOnFrustum = (*iterComponent)->transform->aabb->isOnFrustum((*frustum), (*iterComponent)->transform->aabb);
+
+            //if ((*iterComponent)->gameobject->name == "Cube 1")
+            //{
+            //    if (isOnFrustum)
+            //    {
+            //        cout << "Cube 1: IN\n";
+            //    }
+            //    else
+            //    {
+            //        cout << "Cube 1: OUT\n";
+            //    }
+            //}
+        	
+            if (isOnFrustum)
             {
                 bool isRenderizable = (*iterComponent)->IsRenderizable();
                 bool isEnable = (*iterComponent)->isEnable;

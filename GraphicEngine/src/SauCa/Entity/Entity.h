@@ -19,8 +19,7 @@ public:
 	~Entity();
 	virtual void CreateVertexData() {}
 	void SetRenderer(Renderer* render);
-	void OnAsigned() override;
-	virtual void RecalculateAABB();
+	virtual void RecalculateAABB() = 0;
 	void CalculateParentAABB();
 
 	void SetColorTint(float r, float g, float b, float a);

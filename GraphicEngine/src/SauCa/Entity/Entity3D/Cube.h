@@ -18,7 +18,7 @@ protected:
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
 public:
-	void RecalculateAABB() override;
 	void OnAsigned() override;
+	void RecalculateAABB() override;
 };
 #endif

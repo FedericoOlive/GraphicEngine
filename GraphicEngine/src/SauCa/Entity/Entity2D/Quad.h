@@ -10,4 +10,7 @@ public:
 	void CreateVertexData() override;
 	void GenBufferEntity() override;
 	void BindBufferEntity() override;
+	
+	void OnAsigned() override;
+	void RecalculateAABB() override;
 };

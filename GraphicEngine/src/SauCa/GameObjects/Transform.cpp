@@ -212,7 +212,7 @@ void Transform::UpdateModelMatrix()
 			
 	aabb->BeforeUpdate();
 	OnUpdateModelMatrix.Invoke();
-	aabb->AfterUpdate();
+	//aabb->AfterUpdate(gameObject->name);
 }
 
 // ============================================ TOOLS ============================================

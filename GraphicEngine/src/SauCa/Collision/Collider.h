@@ -13,8 +13,9 @@ public:
 		Shere
 	};
 
-	float lineWidth = 2.0f;
-	glm::vec3 color = { 1, 0, 0 };
+	float lineWidth;
+	glm::vec3 color;
+	bool isCollision;
 	
 	Collider();
 	~Collider() override;

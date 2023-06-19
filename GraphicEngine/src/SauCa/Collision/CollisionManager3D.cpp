@@ -52,6 +52,11 @@ bool CollisionManager3D::IsInCollisionList(Collider* colliderToCheck)
 void CollisionManager3D::UpdateCollisions()
 {
 	for (Collider*& d1 : dynamicCollisionList)
+		d1->isCollision = false;
+	for (Collider*& d1 : staticCollisionList)
+		d1->isCollision = false;
+	
+	for (Collider*& d1 : dynamicCollisionList)
 	{
 		for (Collider*& d2 : dynamicCollisionList)
 		{
@@ -59,10 +64,18 @@ void CollisionManager3D::UpdateCollisions()
 			{
 				if (IsCollision(d1, d2))
 				{
-
+					d1->isCollision = true;
+					d2->isCollision = true;
+					d1->color = { 1, 0, 0 };
+					d2->color = { 1, 0, 0 };
 				}
-
-
+				else if (!d1->isCollision || !d2->isCollision)
+				{
+					if (!d1->isCollision)
+						d1->color = { 0, 1, 0 };
+					if (!d2->isCollision)
+						d2->color = { 0, 1, 0 };
+				}
 				
 				//float overlapX = 0;
 				//float overlapY = 0;
@@ -77,10 +90,28 @@ void CollisionManager3D::UpdateCollisions()
 		}
 	}
 
-	for (Collider*& d : dynamicCollisionList) 
+	for (Collider*& d1 : dynamicCollisionList) 
 	{
-		for (Collider*& s : staticCollisionList) 
+		for (Collider*& s1 : staticCollisionList) 
 		{
+			if (d1 != s1)
+			{
+				if (IsCollision(d1, s1))
+				{
+					d1->isCollision = true;
+					s1->isCollision = true;
+					d1->color = { 1, 0, 0 };
+					s1->color = { 1, 0, 0 };
+				}
+				else if (!d1->isCollision || !s1->isCollision)
+				{
+					if (!d1->isCollision)
+						d1->color = { 0, 1, 0 };
+					if (!s1->isCollision)
+						s1->color = { 0, 1, 0 };
+				}
+			}
+			
 			float overlapX = 0;
 			float overlapY = 0;
 			//CollisionType currentCollision = d->CheckCollision(*s, overlapX, overlapY);

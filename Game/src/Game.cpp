@@ -55,12 +55,12 @@ void Game::Update()
 	Transform* targetCollision1 = player->visualPlayer->transform;
 	Transform* targetCollision2 = cube1->transform;
 	
-	if (CollisionManager3D::IsCollision(targetCollision1, targetCollision2))
-	{
-		cout << "Collision: " << targetCollision1->gameObject->name << " con " << targetCollision2->gameObject->name << "\n";
-	}
+	//if (CollisionManager3D::IsCollision(targetCollision1, targetCollision2))
+	//{
+	//	cout << "Collision: " << targetCollision1->gameObject->name << " con " << targetCollision2->gameObject->name << "\n";
+	//}
 	
-	objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
+	//objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
 	float time = Timer::ElapsedTime();
 	
 	goLightPointArround01->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.2f) * 45, 10, glm::cos(time * 0.2f) * 45 });
@@ -81,6 +81,7 @@ void Game::Draw()
 void Game::SetLights()
 {
 	GameObject* goLightDir01 = CreateGameObject("Dir Light 1");
+	goLightDir01->transform->SetWorldRotation({ -45, 0, 0 });
 	//GameObject* goLightDir02 = CreateGameObject("Dir Light 2");
 	GameObject* goLightPoint01 = CreateGameObject("Point Light 1");
 	GameObject* goLightPoint02 = CreateGameObject("Point Light 2");
@@ -90,6 +91,7 @@ void Game::SetLights()
 	GameObject* goLightSpot02 = CreateGameObject("Spot Light 2");
 
 	DirectionalLight* lightDir1 = CreateDirectionalLight();
+	lightDir1->powerDiffuse = 2;
 	//DirectionalLight* lightDir2 = CreateDirectionalLight();
 	PointLight* lightPoint1 = CreatePointLight();
 	PointLight* lightPoint2 = CreatePointLight();
@@ -191,7 +193,7 @@ void Game::SetEnviroment()
 	objectFoward = CreateGameObject("miniGoku3");
 	Sprite* miniGokuSprite = CreateSprite(miniGokuTexture);
 	objectFoward->AddComponent(miniGokuSprite);
-	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
+	objectFoward->AddComponent(CreateCollider());
 	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
 	
 	GameObject* worldContent = CreateGameObject("World Content");
@@ -203,7 +205,7 @@ void Game::SetEnviroment()
 	Sprite* floorSprite = CreateSprite(CreateTexture("res/Layer2.png"));
 	floor->AddComponent(floorSprite);
 	floor->transform->SetLocalPosition({ 0, 0, 0 });
-	floor->transform->SetLocalScale({ cubeDimensions * 4, cubeDimensions * 4, 1 });
+	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	floor->transform->SetLocalRotation({ 90, 180, 0 });
 	floorSprite->material->shininess = 10000;
 	floorSprite->material->specular = {0, 0, 0};
@@ -212,31 +214,36 @@ void Game::SetEnviroment()
 	GameObject* wallRight = CreateGameObject("Wall Right");
 	wallRight->transform->SetParent(worldContent);
 	wallRight->AddComponent(CreateSprite(CreateTexture("res/World/Right.png")));
+	wallRight->transform->SetLocalPosition({ cubeDimensions, cubeDimensions, 0 });
 	wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0.01f });
-	wallRight->transform->SetLocalPosition({ cubeDimensions, cubeDimensions / 2, 0 });
 	wallRight->transform->SetLocalRotation({ 0, -90, 0 });
+	wallRight->AddComponent(CreateCollider());
 	
 	GameObject* wallLeft = CreateGameObject("Wall Left");
 	wallLeft->transform->SetParent(worldContent);
 	wallLeft->AddComponent(CreateSprite(CreateTexture("res/World/Left.png")));
-	wallLeft->transform->SetLocalPosition({ -cubeDimensions, cubeDimensions / 2, 0 });
+	wallLeft->transform->SetLocalPosition({ -cubeDimensions, cubeDimensions, 0 });
 	wallLeft->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	wallLeft->transform->SetLocalRotation({ 0, 90, 0 });
-	
+	wallLeft->AddComponent(CreateCollider());
+
 	GameObject* wallBack = CreateGameObject("Wall Back");
 	wallBack->transform->SetParent(worldContent);
 	wallBack->AddComponent(CreateSprite(CreateTexture("res/World/Back.png")));
-	wallBack->transform->SetLocalPosition({ 0, cubeDimensions / 2, cubeDimensions });
+	wallBack->transform->SetLocalPosition({ 0, cubeDimensions, cubeDimensions });
 	wallBack->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	wallBack->transform->SetLocalRotation({ 0, 180, 0 });
-	
+	wallBack->AddComponent(CreateCollider());
+
 	Texture* front = CreateTexture("res/World/Front.png");
 	Sprite* spriteFront = CreateSprite(front);
 	GameObject* wallFront = CreateGameObject("Wall Front");
 	wallFront->transform->SetParent(worldContent);
 	wallFront->AddComponent(spriteFront);
-	wallFront->transform->SetLocalPosition({ 0, cubeDimensions / 2, -cubeDimensions });
+	wallFront->transform->SetLocalPosition({ 0, cubeDimensions, -cubeDimensions });
 	wallFront->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
+	wallFront->transform->SetLocalRotation({ 0, 0, 0 });
+	wallFront->AddComponent(CreateCollider());
 
 	// 4 Cubes
 	cubeContent = CreateGameObject("Cube Content");
@@ -310,16 +317,17 @@ void Game::AddPlayer()
 	spotGo->AddComponent(spotlightPlayer);
 	spotGo->transform->SetParent(player->pivot);
 
-	Collider* col = CreateCollider();
+	Collider* col = CreateCollider(false);
 	player->transform->gameObject->AddComponent(col);
 }
 
 void Game::AddMinimap()
 {
 	GameObject* cameraMinimapGo = CreateGameObject("Camera MiniMap");
-	cameraMinimapGo->transform->SetWorldPosition({ -50, 10, 50 });
+	cameraMinimapGo->transform->SetWorldPosition({ -50, 100, 50 });
 	cameraMinimapGo->transform->SetWorldRotation({ -90, 0, 0 });
 	Camera* cameraMinimap = CreateCamera({ 0, 720 - 200 }, { 200, 200 }, Camera::Orthogonal, true);
+	//cameraMinimap->near = 0.00001f;
 	cameraMinimap->SetZoom(2.0f);
 	cameraMinimapGo->AddComponent(cameraMinimap);
 }
@@ -338,6 +346,7 @@ void Game::AddModels3D()
 	modelJakeObject->transform->SetWorldRotation({ 0, 180, 0 });
 	Model* modelJake = CreateModel("res/Jake/Jake_Test1.obj", true, false);
 	modelJakeObject->AddComponent(modelJake);
+	modelJakeObject->AddComponent(CreateCollider(false));
 	// Set as Gold
 	modelJake->material->ambient = { 0.24725f, 0.1995f, 0.0745f };
 	modelJake->material->diffuse = { 0.75164f, 0.60648f, 0.22648f };
@@ -349,6 +358,7 @@ void Game::AddModels3D()
 	modelJakeObject2->transform->SetWorldPosition({ -20, 0, -20 });
 	Model* modelJake2 = CreateModel("res/Jake/Jake_Test1.obj", true, false);
 	modelJakeObject2->AddComponent(modelJake2);
+	modelJakeObject2->AddComponent(CreateCollider(false));
 	// Set as Normal
 	modelJake2->material->ambient = { 1, 1, 1 };
 	modelJake2->material->diffuse = { 1, 1, 1 };
@@ -360,6 +370,7 @@ void Game::AddModels3D()
 	modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });
 	Model* modelGoku = CreateModel("res/Goku/A.obj", true, false);
 	modelGokuObject->AddComponent(modelGoku);
+	modelGokuObject->AddComponent(CreateCollider(false));
 }
 
 void Game::ChangeColorSpotLight()

@@ -79,6 +79,9 @@ int BaseGame::Init()
         OnUpdateEvent.Invoke();
         Update();
 
+        //collisionManager->UpdateCollisions();
+        collisionManager3D->UpdateCollisions();
+    	
         BeforeDraw();
         AutoDraw();
         Draw();
@@ -341,8 +344,8 @@ void BaseGame::DrawCollision()
 
 void BaseGame::DrawCubeLines(AABB* aabb, float lineWidth, glm::vec3 color, Camera* camera)
 {
-    glm::vec3 minPoint = aabb->min;
-    glm::vec3 maxPoint = aabb->max;
+    glm::vec3 minPoint = aabb->center - aabb->extents;
+    glm::vec3 maxPoint = aabb->center + aabb->extents;
 
     // Obtener los 8 vértices del cubo
     glm::vec3 p1 = { minPoint.x, minPoint.y, minPoint.z };
