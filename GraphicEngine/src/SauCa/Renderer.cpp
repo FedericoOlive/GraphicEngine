@@ -314,7 +314,7 @@ void Renderer::Draw()
             glm::vec3 up = (*iterComponent)->transform->up();
             glm::vec3 forward = (*iterComponent)->transform->forward();
 
-            bool isOnFrustum = (*iterComponent)->transform->aabb->isOnFrustum((*frustum), (*iterComponent)->transform->aabb);
+            bool isOnFrustum = (*iterComponent)->transform->aabb->IsOnFrustum((*frustum), (*iterComponent)->transform->aabb);
 
             //if ((*iterComponent)->gameobject->name == "Cube 1")
             //{

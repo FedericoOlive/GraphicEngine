@@ -75,7 +75,7 @@ void Game::Draw()
 	//DrawCubeLines(cube1->transform->aabb, 2, {1, 0, 0}, camera);
 	//DrawCubeLines(cube2->transform->aabb, 2, {0, 1, 0}, camera);
 	//DrawCubeLines(cube3->transform->aabb, 2, {0, 0, 1}, camera);
-	DrawCubeLines(cubeContent->transform->aabb, 2, {0, 0, 1}, camera);
+	DrawCubeLines(cubeContent->transform->aabb, 2, Color::Blue, camera);
 }
 
 void Game::SetLights()

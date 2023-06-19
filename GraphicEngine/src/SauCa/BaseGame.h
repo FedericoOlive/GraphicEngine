@@ -20,6 +20,7 @@
 #include "Render/Camera.h"
 #include "Utility/Event.h"
 #include "Collision/CollisionManager3D.h"
+#include "Utility/Color.h"
 
 using namespace std;
 

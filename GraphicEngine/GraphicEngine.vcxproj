@@ -187,7 +187,9 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Collision\BoundingVolume.cpp" />
     <ClCompile Include="src\SauCa\Collision\Frustum.cpp" />
+    <ClCompile Include="src\SauCa\Collision\Plane.cpp" />
     <ClCompile Include="src\SauCa\Collision\AABB.cpp" />
     <ClCompile Include="src\SauCa\Collision\CollisionManager3D.cpp" />
     <ClCompile Include="src\SauCa\Collision\BoxCollider.cpp" />
@@ -203,6 +205,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Light\BaseLight.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D\Cube.cpp" />
     <ClCompile Include="src\SauCa\Movement\EntityController.cpp" />
+    <ClCompile Include="src\SauCa\Utility\Color.cpp" />
     <ClCompile Include="src\SauCa\Utility\Event.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity3D.cpp" />
     <ClCompile Include="src\SauCa\GameObjects\Component.cpp" />
@@ -233,7 +236,10 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Utility\Color.h" />
+    <ClInclude Include="src\SauCa\Collision\BoundingVolume.h" />
     <ClInclude Include="src\SauCa\Collision\Frustum.h" />
+    <ClInclude Include="src\SauCa\Collision\Plane.h" />
     <ClInclude Include="src\SauCa\Collision\AABB.h" />
     <ClInclude Include="src\SauCa\Collision\CollisionManager3D.h" />
     <ClInclude Include="src\SauCa\Collision\BoxCollider.h" />
