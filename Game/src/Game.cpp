@@ -334,6 +334,12 @@ void Game::AddMinimap()
 
 void Game::AddModels3D()
 {
+	flairGo = CreateGameObject("FlairGo");
+	flairGo->transform->SetWorldScale({ 0.1f , 0.1f , 0.1f });
+	flairGo->transform->SetWorldPosition({ 0.0f, 0.0f, -20.0f });
+	flairModel = CreateModel("res/Flair/Flair.dae",true);
+	flairGo->AddComponent(flairModel);
+	
 	//GameObject* backpackObject = CreateGameObject("BackPack");
 	//backpackObject->transform->SetWorldScale({ 2, 2, 2 });
 	//backpackObject->transform->SetWorldPosition({ 0, 5, 0 });

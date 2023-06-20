@@ -30,6 +30,9 @@ private:
 
 	EntityController* cubeMovement;
 
+	GameObject* flairGo = nullptr;
+	Model* flairModel = nullptr;
+
 public:
 	void Initialize()override;
 	void Inputs() override;
