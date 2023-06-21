@@ -44,7 +44,7 @@ public:
 	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
-	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes/*, std::vector<glm::mat4>* transforms*/);
+	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes, std::vector<glm::mat4>* transforms);
 	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras);
 	static void SetMatrix(Shader* shader, Camera* camera, glm::mat4 model);
 	void SetMaterial(Material* material, float alpha, unsigned int textureID);

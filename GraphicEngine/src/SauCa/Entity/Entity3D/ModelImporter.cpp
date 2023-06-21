@@ -135,6 +135,7 @@ void ModelImporter::ExtractBoneWeightForVertices(std::vector<Vertex>& vertices, 
 		{
 			int vertexId = weights[weightIndex].mVertexId;
 			float weight = weights[weightIndex].mWeight;
+			
 			assert(vertexId <= vertices.size());
 			SetVertexBoneData(vertices[vertexId], boneID, weight);
 		}

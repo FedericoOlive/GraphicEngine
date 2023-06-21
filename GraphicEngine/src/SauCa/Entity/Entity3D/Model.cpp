@@ -5,24 +5,28 @@ Model::Model(Renderer* renderer, std::string const& path, bool isInvertIndexesOr
 {
 	this->isInvertIndexesOrder = isInvertIndexesOrder;
 	name = "Model";
-	SetRenderer(renderer);
-
-	if (path == "res/Flair/Flair.dae")
-		material = new Material(renderer->GetDefaultShaderAnim(), true);
-	else
-		material = new Material(renderer->GetDefaultShader(), true);
-
+	SetRenderer(renderer);	
+	material = new Material(renderer->GetDefaultShader(), true);
 	ModelImporter::LoadModel(path, directory, meshes, textures_loaded, isInvertTextures, m_BoneInfoMap, m_BoneCounter);
 }
 
 Model::~Model() {}
 void Model::CreateVertexData() {}
 
-void Model::Draw(Camera* camera)
+void Model::Update(double deltaTime)
 {
+	if (animator != nullptr)
+	{
+		animator->UpdateAnimation(deltaTime);
+		transform->OnUpdateModelMatrix.Invoke();
+	}
+}
+
+void Model::Draw(Camera* camera)
+{	
 	if (isInvertIndexesOrder) 
 		glFrontFace(GL_CW);
-	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes);
+	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes, &(animator->m_FinalBoneMatrices));
 	if (isInvertIndexesOrder)
 		glFrontFace(GL_CCW);
 }
@@ -64,4 +68,18 @@ void Model::RecalculateAABB()
 	
 	transform->aabb->AfterUpdate(gameobject->name);
 	CalculateParentAABB();
+}
+
+Animation3D* Model::CreateAnimation(const std::string& animationPath)
+{
+	material->shader = renderer->GetDefaultShaderAnim();
+
+	Animation3D* animation = new Animation3D(animationPath, m_BoneInfoMap, m_BoneCounter);
+	animations.push_back(animation);
+	return animation;
+}
+
+void Model::CreateAnimator(Animation3D* animation)
+{
+	animator = new Animator(animation, transform);
 }

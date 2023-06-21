@@ -53,7 +53,6 @@ void Game::Inputs()
 void Game::Update()
 {
 	float deltaTime = DeltaTime();
-	animatorFlair->UpdateAnimation(deltaTime);
 	
 	Transform* targetCollision1 = player->visualPlayer->transform;
 	Transform* targetCollision2 = cube1->transform;
@@ -337,14 +336,23 @@ void Game::AddMinimap()
 
 void Game::AddModels3D()
 {
-	flairGo = CreateGameObject("FlairGo");
-	flairGo->AddComponent(CreateCollider(false));
-	flairGo->transform->SetWorldScale({ 0.1f , 0.1f , 0.1f });
+	GameObject*  flairGo = CreateGameObject("FlairGo");
+	//flairGo->AddComponent(CreateCollider(false));
+	flairGo->transform->SetWorldScale({ 0.3f , 0.3f , 0.3f });
 	flairGo->transform->SetWorldPosition({ 0.0f, 0.0f, -20.0f });
-	flairModel = CreateModel("res/Flair/Flair.dae", true);
+	Model* flairModel = CreateModel("res/Flair/Flair.dae", true);
 	flairGo->AddComponent(flairModel);
-	animationFlair = new Animation3D("res/Flair/Flair.dae", flairModel);
-	animatorFlair = new Animator(animationFlair);
+	Animation3D* animationFlair = flairModel->CreateAnimation("res/Flair/Flair.dae");
+	flairModel->CreateAnimator(animationFlair);
+	
+	GameObject* WalkingGo = CreateGameObject("WalkingGo");
+	//WalkingGo->AddComponent(CreateCollider(false));
+	WalkingGo->transform->SetWorldScale({ 0.3f , 0.3f , 0.3f });
+	WalkingGo->transform->SetWorldPosition({ 0.0f, 0.0f, 20.0f });
+	Model* WalkingGoModel = CreateModel("res/Walking/Walking.dae", true);
+	WalkingGo->AddComponent(WalkingGoModel);
+	Animation3D* animationWalking = WalkingGoModel->CreateAnimation("res/Walking/Walking.dae");
+	WalkingGoModel->CreateAnimator(animationWalking);
 	
 	//GameObject* backpackObject = CreateGameObject("BackPack");
 	//backpackObject->transform->SetWorldScale({ 2, 2, 2 });
@@ -377,12 +385,12 @@ void Game::AddModels3D()
 	modelJake2->material->specular ={ 1, 1, 1 };
 	modelJake2->material->shininess = 128.0f;
 	
-	GameObject* modelGokuObject = CreateGameObject("Goku Model");
-	modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });
-	modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });
-	Model* modelGoku = CreateModel("res/Goku/A.obj", true, false);
-	modelGokuObject->AddComponent(modelGoku);
-	modelGokuObject->AddComponent(CreateCollider(false));
+	//GameObject* modelGokuObject = CreateGameObject("Goku Model");
+	//modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });
+	//modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });
+	//Model* modelGoku = CreateModel("res/Goku/A.obj", true, false);
+	//modelGokuObject->AddComponent(modelGoku);
+	//modelGokuObject->AddComponent(CreateCollider(false));
 }
 
 void Game::ChangeColorSpotLight()

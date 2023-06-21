@@ -1,7 +1,8 @@
 #include "Animator.h"
 
-Animator::Animator(Animation3D* animation)
+Animator::Animator(Animation3D* animation, Transform* transform)
 {
+	this->transform = transform;
 	m_CurrentTime = 0.0;
 	m_CurrentAnimation = animation;
 
@@ -18,7 +19,7 @@ void Animator::UpdateAnimation(float dt)
 	{
 		m_CurrentTime += m_CurrentAnimation->GetTicksPerSecond() * dt;
 		m_CurrentTime = fmod(m_CurrentTime, m_CurrentAnimation->GetDuration());
-		CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), glm::mat4(1.0f));
+		CalculateBoneTransform(&m_CurrentAnimation->GetRootNode(), transform->GetModelMatrix());
 	}
 }
 

@@ -3,7 +3,7 @@
 #include "Utility/PrintInConsole.h"
 
 string BaseGame::version = "2.3.0";
-Event<> BaseGame::OnUpdateEvent;
+Event<double> BaseGame::OnUpdateEvent;
 Event<> BaseGame::OnInputEvent;
 
 void BaseGame::BeforeDraw()
@@ -76,7 +76,7 @@ int BaseGame::Init()
         OnInputEvent.Invoke();
         Inputs();
     	
-        OnUpdateEvent.Invoke();
+        OnUpdateEvent.Invoke(timer->DeltaTime());
         Update();
 
         //collisionManager->UpdateCollisions();
@@ -379,15 +379,15 @@ Collider* BaseGame::CreateCollider(bool isStatic)
     return collider;
 }
 
-Animator* BaseGame::CreateAnimator(Animation3D* animation)
-{
-    Animator* animator = new Animator(animation);
-    //Renderer::allAnimatorList.push_back(animator);
-    return animator;
-}
-
-Animation3D* BaseGame::CreateAnimation(std::string path, Model* model)
-{
-    Animation3D* animation = new Animation3D(path, model);
-    return animation;
-}
+//Animator* BaseGame::CreateAnimator(Animation3D* animation)
+//{
+//    Animator* animator = new Animator(animation);
+//    //Renderer::allAnimatorList.push_back(animator);
+//    return animator;
+//}
+//
+//Animation3D* BaseGame::CreateAnimation(std::string path, Model* model)
+//{
+//    Animation3D* animation = new Animation3D(path, model);
+//    return animation;
+//}

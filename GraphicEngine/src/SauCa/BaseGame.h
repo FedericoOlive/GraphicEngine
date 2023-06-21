@@ -47,7 +47,7 @@ private:
 	void ShowHierarchyInConsole(Transform* transf, string preText);
 
 public:
-	static Event<> OnUpdateEvent;
+	static Event<double> OnUpdateEvent;
 	static Event<> OnInputEvent;
 	
 	BaseGame();
@@ -101,8 +101,8 @@ public:
 	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
 	
 	// Animation 3D
-	Animator* CreateAnimator(Animation3D* animation);
-	Animation3D* CreateAnimation(std::string path, Model* model);
+	//Animator* CreateAnimator(Animation3D* animation);
+	//Animation3D* CreateAnimation(std::string path, Model* model);
 };
 	
 #endif

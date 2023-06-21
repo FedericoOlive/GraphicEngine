@@ -8,7 +8,7 @@ class SAUCA_API BoxCollider : public Collider
 public:
 	~BoxCollider() override;
 	void Draw(Camera* camera) override;
-	void Update() override;
+	void Update(double deltaTime) override;
 	void Input() override;
 	void OnAsigned() override;
 };

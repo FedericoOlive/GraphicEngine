@@ -20,7 +20,7 @@ public:
 	Collider();
 	~Collider() override;
 	void Draw(Camera* camera) override;
-	void Update() override;
+	void Update(double deltaTime) override;
 	void Input() override;
 	void OnAsigned() override;
 };

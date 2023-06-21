@@ -38,7 +38,7 @@ public:
 	void SetSpeedMovements(float speed);
 	void SetSpeedMovements(float speedForward, float speedLeft, float speedBack, float speedRight);
 	void SetCameraSensitive(float sensitiveX, float sensitiveY);
-	void Update() override;
+	void Update(double deltaTime) override;
 	void Input() override;
 	void OnAsigned() override;
 	void OnMouseMove(double x, double y);

@@ -29,11 +29,7 @@ private:
 	glm::vec3 playerZoom = {0, 1, 3};
 
 	EntityController* cubeMovement;
-
-	GameObject* flairGo = nullptr;
-	Model* flairModel = nullptr;
-	Animation3D* animationFlair = nullptr;
-	Animator* animatorFlair = nullptr;
+	
 public:
 	void Initialize()override;
 	void Inputs() override;

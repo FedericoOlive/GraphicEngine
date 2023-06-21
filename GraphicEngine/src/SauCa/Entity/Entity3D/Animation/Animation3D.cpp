@@ -3,7 +3,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 
-Animation3D::Animation3D(const std::string& animationPath, Model* model)
+Animation3D::Animation3D(const std::string& animationPath, std::map<std::string, BoneInfo>& boneInfoMap, int& boneCount)
 {
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(animationPath, aiProcess_Triangulate);
@@ -14,7 +14,7 @@ Animation3D::Animation3D(const std::string& animationPath, Model* model)
 	aiMatrix4x4 globalTransformation = scene->mRootNode->mTransformation;
 	globalTransformation = globalTransformation.Inverse();
 	ReadHierarchyData(m_RootNode, scene->mRootNode);
-	ReadMissingBones(animation, *model);
+	ReadMissingBones(animation, boneInfoMap, boneCount);
 }
 
 Animation3D::~Animation3D() { }
@@ -25,7 +25,7 @@ Bone* Animation3D::FindBone(const std::string& name)
 		{
 			return Bone.GetBoneName() == name;
 		});
-	
+
 	if (iter == m_Bones.end())
 		return nullptr;
 	else
@@ -37,12 +37,9 @@ float Animation3D::GetDuration() const { return m_Duration; }
 const AssimpNodeData& Animation3D::GetRootNode() const { return m_RootNode; }
 const std::map<std::string, BoneInfo>& Animation3D::GetBoneIDMap() const { return m_BoneInfoMap; }
 
-void Animation3D::ReadMissingBones(const aiAnimation* animation, Model& model)
+void Animation3D::ReadMissingBones(const aiAnimation* animation, std::map<std::string, BoneInfo>& boneInfoMap, int& boneCount)
 {
 	int size = animation->mNumChannels;
-
-	auto& boneInfoMap = model.GetBoneInfoMap();//getting m_BoneInfoMap from Model class
-	int& boneCount = model.GetBoneCount(); //getting the m_BoneCounter from Model class
 
 	//reading channels(bones engaged in an animation and their keyframes)
 	for (int i = 0; i < size; i++)

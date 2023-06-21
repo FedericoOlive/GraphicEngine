@@ -100,7 +100,7 @@ void EntityController::SetCameraSensitive(float sensitiveX, float sensitiveY)
 	mouseSensitive = { sensitiveX, sensitiveY };
 }
 
-void EntityController::Update()
+void EntityController::Update(double deltaTime)
 {
 	
 }

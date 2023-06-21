@@ -88,7 +88,7 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
     glUseProgram(0);
 }
 
-void Renderer::DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes)
+void Renderer::DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes, std::vector<glm::mat4>* transforms)
 {
     material->shader->Use();
 
@@ -96,8 +96,11 @@ void Renderer::DrawModel(glm::mat4 model, unsigned textureID, Material* material
     SetMaterial(material, alpha, textureID);
     SetLights(material);
 
-    //for (int i = 0; i < (*transforms).size(); ++i)
-    //    material->shader->SetMat4("finalBonesMatrices[" + std::to_string(i) + "]", (*transforms)[i]);
+    if (transforms != nullptr)
+    {
+        for (int i = 0; i < (*transforms).size(); ++i)
+            material->shader->SetMat4("finalBonesMatrices[" + std::to_string(i) + "]", (*transforms)[i]);
+    }
 
     for (unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Draw(material->shader);

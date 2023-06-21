@@ -20,7 +20,7 @@ void Collider::Draw(Camera* camera)
 	
 }
 
-void Collider::Update()
+void Collider::Update(double deltaTime)
 {
 	
 }
