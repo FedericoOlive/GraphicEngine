@@ -45,6 +45,12 @@ protected:
 	void BindBufferColors(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->CBO, vertexData->atribColor, vertexData->atribColorSize, vertexData->sizeColor, vertexData->colors, modeDataStore); }
 	void BindBufferNormals(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->NBO, vertexData->atribNormal, vertexData->atribNormalSize, vertexData->sizeNormals, vertexData->normals, modeDataStore); }
 	void BindBufferTextures(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->UVB, vertexData->atribUvs, vertexData->atribUvsSize, vertexData->sizeUvs, vertexData->uvs, modeDataStore); }
+
+	void BindBufferTangent(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->UVB, vertexData->atribUvs, vertexData->atribUvsSize, vertexData->sizeUvs, vertexData->uvs, modeDataStore); }
+	void BindBufferBiTangent(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->UVB, vertexData->atribUvs, vertexData->atribUvsSize, vertexData->sizeUvs, vertexData->uvs, modeDataStore); }
+	void BindBufferBoneIds(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->UVB, vertexData->atribUvs, vertexData->atribUvsSize, vertexData->sizeUvs, vertexData->uvs, modeDataStore); }
+	void BindBufferWeights(int modeDataStore = 0)	const { renderer->BindBufferData(vertexData->UVB, vertexData->atribUvs, vertexData->atribUvsSize, vertexData->sizeUvs, vertexData->uvs, modeDataStore); }
+
 	void BindBufferIndex()							const { renderer->BindIndex(vertexData->EBO, vertexData->sizeIndex, vertexData->indexes); }
 public:
 };

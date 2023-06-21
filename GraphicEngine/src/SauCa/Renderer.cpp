@@ -1,5 +1,6 @@
 #include "Renderer.h"
 
+#include "Entity/Entity3D/Animation/Animator.h"
 #include "GameObjects/GameObject.h"
 #include "Render/Camera.h"
 
@@ -13,6 +14,7 @@ Shader* Renderer::defaultShaderSkybox;
 Shader* Renderer::defaultShaderSolid;
 Shader* Renderer::defaultShaderTexture;
 Shader* Renderer::defaultShader;
+Shader* Renderer::defaultShaderAnim;
 
 Renderer::Renderer()
 {
@@ -53,6 +55,8 @@ void Renderer::CreateShader()
     defaultShaderTexture->CreateDefaultTextureShader();
     defaultShader = new Shader();
     defaultShader->CreateDefaultShader();
+    defaultShaderAnim = new Shader();
+    defaultShaderAnim->CreateDefaultShaderAnim();
     std::cout << "\n";
 }
 
@@ -87,14 +91,17 @@ void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsi
 void Renderer::DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes)
 {
     material->shader->Use();
-	
+
     SetMatrix(material->shader, camera, model);
     SetMaterial(material, alpha, textureID);
     SetLights(material);
-	
+
+    //for (int i = 0; i < (*transforms).size(); ++i)
+    //    material->shader->SetMat4("finalBonesMatrices[" + std::to_string(i) + "]", (*transforms)[i]);
+
     for (unsigned int i = 0; i < meshes.size(); i++)
         meshes[i].Draw(material->shader);
-	
+
     glUseProgram(0);
 }
 
@@ -313,25 +320,8 @@ void Renderer::Draw(double deltaTime)
         (*iterCamera)->BeginDraw();
         for (auto iterComponent = (*iterCamera)->cameraRenderList.begin(); iterComponent != (*iterCamera)->cameraRenderList.end(); ++iterComponent)
         {
-            glm::mat4 model = (*iterComponent)->transform->GetModelMatrix();
-            glm::vec3 right = (*iterComponent)->transform->right();
-            glm::vec3 up = (*iterComponent)->transform->up();
-            glm::vec3 forward = (*iterComponent)->transform->forward();
-
             bool isOnFrustum = (*iterComponent)->transform->aabb->IsOnFrustum((*frustum), (*iterComponent)->transform->aabb);
-
-            //if ((*iterComponent)->gameobject->name == "Cube 1")
-            //{
-            //    if (isOnFrustum)
-            //    {
-            //        cout << "Cube 1: IN\n";
-            //    }
-            //    else
-            //    {
-            //        cout << "Cube 1: OUT\n";
-            //    }
-            //}
-        	
+                    	
             if (isOnFrustum)
             {
                 bool isRenderizable = (*iterComponent)->IsRenderizable();

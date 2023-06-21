@@ -1,7 +1,7 @@
 #ifndef RENDERER_H
 #define RENDERER_H
-#include <list>
 
+#include <list>
 #include "glew/glew.h"
 #include "Window.h"
 #include "Entity/Entity2D/Material.h"
@@ -12,17 +12,17 @@
 #include "Light/SpotLight.h"
 #include "Entity/Entity3D/Mesh.h"
 #include "Entity/VertexData.h"
-//#include "Entity/Entity3D/Animation/Animator.h"
 
 class Camera;
 
-static class SAUCA_API Renderer
+class SAUCA_API Renderer
 {
 private:
 	static Shader* defaultShaderSkybox;
 	static Shader* defaultShaderSolid;
 	static Shader* defaultShaderTexture;
 	static Shader* defaultShader;
+	static Shader* defaultShaderAnim;
 	
 	static std::list<Component*> allRenderList;
 	
@@ -44,7 +44,7 @@ public:
 	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
-	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes);
+	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes/*, std::vector<glm::mat4>* transforms*/);
 	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras);
 	static void SetMatrix(Shader* shader, Camera* camera, glm::mat4 model);
 	void SetMaterial(Material* material, float alpha, unsigned int textureID);
@@ -62,6 +62,7 @@ public:
 	static Shader* GetDefaultShaderSolid() { return defaultShaderSolid; }
 	static Shader* GetDefaultShaderTexture() { return defaultShaderTexture; }
 	static Shader* GetDefaultShader() { return defaultShader; }
+	static Shader* GetDefaultShaderAnim() { return defaultShaderAnim; }
 	void BindTextures(unsigned int& texture);
 
 	static void RemoveCamera(Camera* cam);

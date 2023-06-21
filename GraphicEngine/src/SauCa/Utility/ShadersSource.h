@@ -16,6 +16,9 @@ public:
 	
 	static std::string vertexShaderSource;
 	static std::string fragmentShaderSource;
+
+	static std::string vertexShaderSourceAnim;
+	static std::string fragmentShaderSourceAnim;
 };
 
 std::string ShaderSource::vertexShaderSkybox =
@@ -252,4 +255,50 @@ std::string ShaderSource::fragmentShaderSource =
 	"    specular *= attenuation * intensity;\n"
 	"    return (ambient + diffuse + specular);\n"
 	"}";
+std::string ShaderSource::vertexShaderSourceAnim =
+	"#version 330 core\n"
+	"layout(location = 0) in vec3 aPos;\n"
+	"layout(location = 1) in vec3 aColor;\n"
+	"layout(location = 2) in vec3 aNormal;\n"
+	"layout(location = 3) in vec2 aTexCoord;\n"
+	"layout(location = 4) in vec3 tangent;\n"
+	"layout(location = 5) in vec3 bitangent;\n"
+	"layout(location = 6) in ivec4 boneIds;\n"
+	"layout(location = 7) in vec4 weights;\n"
+	"uniform mat4 modelMatrix; \n"
+	"uniform mat4 viewMatrix; \n"
+	"uniform mat4 projectionMatrix; \n"
+	"const int MAX_BONES = 100;\n"
+	"const int MAX_BONE_INFLUENCE = 4;\n"
+	"uniform mat4 finalBonesMatrices[MAX_BONES];\n"
+	"out vec2 TexCoords; \n"
+	"void main()\n"
+	"{\n"
+	"	vec4 totalPosition = vec4(0.0f);\n"
+	"	for (int i = 0; i < MAX_BONE_INFLUENCE; i++)\n"
+	"	{\n"
+	"		if (boneIds[i] == -1)\n"
+	"			continue;\n"
+	"		if (boneIds[i] >= MAX_BONES)\n"
+	"		{\n"
+	"			totalPosition = vec4(aPos, 1.0f);\n"
+	"			break;\n"
+	"		}\n"
+	"		vec4 localPosition = finalBonesMatrices[boneIds[i]] * vec4(aPos, 1.0f);\n"
+	"		totalPosition += localPosition * weights[i];\n"
+	"		vec3 localNormal = mat3(finalBonesMatrices[boneIds[i]]) * aNormal;\n"
+	"	}\n"
+	"	mat4 viewModel = viewMatrix * modelMatrix;\n"
+	"	gl_Position = projectionMatrix * viewModel * totalPosition;\n"
+	"	TexCoords = aTexCoord;\n"
+	"}\n";
+std::string ShaderSource::fragmentShaderSourceAnim =
+	"#version 330 core\n"
+	"out vec4 FragColor;\n"
+	"in vec2 TexCoords;\n"
+	"uniform sampler2D texture_diffuse1;\n"
+	"void main()\n"
+	"{\n"
+	"	FragColor = texture(texture_diffuse1, TexCoords);\n"
+	"}\n";
 #endif

@@ -31,12 +31,4 @@ private:
 	int m_BoneCounter = 0;
 };
 
-
-
-
-class Model2
-{
-	
-};
-
 #endif

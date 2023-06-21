@@ -6,7 +6,11 @@ Model::Model(Renderer* renderer, std::string const& path, bool isInvertIndexesOr
 	this->isInvertIndexesOrder = isInvertIndexesOrder;
 	name = "Model";
 	SetRenderer(renderer);
-	material = new Material(renderer->GetDefaultShader(), true);
+
+	if (path == "res/Flair/Flair.dae")
+		material = new Material(renderer->GetDefaultShaderAnim(), true);
+	else
+		material = new Material(renderer->GetDefaultShader(), true);
 
 	ModelImporter::LoadModel(path, directory, meshes, textures_loaded, isInvertTextures, m_BoneInfoMap, m_BoneCounter);
 }
@@ -16,8 +20,6 @@ void Model::CreateVertexData() {}
 
 void Model::Draw(Camera* camera)
 {
-
-	
 	if (isInvertIndexesOrder) 
 		glFrontFace(GL_CW);
 	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes);

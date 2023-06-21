@@ -341,7 +341,7 @@ void Game::AddModels3D()
 	flairGo->AddComponent(CreateCollider(false));
 	flairGo->transform->SetWorldScale({ 0.1f , 0.1f , 0.1f });
 	flairGo->transform->SetWorldPosition({ 0.0f, 0.0f, -20.0f });
-	flairModel = CreateModel("res/Flair/Flair.dae",true);
+	flairModel = CreateModel("res/Flair/Flair.dae", true);
 	flairGo->AddComponent(flairModel);
 	animationFlair = new Animation3D("res/Flair/Flair.dae", flairModel);
 	animatorFlair = new Animator(animationFlair);
