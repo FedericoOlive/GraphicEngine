@@ -48,7 +48,7 @@
     <ClCompile Include="src\SauCa\Entity\Entity2D\Sprite.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
-    <ClCompile Include="src\SauCa\Entity\Entity2D\Animation.cpp">
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Animation2D.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="src\SauCa\Shaders\Shader.cpp">
@@ -159,6 +159,21 @@
     <ClCompile Include="src\SauCa\Utility\Color.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Animation3D.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Animator.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Animation3DImporter.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Bone.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SauCa\Utility\Utility.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\SauCa\BaseGame.h">
@@ -200,7 +215,7 @@
     <ClInclude Include="src\SauCa\Entity\Entity2D\Sprite.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="src\SauCa\Entity\Entity2D\Animation.h">
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Animation2D.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Shaders\Shader.h">
@@ -318,6 +333,21 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="src\SauCa\Utility\Color.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Animation3D.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Animator.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Animation3DImporter.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Bone.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SauCa\Utility\Utility.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

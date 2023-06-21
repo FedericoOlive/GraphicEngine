@@ -129,17 +129,17 @@ void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float fr
 {
     //glGenBuffers(1, &vertexData->UVB);
     hasAnimation = true;
-    animations.push_back(new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs));
+    animations.push_back(new Animation2D(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs));
 }
 
 void Sprite::AddAnimation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount)
 {
     //glGenBuffers(1, &vertexData->UVB);
     hasAnimation = true;
-    animations.push_back(new Animation(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs,frameCount));
+    animations.push_back(new Animation2D(frameX, frameY, frameWidth, frameHeigth, textureWidth, textureHeigth, durationInSecs,frameCount));
 }
 
-std::vector<Animation*> Sprite::GetAnimations()
+std::vector<Animation2D*> Sprite::GetAnimations()
 {
     return animations;
 }

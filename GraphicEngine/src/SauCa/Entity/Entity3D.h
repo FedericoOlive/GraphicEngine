@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ENTITY3D_H
+#define ENTITY3D_H
+
 #include "GameObjects/Component.h"
 #include "Entity.h"
 
@@ -11,3 +13,5 @@ protected:
 public:
 	Entity3D();
 };
+
+#endif

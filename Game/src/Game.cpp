@@ -52,6 +52,9 @@ void Game::Inputs()
 
 void Game::Update()
 {
+	float deltaTime = DeltaTime();
+	animatorFlair->UpdateAnimation(deltaTime);
+	
 	Transform* targetCollision1 = player->visualPlayer->transform;
 	Transform* targetCollision2 = cube1->transform;
 	
@@ -283,7 +286,7 @@ void Game::SetEnviroment()
 	Collider* col4 = CreateCollider();
 	cube4->AddComponent(col4);
 	
-	cube4CubeComponent->SetColorTint(81/255.0f, 209 / 255.0f, 246 / 255.0f, 0.5f);
+	cube4CubeComponent->SetColorTint(81 / 255.0f, 209 / 255.0f, 246 / 255.0f, 0.5f);
 
 	//cubeMovement = new EntityController();
 	//cubeMovement->RemoveRotation();
@@ -335,10 +338,13 @@ void Game::AddMinimap()
 void Game::AddModels3D()
 {
 	flairGo = CreateGameObject("FlairGo");
+	flairGo->AddComponent(CreateCollider(false));
 	flairGo->transform->SetWorldScale({ 0.1f , 0.1f , 0.1f });
 	flairGo->transform->SetWorldPosition({ 0.0f, 0.0f, -20.0f });
 	flairModel = CreateModel("res/Flair/Flair.dae",true);
 	flairGo->AddComponent(flairModel);
+	animationFlair = new Animation3D("res/Flair/Flair.dae", flairModel);
+	animatorFlair = new Animator(animationFlair);
 	
 	//GameObject* backpackObject = CreateGameObject("BackPack");
 	//backpackObject->transform->SetWorldScale({ 2, 2, 2 });

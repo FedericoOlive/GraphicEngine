@@ -20,6 +20,7 @@
 #include "Render/Camera.h"
 #include "Utility/Event.h"
 #include "Collision/CollisionManager3D.h"
+#include "Entity/Entity3D/Animation/Animator.h"
 #include "Utility/Color.h"
 
 using namespace std;
@@ -39,7 +40,7 @@ private:
 	Skybox* skybox;
 
 	void BeforeDraw();
-	void AutoDraw();
+	void AutoDraw(double deltaTime);
 	void AfterDraw();
 
 	void LoadInfo();
@@ -97,7 +98,11 @@ public:
 
 	// Window
 	void ModifyWindow(const char* name, float width, float height);
-	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }	
+	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
+	
+	// Animation 3D
+	Animator* CreateAnimator(Animation3D* animation);
+	Animation3D* CreateAnimation(std::string path, Model* model);
 };
 	
 #endif

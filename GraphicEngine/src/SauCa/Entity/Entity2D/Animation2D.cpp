@@ -1,11 +1,11 @@
-#include "Animation.h"
+#include "Animation2D.h"
 
 #include <string>
 #include <sstream>
 
 #include "Timer.h"
 
-Animation::Animation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs)
+Animation2D::Animation2D(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs)
 {
 	frameX *= frameWidth;
 	frameY *= frameHeigth;
@@ -24,7 +24,7 @@ Animation::Animation(float frameX, float frameY, float frameWidth, float frameHe
 	anim.push_back(frame);
 }
 
-Animation::Animation(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount)
+Animation2D::Animation2D(float frameX, float frameY, float frameWidth, float frameHeigth, float textureWidth, float textureHeigth, float durationInSecs, int frameCount)
 {
 	frameX *= frameWidth;
 	frameY *= frameHeigth;
@@ -46,11 +46,11 @@ Animation::Animation(float frameX, float frameY, float frameWidth, float frameHe
 	}
 }
 
-Animation::~Animation()
+Animation2D::~Animation2D()
 {
 }
 
-void Animation::Update()
+void Animation2D::Update()
 {
 	finished = false;
 	currentTime += Timer::DeltaTime();
@@ -68,19 +68,19 @@ void Animation::Update()
 
 }
 
-bool Animation::IsFinished()
+bool Animation2D::IsFinished()
 {
 	return finished;
 }
 
 
 
-int Animation::CurrentFrame()
+int Animation2D::CurrentFrame()
 {
 	return currentFrame;
 }
 
-vector<Frame>& Animation::GetFrames()
+vector<Frame>& Animation2D::GetFrames()
 {
 	return anim;
 }

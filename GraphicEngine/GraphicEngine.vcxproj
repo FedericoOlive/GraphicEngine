@@ -187,6 +187,10 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Bone.cpp" />
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Animation3D.cpp" />
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Animation3DImporter.cpp" />
+    <ClCompile Include="src\SauCa\Entity\Entity3D\Animation\Animator.cpp" />
     <ClCompile Include="src\SauCa\Collision\BoundingVolume.cpp" />
     <ClCompile Include="src\SauCa\Collision\Frustum.cpp" />
     <ClCompile Include="src\SauCa\Collision\Plane.cpp" />
@@ -216,7 +220,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\Entity2D\tinyxml2.cpp" />
     <ClCompile Include="src\SauCa\Render\Camera.cpp" />
     <ClCompile Include="src\SauCa\Shaders\Shader.cpp" />
-    <ClCompile Include="src\SauCa\Entity\Entity2D\Animation.cpp" />
+    <ClCompile Include="src\SauCa\Entity\Entity2D\Animation2D.cpp" />
     <ClCompile Include="src\SauCa\CollisionManager.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity.cpp" />
     <ClCompile Include="src\SauCa\Entity\Entity2D.cpp" />
@@ -234,8 +238,13 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\Entity2D\Tile.cpp" />
     <ClCompile Include="src\SauCa\GameObjects\Transform.cpp" />
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
+    <ClCompile Include="src\SauCa\Utility\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Bone.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Animation3D.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Animation3DImporter.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity3D\Animation\Animator.h" />
     <ClInclude Include="src\SauCa\Utility\Color.h" />
     <ClInclude Include="src\SauCa\Collision\BoundingVolume.h" />
     <ClInclude Include="src\SauCa\Collision\Frustum.h" />
@@ -267,7 +276,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Input\KeyCodes.h" />
     <ClInclude Include="src\SauCa\Render\Camera.h" />
     <ClInclude Include="src\SauCa\Shaders\Shader.h" />
-    <ClInclude Include="src\SauCa\Entity\Entity2D\Animation.h" />
+    <ClInclude Include="src\SauCa\Entity\Entity2D\Animation2D.h" />
     <ClInclude Include="src\SauCa\CollisionManager.h" />
     <ClInclude Include="src\SauCa\Entity\Entity.h" />
     <ClInclude Include="src\SauCa\Entity\Entity2D.h" />
@@ -288,6 +297,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClInclude Include="src\SauCa\Entity\Entity2D\Tile.h" />
     <ClInclude Include="src\SauCa\GameObjects\Transform.h" />
     <ClInclude Include="src\SauCa\Entity\VertexData.h" />
+    <ClInclude Include="src\SauCa\Utility\Utility.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\ClassDiagram.cd" />

@@ -1,6 +1,5 @@
 #include "Model.h"
 #include <iostream>
-#include "ModelImporter.h"
 
 Model::Model(Renderer* renderer, std::string const& path, bool isInvertIndexesOrder, bool isInvertTextures)
 {
@@ -9,7 +8,7 @@ Model::Model(Renderer* renderer, std::string const& path, bool isInvertIndexesOr
 	SetRenderer(renderer);
 	material = new Material(renderer->GetDefaultShader(), true);
 
-	ModelImporter::LoadModel(path, directory, meshes, textures_loaded, isInvertTextures);
+	ModelImporter::LoadModel(path, directory, meshes, textures_loaded, isInvertTextures, m_BoneInfoMap, m_BoneCounter);
 }
 
 Model::~Model() {}
@@ -17,6 +16,8 @@ void Model::CreateVertexData() {}
 
 void Model::Draw(Camera* camera)
 {
+
+	
 	if (isInvertIndexesOrder) 
 		glFrontFace(GL_CW);
 	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes);

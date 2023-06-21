@@ -12,6 +12,7 @@
 #include "Light/SpotLight.h"
 #include "Entity/Entity3D/Mesh.h"
 #include "Entity/VertexData.h"
+//#include "Entity/Entity3D/Animation/Animator.h"
 
 class Camera;
 
@@ -26,6 +27,7 @@ private:
 	static std::list<Component*> allRenderList;
 	
 public:
+	//static std::list<Animator*> allAnimatorList;
 	static std::list<Camera*> cameras;
 	std::list<DirectionalLight*> directionalLights;
 	std::list<PointLight*> pointLights;
@@ -37,7 +39,7 @@ public:
 	~Renderer();
 	void CreateRenderer();
 	void Clear(GLbitfield field);
-	void Draw();
+	void Draw(double deltaTime);
 	void SwapBuffers(GLFWwindow* window);
 	void CreateShader();
 	

@@ -6,6 +6,7 @@
 using namespace std;
 
 std::list<Component*> Renderer::allRenderList;
+//std::list<Animator*> Renderer::allAnimatorList;
 std::list<Camera*> Renderer::cameras;
 
 Shader* Renderer::defaultShaderSkybox;
@@ -290,12 +291,15 @@ void DrawLinesFrustum(Camera* camera)
 	    break;
     default: ;
     }
-	
-   
 }
 
-void Renderer::Draw()
+void Renderer::Draw(double deltaTime)
 {
+    //for (auto animator = allAnimatorList.begin(); animator != allAnimatorList.end(); ++animator)
+    //{
+    //    (*animator)->UpdateAnimation(deltaTime);
+    //}
+        
     int count = 0;
     Camera* cam = (*cameras.begin());
     Frustum* frustum = cam->frustum;

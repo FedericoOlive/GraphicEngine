@@ -11,12 +11,12 @@ void BaseGame::BeforeDraw()
     renderer->Clear(GL_COLOR_BUFFER_BIT);
 }
 
-void BaseGame::AutoDraw()
+void BaseGame::AutoDraw(double deltaTime)
 {
     //glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     if (skybox != nullptr)
         skybox->Draw(Renderer::cameras);
-    renderer->Draw();
+    renderer->Draw(deltaTime);
     DrawCollision();
 }
 
@@ -83,7 +83,7 @@ int BaseGame::Init()
         collisionManager3D->UpdateCollisions();
     	
         BeforeDraw();
-        AutoDraw();
+        AutoDraw(timer->DeltaTime());
         Draw();
         AfterDraw();
     }
@@ -377,4 +377,17 @@ Collider* BaseGame::CreateCollider(bool isStatic)
     Collider* collider = new Collider();
     collisionManager3D->AddToCollisionList(collider, isStatic);
     return collider;
+}
+
+Animator* BaseGame::CreateAnimator(Animation3D* animation)
+{
+    Animator* animator = new Animator(animation);
+    //Renderer::allAnimatorList.push_back(animator);
+    return animator;
+}
+
+Animation3D* BaseGame::CreateAnimation(std::string path, Model* model)
+{
+    Animation3D* animation = new Animation3D(path, model);
+    return animation;
 }
