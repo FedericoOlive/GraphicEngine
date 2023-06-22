@@ -50,6 +50,7 @@ public:
 	void ChangeColorSpotLight();
 	void OnMouseMove(double xPos, double yPos);
 	void OnMouseScrollMovement(double xOffset, double yOffset);
+	Model* AddNewModel(std::string name, std::string path, glm::vec3 pos);
 
 };
 

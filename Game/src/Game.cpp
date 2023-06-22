@@ -332,20 +332,33 @@ void Game::AddMinimap()
 	cameraMinimapGo->AddComponent(cameraMinimap);
 }
 
+Model* Game::AddNewModel(std::string name, std::string path, glm::vec3 pos)
+{
+	float modelScale = 0.07f;
+	GameObject* newModelGameObject = CreateGameObject(name);
+	newModelGameObject->transform->SetWorldScale({ modelScale, modelScale, modelScale });
+	newModelGameObject->transform->SetWorldPosition(pos);
+	newModelGameObject->AddComponent(CreateCollider(false));
+	Model* newModel = CreateModel(path, true);
+	newModelGameObject->AddComponent(newModel);
+	return newModel;
+}
+
 void Game::AddModels3D()
 {
-	flairGo = CreateGameObject("FlairGo");
-	flairGo->transform->SetWorldScale({ 0.1f , 0.1f , 0.1f });
-	flairGo->transform->SetWorldPosition({ 0.0f, 0.0f, -20.0f });
-	flairModel = CreateModel("res/Flair/Flair.dae",true);
-	flairGo->AddComponent(flairModel);
-	
+	Model* modelVampire = AddNewModel("Vampire", "res/Vampire/Vampire A Lusth.dae", {0, 0, -20});
+	Model* modelArcher = AddNewModel("Archer", "res/Archer/Archer.dae", {-20, 0, 0});
+	modelArcher->transform->SetWorldRotation({ 0, 90, 0 });
+	Model* modelMaria = AddNewModel("Maria", "res/Maria/Maria.dae", {20, 0, 0});
+	modelMaria->transform->SetWorldRotation({ 0, -90, 0 });
+
 	//GameObject* backpackObject = CreateGameObject("BackPack");
 	//backpackObject->transform->SetWorldScale({ 2, 2, 2 });
 	//backpackObject->transform->SetWorldPosition({ 0, 5, 0 });
 	//Model* modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
 	//backpackObject->AddComponent(modelBackPack);
 	//
+	
 	GameObject* modelJakeObject = CreateGameObject("Jake Model");
 	modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
 	modelJakeObject->transform->SetWorldPosition({ -10, 5, 5 });
@@ -358,7 +371,7 @@ void Game::AddModels3D()
 	modelJake->material->diffuse = { 0.75164f, 0.60648f, 0.22648f };
 	modelJake->material->specular = { 0.628281f, 0.555802f, 0.366065f };
 	modelJake->material->shininess = 0.4f * 128.0f;
-	
+
 	GameObject* modelJakeObject2 = CreateGameObject("Jake Model");
 	modelJakeObject2->transform->SetWorldScale({ 1, 1, 1 });
 	modelJakeObject2->transform->SetWorldPosition({ -20, 0, -20 });
@@ -370,13 +383,6 @@ void Game::AddModels3D()
 	modelJake2->material->diffuse = { 1, 1, 1 };
 	modelJake2->material->specular ={ 1, 1, 1 };
 	modelJake2->material->shininess = 128.0f;
-	
-	GameObject* modelGokuObject = CreateGameObject("Goku Model");
-	modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });
-	modelGokuObject->transform->SetWorldPosition({ 10, 5, 0 });
-	Model* modelGoku = CreateModel("res/Goku/A.obj", true, false);
-	modelGokuObject->AddComponent(modelGoku);
-	modelGokuObject->AddComponent(CreateCollider(false));
 }
 
 void Game::ChangeColorSpotLight()
