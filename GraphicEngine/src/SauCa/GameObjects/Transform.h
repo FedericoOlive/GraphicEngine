@@ -8,6 +8,7 @@
 #include "Collision/AABB.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Utility/Event.h"
+#include "Utility/Utility.h"
 
 class SAUCA_API Transform
 {
@@ -43,10 +44,7 @@ public:
 	Transform* parent;
 	GameObject* gameObject;
 	AABB* aabb = nullptr;
-
-	const float deg2rad = (glm::pi<float>() * 2.0f) / 360.0f;
-	const float rad2deg = 360.0f / (glm::pi<float>() * 2.0f);
-
+	
 	glm::vec3 forward() const { return -modelMatrix[2]; }
 	glm::vec3 right() const { return modelMatrix[0]; }
 	glm::vec3 up() const { return modelMatrix[1]; }
@@ -82,17 +80,11 @@ public:
 
 	// Matrix
 	glm::mat4 GetModelMatrix() const { return modelMatrix; }
+	glm::mat4* GetModelMatrixRef() { return &modelMatrix; }
 	
 	glm::mat4 GetTranslateMatrix() const { return translateMatrix; }
 	glm::mat4 GetRotationMatrix() const { return rotationMatrix; }
 	glm::mat4 GetScaleMatrix() const { return scaleMatrix; }
-
-	// Tools
-	glm::quat EulerToQuat(glm::vec3 euler);
-	glm::vec3 QuatToVec(glm::quat quat, glm::vec3 vec);
-	glm::vec3 QuatToEuler(glm::quat rot);
-	glm::vec3 NormalizeAngles(glm::vec3 angles);
-	float NormalizeAngle(float angle);
 };
 
 #endif

@@ -34,7 +34,8 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply, 0, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Z)) { *targetFloatModify -= 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
 	if (Input::IsKeyHolding(KeyCode::X)) { *targetFloatModify += 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
-	if (Input::IsKeyHolding(KeyCode::Num0)) {  }
+	
+	if (Input::IsKeyDown(KeyCode::Num0)) { AddNewAnim("res/Eri/Eri.dae", model1); }
 	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
 	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
 	if (Input::IsKeyHolding(KeyCode::Num3)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0 , -1 * multiply, 0)); }
@@ -334,56 +335,64 @@ void Game::AddMinimap()
 	cameraMinimapGo->AddComponent(cameraMinimap);
 }
 
+Model* Game::AddNewModel(std::string name, std::string path, glm::vec3 pos)
+{
+	GameObject* newModelGameObject = CreateGameObject(name);
+	newModelGameObject->transform->SetWorldScale({ 0.3f , 0.3f , 0.3f });
+	newModelGameObject->transform->SetWorldPosition(pos);
+	Model* newModel = CreateModel(path, true);
+	newModelGameObject->AddComponent(newModel);
+	return newModel;
+}
+
+Animation3D* Game::AddNewAnim(std::string path, Model* model)
+{
+	Animation3D* animation = model->CreateAnimation(path);
+	model->CreateAnimator(animation);
+	return animation;
+}
+
 void Game::AddModels3D()
 {
-	GameObject*  flairGo = CreateGameObject("FlairGo");
-	//flairGo->AddComponent(CreateCollider(false));
-	flairGo->transform->SetWorldScale({ 0.3f , 0.3f , 0.3f });
-	flairGo->transform->SetWorldPosition({ 0.0f, 0.0f, -20.0f });
-	Model* flairModel = CreateModel("res/Flair/Flair.dae", true);
-	flairGo->AddComponent(flairModel);
-	Animation3D* animationFlair = flairModel->CreateAnimation("res/Flair/Flair.dae");
-	flairModel->CreateAnimator(animationFlair);
-	
-	GameObject* WalkingGo = CreateGameObject("WalkingGo");
-	//WalkingGo->AddComponent(CreateCollider(false));
-	WalkingGo->transform->SetWorldScale({ 0.3f , 0.3f , 0.3f });
-	WalkingGo->transform->SetWorldPosition({ 0.0f, 0.0f, 20.0f });
-	Model* WalkingGoModel = CreateModel("res/Walking/Walking.dae", true);
-	WalkingGo->AddComponent(WalkingGoModel);
-	Animation3D* animationWalking = WalkingGoModel->CreateAnimation("res/Walking/Walking.dae");
-	WalkingGoModel->CreateAnimator(animationWalking);
-	
+	//AddNewAnim("res/Vampire/Capoeira.dae", AddNewModel("Flair", "res/Vampire/Vampire A Lusth.dae", {0, 0, -20}));
+	//AddNewAnim("res/Flair/Flair.dae", AddNewModel("Flair", "res/Flair/Flair.dae", {0, 0, 20}));
+	//AddNewAnim("res/Walking2/Walking2.dae", AddNewModel("WalkingGo", "res/Walking2/Walking.dae", {0, 0, -20}));
+	model1=AddNewModel("WalkingGo", "res/Eri/Eri.dae", {0, 0, -20});
+	//AddNewAnim("res/Eri/Eri.dae", AddNewModel("WalkingGo", "res/Eri/Eri.dae", {0, 0, -20}));
+	//AddNewAnim("res/FlairT/FlairT.dae", AddNewModel("Maria", "res/Maria/Maria.dae", {20, 0, 0}));
+		
 	//GameObject* backpackObject = CreateGameObject("BackPack");
 	//backpackObject->transform->SetWorldScale({ 2, 2, 2 });
 	//backpackObject->transform->SetWorldPosition({ 0, 5, 0 });
 	//Model* modelBackPack = CreateModel("res/Backpack/backpack.obj", true, true);
 	//backpackObject->AddComponent(modelBackPack);
 	//
-	GameObject* modelJakeObject = CreateGameObject("Jake Model");
-	modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
-	modelJakeObject->transform->SetWorldPosition({ -10, 5, 5 });
-	modelJakeObject->transform->SetWorldRotation({ 0, 180, 0 });
-	Model* modelJake = CreateModel("res/Jake/Jake_Test1.obj", true, false);
-	modelJakeObject->AddComponent(modelJake);
-	modelJakeObject->AddComponent(CreateCollider(false));
-	// Set as Gold
-	modelJake->material->ambient = { 0.24725f, 0.1995f, 0.0745f };
-	modelJake->material->diffuse = { 0.75164f, 0.60648f, 0.22648f };
-	modelJake->material->specular = { 0.628281f, 0.555802f, 0.366065f };
-	modelJake->material->shininess = 0.4f * 128.0f;
+
+	// Todo: Descomentar los Jakes para demostrar colisiones
+	//GameObject* modelJakeObject = CreateGameObject("Jake Model");
+	//modelJakeObject->transform->SetWorldScale({ 0.5f, 0.5f, 0.5f });
+	//modelJakeObject->transform->SetWorldPosition({ -10, 5, 5 });
+	//modelJakeObject->transform->SetWorldRotation({ 0, 180, 0 });
+	//Model* modelJake = CreateModel("res/Jake/Jake_Test1.obj", true, false);
+	//modelJakeObject->AddComponent(modelJake);
+	//modelJakeObject->AddComponent(CreateCollider(false));
+	//// Set as Gold
+	//modelJake->material->ambient = { 0.24725f, 0.1995f, 0.0745f };
+	//modelJake->material->diffuse = { 0.75164f, 0.60648f, 0.22648f };
+	//modelJake->material->specular = { 0.628281f, 0.555802f, 0.366065f };
+	//modelJake->material->shininess = 0.4f * 128.0f;
 	
-	GameObject* modelJakeObject2 = CreateGameObject("Jake Model");
-	modelJakeObject2->transform->SetWorldScale({ 1, 1, 1 });
-	modelJakeObject2->transform->SetWorldPosition({ -20, 0, -20 });
-	Model* modelJake2 = CreateModel("res/Jake/Jake_Test1.obj", true, false);
-	modelJakeObject2->AddComponent(modelJake2);
-	modelJakeObject2->AddComponent(CreateCollider(false));
-	// Set as Normal
-	modelJake2->material->ambient = { 1, 1, 1 };
-	modelJake2->material->diffuse = { 1, 1, 1 };
-	modelJake2->material->specular ={ 1, 1, 1 };
-	modelJake2->material->shininess = 128.0f;
+	//GameObject* modelJakeObject2 = CreateGameObject("Jake Model");
+	//modelJakeObject2->transform->SetWorldScale({ 1, 1, 1 });
+	//modelJakeObject2->transform->SetWorldPosition({ -20, 0, -20 });
+	//Model* modelJake2 = CreateModel("res/Jake/Jake_Test1.obj", true, false);
+	//modelJakeObject2->AddComponent(modelJake2);
+	//modelJakeObject2->AddComponent(CreateCollider(false));
+	//// Set as Normal
+	//modelJake2->material->ambient = { 1, 1, 1 };
+	//modelJake2->material->diffuse = { 1, 1, 1 };
+	//modelJake2->material->specular ={ 1, 1, 1 };
+	//modelJake2->material->shininess = 128.0f;
 	
 	//GameObject* modelGokuObject = CreateGameObject("Goku Model");
 	//modelGokuObject->transform->SetWorldScale({ 10, 10, 10 });

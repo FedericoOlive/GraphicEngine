@@ -23,8 +23,8 @@ void Model::Update(double deltaTime)
 }
 
 void Model::Draw(Camera* camera)
-{	
-	if (isInvertIndexesOrder) 
+{
+	if (isInvertIndexesOrder)
 		glFrontFace(GL_CW);
 	renderer->DrawModel(transform->GetModelMatrix(), NULL, material, alpha, camera, meshes, &(animator->m_FinalBoneMatrices));
 	if (isInvertIndexesOrder)

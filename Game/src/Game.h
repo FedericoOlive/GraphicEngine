@@ -29,7 +29,11 @@ private:
 	glm::vec3 playerZoom = {0, 1, 3};
 
 	EntityController* cubeMovement;
-	
+
+	Model* model1;
+	Animation3D* animation1;
+	Animation3D* animation2;
+
 public:
 	void Initialize()override;
 	void Inputs() override;
@@ -43,6 +47,8 @@ public:
 	void AddPlayer();
 	void AddMinimap();
 	void AddModels3D();
+	Model* AddNewModel(std::string name, std::string path, glm::vec3 pos);
+	Animation3D* AddNewAnim(std::string path, Model* model);
 
 	void ChangeColorSpotLight();
 	void OnMouseMove(double xPos, double yPos);

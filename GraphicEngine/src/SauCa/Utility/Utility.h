@@ -10,9 +10,18 @@
 class Utility
 {
 public:
+	static const float deg2rad;
+	static const float rad2deg;
+	
 	static glm::mat4 ConvertMatrixToGLMFormat(const aiMatrix4x4& from);
 	static glm::vec3 GetGLMVec(const aiVector3D& vec);
 	static glm::quat GetGLMQuat(const aiQuaternion& pOrientation);
+
+	static glm::quat EulerToQuat(glm::vec3 euler);
+	static glm::vec3 QuatToVec(glm::quat quat, glm::vec3 vec);
+	static glm::vec3 QuatToEuler(glm::quat rot);
+	static glm::vec3 NormalizeAngles(glm::vec3 angles);
+	static float NormalizeAngle(float angle);
 };
 
 #endif
