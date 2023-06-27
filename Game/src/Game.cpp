@@ -34,6 +34,7 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::E)) { target->SetLocalPosition(target->GetLocalPosition() + glm::vec3(-1 * multiply, 0, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Z)) { *targetFloatModify -= 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
 	if (Input::IsKeyHolding(KeyCode::X)) { *targetFloatModify += 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
+	if (Input::IsKeyDown(KeyCode::P)) { rotatePlanets = !rotatePlanets; }
 	if (Input::IsKeyHolding(KeyCode::Num0)) {  }
 	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
 	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
@@ -52,21 +53,22 @@ void Game::Inputs()
 
 void Game::Update()
 {
-	Transform* targetCollision1 = player->visualPlayer->transform;
-	Transform* targetCollision2 = cube1->transform;
-	
-	//if (CollisionManager3D::IsCollision(targetCollision1, targetCollision2))
-	//{
-	//	cout << "Collision: " << targetCollision1->gameObject->name << " con " << targetCollision2->gameObject->name << "\n";
-	//}
-	
-	//objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
 	float time = Timer::ElapsedTime();
 	
-	goLightPointArround01->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.2f) * 45, 10, glm::cos(time * 0.2f) * 45 });
-	goLightPointArround02->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.4f) * 45, 15, glm::cos(time * 0.4f) * 45 });
-	goLightPointArround03->transform->SetWorldPosition(glm::vec3{ glm::sin(time*0.8f) * 45, 20, glm::cos(time * 0.8f) * 45 });
-	goLightPointArround04->transform->SetWorldPosition(glm::vec3{ glm::sin(time*1.6f) * 45, 25, glm::cos(time * 1.6f) * 45 });
+	if (rotatePlanets)
+	{
+		timeRotation += Timer::DeltaTime();
+		sol->transform->SetLocalRotation(glm::vec3{ 0, (timeRotation * 360) / 10, 0 });
+		tie->transform->SetLocalRotation(glm::vec3{ 0, (timeRotation * 360) /  5, 0 });
+		lun->transform->SetLocalRotation(glm::vec3{ 0, (timeRotation * 360) / 20, 0 });
+	}
+
+	//objectFoward->transform->SetWorldPosition(cubeContent->transform->GetWorldPosition() + cubeContent->transform->forward() * 2.0f + glm::vec3{ 0, 5, 0 });
+
+	goLightPointArround01->transform->SetWorldPosition(glm::vec3{ glm::sin(time * 0.2f) * 45, 10, glm::cos(time * 0.2f) * 45 });
+	goLightPointArround02->transform->SetWorldPosition(glm::vec3{ glm::sin(time * 0.4f) * 45, 15, glm::cos(time * 0.4f) * 45 });
+	goLightPointArround03->transform->SetWorldPosition(glm::vec3{ glm::sin(time * 0.8f) * 45, 20, glm::cos(time * 0.8f) * 45 });
+	goLightPointArround04->transform->SetWorldPosition(glm::vec3{ glm::sin(time * 1.6f) * 45, 25, glm::cos(time * 1.6f) * 45 });
 }
 
 void Game::Draw()
@@ -195,12 +197,12 @@ void Game::SetEnviroment()
 	objectFoward->AddComponent(miniGokuSprite);
 	objectFoward->AddComponent(CreateCollider());
 	objectFoward->transform->SetLocalScale({ 10, 10, 1 });
-	
+
 	GameObject* worldContent = CreateGameObject("World Content");
 	worldContent->transform->SetLocalPosition({ 0, 0, 0 });
 	worldContent->transform->SetLocalScale({ 1, 1, 1 });
 	worldContent->transform->SetLocalRotation({ 0, 0, 0 });
-	
+
 	GameObject* floor = CreateGameObject("Floor");
 	Sprite* floorSprite = CreateSprite(CreateTexture("res/Layer2.png"));
 	floor->AddComponent(floorSprite);
@@ -208,9 +210,9 @@ void Game::SetEnviroment()
 	floor->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 1 });
 	floor->transform->SetLocalRotation({ 90, 180, 0 });
 	floorSprite->material->shininess = 10000;
-	floorSprite->material->specular = {0, 0, 0};
-	floorSprite->material->diffuse = {0.5f, 0.5f, 0.5f };
-	
+	floorSprite->material->specular = { 0, 0, 0 };
+	floorSprite->material->diffuse = { 0.5f, 0.5f, 0.5f };
+
 	GameObject* wallRight = CreateGameObject("Wall Right");
 	wallRight->transform->SetParent(worldContent);
 	wallRight->AddComponent(CreateSprite(CreateTexture("res/World/Right.png")));
@@ -218,7 +220,7 @@ void Game::SetEnviroment()
 	wallRight->transform->SetLocalScale({ cubeDimensions * 2, cubeDimensions * 2, 0.01f });
 	wallRight->transform->SetLocalRotation({ 0, -90, 0 });
 	wallRight->AddComponent(CreateCollider());
-	
+
 	GameObject* wallLeft = CreateGameObject("Wall Left");
 	wallLeft->transform->SetParent(worldContent);
 	wallLeft->AddComponent(CreateSprite(CreateTexture("res/World/Left.png")));
@@ -247,7 +249,7 @@ void Game::SetEnviroment()
 
 	// 4 Cubes
 	cubeContent = CreateGameObject("Cube Content");
-	
+
 	float distance = 2;
 
 	cube1 = CreateGameObject("Cube 1");
@@ -258,7 +260,7 @@ void Game::SetEnviroment()
 	cube1->AddComponent(cube1CubeComponent);
 	Collider* col1 = CreateCollider();
 	cube1->AddComponent(col1);
-	
+
 	cube2 = CreateGameObject("Cube 2");
 	cube2->transform->SetParent(cubeContent);
 	cube2->transform->SetWorldPosition({ distance, 0, -distance });
@@ -266,7 +268,7 @@ void Game::SetEnviroment()
 	cube2->AddComponent(cube2CubeComponent);
 	Collider* col2 = CreateCollider();
 	cube2->AddComponent(col2);
-	
+
 	cube3 = CreateGameObject("Cube 3");
 	cube3->transform->SetParent(cubeContent);
 	cube3->transform->SetWorldPosition({ -distance, 0, distance });
@@ -274,7 +276,7 @@ void Game::SetEnviroment()
 	cube3->AddComponent(cube3CubeComponent);
 	Collider* col3 = CreateCollider();
 	cube3->AddComponent(col3);
-	
+
 	cube4 = CreateGameObject("Cube 4");
 	cube4->transform->SetParent(cubeContent);
 	cube4->transform->SetWorldPosition({ -distance, 0, -distance });
@@ -282,8 +284,8 @@ void Game::SetEnviroment()
 	cube4->AddComponent(cube4CubeComponent);
 	Collider* col4 = CreateCollider();
 	cube4->AddComponent(col4);
-	
-	cube4CubeComponent->SetColorTint(81/255.0f, 209 / 255.0f, 246 / 255.0f, 0.5f);
+
+	cube4CubeComponent->SetColorTint(81 / 255.0f, 209 / 255.0f, 246 / 255.0f, 0.5f);
 
 	//cubeMovement = new EntityController();
 	//cubeMovement->RemoveRotation();
@@ -292,6 +294,34 @@ void Game::SetEnviroment()
 
 	cubeContent->transform->SetWorldScale({ 10, 10, 10 });
 	cubeContent->transform->SetWorldPosition({ 0, 5, 0 });
+
+
+	
+	sol = CreateGameObject("Cube XX");
+	sol->transform->SetWorldPosition({ 0, 30,  0 });
+	Cube* cube = CreateCube();
+	sol->AddComponent(cube);
+	cube->material->colorTint = Color::Red;
+	Collider* col = CreateCollider();
+	sol->AddComponent(col);
+
+	tie = CreateGameObject("Cube XX");
+	tie->transform->SetParent(sol);
+	tie->transform->SetWorldPosition({ 0, 30, 20 });
+	cube = CreateCube();
+	cube->material->colorTint = Color::Green;
+	tie->AddComponent(cube);
+	col = CreateCollider();
+	tie->AddComponent(col);
+
+	lun = CreateGameObject("Cube XX");
+	lun->transform->SetParent(tie);
+	lun->transform->SetWorldPosition({ 0, 30, 25 });
+	cube = CreateCube();
+	cube->material->colorTint = Color::Blue;
+	lun->AddComponent(cube);
+	col = CreateCollider();
+	lun->AddComponent(col);
 }
 
 void Game::AddListeners()

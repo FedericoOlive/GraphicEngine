@@ -33,6 +33,13 @@ private:
 	GameObject* flairGo = nullptr;
 	Model* flairModel = nullptr;
 
+
+	bool rotatePlanets = false;
+	float timeRotation = 0;
+	GameObject* sol = nullptr;
+	GameObject* tie = nullptr;
+	GameObject* lun = nullptr;
+
 public:
 	void Initialize()override;
 	void Inputs() override;
@@ -51,7 +58,6 @@ public:
 	void OnMouseMove(double xPos, double yPos);
 	void OnMouseScrollMovement(double xOffset, double yOffset);
 	Model* AddNewModel(std::string name, std::string path, glm::vec3 pos);
-
 };
 
 #endif

@@ -300,7 +300,6 @@ void Renderer::Draw()
     Camera* cam = (*cameras.begin());
     Frustum* frustum = cam->frustum;
     cam->frustum->Update(cam->fov, cam->aspect, cam->far, cam->near, cam->transform->GetWorldPosition(), cam->transform->forward(), cam->transform->right(), cam->transform->up());
-	DrawLinesFrustum(cam);
     for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
     {
         count++;
@@ -315,18 +314,6 @@ void Renderer::Draw()
             glm::vec3 forward = (*iterComponent)->transform->forward();
 
             bool isOnFrustum = (*iterComponent)->transform->aabb->IsOnFrustum((*frustum), (*iterComponent)->transform->aabb);
-
-            //if ((*iterComponent)->gameobject->name == "Cube 1")
-            //{
-            //    if (isOnFrustum)
-            //    {
-            //        cout << "Cube 1: IN\n";
-            //    }
-            //    else
-            //    {
-            //        cout << "Cube 1: OUT\n";
-            //    }
-            //}
         	
             if (isOnFrustum)
             {
