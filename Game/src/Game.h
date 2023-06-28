@@ -8,6 +8,7 @@ private:
 	float multiply = 0.5f;
 	Transform* target = nullptr;
 	Camera* camera = nullptr;
+	Camera* cameraMinimap = nullptr;
 	CharacterController* player = nullptr;
 	GameObject* cube1 = nullptr;
 	GameObject* cube2 = nullptr;

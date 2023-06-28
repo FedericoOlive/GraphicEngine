@@ -12,6 +12,7 @@
 #include "Light/SpotLight.h"
 #include "Entity/Entity3D/Mesh.h"
 #include "Entity/VertexData.h"
+#include "GameObjects/GameObject.h"
 
 class Camera;
 
@@ -23,7 +24,7 @@ private:
 	static Shader* defaultShaderTexture;
 	static Shader* defaultShader;
 	
-	static std::list<Component*> allRenderList;
+	static std::list<GameObject*> allRenderList;
 	
 public:
 	static std::list<Camera*> cameras;
@@ -31,19 +32,19 @@ public:
 	std::list<PointLight*> pointLights;
 	std::list<SpotLight*> spotLights;
 	
-	static void AddToRenderList(Component* component);
 	
 	Renderer();
 	~Renderer();
 	void CreateRenderer();
+	void CreateShader();
 	void Clear(GLbitfield field);
 	void Draw();
 	void SwapBuffers(GLFWwindow* window);
-	void CreateShader();
 	
 	void DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera);
 	void DrawModel(glm::mat4 model, unsigned textureID, Material* material, float alpha, Camera* camera, std::vector<Mesh> meshes);
 	void DrawCubemap(unsigned int VAO, unsigned int cubemapTexture, Material* material, std::list<Camera*> cameras);
+
 	static void SetMatrix(Shader* shader, Camera* camera, glm::mat4 model);
 	void SetMaterial(Material* material, float alpha, unsigned int textureID);
 	void SetLights(Material* material);
@@ -53,6 +54,7 @@ public:
 	void GenBuffer(int amount, unsigned int& buffer);
 	void BindBufferData(unsigned int buffer, int atribPointer, int atribPointerSize, int size, float* arrayData, int modeDataStore);
 	void BindIndex(unsigned int buffer, int size, int* arrayData);
+	void BindTextures(unsigned int& texture);
 	void UnBindObject(VertexData* vertexData);
 	void UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& CBO, unsigned int& NBO, unsigned int& UVB, unsigned int& EBO);
 
@@ -60,11 +62,12 @@ public:
 	static Shader* GetDefaultShaderSolid() { return defaultShaderSolid; }
 	static Shader* GetDefaultShaderTexture() { return defaultShaderTexture; }
 	static Shader* GetDefaultShader() { return defaultShader; }
-	void BindTextures(unsigned int& texture);
 
-	static void RemoveCamera(Camera* cam);
 	static void AddCamera(Camera* cam);
+	static void RemoveCamera(Camera* cam);
+	static void AddToRenderList(GameObject* gameObject);
 
+	static void DrawCubeLines(AABB* aabb, float lineWidth, glm::vec3 color, Camera* camera);
 	static void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2.0f, glm::vec3 color = { 1, 0, 0 }, Camera* camera = nullptr);
 };
 

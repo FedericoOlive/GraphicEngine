@@ -42,7 +42,8 @@ public:
 	std::list<Transform*> childrens;
 	Transform* parent;
 	GameObject* gameObject;
-	AABB* aabb = nullptr;
+	AABB* aabbGlobal = nullptr;
+	AABB* aabbLocal = nullptr;
 
 	const float deg2rad = (glm::pi<float>() * 2.0f) / 360.0f;
 	const float rad2deg = 360.0f / (glm::pi<float>() * 2.0f);
@@ -55,7 +56,7 @@ public:
 	Transform(GameObject* go);
 	~Transform();
 
-	void SetParent(Transform* parentTransform);
+	void SetParent(Transform* parentTransform = nullptr);
 	void SetParent(GameObject* gameObject);
 	Transform* GetParent() const { return parent; }
 	std::list<Transform*> GetChildrens() const { return childrens; }

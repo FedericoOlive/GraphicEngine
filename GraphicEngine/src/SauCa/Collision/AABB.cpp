@@ -6,11 +6,8 @@ void AABB::BeforeUpdate()
 	max = -glm::vec3(std::numeric_limits<float>::max());
 }
 
-void AABB::AfterUpdate(std::string nameGameObject)
+void AABB::AfterUpdate()
 {
-	bool check = false;
-	if (nameGameObject == "miniGoku3") { check = true; }
-
 	center = { (max + min) * 0.5f };
 	extents = { max.x - center.x, max.y - center.y, max.z - center.z };
 
@@ -18,10 +15,6 @@ void AABB::AfterUpdate(std::string nameGameObject)
 	if (extents.x < minToCheck) extents.x = minToCheck;
 	if (extents.y < minToCheck) extents.y = minToCheck;
 	if (extents.z < minToCheck) extents.z = minToCheck;
-	if (check)
-	{
-		std::cout << nameGameObject << ": Extents: " << extents.x << ", " << extents.y << ", " << extents.z << "\n";
-	}
 }
 
 std::array<glm::vec3, 8> AABB::getVertice() const

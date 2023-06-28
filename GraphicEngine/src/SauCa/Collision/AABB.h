@@ -22,7 +22,7 @@ struct SAUCA_API AABB : public BoundingVolume
 	{}
 
 	void BeforeUpdate();
-	void AfterUpdate(std::string nameGameObject);
+	void AfterUpdate();
 	std::array<glm::vec3, 8> getVertice() const;
 	
 	//see https://gdbooks.gitbooks.io/3dcollisions/content/Chapter2/static_aabb_plane.html

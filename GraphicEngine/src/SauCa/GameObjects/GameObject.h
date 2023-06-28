@@ -19,6 +19,7 @@ public:
 	
     Transform* transform;
     std::list<Component*> components;
+    void Draw(Camera* camera, Frustum* frustum);
     bool IsActive();
     bool IsActiveInHierarch();
     void SetActive(bool isActive);

@@ -28,7 +28,7 @@ class SAUCA_API BaseGame
 {
 private:
 	static string version;
-		
+
 	Input* input;
 	Window* window;
 	Renderer* renderer;
@@ -43,15 +43,15 @@ private:
 	void AfterDraw();
 
 	void LoadInfo();
-	void ShowHierarchyInConsole(Transform* transf, string preText);
 
 public:
 	static Event<> OnUpdateEvent;
 	static Event<> OnInputEvent;
-	
+
 	BaseGame();
 	~BaseGame();
 	int Init();
+	void DeInitializeEngine();
 
 	// User Interface
 	virtual void Initialize() = 0;
@@ -59,9 +59,9 @@ public:
 	virtual void Update() = 0;
 	virtual void DeInitialize() = 0;
 	virtual void Draw() = 0;
-	void DeInitializeEngine();
 
-	// World Objects
+	// World Components
+	GameObject* CreateGameObject(string name = "");
 	Triangle* CreateTriangle();
 	Quad* CreateQuad();
 	Quad* CreateQuad(Material* mat);
@@ -69,7 +69,6 @@ public:
 	Cube* CreateCube();
 	Texture* CreateTexture(string path);
 	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
-	GameObject* CreateGameObject(string name = "");
 	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective, bool autoAddGameObjects = true);
 	Model* CreateModel(string path, bool isInvertIndexesOrder = false, bool IsInvertTextures = false);
 	CharacterController* CreateCharacterController(Camera* camera);
@@ -78,26 +77,25 @@ public:
 	DirectionalLight* CreateDirectionalLight();
 	PointLight* CreatePointLight();
 	SpotLight* CreateSpotLight();
-	
+
 	//Collisions
 	void AddCollision(Entity2D* entity, bool isStatic);
 	void UpdateCollisions(TileMap* tileMap);
 	void DrawCollision();
 	void DrawCubeLines(AABB* aabb, float lineWidth = 2, glm::vec3 color = { 0, 0, 0 }, Camera* camera = nullptr);
+	void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2.0f, glm::vec3 color = { 1, 0, 0 }, Camera* camera = nullptr);
 	Collider* CreateCollider(bool isStatic = true);
-	
+
 	// Utilities
 	TileMap* CreateTileMap(string filePath, string resPath);
-	void ShowHierarchyInConsole() const;
-	void DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth = 2.0f, glm::vec3 color = { 1, 0, 0 }, Camera* camera = nullptr);
-	
+	void ShowHierarchyInConsole();
+
 	// Time
 	double DeltaTime();
 	double ElapsedTime();
 
 	// Window
-	void ModifyWindow(const char* name, float width, float height);
-	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }	
+	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
 };
-	
+
 #endif

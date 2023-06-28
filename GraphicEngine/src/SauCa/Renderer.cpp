@@ -1,11 +1,10 @@
 #include "Renderer.h"
 
-#include "GameObjects/GameObject.h"
 #include "Render/Camera.h"
 
 using namespace std;
 
-std::list<Component*> Renderer::allRenderList;
+std::list<GameObject*> Renderer::allRenderList;
 std::list<Camera*> Renderer::cameras;
 
 Shader* Renderer::defaultShaderSkybox;
@@ -42,6 +41,20 @@ Renderer::~Renderer()
     }
 }
 
+void Renderer::CreateRenderer()
+{
+    glewExperimental = GL_TRUE;
+    glewInit();
+	
+    glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    glFrontFace(GL_CCW);
+    glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+}
+
 void Renderer::CreateShader()
 {
     defaultShaderSkybox = new Shader();
@@ -55,18 +68,27 @@ void Renderer::CreateShader()
     std::cout << "\n";
 }
 
-void Renderer::CreateRenderer()
+void Renderer::Clear(GLbitfield field)
 {
-    glewExperimental = GL_TRUE;
-    glewInit();
-	
-    glEnable(GL_BLEND);
-    glEnable(GL_DEPTH_TEST);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glClearColor(0, 0, 0, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
 
-    glFrontFace(GL_CCW);
-    glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+void Renderer::Draw()
+{
+    Camera* cam = (*cameras.begin());
+    Frustum* frustum = cam->frustum;
+    cam->frustum->Update(cam->fov, cam->aspect, cam->far, cam->near, cam->transform->GetWorldPosition(), cam->transform->forward(), cam->transform->right(), cam->transform->up());
+
+    for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
+    {
+        (*iterCamera)->DrawRenderList(frustum);
+    }
+}
+
+void Renderer::SwapBuffers(GLFWwindow* window)
+{
+    glfwSwapBuffers(window);
 }
 
 void Renderer::DrawEntity(unsigned int VAO, int sizeIndex, glm::mat4 model, unsigned int textureID, Material* material, float alpha, Camera* camera)
@@ -232,108 +254,6 @@ void Renderer::SetLights(Material* material)
     }
 }
 
-void Renderer::Clear(GLbitfield field)
-{
-    glClearColor(0, 0, 0, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-void DrawLinesFrustum(Camera* camera)
-{
-    Plane left      = camera->frustum->leftFace;
-    Plane right     = camera->frustum->rightFace;
-    Plane top       = camera->frustum->topFace;
-    Plane bottom    = camera->frustum->bottomFace;
-    Plane far       = camera->frustum->farFace;
-    Plane near      = camera->frustum->nearFace;
-	
-    glm::vec3 nearLeftTop =     Plane::FindIntersectionPoint(near, left,  top);
-    glm::vec3 nearLeftBottom =  Plane::FindIntersectionPoint(near, left,  bottom);
-    glm::vec3 nearRightTop =    Plane::FindIntersectionPoint(near, right, top);
-    glm::vec3 nearRightBottom = Plane::FindIntersectionPoint(near, right, bottom);
-    glm::vec3 farLeftTop =      Plane::FindIntersectionPoint(far,  left,  top);
-    glm::vec3 farLeftBottom =   Plane::FindIntersectionPoint(far,  left,  bottom);
-    glm::vec3 farRightTop =     Plane::FindIntersectionPoint(far,  right, top);
-    glm::vec3 farRightBottom =  Plane::FindIntersectionPoint(far,  right, bottom);
-    enum DrawMode { Both, PlaneNear, PlaneFar };
-    DrawMode drawMode = Both;
-    switch (drawMode)
-	{
-    case Both:
-        Renderer::DrawLine(nearLeftTop, nearLeftBottom);
-        Renderer::DrawLine(nearLeftTop, nearRightTop);
-        Renderer::DrawLine(nearLeftTop, farLeftBottom);
-
-        Renderer::DrawLine(nearRightBottom, nearLeftBottom);
-        Renderer::DrawLine(nearRightBottom, nearRightTop);
-        Renderer::DrawLine(nearRightBottom, farRightBottom);
-
-        Renderer::DrawLine(farRightTop, farRightBottom);
-        Renderer::DrawLine(farRightTop, nearRightTop);
-        Renderer::DrawLine(farRightTop, farLeftTop);
-
-        Renderer::DrawLine(farLeftBottom, farLeftTop);
-        Renderer::DrawLine(farLeftBottom, nearLeftBottom);
-        Renderer::DrawLine(farLeftBottom, farRightBottom);
-	    break;
-    case PlaneNear:
-        Renderer::DrawLine(nearRightBottom, nearRightTop);
-        Renderer::DrawLine(nearRightBottom, nearLeftBottom);
-        Renderer::DrawLine(nearLeftTop, nearRightTop);
-        Renderer::DrawLine(nearLeftTop, nearLeftBottom);
-	    break;
-    case PlaneFar:
-        Renderer::DrawLine(farRightBottom, farRightTop);
-        Renderer::DrawLine(farRightBottom, farLeftBottom);
-        Renderer::DrawLine(farLeftTop, farRightTop);
-        Renderer::DrawLine(farLeftTop, farLeftBottom);
-	    break;
-    default: ;
-    }
-	
-   
-}
-
-void Renderer::Draw()
-{
-    int count = 0;
-    Camera* cam = (*cameras.begin());
-    Frustum* frustum = cam->frustum;
-    cam->frustum->Update(cam->fov, cam->aspect, cam->far, cam->near, cam->transform->GetWorldPosition(), cam->transform->forward(), cam->transform->right(), cam->transform->up());
-    for (auto iterCamera = cameras.begin(); iterCamera != cameras.end(); ++iterCamera)
-    {
-        count++;
-        //Frustum* frustum = cam->frustum;
-        //(*iterCamera)->frustum->Update(cam->fov, cam->aspect, cam->far, cam->near, cam->transform->GetWorldPosition(), cam->transform->forward(), cam->transform->right(), cam->transform->up());
-        (*iterCamera)->BeginDraw();
-        for (auto iterComponent = (*iterCamera)->cameraRenderList.begin(); iterComponent != (*iterCamera)->cameraRenderList.end(); ++iterComponent)
-        {
-            glm::mat4 model = (*iterComponent)->transform->GetModelMatrix();
-            glm::vec3 right = (*iterComponent)->transform->right();
-            glm::vec3 up = (*iterComponent)->transform->up();
-            glm::vec3 forward = (*iterComponent)->transform->forward();
-
-            bool isOnFrustum = (*iterComponent)->transform->aabb->IsOnFrustum((*frustum), (*iterComponent)->transform->aabb);
-        	
-            if (isOnFrustum)
-            {
-                bool isRenderizable = (*iterComponent)->IsRenderizable();
-                bool isEnable = (*iterComponent)->isEnable;
-                bool isActive = (*iterComponent)->gameobject->IsActive();
-                bool isActiveInHierarch = (*iterComponent)->gameobject->IsActiveInHierarch();
-
-                if (isRenderizable && isEnable && isActive && isActiveInHierarch)
-                    (*iterComponent)->Draw((*iterCamera));
-            }
-        }
-    }
-}
-
-void Renderer::SwapBuffers(GLFWwindow* window)
-{
-	glfwSwapBuffers(window);
-}
-
 void Renderer::BindGenBufferObject(unsigned int& buffer)
 {
     glGenVertexArrays(1, &buffer);
@@ -365,6 +285,12 @@ void Renderer::BindIndex(unsigned int buffer, int size, int* arrayData)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size * sizeof(int), arrayData, GL_STATIC_DRAW);
 }
 
+void Renderer::BindTextures(unsigned int& texture)
+{
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+}
+
 void Renderer::UnBindObject(VertexData* vertexData)
 {
     UnBindObject(vertexData->VAO, vertexData->VBO, vertexData->CBO, vertexData->NBO, vertexData->UVB, vertexData->EBO);
@@ -380,12 +306,6 @@ void Renderer::UnBindObject(unsigned int& VAO, unsigned int& VBO, unsigned int& 
     glDeleteBuffers(1, &EBO);
 }
 
-void Renderer::BindTextures(unsigned int& texture)
-{
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-}
-
 void Renderer::AddCamera(Camera* cam)
 {
     cameras.push_back(cam);
@@ -394,18 +314,9 @@ void Renderer::AddCamera(Camera* cam)
     {
         for (auto iter = allRenderList.begin(); iter != allRenderList.end(); ++iter)
         {
-            cam->cameraRenderList.push_back((*iter));
+            cam->AddToRenderList((*iter));
         }
     }
-}
-
-void Renderer::AddToRenderList(Component* component)
-{
-    allRenderList.push_back(component);
-
-    for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
-        if ((*iter)->autoAddGameObjects)
-            (*iter)->cameraRenderList.push_back(component);
 }
 
 void Renderer::RemoveCamera(Camera* cam)
@@ -418,6 +329,46 @@ void Renderer::RemoveCamera(Camera* cam)
             break;
         }
     }
+}
+
+void Renderer::AddToRenderList(GameObject* gameObject)
+{
+    allRenderList.remove(gameObject);
+    allRenderList.push_back(gameObject);
+
+    for (auto iter = cameras.begin(); iter != cameras.end(); ++iter)
+        if ((*iter)->autoAddGameObjects)
+            (*iter)->AddToRenderList(gameObject);
+}
+
+void Renderer::DrawCubeLines(AABB* aabb, float lineWidth, glm::vec3 color, Camera* camera)
+{
+    glm::vec3 minPoint = aabb->center - aabb->extents;
+    glm::vec3 maxPoint = aabb->center + aabb->extents;
+
+    // Obtener los 8 vértices del cubo
+    glm::vec3 p1 = { minPoint.x, minPoint.y, minPoint.z };
+    glm::vec3 p2 = { maxPoint.x, minPoint.y, minPoint.z };
+    glm::vec3 p3 = { maxPoint.x, minPoint.y, maxPoint.z };
+    glm::vec3 p4 = { minPoint.x, minPoint.y, maxPoint.z };
+    glm::vec3 p5 = { minPoint.x, maxPoint.y, minPoint.z };
+    glm::vec3 p6 = { maxPoint.x, maxPoint.y, minPoint.z };
+    glm::vec3 p7 = { maxPoint.x, maxPoint.y, maxPoint.z };
+    glm::vec3 p8 = { minPoint.x, maxPoint.y, maxPoint.z };
+
+    // Dibujar las 12 aristas del cubo
+    DrawLine(p1, p2, lineWidth, color, camera);
+    DrawLine(p2, p3, lineWidth, color, camera);
+    DrawLine(p3, p4, lineWidth, color, camera);
+    DrawLine(p4, p1, lineWidth, color, camera);
+    DrawLine(p5, p6, lineWidth, color, camera);
+    DrawLine(p6, p7, lineWidth, color, camera);
+    DrawLine(p7, p8, lineWidth, color, camera);
+    DrawLine(p8, p5, lineWidth, color, camera);
+    DrawLine(p1, p5, lineWidth, color, camera);
+    DrawLine(p2, p6, lineWidth, color, camera);
+    DrawLine(p3, p7, lineWidth, color, camera);
+    DrawLine(p4, p8, lineWidth, color, camera);
 }
 
 void Renderer::DrawLine(const glm::vec3& startPoint, const glm::vec3& endPoint, float lineWidth, glm::vec3 color, Camera* camera)

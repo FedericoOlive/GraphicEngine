@@ -117,3 +117,26 @@ void Camera::SetCameraType(CameraType cameraType)
 		break;
 	}
 }
+
+void Camera::AddToRenderList(GameObject* gameObject)
+{
+	cameraRenderList.remove(gameObject);
+	cameraRenderList.push_back(gameObject);
+}
+
+void Camera::DrawRenderList(Frustum* frustum)
+{
+	//UpdateFrustum();
+
+	BeginDraw();
+	for (auto iterComponent = cameraRenderList.begin(); iterComponent != cameraRenderList.end(); ++iterComponent)
+	{
+		if ((*iterComponent)->transform->parent == nullptr)
+			(*iterComponent)->Draw(this, frustum);
+	}
+}
+
+void Camera::UpdateFrustum()
+{
+	frustum->Update(fov, aspect, far, near, transform->GetWorldPosition(), transform->forward(), transform->right(), transform->up());
+}

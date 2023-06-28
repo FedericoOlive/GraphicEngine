@@ -6,8 +6,8 @@
 
 bool CollisionManager3D::IsCollision(Transform* collider1, Transform* collider2)
 {
-	AABB* aabb1 = collider1->aabb;
-	AABB* aabb2 = collider2->aabb;
+	AABB* aabb1 = collider1->aabbLocal;
+	AABB* aabb2 = collider2->aabbLocal;
 
 	return( aabb1->max.x > aabb2->min.x &&
 			aabb1->min.x < aabb2->max.x &&
@@ -76,16 +76,6 @@ void CollisionManager3D::UpdateCollisions()
 					if (!d2->isCollision)
 						d2->color = { 0, 1, 0 };
 				}
-				
-				//float overlapX = 0;
-				//float overlapY = 0;
-				//
-				//CollisionType currentCollision = d1->CheckCollision(*d2, overlapX, overlapY);
-				//if (currentCollision != CollisionType::none)
-				//{
-				//	d1->ApplyCollisionRestrictions(currentCollision, overlapX, overlapY, true);
-				//	d2->ApplyCollisionRestrictions(currentCollision, -overlapX, -overlapY, true);
-				//}
 			}
 		}
 	}
@@ -111,27 +101,11 @@ void CollisionManager3D::UpdateCollisions()
 						s1->color = { 0, 1, 0 };
 				}
 			}
-			
-			float overlapX = 0;
-			float overlapY = 0;
-			//CollisionType currentCollision = d->CheckCollision(*s, overlapX, overlapY);
-			//if (currentCollision != CollisionType::none)
-			//{
-			//	d->ApplyCollisionRestrictions(currentCollision, overlapX, overlapY, false);
-			//}
 		}
 	}
 }
 
 void CollisionManager3D::Draw()
 {
-	for (Collider*& d : dynamicCollisionList)
-	{
-		//Renderer::DrawLine()
-	}
 
-	for (Collider*& s : staticCollisionList)
-	{
-
-	}
 }

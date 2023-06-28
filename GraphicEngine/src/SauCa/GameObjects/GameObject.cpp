@@ -1,6 +1,6 @@
 #include "GameObject.h"
 #include "Renderer.h"
-
+#include "Render/Camera.h"
 unsigned int GameObject::id = 0;
 
 GameObject::GameObject(std::string name)
@@ -40,6 +40,32 @@ GameObject::~GameObject()
 	{
 		delete transform;
 		transform = nullptr;
+	}
+}
+
+void GameObject::Draw(Camera* camera, Frustum* frustum)
+{
+	if (isActive && isActiveInHierarchy)
+	{
+		if (transform->aabbGlobal->IsOnFrustum(*frustum, transform->aabbGlobal))
+		{
+			if (transform->aabbLocal->IsOnFrustum(*frustum, transform->aabbLocal))
+			{
+				for (auto iterComponent = components.begin(); iterComponent != components.end(); ++iterComponent)
+				{
+					bool isRenderizable = (*iterComponent)->IsRenderizable();
+					bool isEnable = (*iterComponent)->isEnable;
+
+					if (isRenderizable && isEnable)
+						(*iterComponent)->Draw(camera);
+				}
+			}
+
+			for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
+			{
+				(*iter)->gameObject->Draw(camera, frustum);
+			}
+		}
 	}
 }
 
@@ -108,9 +134,6 @@ void GameObject::AddComponent(Component* component)
 	component->transform = transform;
 	component->OnAsigned();
 
+	components.remove(component);
 	components.push_back(component);
-	if (component->IsRenderizable())
-	{
-		Renderer::AddToRenderList(component);
-	}
 }

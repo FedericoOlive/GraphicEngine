@@ -15,6 +15,7 @@ public:
 private:
 	CameraType cameraType = Perspective;
 	float cameraZoom = 1;
+	std::list<GameObject*> cameraRenderList;
 	
 public:
 	float aspect;
@@ -24,7 +25,6 @@ public:
 	bool autoAddGameObjects = true;
 	bool isDrawSkybox = true;
 	Frustum* frustum;
-	std::list<Component*> cameraRenderList;
 	
 	glm::vec2 viewportPosition;
 	glm::vec2 viewportSize;
@@ -43,6 +43,9 @@ public:
 	void SetZoom(float cameraZoom, float fov = 45.0f);
 	void SetCameraType(CameraType cameraType);
 	float GetZoom() const { return cameraZoom; }
+	void AddToRenderList(GameObject* gameObject);
+	void DrawRenderList(Frustum* frustum);
+	void UpdateFrustum();
 };
 
 #endif

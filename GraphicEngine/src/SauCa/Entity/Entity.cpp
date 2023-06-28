@@ -49,13 +49,18 @@ void Entity::CalculateParentAABB()
 	
 	while (parent != nullptr)
 	{
-		parent->aabb->min.x = glm::min(transform->aabb->min.x, parent->aabb->min.x);
-		parent->aabb->min.y = glm::min(transform->aabb->min.y, parent->aabb->min.y);
-		parent->aabb->min.z = glm::min(transform->aabb->min.z, parent->aabb->min.z);
-		parent->aabb->max.x = glm::max(transform->aabb->max.x, parent->aabb->max.x);
-		parent->aabb->max.y = glm::max(transform->aabb->max.y, parent->aabb->max.y);
-		parent->aabb->max.z = glm::max(transform->aabb->max.z, parent->aabb->max.z);
-		parent->aabb->AfterUpdate(parent->gameObject->name);
+		parent->aabbGlobal->min.x = glm::min(transform->aabbGlobal->min.x, parent->aabbGlobal->min.x);
+		parent->aabbGlobal->min.y = glm::min(transform->aabbGlobal->min.y, parent->aabbGlobal->min.y);
+		parent->aabbGlobal->min.z = glm::min(transform->aabbGlobal->min.z, parent->aabbGlobal->min.z);
+		parent->aabbGlobal->max.x = glm::max(transform->aabbGlobal->max.x, parent->aabbGlobal->max.x);
+		parent->aabbGlobal->max.y = glm::max(transform->aabbGlobal->max.y, parent->aabbGlobal->max.y);
+		parent->aabbGlobal->max.z = glm::max(transform->aabbGlobal->max.z, parent->aabbGlobal->max.z);
+		parent->aabbGlobal->AfterUpdate();
+
+		transform->aabbLocal->min = transform->aabbGlobal->min;
+		transform->aabbLocal->max = transform->aabbGlobal->max;
+		transform->aabbLocal->AfterUpdate();
+
 		parent = parent->parent;
 	}
 }

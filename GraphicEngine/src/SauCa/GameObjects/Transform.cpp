@@ -6,7 +6,8 @@ Transform::Transform(GameObject* go)
 {
 	parent = nullptr;
 	gameObject = go;
-	aabb = new AABB();
+	aabbGlobal = new AABB();
+	aabbLocal = new AABB();
 	
 	localPosition = glm::vec3(0.0f);
 	localRotation= glm::vec3(0.0f);
@@ -20,10 +21,10 @@ Transform::Transform(GameObject* go)
 
 Transform::~Transform()
 {
-	if (aabb != nullptr)
+	if (aabbGlobal != nullptr)
 	{
-		delete aabb;
-		aabb = nullptr;
+		delete aabbGlobal;
+		aabbGlobal = nullptr;
 	}
 }
 
@@ -61,7 +62,10 @@ void Transform::SetParent(Transform* parentTransform)
 
 void Transform::SetParent(GameObject* gameObject)
 {
-	SetParent(gameObject->transform);
+	if (gameObject == nullptr)
+		SetParent();
+	else
+		SetParent(gameObject->transform);
 }
 
 void Transform::GetRecursivelyChildrens(std::list<Transform*>& allChildrens, bool excludeThis)
@@ -210,7 +214,7 @@ void Transform::UpdateModelMatrix()
 	worldRotation = QuatToEuler(glm::quat_cast(modelMatrix));
 	worldScale = { glm::length(glm::vec3(modelMatrix[0])),	glm::length(glm::vec3(modelMatrix[1])),	glm::length(glm::vec3(modelMatrix[2])) };
 			
-	aabb->BeforeUpdate();
+	aabbGlobal->BeforeUpdate();
 	OnUpdateModelMatrix.Invoke();
 	//aabb->AfterUpdate(gameObject->name);
 }
