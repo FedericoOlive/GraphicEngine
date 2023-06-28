@@ -129,10 +129,10 @@ void Camera::DrawRenderList(Frustum* frustum)
 	//UpdateFrustum();
 
 	BeginDraw();
-	for (auto iterComponent = cameraRenderList.begin(); iterComponent != cameraRenderList.end(); ++iterComponent)
+	for (auto iter = cameraRenderList.begin(); iter != cameraRenderList.end(); ++iter)
 	{
-		if ((*iterComponent)->transform->parent == nullptr)
-			(*iterComponent)->Draw(this, frustum);
+		if ((*iter)->transform->parent == nullptr)
+			(*iter)->Draw(this, frustum);
 	}
 }
 

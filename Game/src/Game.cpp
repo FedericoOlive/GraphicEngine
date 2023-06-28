@@ -349,7 +349,7 @@ void Game::AddPlayer()
 	spotGo->transform->SetParent(player->pivot);
 
 	Collider* col = CreateCollider(false);
-	player->transform->gameObject->AddComponent(col);
+	player->visualPlayer->transform->gameObject->AddComponent(col);
 }
 
 void Game::AddMinimap()

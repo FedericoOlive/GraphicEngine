@@ -6,8 +6,8 @@ Transform::Transform(GameObject* go)
 {
 	parent = nullptr;
 	gameObject = go;
-	aabbGlobal = new AABB();
-	aabbLocal = new AABB();
+	aabbGlobal = new AABB({ -1,-1,-1 }, { 1, 1, 1 });
+	aabbLocal = new AABB({ -1,-1,-1 }, { 1, 1, 1 });
 	
 	localPosition = glm::vec3(0.0f);
 	localRotation= glm::vec3(0.0f);

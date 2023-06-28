@@ -201,13 +201,6 @@ void Cube::Draw(Camera* camera)
 	{
 		renderer->DrawEntity(vertexData->VAO, vertexData->sizeIndex, transform->GetModelMatrix(), NULL, material, alpha, camera);
 	}
-
-	for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
-	{
-		// todo: Draw Childrens
-		// (*iter)->gameObject->ren
-	}
-
 }
 
 void Cube::SetTexture(Texture* texture, bool deleteExitingMaterial, bool deleteExitingTexture)

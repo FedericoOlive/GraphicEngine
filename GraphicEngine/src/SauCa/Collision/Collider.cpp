@@ -14,7 +14,7 @@ Collider::Collider()
 
 Collider::~Collider()
 {
-	
+
 }
 
 void Collider::Draw(Camera* camera)
@@ -24,12 +24,12 @@ void Collider::Draw(Camera* camera)
 
 void Collider::Update()
 {
-	
+
 }
 
 void Collider::Input()
 {
-	
+
 }
 
 void Collider::OnAsigned()
