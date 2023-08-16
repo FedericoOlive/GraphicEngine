@@ -5,41 +5,30 @@
 class Game : public BaseGame
 {
 private:
-	float multiply = 0.5f;
 	Transform* target = nullptr;
+	float multiply = 0.5f;
+	float* targetFloatModify = nullptr;
+	string targetString = "";
+	int currentColor = 0;
+
 	Camera* camera = nullptr;
 	Camera* cameraMinimap = nullptr;
 	CharacterController* player = nullptr;
+	GameObject* cubeControll = nullptr;
+	GameObject* cubeContent = nullptr;
 	GameObject* cube1 = nullptr;
 	GameObject* cube2 = nullptr;
 	GameObject* cube3 = nullptr;
 	GameObject* cube4 = nullptr;
-	GameObject* objectFoward = nullptr;
-
-	GameObject* cubeContent = nullptr;
 	
-	GameObject* goLightPointArround01 = nullptr;
-	GameObject* goLightPointArround02 = nullptr;
-	GameObject* goLightPointArround03 = nullptr;
-	GameObject* goLightPointArround04 = nullptr;
-
-	float* targetFloatModify = nullptr;
-	string targetString = "";
 	SpotLight* spotlightPlayer = nullptr;
-	int currentColor = 0;
 	glm::vec3 playerZoom = {0, 1, 3};
 
-	EntityController* cubeMovement;
-
-	GameObject* flairGo = nullptr;
-	Model* flairModel = nullptr;
-
-
-	bool rotatePlanets = false;
-	float timeRotation = 0;
-	GameObject* sol = nullptr;
-	GameObject* tie = nullptr;
-	GameObject* lun = nullptr;
+	Texture* floorTexture;
+	Texture* wallRightTexture;
+	Texture* wallLeftTexture;
+	Texture* wallBackTexture;
+	Texture* wallFrontTexture;
 
 public:
 	void Initialize()override;
@@ -59,6 +48,7 @@ public:
 	void OnMouseMove(double xPos, double yPos);
 	void OnMouseScrollMovement(double xOffset, double yOffset);
 	Model* AddNewModel(std::string name, std::string path, glm::vec3 pos);
+	void CreateRoom(GameObject* WorldContent, glm::vec3 position, float dimension);
 };
 
 #endif

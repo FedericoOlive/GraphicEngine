@@ -35,8 +35,11 @@ Sprite::~Sprite()
 
 	if (texture != nullptr)
     {
-        delete texture;
-        texture = nullptr;
+        if (texture->texture > -1)
+        {
+            delete texture;
+            texture = nullptr;
+        }
     }
 }
 
