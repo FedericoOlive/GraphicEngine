@@ -49,6 +49,8 @@ public:
 	void OnMouseScrollMovement(double xOffset, double yOffset);
 	Model* AddNewModel(std::string name, std::string path, glm::vec3 pos);
 	void CreateRoom(GameObject* WorldContent, glm::vec3 position, float dimension);
+
+	void AddBSP();
 };
 
 #endif

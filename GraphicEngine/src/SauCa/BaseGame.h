@@ -96,6 +96,10 @@ public:
 
 	// Window
 	void LockCursor(bool isEnable) { window->LockCursor(isEnable); }
+
+	// BSP
+	void CreateBinarySpacePartitioning(Transform* target);
+	void AddPlaneBSP(Transform* plane);
 };
 
 #endif

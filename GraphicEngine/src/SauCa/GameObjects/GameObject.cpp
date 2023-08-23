@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Renderer.h"
+#include "Render/BinarySpacePartitioning.h"
 #include "Render/Camera.h"
 unsigned int GameObject::id = 0;
 
@@ -51,19 +52,25 @@ void GameObject::Draw(Camera* camera, Frustum* frustum)
 		{
 			if (transform->aabbLocal->IsOnFrustum(*frustum, transform->aabbLocal))
 			{
-				for (auto iterComponent = components.begin(); iterComponent != components.end(); ++iterComponent)
+				if (BinarySpacePartitioning::IsDraweable(transform))//Todo: Chequear acá el BSP
 				{
-					bool isRenderizable = (*iterComponent)->IsRenderizable();
-					bool isEnable = (*iterComponent)->isEnable;
+					for (auto iterComponent = components.begin(); iterComponent != components.end(); ++iterComponent)
+					{
+						bool isRenderizable = (*iterComponent)->IsRenderizable();
+						bool isEnable = (*iterComponent)->isEnable;
 
-					if (isRenderizable && isEnable)
-						(*iterComponent)->Draw(camera);
+						if (isRenderizable && isEnable)
+							(*iterComponent)->Draw(camera);
+					}
 				}
 			}
 
-			for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
+			//if (BinarySpacePartitioning::IsDraweable(transform))//	Todo: Chequear acá el BSP
 			{
-				(*iter)->gameObject->Draw(camera, frustum);
+				for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
+				{
+					(*iter)->gameObject->Draw(camera, frustum);
+				}
 			}
 		}
 	}

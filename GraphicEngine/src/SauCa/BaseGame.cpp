@@ -1,5 +1,6 @@
 #include "BaseGame.h"
 
+#include "Render/BinarySpacePartitioning.h"
 #include "Utility/PrintInConsole.h"
 
 string BaseGame::version = "2.3.0";
@@ -349,4 +350,15 @@ double BaseGame::DeltaTime()
 double BaseGame::ElapsedTime()
 {
 	return timer->ElapsedTime();
+}
+
+void BaseGame::CreateBinarySpacePartitioning(Transform* target)
+{
+	BinarySpacePartitioning::isEnable = true;
+	BinarySpacePartitioning::SetTarget(target);
+}
+
+void BaseGame::AddPlaneBSP(Transform* plane)
+{
+	BinarySpacePartitioning::AddPlane(plane);
 }

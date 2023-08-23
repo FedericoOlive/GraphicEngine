@@ -12,6 +12,7 @@ void Game::Initialize()
 	AddPlayer();
 	AddMinimap();
 	SetEnviroment();
+	AddBSP();
 	
 	target = cubeContent->transform;
 }
@@ -30,6 +31,8 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::Kp4)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(1 * -multiply, 0, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Kp6)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Kp8)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 0, 1 * -multiply)); }
+	if (Input::IsKeyHolding(KeyCode::Kp7)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 1 * -multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Kp9)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 1 * multiply, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Num0)) {  }
 	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
 	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
@@ -55,8 +58,8 @@ void Game::Update()
 
 void Game::Draw()
 {
-	DrawCubeLines(cubeContent->transform->aabbGlobal, 2, Color::Blue, camera);
-	DrawCubeLines(cubeContent->transform->aabbGlobal, 2, Color::Blue, cameraMinimap);
+	//DrawCubeLines(cubeContent->transform->aabbGlobal, 2, Color::Blue, camera);
+	//DrawCubeLines(cubeContent->transform->aabbGlobal, 2, Color::Blue, cameraMinimap);
 }
 
 void Game::SetLights()
@@ -91,13 +94,19 @@ void Game::SetEnviroment()
 	GameObject* WorldContent = CreateGameObject("World Content");
 	float dimension = 20;
 
-	for (int i = -1; i <= 1; ++i)
+	for (float i = -1; i <= 1; i += 1)
 	{
-		for (int j = -1; j <= 1; ++j)
+		for (float j = -1; j <= 0; j += 1)
 		{
-			CreateRoom(WorldContent, { i * dimension, 0, j * dimension }, dimension * 0.5f);
+			if(i==-1&&j==-1)
+				continue;
+			if(i==1&&j==-1)
+				continue;
+
+			CreateRoom(WorldContent, { i * dimension + i, 0, j * dimension + j }, dimension * 0.5f);
 		}
 	}
+
 
 	// 4 Cubes
 	cubeContent = CreateGameObject("Cube Content");
@@ -210,7 +219,7 @@ void Game::AddPlayer()
 	player = CreateCharacterController(camera);
 	//player->movement->RemoveMovement();
 	player->SetThirdPerson();
-	player->transform->SetWorldPosition(glm::vec3(0, 10, 0));
+	player->transform->SetWorldPosition(glm::vec3(0, 18, 42));
 	
 	player->visualPlayer->AddComponent(CreateCube());
 	
@@ -284,6 +293,26 @@ void Game::OnMouseScrollMovement(double xOffset, double yOffset)
 		player->SetFirstPerson();
 		camera->SetZoom(1 - (-playerZoom.y / 10.0f));
 	}
+}
+
+void Game::AddBSP()
+{
+	CreateBinarySpacePartitioning(cubeControll->transform);
+
+	Transform* bsp1 = CreateGameObject("BSP 1")->transform;
+	bsp1->SetWorldPosition({ 0, 0, -10.5f });
+	bsp1->SetWorldRotation({ 0, 0, 0 });
+	AddPlaneBSP(bsp1);
+
+	Transform* bsp2 = CreateGameObject("BSP 2")->transform;
+	bsp2->SetWorldPosition({ -10.5f, 0, 0 });
+	bsp2->SetWorldRotation({ 0, -90, 0 });
+	AddPlaneBSP(bsp2);
+
+	Transform* bsp3 = CreateGameObject("BSP 3")->transform;
+	bsp3->SetWorldPosition({ 10.5f, 0, 0 });
+	bsp3->SetWorldRotation({ 0, 90, 0 });
+	AddPlaneBSP(bsp3);
 }
 
 void Game::DeInitialize()

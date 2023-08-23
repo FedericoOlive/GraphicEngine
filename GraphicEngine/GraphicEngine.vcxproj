@@ -187,6 +187,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\SauCa\Render\BinarySpacePartitioning.cpp" />
     <ClCompile Include="src\SauCa\Collision\BoundingVolume.cpp" />
     <ClCompile Include="src\SauCa\Collision\Frustum.cpp" />
     <ClCompile Include="src\SauCa\Collision\Plane.cpp" />
@@ -236,6 +237,7 @@ XCOPY "$(SolutionDir)libs\glfw\glfw3.dll" "$(SolutionDir)bin\$(Configuration)\" 
     <ClCompile Include="src\SauCa\Entity\VertexData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\SauCa\Render\BinarySpacePartitioning.h" />
     <ClInclude Include="src\SauCa\Utility\Color.h" />
     <ClInclude Include="src\SauCa\Collision\BoundingVolume.h" />
     <ClInclude Include="src\SauCa\Collision\Frustum.h" />
