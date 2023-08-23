@@ -52,7 +52,7 @@ void GameObject::Draw(Camera* camera, Frustum* frustum)
 		{
 			if (transform->aabbLocal->IsOnFrustum(*frustum, transform->aabbLocal))
 			{
-				if (BinarySpacePartitioning::IsDraweable(transform))//Todo: Chequear acá el BSP
+				if (alwaysVisible ||BinarySpacePartitioning::IsDraweable(transform))
 				{
 					for (auto iterComponent = components.begin(); iterComponent != components.end(); ++iterComponent)
 					{
@@ -65,12 +65,9 @@ void GameObject::Draw(Camera* camera, Frustum* frustum)
 				}
 			}
 
-			//if (BinarySpacePartitioning::IsDraweable(transform))//	Todo: Chequear acá el BSP
+			for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
 			{
-				for (auto iter = transform->childrens.begin(); iter != transform->childrens.end(); ++iter)
-				{
-					(*iter)->gameObject->Draw(camera, frustum);
-				}
+				(*iter)->gameObject->Draw(camera, frustum);
 			}
 		}
 	}

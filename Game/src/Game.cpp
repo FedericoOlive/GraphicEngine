@@ -300,16 +300,25 @@ void Game::AddBSP()
 	CreateBinarySpacePartitioning(cubeControll->transform);
 
 	Transform* bsp1 = CreateGameObject("BSP 1")->transform;
+	bsp1->gameObject->alwaysVisible = true;
+	bsp1->gameObject->AddComponent(CreateQuad());
+	bsp1->SetWorldScale({ 50,50,50 });
 	bsp1->SetWorldPosition({ 0, 0, -10.5f });
 	bsp1->SetWorldRotation({ 0, 0, 0 });
 	AddPlaneBSP(bsp1);
 
 	Transform* bsp2 = CreateGameObject("BSP 2")->transform;
+	bsp2->gameObject->alwaysVisible = true;
+	bsp2->gameObject->AddComponent(CreateQuad());
+	bsp2->SetWorldScale({ 50,50,50 });
 	bsp2->SetWorldPosition({ -10.5f, 0, 0 });
 	bsp2->SetWorldRotation({ 0, -90, 0 });
 	AddPlaneBSP(bsp2);
 
 	Transform* bsp3 = CreateGameObject("BSP 3")->transform;
+	bsp3->gameObject->alwaysVisible = true;
+	bsp3->gameObject->AddComponent(CreateQuad());
+	bsp3->SetWorldScale({ 50,50,50 });
 	bsp3->SetWorldPosition({ 10.5f, 0, 0 });
 	bsp3->SetWorldRotation({ 0, 90, 0 });
 	AddPlaneBSP(bsp3);

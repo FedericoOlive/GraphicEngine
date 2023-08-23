@@ -19,6 +19,7 @@ public:
 	GameObject* gameobject = nullptr;
 	Transform* transform = nullptr;
 	bool isEnable = true;
+	bool alwaysDraw = false;
 	std::string name = "Component";
 	
 	Component(bool isRenderizable = false);

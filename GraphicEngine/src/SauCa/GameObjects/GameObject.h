@@ -14,6 +14,7 @@ private:
 	
 public:
 	std::string name;
+    bool alwaysVisible = false;
     GameObject(std::string name = "");
     ~GameObject();
 	
