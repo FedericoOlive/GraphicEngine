@@ -120,6 +120,33 @@ int BaseGame::Init()
 
 void BaseGame::DeInitializeEngine()
 {
+	while (!gameobjects.empty())
+	{
+		auto gameObject = gameobjects.begin();
+
+		if ((*gameObject)->transform->parent == nullptr)
+		{
+			std::list<Transform*> allChildrens;
+			(*gameObject)->transform->GetRecursivelyChildrens(allChildrens);
+			while (!allChildrens.empty())
+			{
+				auto childtransform = allChildrens.begin();
+				gameobjects.remove((*childtransform)->gameObject);
+				allChildrens.pop_front();
+			}
+
+			delete (*gameObject);
+			(*gameObject) = nullptr;
+		}
+
+		gameobjects.pop_front();
+	}
+
+	if (skybox != nullptr)
+	{
+		delete skybox;
+		skybox = nullptr;
+	}
 	if (input != nullptr)
 	{
 		delete input;
@@ -149,34 +176,6 @@ void BaseGame::DeInitializeEngine()
 	{
 		delete timer;
 		timer = nullptr;
-	}
-
-	while (!gameobjects.empty())
-	{
-		auto gameObject = gameobjects.begin();
-
-		if ((*gameObject)->transform->parent == nullptr)
-		{
-			std::list<Transform*> allChildrens;
-			(*gameObject)->transform->GetRecursivelyChildrens(allChildrens);
-			while (!allChildrens.empty())
-			{
-				auto childtransform = allChildrens.begin();
-				gameobjects.remove((*childtransform)->gameObject);
-				allChildrens.pop_front();
-			}
-
-			delete (*gameObject);
-			(*gameObject) = nullptr;
-		}
-
-		gameobjects.pop_front();
-	}
-
-	if (skybox != nullptr)
-	{
-		delete skybox;
-		skybox = nullptr;
 	}
 }
 
@@ -214,8 +213,14 @@ Sprite* BaseGame::CreateSprite(Texture* texture)
 
 Cube* BaseGame::CreateCube()
 {
-	Cube* sprite = new Cube(renderer);
-	return sprite;
+	Cube* cube = new Cube(renderer);
+	return cube;
+}
+
+Cube* BaseGame::CreateCube(Material* mat)
+{
+	Cube* cube = new Cube(renderer, mat);	
+	return cube;
 }
 
 Texture* BaseGame::CreateTexture(string path)

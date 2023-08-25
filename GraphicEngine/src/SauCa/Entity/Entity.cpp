@@ -14,8 +14,10 @@ Entity::~Entity()
 		delete vertexData;
 		vertexData = nullptr;
 	}
-	if (material != nullptr)
+
+	if (!material->flagDestroyed)
 	{
+		material->flagDestroyed = true;
 		delete material;
 		material = nullptr;
 	}

@@ -10,6 +10,7 @@ class SAUCA_API Material
 public:
 	glm::vec3 colorTint = { 1.0f, 1.0f, 1.0f };;
 	Shader* shader;
+	bool flagDestroyed = false;
 	bool hasTexture;
 	glm::vec3 ambient = { 1, 1, 1 };
 	glm::vec3 diffuse = { 1, 1, 1 };

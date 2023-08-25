@@ -7,6 +7,7 @@ class SAUCA_API Cube final : public Entity3D
 {
 public:
 	Cube(Renderer* renderer);
+	Cube(Renderer* renderer, Material* mat);
 	~Cube() override;
 	void CreateVertexData() override;
 	void Draw(Camera* camera) override;

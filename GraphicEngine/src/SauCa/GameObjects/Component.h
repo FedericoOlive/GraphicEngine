@@ -23,8 +23,8 @@ public:
 	std::string name = "Component";
 	
 	Component(bool isRenderizable = false);
-	virtual ~Component() {} // Destructor virtual
-	virtual void Draw(Camera* camera){}
+	virtual ~Component() { }
+	virtual void Draw(Camera* camera) { }
 	virtual void Update();
 	virtual void Input();
 	virtual void OnAsigned();

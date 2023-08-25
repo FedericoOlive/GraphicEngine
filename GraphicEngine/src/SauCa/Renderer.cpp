@@ -1,5 +1,4 @@
 #include "Renderer.h"
-
 #include "Render/Camera.h"
 
 using namespace std;

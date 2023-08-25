@@ -297,29 +297,45 @@ void Game::OnMouseScrollMovement(double xOffset, double yOffset)
 
 void Game::AddBSP()
 {
+	float alpha = 0.2f;
+	float dim = 50;
+	float dist = 10.5f;
+	glm::vec3 size = {dim, dim, 0.5f};
+
+	Material* mat = new Material(Renderer::GetDefaultShaderSolid(), false);
+	mat->colorTint = Color::Blue;
+	
 	CreateBinarySpacePartitioning(cubeControll->transform);
 
 	Transform* bsp1 = CreateGameObject("BSP 1")->transform;
 	bsp1->gameObject->alwaysVisible = true;
-	bsp1->gameObject->AddComponent(CreateQuad());
-	bsp1->SetWorldScale({ 50,50,50 });
-	bsp1->SetWorldPosition({ 0, 0, -10.5f });
+	Cube* qbsp1 = CreateCube(mat);
+	qbsp1->alpha = alpha;
+	bsp1->gameObject->AddComponent(qbsp1);
+	bsp1->SetWorldScale(size);
+	bsp1->SetWorldPosition({ 0, 0, -dist });
 	bsp1->SetWorldRotation({ 0, 0, 0 });
 	AddPlaneBSP(bsp1);
 
 	Transform* bsp2 = CreateGameObject("BSP 2")->transform;
 	bsp2->gameObject->alwaysVisible = true;
-	bsp2->gameObject->AddComponent(CreateQuad());
-	bsp2->SetWorldScale({ 50,50,50 });
-	bsp2->SetWorldPosition({ -10.5f, 0, 0 });
+	Cube* qbsp2 = CreateCube(mat);
+	qbsp2->alpha = alpha;
+	bsp2->gameObject->AddComponent(qbsp2);
+	bsp2->gameObject->AddComponent(CreateQuad(mat));
+	bsp2->SetWorldScale(size);
+	bsp2->SetWorldPosition({ -dist, 0, 0 });
 	bsp2->SetWorldRotation({ 0, -90, 0 });
 	AddPlaneBSP(bsp2);
 
 	Transform* bsp3 = CreateGameObject("BSP 3")->transform;
 	bsp3->gameObject->alwaysVisible = true;
-	bsp3->gameObject->AddComponent(CreateQuad());
-	bsp3->SetWorldScale({ 50,50,50 });
-	bsp3->SetWorldPosition({ 10.5f, 0, 0 });
+	Cube* qbsp3 = CreateCube(mat);
+	qbsp3->alpha = alpha;
+	bsp3->gameObject->AddComponent(qbsp3);
+	bsp3->gameObject->AddComponent(CreateQuad(mat));
+	bsp3->SetWorldScale(size);
+	bsp3->SetWorldPosition({ dist, 0, 0 });
 	bsp3->SetWorldRotation({ 0, 90, 0 });
 	AddPlaneBSP(bsp3);
 }

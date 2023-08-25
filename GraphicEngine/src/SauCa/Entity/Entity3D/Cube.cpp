@@ -14,6 +14,20 @@ Cube::Cube(Renderer* renderer)
 	BindBufferEntity();
 }
 
+Cube::Cube(Renderer* renderer, Material* mat)
+{
+	name = "Cube";
+	SetRenderer(renderer); 
+	texture = nullptr;
+	material = mat;
+	CreateVertexData();
+
+	isRenderizable = true;
+
+	GenBufferEntity();
+	BindBufferEntity();
+}
+
 Cube::~Cube()
 {
 	DeleteTextureAsociate();

@@ -13,8 +13,9 @@ Quad::Quad(Renderer* renderer)
 
 Quad::Quad(Renderer* renderer, Material* mat)
 {
-    material = mat;
+    name = "Quad";
     SetRenderer(renderer);
+    material = mat;
     Quad::CreateVertexData();
 
     Quad::GenBufferEntity();
@@ -23,7 +24,8 @@ Quad::Quad(Renderer* renderer, Material* mat)
 
 Quad::~Quad()
 {
-    UnBindObject();
+    if (renderer != nullptr)
+        UnBindObject();
 }
 
 void Quad::CreateVertexData()

@@ -18,6 +18,7 @@ GameObject::~GameObject()
 	while (!components.empty())
 	{
 		auto iter = components.begin();
+
 		if ((*iter) != nullptr)
 		{
 			delete (*iter);
@@ -52,7 +53,7 @@ void GameObject::Draw(Camera* camera, Frustum* frustum)
 		{
 			if (transform->aabbLocal->IsOnFrustum(*frustum, transform->aabbLocal))
 			{
-				if (alwaysVisible ||BinarySpacePartitioning::IsDraweable(transform))
+				if (alwaysVisible || BinarySpacePartitioning::IsDraweable(transform))
 				{
 					for (auto iterComponent = components.begin(); iterComponent != components.end(); ++iterComponent)
 					{

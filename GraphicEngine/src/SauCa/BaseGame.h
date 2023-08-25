@@ -67,6 +67,7 @@ public:
 	Quad* CreateQuad(Material* mat);
 	Sprite* CreateSprite(Texture* texture);
 	Cube* CreateCube();
+	Cube* CreateCube(Material* mat);
 	Texture* CreateTexture(string path);
 	void CreateSkybox(std::string right, std::string left, std::string top, std::string bottom, std::string front, std::string back);
 	Camera* CreateCamera(glm::vec2 viewportPosition = { 0, 0 }, glm::vec2 viewportSize = { 1280, 720 }, Camera::CameraType cameraType = Camera::CameraType::Perspective, bool autoAddGameObjects = true);
