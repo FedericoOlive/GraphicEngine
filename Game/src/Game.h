@@ -14,7 +14,7 @@ private:
 	Camera* camera = nullptr;
 	Camera* cameraMinimap = nullptr;
 	CharacterController* player = nullptr;
-	GameObject* cubeControll = nullptr;
+	GameObject* headCubeControll = nullptr;
 	GameObject* cubeContent = nullptr;
 	GameObject* cube1 = nullptr;
 	GameObject* cube2 = nullptr;
@@ -38,7 +38,10 @@ public:
 	void Draw() override;
 
 	void SetLights();
+	void AddCubeController();
+	GameObject* CreatePartOfBody(string name, glm::vec3 pos, glm::vec3 scale, GameObject* parent);
 	void SetEnviroment();
+	void AddFourCubes();
 	void AddListeners();
 	void AddPlayer();
 	void AddMinimap();

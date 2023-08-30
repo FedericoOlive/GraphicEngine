@@ -5,16 +5,21 @@
 void Game::Initialize()
 {
 	camera = CreateCamera({ 0,0 }, { 1280, 720 }, Camera::Perspective, true);
-	
+
 	targetFloatModify = &multiply;
 	SetLights();
 	AddListeners();
 	AddPlayer();
 	AddMinimap();
+	AddCubeController();
 	SetEnviroment();
+	//AddFourCubes();
 	AddBSP();
-	
-	target = cubeContent->transform;
+
+	if (cubeContent != nullptr)
+		target = cubeContent->transform;
+	else
+		target = headCubeControll->transform;
 }
 
 void Game::Inputs()
@@ -27,12 +32,12 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::Z)) { *targetFloatModify -= 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
 	if (Input::IsKeyHolding(KeyCode::X)) { *targetFloatModify += 1.01f; cout << targetString << (*targetFloatModify) << "\n"; }
 
-	if (Input::IsKeyHolding(KeyCode::Kp2)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 0, 1 * multiply)); }
-	if (Input::IsKeyHolding(KeyCode::Kp4)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(1 * -multiply, 0, 0)); }
-	if (Input::IsKeyHolding(KeyCode::Kp6)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
-	if (Input::IsKeyHolding(KeyCode::Kp8)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 0, 1 * -multiply)); }
-	if (Input::IsKeyHolding(KeyCode::Kp7)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 1 * -multiply, 0)); }
-	if (Input::IsKeyHolding(KeyCode::Kp9)) { cubeControll->transform->SetLocalPosition(cubeControll->transform->GetLocalPosition() + glm::vec3(0, 1 * multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Kp2)) { headCubeControll->transform->SetLocalPosition(headCubeControll->transform->GetLocalPosition() + glm::vec3(0, 0, 1 * multiply)); }
+	if (Input::IsKeyHolding(KeyCode::Kp4)) { headCubeControll->transform->SetLocalPosition(headCubeControll->transform->GetLocalPosition() + glm::vec3(1 * -multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Kp6)) { headCubeControll->transform->SetLocalPosition(headCubeControll->transform->GetLocalPosition() + glm::vec3(1 * multiply, 0, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Kp8)) { headCubeControll->transform->SetLocalPosition(headCubeControll->transform->GetLocalPosition() + glm::vec3(0, 0, 1 * -multiply)); }
+	if (Input::IsKeyHolding(KeyCode::Kp7)) { headCubeControll->transform->SetLocalPosition(headCubeControll->transform->GetLocalPosition() + glm::vec3(0, 1 * -multiply, 0)); }
+	if (Input::IsKeyHolding(KeyCode::Kp9)) { headCubeControll->transform->SetLocalPosition(headCubeControll->transform->GetLocalPosition() + glm::vec3(0, 1 * multiply, 0)); }
 	if (Input::IsKeyHolding(KeyCode::Num0)) {  }
 	if (Input::IsKeyHolding(KeyCode::Num1)) { LockCursor(true);  }
 	if (Input::IsKeyHolding(KeyCode::Num2)) { LockCursor(false); }
@@ -76,17 +81,39 @@ void Game::SetLights()
 	goLightDir01->AddComponent(lightDir1);
 }
 
+void Game::AddCubeController()
+{
+	headCubeControll = CreateGameObject("Cube 1");
+	headCubeControll->transform->SetWorldPosition({ 0, 10, 0 });
+	Cube* cubeControllCubeComponent = CreateCube();
+	cubeControllCubeComponent->SetTexture(CreateTexture("res/Layer9.png"));
+	headCubeControll->AddComponent(cubeControllCubeComponent);
+	Collider* colControll = CreateCollider();
+	headCubeControll->AddComponent(colControll);
+
+	GameObject* chest = CreatePartOfBody("Body Chest", { 0, -2.5f, 0 }, { 3, 4, 3 }, headCubeControll);
+	GameObject* leg1L = CreatePartOfBody("Body Leg Left1", { 0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, chest);
+	GameObject* leg2L = CreatePartOfBody("Body Leg Left2", { 0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, leg1L);
+	GameObject* leg1R = CreatePartOfBody("Body Leg Left1", { -0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, chest);
+	GameObject* leg2R = CreatePartOfBody("Body Leg Left2", { -0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, leg1R);
+
+	headCubeControll->transform->SetWorldRotation({ 90, 0, 0 });
+}
+
+GameObject* Game::CreatePartOfBody(string name, glm::vec3 pos, glm::vec3 scale, GameObject* parent)
+{
+	GameObject* body = CreateGameObject(name);
+	body->transform->SetParent(parent);
+	body->transform->SetLocalPosition(pos);
+	body->transform->SetLocalScale(scale);
+	body->AddComponent(CreateCube());
+	body->AddComponent(CreateCollider());
+	return body;
+}
+
 void Game::SetEnviroment()
 {
 	CreateSkybox("res/Skybox/Skybox_Right.jpg", "res/Skybox/Skybox_Left.jpg", "res/Skybox/Skybox_Top.jpg", "res/Skybox/Skybox_Bottom.jpg", "res/Skybox/Skybox_Front.jpg", "res/Skybox/Skybox_Back.jpg");
-
-	cubeControll = CreateGameObject("Cube 1");
-	cubeControll->transform->SetWorldPosition({ 0, 2, 0 });
-	Cube* cubeControllCubeComponent = CreateCube();
-	cubeControllCubeComponent->SetTexture(CreateTexture("res/Layer9.png"));
-	cubeControll->AddComponent(cubeControllCubeComponent);
-	Collider* colControll = CreateCollider();
-	cubeControll->AddComponent(colControll);
 
 	floorTexture = CreateTexture("res/Layer2.png");
 	wallRightTexture = CreateTexture("res/World/Right.png");
@@ -101,17 +128,18 @@ void Game::SetEnviroment()
 	{
 		for (float j = -1; j <= 0; j += 1)
 		{
-			if(i==-1&&j==-1)
+			if (i == -1 && j == -1)
 				continue;
-			if(i==1&&j==-1)
+			if (i == 1 && j == -1)
 				continue;
 
 			CreateRoom(WorldContent, { i * dimension + i, 0, j * dimension + j }, dimension * 0.5f);
 		}
 	}
+}
 
-
-	// 4 Cubes
+void Game::AddFourCubes()
+{
 	cubeContent = CreateGameObject("Cube Content");
 
 	float distance = 10;
@@ -300,7 +328,7 @@ void Game::OnMouseScrollMovement(double xOffset, double yOffset)
 
 void Game::AddBSP()
 {
-	CreateBinarySpacePartitioning(cubeControll->transform);
+	CreateBinarySpacePartitioning(headCubeControll->transform);
 
 	float dist = 10.5f;
 
