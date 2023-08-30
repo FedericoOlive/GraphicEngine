@@ -8,8 +8,8 @@ bool BinarySpacePartitioning::SameSide(Transform* entity, Transform* plane)
 {
 	Plane bspPlane;
 	bspPlane.SetPositionAndNormal(plane->GetWorldPosition(), plane->forward());
-	bool sideEntity = bspPlane.GetSide(entity->GetWorldPosition());
-	bool sideTarget = bspPlane.GetSide(target->GetWorldPosition());
+	const bool sideEntity = bspPlane.GetSide(entity->GetWorldPosition());
+	const bool sideTarget = bspPlane.GetSide(target->GetWorldPosition());
 
 	return sideEntity == sideTarget;
 }

@@ -359,8 +359,31 @@ double BaseGame::ElapsedTime()
 
 void BaseGame::CreateBinarySpacePartitioning(Transform* target)
 {
-	BinarySpacePartitioning::isEnable = true;
+	SetStateBSP(true);
 	BinarySpacePartitioning::SetTarget(target);
+}
+
+void BaseGame::SetStateBSP(bool state)
+{
+	BinarySpacePartitioning::isEnable = state;
+}
+
+void BaseGame::CreatePlaneBSP(Transform* transformBSP)
+{
+	glm::vec3 size = { 50, 50, 0.5f };
+	
+#ifdef _DEBUG
+	float alpha = 0.2f;
+	Material* mat = new Material(Renderer::GetDefaultShaderSolid(), false);
+	mat->colorTint = Color::Blue;
+	Cube* qbsp1 = CreateCube(mat);
+	qbsp1->alpha = alpha;
+	transformBSP->gameObject->AddComponent(qbsp1);
+#endif
+
+	transformBSP->gameObject->alwaysVisible = true;
+	transformBSP->SetWorldScale(size);
+	AddPlaneBSP(transformBSP);
 }
 
 void BaseGame::AddPlaneBSP(Transform* plane)

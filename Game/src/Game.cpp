@@ -44,6 +44,9 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::Num8)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, 01 * multiply)); }
 	if (Input::IsKeyHolding(KeyCode::Num9)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply)); }
 
+	if (Input::IsKeyHolding(KeyCode::N)) { SetStateBSP(true); }
+	if (Input::IsKeyHolding(KeyCode::M)) { SetStateBSP(false); }
+
 	if (Input::IsKeyDown(KeyCode::H)) { ShowHierarchyInConsole(); }
 
 	if (Input::IsKeyHolding(KeyCode::Space)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, 1 * multiply, 0)); }
@@ -297,47 +300,24 @@ void Game::OnMouseScrollMovement(double xOffset, double yOffset)
 
 void Game::AddBSP()
 {
-	float alpha = 0.2f;
-	float dim = 50;
-	float dist = 10.5f;
-	glm::vec3 size = {dim, dim, 0.5f};
-
-	Material* mat = new Material(Renderer::GetDefaultShaderSolid(), false);
-	mat->colorTint = Color::Blue;
-	
 	CreateBinarySpacePartitioning(cubeControll->transform);
 
+	float dist = 10.5f;
+
 	Transform* bsp1 = CreateGameObject("BSP 1")->transform;
-	bsp1->gameObject->alwaysVisible = true;
-	Cube* qbsp1 = CreateCube(mat);
-	qbsp1->alpha = alpha;
-	bsp1->gameObject->AddComponent(qbsp1);
-	bsp1->SetWorldScale(size);
 	bsp1->SetWorldPosition({ 0, 0, -dist });
 	bsp1->SetWorldRotation({ 0, 0, 0 });
-	AddPlaneBSP(bsp1);
+	CreatePlaneBSP(bsp1);
 
 	Transform* bsp2 = CreateGameObject("BSP 2")->transform;
-	bsp2->gameObject->alwaysVisible = true;
-	Cube* qbsp2 = CreateCube(mat);
-	qbsp2->alpha = alpha;
-	bsp2->gameObject->AddComponent(qbsp2);
-	bsp2->gameObject->AddComponent(CreateQuad(mat));
-	bsp2->SetWorldScale(size);
+	bsp2->SetWorldRotation({ 0,-90, 0 });
 	bsp2->SetWorldPosition({ -dist, 0, 0 });
-	bsp2->SetWorldRotation({ 0, -90, 0 });
-	AddPlaneBSP(bsp2);
+	CreatePlaneBSP(bsp2);
 
 	Transform* bsp3 = CreateGameObject("BSP 3")->transform;
-	bsp3->gameObject->alwaysVisible = true;
-	Cube* qbsp3 = CreateCube(mat);
-	qbsp3->alpha = alpha;
-	bsp3->gameObject->AddComponent(qbsp3);
-	bsp3->gameObject->AddComponent(CreateQuad(mat));
-	bsp3->SetWorldScale(size);
 	bsp3->SetWorldPosition({ dist, 0, 0 });
 	bsp3->SetWorldRotation({ 0, 90, 0 });
-	AddPlaneBSP(bsp3);
+	CreatePlaneBSP(bsp3);
 }
 
 void Game::DeInitialize()

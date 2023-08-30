@@ -100,6 +100,8 @@ public:
 
 	// BSP
 	void CreateBinarySpacePartitioning(Transform* target);
+	void SetStateBSP(bool state);
+	void CreatePlaneBSP(Transform* transformBSP);
 	void AddPlaneBSP(Transform* plane);
 };
 
