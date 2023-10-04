@@ -28,6 +28,7 @@ class SAUCA_API BaseGame
 {
 private:
 	static string version;
+	static std::list<Transform*> planes;
 
 	Input* input;
 	Window* window;
@@ -100,6 +101,7 @@ public:
 
 	// BSP
 	void CreateBinarySpacePartitioning(Transform* target);
+	void FindPlanesBSP(Transform* parent);
 	void SetStateBSP(bool state);
 	void CreatePlaneBSP(Transform* transformBSP);
 	void AddPlaneBSP(Transform* plane);

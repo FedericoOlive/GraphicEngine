@@ -9,10 +9,10 @@ void Game::Initialize()
 	targetFloatModify = &multiply;
 	SetLights();
 	AddListeners();
-	AddPlayer();
 	AddMinimap();
 	AddCubeController();
 	SetEnviroment();
+	AddPlayer();
 	//AddFourCubes();
 	AddBSP();
 
@@ -49,14 +49,14 @@ void Game::Inputs()
 	if (Input::IsKeyHolding(KeyCode::Num8)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, 01 * multiply)); }
 	if (Input::IsKeyHolding(KeyCode::Num9)) { target->SetLocalRotation(target->GetLocalRotation() + glm::vec3(0, 0, -1 * multiply)); }
 
-	if (Input::IsKeyHolding(KeyCode::N)) { SetStateBSP(true); }
-	if (Input::IsKeyHolding(KeyCode::M)) { SetStateBSP(false); }
+	if (Input::IsKeyHolding(KeyCode::N)) { SetStateBSP(true); bsp->SetActive(true); }
+	if (Input::IsKeyHolding(KeyCode::M)) { SetStateBSP(false); bsp->SetActive(false); }
 
 	if (Input::IsKeyDown(KeyCode::H)) { ShowHierarchyInConsole(); }
 
 	if (Input::IsKeyHolding(KeyCode::Space)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, 1 * multiply, 0)); }
-	if (Input::IsKeyHolding(KeyCode::LeftControl)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
-	if (Input::IsKeyHolding(KeyCode::BackSpace)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
+	//if (Input::IsKeyHolding(KeyCode::LeftControl)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
+	if (Input::IsKeyUp(KeyCode::BackSpace)) { player->transform->SetLocalPosition(player->transform->GetLocalPosition() + glm::vec3(0, -1 * multiply, 0)); }
 }
 
 void Game::Update()
@@ -79,25 +79,43 @@ void Game::SetLights()
 	DirectionalLight* lightDir1 = CreateDirectionalLight();
 	lightDir1->powerDiffuse = 2;
 	goLightDir01->AddComponent(lightDir1);
+
+	float dist = 10.5f;
+
+	Transform* bsp1 = CreateGameObject("BSP 1")->transform;
+	bsp1->SetWorldPosition({ 0, 0, -dist });
+	bsp1->SetWorldRotation({ 0, 0, 0 });
+	CreatePlaneBSP(bsp1);
+
+	Transform* bsp2 = CreateGameObject("BSP 2")->transform;
+	bsp2->SetWorldRotation({ 0,-90, 0 });
+	bsp2->SetWorldPosition({ -dist, 0, 0 });
+	CreatePlaneBSP(bsp2);
+
+	Transform* bsp3 = CreateGameObject("BSP 3")->transform;
+	bsp3->SetWorldPosition({ dist, 0, 0 });
+	bsp3->SetWorldRotation({ 0, 90, 0 });
+	CreatePlaneBSP(bsp3);
+
 }
 
 void Game::AddCubeController()
 {
-	headCubeControll = CreateGameObject("Cube 1");
-	headCubeControll->transform->SetWorldPosition({ 0, 10, 0 });
-	Cube* cubeControllCubeComponent = CreateCube();
-	cubeControllCubeComponent->SetTexture(CreateTexture("res/Layer9.png"));
-	headCubeControll->AddComponent(cubeControllCubeComponent);
-	Collider* colControll = CreateCollider();
-	headCubeControll->AddComponent(colControll);
-
-	GameObject* chest = CreatePartOfBody("Body Chest", { 0, -2.5f, 0 }, { 3, 4, 3 }, headCubeControll);
-	GameObject* leg1L = CreatePartOfBody("Body Leg Left1", { 0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, chest);
-	GameObject* leg2L = CreatePartOfBody("Body Leg Left2", { 0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, leg1L);
-	GameObject* leg1R = CreatePartOfBody("Body Leg Left1", { -0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, chest);
-	GameObject* leg2R = CreatePartOfBody("Body Leg Left2", { -0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, leg1R);
-
-	headCubeControll->transform->SetWorldRotation({ 90, 0, 0 });
+	//GameObject* headCubeControll = CreateGameObject("Cube 1");
+	//headCubeControll->transform->SetWorldPosition({ 0, 10, 0 });
+	//Cube* cubeControllCubeComponent = CreateCube();
+	//cubeControllCubeComponent->SetTexture(CreateTexture("res/Layer9.png"));
+	//headCubeControll->AddComponent(cubeControllCubeComponent);
+	//Collider* colControll = CreateCollider();
+	//headCubeControll->AddComponent(colControll);
+	//
+	//GameObject* chest = CreatePartOfBody("Body Chest", { 0, -2.5f, 0 }, { 3, 4, 3 }, headCubeControll);
+	//GameObject* leg1L = CreatePartOfBody("Body Leg Left1", { 0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, chest);
+	//GameObject* leg2L = CreatePartOfBody("Body Leg Left2", { 0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, leg1L);
+	//GameObject* leg1R = CreatePartOfBody("Body Leg Left1", { -0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, chest);
+	//GameObject* leg2R = CreatePartOfBody("Body Leg Left2", { -0.2f, -0.75f, 0 }, { 0.3f, 0.5f, 0.3f }, leg1R);
+	//
+	//headCubeControll->transform->SetWorldRotation({ 90, 0, 0 });
 }
 
 GameObject* Game::CreatePartOfBody(string name, glm::vec3 pos, glm::vec3 scale, GameObject* parent)
@@ -261,6 +279,36 @@ void Game::AddPlayer()
 
 	Collider* col = CreateCollider(false);
 	player->visualPlayer->transform->gameObject->AddComponent(col);
+
+	GameObject* modelJakeObject = CreateGameObject("Jake Model");
+	modelJakeObject->AddComponent(CreateCollider());
+
+	AddModels3D(modelJakeObject, "body", "res/Jake/body.obj");
+	AddModels3D(modelJakeObject, "innerMouth", "res/Jake/innerMouth.obj");
+	AddModels3D(modelJakeObject, "L_arm", "res/Jake/L_arm.obj");
+	AddModels3D(modelJakeObject, "L_blackEye", "res/Jake/L_blackEye.obj");
+	AddModels3D(modelJakeObject, "L_leg", "res/Jake/L_leg.obj");
+	AddModels3D(modelJakeObject, "L_whiteEye", "res/Jake/L_whiteEye.obj");
+	AddModels3D(modelJakeObject, "mouth", "res/Jake/mouth.obj");
+	AddModels3D(modelJakeObject, "mustache", "res/Jake/mustache.obj");
+	AddModels3D(modelJakeObject, "nose", "res/Jake/nose.obj");
+	AddModels3D(modelJakeObject, "R_arm", "res/Jake/R_arm.obj");
+	AddModels3D(modelJakeObject, "R_blackEye", "res/Jake/R_blackEye.obj");
+	AddModels3D(modelJakeObject, "R_leg", "res/Jake/R_leg.obj");
+	AddModels3D(modelJakeObject, "R_whiteEye", "res/Jake/R_whiteEye.obj");
+	AddModels3D(modelJakeObject, "teeth", "res/Jake/teeth.obj");
+	AddModels3D(modelJakeObject, "tongue", "res/Jake/tongue.obj");
+
+	modelJakeObject->transform->SetLocalPosition({ 0, 0, 0 });
+	headCubeControll = modelJakeObject;
+}
+
+void Game::AddModels3D(GameObject* parent, string name, string path)
+{
+	GameObject* modelJakeObject1 = CreateGameObject(name);
+	modelJakeObject1->AddComponent(CreateModel(path, true, false));
+	modelJakeObject1->transform->SetParent(parent);
+	modelJakeObject1->AddComponent(CreateCollider(true));
 }
 
 void Game::AddMinimap()
@@ -328,24 +376,13 @@ void Game::OnMouseScrollMovement(double xOffset, double yOffset)
 
 void Game::AddBSP()
 {
-	CreateBinarySpacePartitioning(headCubeControll->transform);
-
-	float dist = 10.5f;
-
-	Transform* bsp1 = CreateGameObject("BSP 1")->transform;
-	bsp1->SetWorldPosition({ 0, 0, -dist });
-	bsp1->SetWorldRotation({ 0, 0, 0 });
-	CreatePlaneBSP(bsp1);
-
-	Transform* bsp2 = CreateGameObject("BSP 2")->transform;
-	bsp2->SetWorldRotation({ 0,-90, 0 });
-	bsp2->SetWorldPosition({ -dist, 0, 0 });
-	CreatePlaneBSP(bsp2);
-
-	Transform* bsp3 = CreateGameObject("BSP 3")->transform;
-	bsp3->SetWorldPosition({ dist, 0, 0 });
-	bsp3->SetWorldRotation({ 0, 90, 0 });
-	CreatePlaneBSP(bsp3);
+	bsp = CreateGameObject("bsp");
+	Model* bspModel = CreateModel("res/BSP/BSP_Planes.obj", true, false);
+	bsp->AddComponent(bspModel);
+	bspModel->alpha = 0.2f;
+	bsp->transform->SetLocalRotation({ 0, 180, 0 });
+	CreateBinarySpacePartitioning(player->transform);
+	FindPlanesBSP(bsp->transform);
 }
 
 void Game::DeInitialize()

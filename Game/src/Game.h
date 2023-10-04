@@ -11,6 +11,7 @@ private:
 	string targetString = "";
 	int currentColor = 0;
 
+	GameObject* bsp;
 	Camera* camera = nullptr;
 	Camera* cameraMinimap = nullptr;
 	CharacterController* player = nullptr;
@@ -45,14 +46,13 @@ public:
 	void AddListeners();
 	void AddPlayer();
 	void AddMinimap();
-	void AddModels3D();
+	void AddModels3D(GameObject* parent, string name, string path);
 
 	void ChangeColorSpotLight();
 	void OnMouseMove(double xPos, double yPos);
 	void OnMouseScrollMovement(double xOffset, double yOffset);
 	Model* AddNewModel(std::string name, std::string path, glm::vec3 pos);
 	void CreateRoom(GameObject* WorldContent, glm::vec3 position, float dimension);
-
 	void AddBSP();
 };
 
